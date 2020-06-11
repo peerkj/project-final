@@ -58,7 +58,7 @@ class join extends Component {
             />
           )}
         </div>
-
+예지
         <input
           style={{ display: "none" }}
           accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
