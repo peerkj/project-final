@@ -58,7 +58,7 @@ class join extends Component {
             />
           )}
         </div>
-예지
+        커밋테스트
         <input
           style={{ display: "none" }}
           accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
@@ -82,7 +82,6 @@ class join extends Component {
         </Button>
         <br />
         <input type="text" name="email" onChange={handleChange} value={email} />
-
         <br />
         <Button variant="contained" color="primary" component="span">
           회원가입
