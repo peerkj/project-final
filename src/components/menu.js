@@ -11,6 +11,7 @@ import "../css/menu.css";
   handleLogout: stores.login.handleLogout,
   login_state: stores.info.login_state,
   nickname: stores.withdraw.nickname,
+  imgBase64: stores.withdraw.imgBase64,
 }))
 @observer
 class header extends Component {
@@ -43,7 +44,7 @@ class header extends Component {
               {imgBase64 ? (
                 <img src={imgBase64}
                   alt=""
-                  style={{ width: "200px", marginLeft: "13px" }}
+                  style={{ height: "150px", marginTop: "30px", marginBottom: "20px" }}
                 />
               ) : (
                   <img

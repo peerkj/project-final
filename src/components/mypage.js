@@ -22,6 +22,7 @@ import { Create, Lock, AccountCircle } from '@material-ui/icons';
   available_pass_re: stores.chefupdate.available_pass_re,
   handlePassUpdate: stores.chefupdate.handlePassUpdate,
   email: stores.withdraw.email,
+  imgBase64: stores.withdraw.imgBase64,
 }))
 @observer
 class mypage extends Component {
@@ -72,7 +73,7 @@ class mypage extends Component {
             {imgBase64 ? (
               <img src={imgBase64}
                 alt=""
-                style={{ width: "200px" }}
+                style={{ height: "150px", marginTop: "30px", marginBottom: "20px" }}
               />
             ) : (
                 <img
