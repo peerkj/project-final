@@ -6,6 +6,7 @@ import FindIdStore from "./findid";
 import FindPassStore from "./findpass";
 import WithdrawStore from "./withdraw";
 import ChefupdateStore from "./chefupdate";
+import DragStore from "./drag";
 
 import TestStore from "./test";
 import InfoStore from "./info";
@@ -19,6 +20,7 @@ class RootStore {
     this.findPass = new FindPassStore(this);
     this.withdraw = new WithdrawStore(this);
     this.chefupdate = new ChefupdateStore(this);
+    this.drag = new DragStore(this);
 
     this.test = new TestStore(this);
     this.info = new InfoStore(this);
