@@ -114,22 +114,22 @@ class join extends Component {
                   {imgBase64 ? (
                     <img className="profileImg" src={imgBase64} alt="" />
                   ) : (
-                    <img
-                      className="profileImg"
-                      src="img/basic_user.png"
-                      alt=""
-                    />
-                  )}
+                      <img
+                        className="profileImg"
+                        src="img/basic_user.png"
+                        alt=""
+                      />
+                    )}
                 </label>
               </center>
 
               {imgBase64 ? (
                 <Close onClick={handleRemove} id="profileImg_delete" />
               ) : (
-                <label htmlFor="contained-button-file">
-                  <Add id="profileImg_add" />
-                </label>
-              )}
+                  <label htmlFor="contained-button-file">
+                    <Add id="profileImg_add" />
+                  </label>
+                )}
             </div>
             <input
               style={{ display: "none" }}
@@ -139,6 +139,7 @@ class join extends Component {
               type="file"
               onChange={handleChangeImg}
             />
+            <br />
             <div id="divjoin">
               <span class="all_title">E-mail</span>
               <br />
@@ -147,19 +148,19 @@ class join extends Component {
                   email === ""
                     ? false
                     : (available_email === false) === true
-                    ? true
-                    : available_email === true && checkEmail === false
-                    ? true
-                    : false
+                      ? true
+                      : available_email === true && checkEmail === false
+                        ? true
+                        : false
                 }
                 helperText={
                   email === ""
                     ? ""
                     : !available_email
-                    ? "이메일 형식이 유효하지 않습니다"
-                    : available_email === true && checkEmail === false
-                    ? "이미 가입된 이메일입니다"
-                    : "사용가능"
+                      ? "이메일 형식이 유효하지 않습니다"
+                      : available_email === true && checkEmail === false
+                        ? "이미 가입된 이메일입니다"
+                        : "사용가능"
                 }
                 id="standard-basic"
                 name="email"
@@ -231,19 +232,19 @@ class join extends Component {
                   nickname === ""
                     ? false
                     : (available_nickname === false) === true
-                    ? true
-                    : available_nickname === true && checkNickname === false
-                    ? true
-                    : false
+                      ? true
+                      : available_nickname === true && checkNickname === false
+                        ? true
+                        : false
                 }
                 helperText={
                   nickname === ""
                     ? ""
                     : !available_nickname
-                    ? "한글 2~8자"
-                    : available_nickname === true && checkNickname === false
-                    ? "이미 사용중인 닉네임입니다"
-                    : "사용 가능"
+                      ? "한글 2~8자"
+                      : available_nickname === true && checkNickname === false
+                        ? "이미 사용중인 닉네임입니다"
+                        : "사용 가능"
                 }
               />
               <br />
@@ -269,7 +270,6 @@ class join extends Component {
             >
               {error}
             </span>
-            <br />
             <br />
             <Button
               onClick={handleSubmit}

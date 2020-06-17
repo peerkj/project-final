@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import { Button, Dialog, TextField, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
+import { Create, Lock, AccountCircle } from '@material-ui/icons';
 
 @inject((stores) => ({
   password: stores.chefupdate.password,
@@ -26,6 +21,7 @@ import { inject, observer } from "mobx-react";
   available_newpassword: stores.chefupdate.available_newpassword,
   available_pass_re: stores.chefupdate.available_pass_re,
   handlePassUpdate: stores.chefupdate.handlePassUpdate,
+  email: stores.withdraw.email,
 }))
 @observer
 class mypage extends Component {
@@ -62,27 +58,55 @@ class mypage extends Component {
       available_pass_re,
       handleOpen2,
       handlePassUpdate,
+      imgBase64,
       error,
       pass_open,
       new_password,
       new_password_re,
+      email
     } = this.props;
     return (
       <div>
-        <ul>
-          <li>
-            <Button color="primary" onClick={this.handleOpen1}>
-              회원정보수정
+        <center>
+          <div>
+            {imgBase64 ? (
+              <img src={imgBase64}
+                alt=""
+                style={{ width: "200px" }}
+              />
+            ) : (
+                <img
+                  src="img/basic_user.png"
+                  alt=""
+                  style={{ width: "200px" }}
+                />
+              )}
+          </div>
+          <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
+        </center>
+        <br /><br /><br />
+        <hr />
+        <br /><br />
+        <ul style={{ marginLeft: "85px", padding: "10px" }}>
+          <li style={{ padding: "10px" }}>
+            <Create style={{ verticalAlign: "middle" }} />
+            <Button color="#000000" onClick={this.handleOpen1}
+              style={{ fontSize: "12pt" }}>
+              회원정보 수정
             </Button>
           </li>
-          <li>
-            <Button color="primary" onClick={this.handleOpen2}>
+          <li style={{ padding: "10px" }}>
+            <Lock style={{ verticalAlign: "middle" }} />
+            <Button color="#000000" onClick={this.handleOpen2}
+              style={{ fontSize: "12pt" }}>
               비밀번호 변경
             </Button>
           </li>
-          <li>
-            <Button color="primary" onClick={this.handleOpen3}>
-              회원탈퇴
+          <li style={{ padding: "10px" }}>
+            <AccountCircle style={{ verticalAlign: "middle" }} />
+            <Button color="#000000" onClick={this.handleOpen3}
+              style={{ fontSize: "12pt" }}>
+              회원 탈퇴
             </Button>
           </li>
         </ul>
@@ -154,8 +178,8 @@ class mypage extends Component {
                   new_password_re === ""
                     ? false
                     : !available_pass_re
-                    ? true
-                    : false
+                      ? true
+                      : false
                 }
                 helperText={
                   available_pass_re || new_password_re === ""

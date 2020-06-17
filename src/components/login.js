@@ -1,15 +1,9 @@
 import React, { Component } from "react";
-import { TextField, Grid, Button } from "@material-ui/core";
-import { AccountCircle, Https } from "@material-ui/icons";
+import { TextField, Grid, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import { AccountCircle, Https, Email } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import "../css/login.css";
-
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
 @inject((stores) => ({
   email: stores.login.email,
@@ -56,15 +50,18 @@ class login extends Component {
 
     return (
       <div>
-        <div style={{ width: "280px", margin: "0 auto", textAlign: "center" }}>
+        <div style={{ width: "290px", margin: "0 auto", }}>
           <div style={{ marginTop: "200px" }}>
-            <span style={{ fontWeight: "bold", fontSize: "large" }}>
-              로그인
+            <center>
+              <AccountCircle style={{ verticalAlign: "middle" }} />
+              <span style={{ fontSize: "medium", fontWeight: "300", verticalAlign: "middle" }}>
+                로그인
             </span>
-
-            <Grid container spacing={1} alignItems="flex-start">
-              <Grid item>
-                <AccountCircle />
+            </center>
+            <br /><br />
+            <Grid container spacing={1} alignItems="flex-start" style={{ marginLeft: "22px" }}>
+              <Grid item style={{ padding: "10px 1px" }}>
+                <Email />
               </Grid>
               <Grid item>
                 <TextField
@@ -78,58 +75,61 @@ class login extends Component {
                   id="outlined-id-input"
                   variant="outlined"
                   size="small"
-                  label="e-mail"
+                  label="E-mail"
                   type="text"
                   onChange={handleEmailChange}
                 />
               </Grid>
             </Grid>
-          </div>
-          <div>
-            <Grid container spacing={1}>
-              <Grid item alignItems="center">
-                <Https />
+
+            <div>
+              <Grid container spacing={1} style={{ marginLeft: "22px", marginTop: "3px" }}>
+                <Grid item style={{ padding: "10px 1px" }}>
+                  <Https />
+                </Grid>
+                <Grid item>
+                  <TextField
+                    id="outlined-password-input"
+                    name="password"
+                    variant="outlined"
+                    size="small"
+                    label="Password"
+                    type="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={handlePassChange}
+                  />
+                </Grid>
               </Grid>
-              <Grid item>
-                <TextField
-                  id="outlined-password-input"
-                  name="password"
-                  variant="outlined"
-                  size="small"
-                  label="password"
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={handlePassChange}
-                />
-              </Grid>
-            </Grid>
-          </div>
-          <br />
-          <Button
-            onClick={this.handleSubmit}
-            variant="contained"
-            color="primary"
-          >
-            로그인
+            </div>
+            <br />
+            <center>
+              <Button
+                onClick={this.handleSubmit}
+                variant="contained"
+                style={{ backgroundColor: "#002060", color: "#ffffff" }}
+              >
+                로그인
           </Button>
-          <br />
-          <br />
-          <span style={{ color: "#BDBDBD" }}>계정이 없으신가요?</span>
+              <br />
+              <br />
+              <span style={{ color: "#BDBDBD" }}>계정이 없으신가요?</span>
           &nbsp;&nbsp;
           <Link to="/join">회원가입</Link>
-          <br />
-          <Link to="/findid" style={{ textDecoration: "none" }}>
-            이메일 찾기
+              <br />
+              <Link to="/findid" style={{ textDecoration: "none" }}>
+                이메일 찾기
           </Link>
           &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
           <Link
-            to="/findpass"
-            style={{ textDecoration: "none" }}
-            activeStyle={{ color: "#BDBDBD" }}
-          >
-            비밀번호 찾기
+                to="/findpass"
+                style={{ textDecoration: "none" }}
+                activeStyle={{ color: "#BDBDBD" }}
+              >
+                비밀번호 찾기
           </Link>
+            </center>
+          </div>
         </div>
         <div>
           <Dialog

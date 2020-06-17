@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { TextField, Button } from "@material-ui/core";
-
+import { Email } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 
 import Dialog from "@material-ui/core/Dialog";
@@ -66,99 +66,118 @@ class findid extends Component {
 
     return (
       <div>
-        <div id="divjoin">
-          이름
-          <br />
-          <TextField
-            id="standard-basic"
-            value={name}
-            onChange={handleNameChange}
-            error={!(name === "") ^ available_name}
-            helperText={
-              available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
-            }
-          />
-          <br />
-          전화번호
-          <br />
-          <TextField
-            id="standard-basic"
-            value={hp}
-            onChange={handleHpChange}
-            error={!(hp === "010") ^ available_hp}
-            helperText={!available_hp && "하이픈(-) 없이 입력"}
-          />
-          <br />
-          <span
-            style={{
-              fontWeight: "300",
-              color: "red",
-              fontSize: "medium",
-            }}
-          >
-            {error}
-          </span>
-          <br />
-          <br />
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            color="primary"
-            component="span"
-          >
-            이메일 찾기
+        <div id="divjoin"
+          style={{
+            width: "290px",
+            margin: "0 auto",
+          }}>
+          <div style={{ marginTop: "170px" }}>
+            <center>
+              <Email style={{ verticalAlign: "middle" }} />
+              <span style={{
+                fontSize: "medium",
+                fontWeight: "300",
+                verticalAlign: "middle",
+              }}>
+                이메일 찾기</span>
+            </center>
+          </div>
+          <div style={{ position: "absolute", top: "310px", marginLeft: "55px" }}>
+            <span>이름</span>
+            < br />
+            <TextField
+              id="standard-basic"
+              value={name}
+              onChange={handleNameChange}
+              error={!(name === "") ^ available_name}
+              helperText={
+                available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
+              }
+            />
+            <br /><br />
+            <span>전화번호</span>
+            <br />
+            <TextField
+              id="standard-basic"
+              value={hp}
+              onChange={handleHpChange}
+              error={!(hp === "010") ^ available_hp}
+              helperText={!available_hp && "하이픈(-) 없이 입력"}
+            />
+            <br />
+            <br />
+
+            <center>
+              <span
+                style={{
+                  fontWeight: "400",
+                  color: "red",
+                  fontSize: "medium",
+                }}
+              >
+                {error === "" ? <br /> : error}
+              </span>
+            </center>
+            <br />
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "35px" }}
+              component="span"
+            >
+              이메일 찾기
           </Button>
-          <br />
-          <br />
-        </div>
+            <br />
+            <br />
+          </div>
+          <div>
+            <Dialog
+              open={modal_open}
+              onClose={handleOpen}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {result}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                {result_state && (
+                  <Button
+                    onClick={() => {
+                      handleReset();
+                      history.replace("/login");
+                      handleOpen();
+                    }}
+                    color="primary"
+                  >
+                    로그인
+                  </Button>
+                )}
+                {result_state && (
+                  <Button
+                    onClick={() => {
+                      handleReset();
+                      history.replace("/findpass");
+                      handleOpen();
+                    }}
+                    color="primary"
+                  >
+                    비밀번호 찾기
+                  </Button>
+                )}
 
-        <div>
-          <Dialog
-            open={modal_open}
-            onClose={handleOpen}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                {result}
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              {result_state && (
-                <Button
-                  onClick={() => {
-                    handleReset();
-                    history.replace("/login");
-                    handleOpen();
-                  }}
-                  color="primary"
-                >
-                  로그인
-                </Button>
-              )}
-              {result_state && (
-                <Button
-                  onClick={() => {
-                    handleReset();
-                    history.replace("/findpass");
-                    handleOpen();
-                  }}
-                  color="primary"
-                >
-                  비밀번호 찾기
-                </Button>
-              )}
-
-              {!result_state && (
-                <Button onClick={handleOpen} color="primary" autoFocus>
-                  확인
-                </Button>
-              )}
-            </DialogActions>
-          </Dialog>
+                {!result_state && (
+                  <Button onClick={handleOpen} color="primary" autoFocus>
+                    확인
+                  </Button>
+                )}
+              </DialogActions>
+            </Dialog>
+          </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

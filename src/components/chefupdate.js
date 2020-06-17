@@ -110,22 +110,22 @@ class chefupdate extends Component {
                   {imgBase64 ? (
                     <img className="profileImg" src={imgBase64} alt="" />
                   ) : (
-                    <img
-                      className="profileImg"
-                      src="img/basic_user.png"
-                      alt=""
-                    />
-                  )}
+                      <img
+                        className="profileImg"
+                        src="img/basic_user.png"
+                        alt=""
+                      />
+                    )}
                 </label>
               </center>
 
               {imgBase64 ? (
                 <Close onClick={handleRemove} id="profileImg_delete" />
               ) : (
-                <label htmlFor="contained-button-file">
-                  <Add id="profileImg_add" />
-                </label>
-              )}
+                  <label htmlFor="contained-button-file">
+                    <Add id="profileImg_add" />
+                  </label>
+                )}
             </div>
             <br />
             <input
@@ -156,7 +156,7 @@ class chefupdate extends Component {
                 helperText={
                   available_name || name === ""
                     ? ""
-                    : "한글 2~5자/영문 2~15자/혼용 불가능"
+                    : "한글 2~5자"
                 }
               />
               <br />
@@ -171,19 +171,19 @@ class chefupdate extends Component {
                   nickname === "" || nickname === ori_nickname
                     ? false
                     : (available_nickname === false) === true
-                    ? true
-                    : available_nickname === true && checkNickname === false
-                    ? true
-                    : false
+                      ? true
+                      : available_nickname === true && checkNickname === false
+                        ? true
+                        : false
                 }
                 helperText={
                   nickname === ""
                     ? ""
                     : !available_nickname
-                    ? "한글 2~8자"
-                    : available_nickname === true && checkNickname === false
-                    ? "이미 사용중인 닉네임입니다"
-                    : "사용 가능"
+                      ? "한글 2~8자"
+                      : available_nickname === true && checkNickname === false
+                        ? "이미 사용중인 닉네임입니다"
+                        : "사용 가능"
                 }
               />
               <br />
@@ -214,8 +214,8 @@ class chefupdate extends Component {
             <Button
               onClick={this.handleSubmit}
               variant="contained"
-              color="primary"
               component="span"
+              style={{ backgroundColor: "#002060", color: "#ffffff" }}
             >
               정보수정
             </Button>

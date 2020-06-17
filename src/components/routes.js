@@ -13,6 +13,8 @@ import Mypage from "./mypage";
 import Chefupdate from "./chefupdate";
 import Withdraw from "./withdraw";
 import PassUpdate from "./passupdate";
+import Write from "./write";
+import Recipe from "./recipe";
 export default () => (
   <Switch>
     <Route exact path="/" component={Home} />
@@ -27,5 +29,7 @@ export default () => (
     <Route exact path="/findid" component={FindId} />
     <Route exact path="/findpass" component={FindPass} />
     <Route exact path="/passupdate" component={PassUpdate} />
+    <Route exact path="/write" component={Write} />
+    <Route exact path="/recipe" component={Recipe} />
   </Switch>
 );
