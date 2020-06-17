@@ -5,32 +5,52 @@ import { Fade as Hamburger } from "hamburger-react";
 import "../css/menu.css";
 
 @inject((stores) => ({
-  visible: stores.menu.visible,
+  hamto: stores.menu.hamto,
   togglemenu: stores.menu.togglemenu,
+  change_ham: stores.menu.change_ham,
+  handleLogout: stores.login.handleLogout,
+  login_state: stores.info.login_state,
 }))
 @observer
 class header extends Component {
   render() {
-    const { visible, togglemenu } = this.props;
-    console.log(visible);
+    const {
+      hamto,
+      togglemenu,
+      change_ham,
+      handleLogout,
+      login_state,
+    } = this.props;
+
     return (
       <div>
-        <Hamburger
-          onToggle={(toggled) => {
-            if (toggled) {
-              return togglemenu();
-            } else {
-              return togglemenu();
-            }
-          }}
-        />
-        <div id="flyoutMenu" className={visible} onClick={togglemenu}>
+        <div id="headgroup">
+          <Link to="/">
+            <img
+              style={{ marginLeft: "107.5px", width: "140px" }}
+              src="/img/logo1.png"
+              alt=""
+            />
+          </Link>
+          <Hamburger toggled={hamto} toggle={change_ham} />
+        </div>
+        <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
           <ul>
             <li>
               <Link to="/">HOME</Link>
             </li>
             <li>
-              <Link to="/login">LOGIN</Link>/<Link to="/join">JOIN</Link>
+              {login_state ? (
+                <b onClick={handleLogout}>LOGOUT</b>
+              ) : (
+                  <Link to="/login">LOGIN</Link>
+                )}
+              /
+              {login_state ? (
+                <Link to="/mypage">MYPAGE</Link>
+              ) : (
+                  <Link to="/join">JOIN</Link>
+                )}
             </li>
             <li>
               <Link to="/counter">RECIPE</Link>

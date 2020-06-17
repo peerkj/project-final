@@ -1,39 +1,37 @@
 import { observable, action, computed } from "mobx";
 import axios from "axios";
 
-export default class JoinStore {
-  @observable email = "";
-  @observable password = "";
-  @observable password_re = "";
-  @observable name = "";
-  @observable nickname = "";
-  @observable hp = "010";
-
+export default class WithdrawStore {
+  //회원탈퇴
+  @observable reason = "reason1";
+  //회원정보 수정
+  @observable email = this.root.info.userEmail;
+  @observable name = this.root.info.name;
+  @observable nickname = this.root.info.nickname;
+  @observable hp = this.root.info.hp;
   @observable profile = null;
-  @observable imgBase64 = "";
-  @observable email_check = false;
-  @observable nickname_check = false;
+  @observable
+  imgBase64 = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
   @observable error = "";
-
-  //회원정보수정
-  @observable info = {};
+  @observable nickname_check = false;
 
   constructor(root) {
     this.root = root;
   }
+
+  @action
+  checkImg = () => {
+    if (this.root.info.profile_name === "basic_user.png") {
+      this.imgBase64 = "";
+    }
+  };
+  @action
+  reloadimg = () => {
+    this.imgBase64 = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
+    this.checkImg();
+  };
+
   //input
-  @action
-  handleEmailChange = (e) => {
-    this.email = e.target.value;
-  };
-  @action
-  handlePassChange = (e) => {
-    this.password = e.target.value;
-  };
-  @action
-  handlePassCheckChange = (e) => {
-    this.password_re = e.target.value;
-  };
   @action
   handleNameChange = (e) => {
     this.name = e.target.value;
@@ -48,52 +46,9 @@ export default class JoinStore {
   };
 
   @action
-  handelReset = () => {
-    this.email = "";
-    this.password = "";
-    this.password_re = "";
-    this.name = "";
-    this.nickname = "";
-    this.hp = "010";
-
-    this.profile = null;
-    this.imgBase64 = "";
-    this.email_check = false;
-    this.nickname_check = false;
-    this.error = "";
+  handleChange = (e) => {
+    this.reason = e.target.value;
   };
-
-  //유효성검사
-  @computed
-  get available_email() {
-    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z]){3,}@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    return regExp.test(this.email);
-  }
-  @computed
-  get available_password() {
-    var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/;
-    return regExp.test(this.password);
-  }
-  @computed
-  get available_pass_re() {
-    return this.password_re === this.password;
-  }
-  @computed
-  get available_name() {
-    var regExp = /^[가-힣]{2,5}$/;
-    return regExp.test(this.name);
-  }
-  @computed
-  get available_hp() {
-    var regExp = /^[0-9]{11,12}$/;
-    return regExp.test(this.hp);
-  }
-
-  @computed
-  get available_nickname() {
-    var regExp = /^[가-힣]{2,8}$/;
-    return regExp.test(this.nickname);
-  }
 
   @action
   handleChangeImg = (e) => {
@@ -118,38 +73,52 @@ export default class JoinStore {
     }
   };
 
+  //유효성
+  @computed
+  get available_name() {
+    var regExp = /^[가-힣]{2,5}$/;
+    return regExp.test(this.name);
+  }
+  @computed
+  get available_hp() {
+    var regExp = /^[0-9]{11,12}$/;
+    return regExp.test(this.hp);
+  }
+
+  @computed
+  get available_nickname() {
+    var regExp = /^[가-힣]{2,8}$/;
+    return regExp.test(this.nickname);
+  }
+
   @action
   handleRemove = () => {
     this.imgBase64 = "";
     this.profile = null;
   };
 
-  //중복체크
-  @computed
-  get checkEmail() {
-    let url = "http://localhost:9000/acorn/chef/checkid";
-    let email = new FormData();
-    email.append("email", this.email);
-    if (this.available_email) {
-      axios({
-        method: "post",
-        url: url,
-        data: email,
-        //headers: { "Content-Type": "multipart/form-data" },
+  @action
+  handleWithdraw = () => {
+    let url = "http://localhost:9000/acorn/chef/withdraw";
+    let withdraw = new FormData();
+
+    withdraw.append("email", this.root.login.email);
+    withdraw.append("reason", this.reason);
+
+    axios({
+      method: "post",
+      url: url,
+      data: withdraw,
+    })
+      .then((res) => {
+        this.root.login.handleLogout();
       })
-        .then((res) => {
-          if (res.data === 1) {
-            this.email_check = true;
-          } else {
-            this.email_check = false;
-          }
-        })
-        .catch((err) => {
-          console.log("업로드 오류:" + err);
-        });
-    }
-    return this.email_check;
-  }
+      .catch((err) => {
+        console.log("틸퇴오류:" + err);
+      });
+  };
+  //닉네임 중복체크
+
   @computed
   get checkNickname() {
     let url = "http://localhost:9000/acorn/chef/checknick";
@@ -167,40 +136,37 @@ export default class JoinStore {
             this.nickname_check = true;
           } else {
             this.nickname_check = false;
+            if (this.nickname === this.root.info.nickname)
+              this.nickname_check = true;
           }
         })
         .catch((err) => {
           console.log("업로드 오류:" + err);
         });
     }
+
     return this.nickname_check;
   }
 
   @action
-  handleSubmit = () => {
-    let url = "http://localhost:9000/acorn/chef/regist";
+  handleSubmit = (history) => {
+    let url = "http://localhost:9000/acorn/chef/mod";
     let submit = new FormData();
     submit.append("name", this.name);
     submit.append("email", this.email);
-    submit.append("pass", this.password);
     submit.append("hp", this.hp);
-    //이미지 파일 dto 명
-    submit.append("profileimage", this.profile);
     submit.append("nickname", this.nickname);
+
+    //이미지 파일 dto 명
+    //사진이 변경 안됐거나 삭제되면 null
+    submit.append("profileimage", this.profile);
+    let change = 0;
+    if (this.profile !== null || this.imgBase64 === "") change = 1;
+
+    submit.append("change", change);
+
     //유효성 처리
-    if (this.email === "") {
-      this.error = "이메일을 입력하세요";
-    } else if (!this.available_email) {
-      this.error = "이메일 형식을 지켜주세요";
-    } else if (!this.email_check) {
-      this.error = "이미 가입된 이메일입니다.";
-    } else if (this.password === "") {
-      this.error = "비밀번호를 입력하세요";
-    } else if (!this.available_password) {
-      this.error = "비밀번호 형식을 지켜주세요";
-    } else if (this.password_re === "" || !this.available_pass_re) {
-      this.error = "비밀번호가 일치하지 않습니다";
-    } else if (this.name === "") {
+    if (this.name === "") {
       this.error = "이름을 입력하세요";
     } else if (!this.available_name) {
       this.error = "이름 형식을 지켜주세요";
@@ -222,7 +188,8 @@ export default class JoinStore {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
-          window.location.replace("/login");
+          this.root.info.getInfo();
+          history.replace("/mypage");
         })
         .catch((err) => {
           console.log("업로드 오류:" + err);

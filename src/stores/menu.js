@@ -1,18 +1,22 @@
 import { observable, action, computed } from "mobx";
 
-export default class CounterStore {
-  @observable visible = "hide";
-
+export default class MenuStore {
+  @observable hamto = false;
   // **** 추가됨
   constructor(root) {
     this.root = root;
   }
 
-  @action togglemenu = () => {
-    if (this.visible === "hide") {
-      this.visible = "show";
-    } else {
-      this.visible = "hide";
-    }
+  @action change_ham = () => {
+    this.hamto = !this.hamto;
   };
+
+  @computed
+  get togglemenu() {
+    if (this.hamto) {
+      return "show";
+    } else {
+      return "hide";
+    }
+  }
 }

@@ -2,81 +2,79 @@ import React, { Component } from "react";
 
 import "../css/join.css";
 import { inject, observer } from "mobx-react";
-import { TextField, Button, Icon, makeStyles } from "@material-ui/core";
-import { Add, Close } from "@material-ui/icons";
+import { TextField, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Add, Close, StorefrontSharp } from "@material-ui/icons";
 
 @inject((stores) => ({
   //input list -7
-  email: stores.join.email,
-  password: stores.join.password,
-  password_re: stores.join.password_re,
-  name: stores.join.name,
-  nickname: stores.join.nickname,
-  hp: stores.join.hp,
-  login_state: stores.info.login_state,
+  email: stores.withdraw.email,
+  name: stores.withdraw.name,
+  ori_nickname: stores.info.nickname,
+  nickname: stores.withdraw.nickname,
+  hp: stores.withdraw.hp,
+  imgBase64: stores.withdraw.imgBase64,
+  error: stores.withdraw.error,
+  checkImg: stores.withdraw.checkImg,
 
-  handelReset: stores.join.handelReset,
-  imgBase64: stores.join.imgBase64,
-  error: stores.join.error,
   //input change event -7
-  handleChangeImg: stores.join.handleChangeImg,
-  handleEmailChange: stores.join.handleEmailChange,
-  handlePassChange: stores.join.handlePassChange,
-  handlePassCheckChange: stores.join.handlePassCheckChange,
-  handleNameChange: stores.join.handleNameChange,
-  handleNicknameChange: stores.join.handleNicknameChange,
-  handleHpChange: stores.join.handleHpChange,
+  handleChangeImg: stores.withdraw.handleChangeImg,
+  handleEmailChange: stores.withdraw.handleEmailChange,
+  handleNameChange: stores.withdraw.handleNameChange,
+  handleNicknameChange: stores.withdraw.handleNicknameChange,
+  handleHpChange: stores.withdraw.handleHpChange,
 
   //이미지 제거
-  handleRemove: stores.join.handleRemove,
+  handleRemove: stores.withdraw.handleRemove,
   //유효성 검사
-  available_email: stores.join.available_email,
-  available_password: stores.join.available_password,
-  available_pass_re: stores.join.available_pass_re,
-  available_name: stores.join.available_name,
-  available_nickname: stores.join.available_nickname,
-  available_hp: stores.join.available_hp,
+
+  available_name: stores.withdraw.available_name,
+  available_nickname: stores.withdraw.available_nickname,
+  available_hp: stores.withdraw.available_hp,
 
   //이메일 중복체크
-  checkEmail: stores.join.checkEmail,
-  checkNickname: stores.join.checkNickname,
+
+  checkNickname: stores.withdraw.checkNickname,
+  nickname_check: stores.withdraw.nickname_check,
   //submit
-  handleSubmit: stores.join.handleSubmit,
+  handleSubmit: stores.withdraw.handleSubmit,
+  reloadimg: stores.withdraw.reloadimg,
+  login_state: stores.info.login_state,
+  pass_check: stores.chefupdate.pass_check,
 }))
 @observer
-class join extends Component {
+class chefupdate extends Component {
   componentWillMount = () => {
-    this.props.handelReset();
-    if (this.props.login_state) {
+    if (!this.props.login_state || !this.props.pass_check) {
       this.props.history.replace("/");
     }
+    this.props.reloadimg();
+  };
+
+  handleSubmit = () => {
+    this.props.handleSubmit(this.props.history);
   };
 
   render() {
     const {
       email,
-      password,
-      password_re,
-      error,
       name,
       nickname,
       hp,
+      error,
       //유효성
-      available_email,
-      available_password,
-      available_pass_re,
+      ori_nickname,
       available_name,
       available_nickname,
-      available_hp,
       imgBase64,
+      available_hp,
       //중복체크
-      checkEmail,
+
       checkNickname,
+      nickname_check,
       //change
       handleChangeImg,
-      handleEmailChange,
-      handlePassChange,
-      handlePassCheckChange,
+
       handleNameChange,
       handleNicknameChange,
       handleHpChange,
@@ -93,9 +91,7 @@ class join extends Component {
       textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-      },
-      button: {
-        margin: theme.spacing(1),
+        width: 200,
       },
     }));
 
@@ -131,6 +127,7 @@ class join extends Component {
                 </label>
               )}
             </div>
+            <br />
             <input
               style={{ display: "none" }}
               accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
@@ -143,66 +140,9 @@ class join extends Component {
               <span class="all_title">E-mail</span>
               <br />
               <TextField
-                error={
-                  email === ""
-                    ? false
-                    : (available_email === false) === true
-                    ? true
-                    : available_email === true && checkEmail === false
-                    ? true
-                    : false
-                }
-                helperText={
-                  email === ""
-                    ? ""
-                    : !available_email
-                    ? "이메일 형식이 유효하지 않습니다"
-                    : available_email === true && checkEmail === false
-                    ? "이미 가입된 이메일입니다"
-                    : "사용가능"
-                }
+                aria-readonly
                 id="standard-basic"
-                name="email"
-                onChange={handleEmailChange}
-                value={email}
-              />
-              <br />
-              <br />
-              <span class="all_title">비밀번호</span>
-              <br />
-              <TextField
-                id="standard-password-input"
-                name="password"
-                value={password}
-                onChange={handlePassChange}
-                type="password"
-                autoComplete="current-password"
-                error={!(password === "") ^ available_password}
-                helperText={
-                  available_password || password === ""
-                    ? ""
-                    : "8~10자 영문,숫자 조합"
-                }
-              />
-              <br />
-              <br />
-              <span class="all_title">비밀번호 확인</span>
-              <br />
-              <TextField
-                onChange={handlePassCheckChange}
-                id="standard-password-input"
-                type="password"
-                name="password_re"
-                value={password_re}
-                autoComplete="current-password"
-                error={
-                  password_re === "" ? false : !available_pass_re ? true : false
-                }
-                helperText={
-                  available_pass_re || password_re === ""
-                    ? ""
-                    : "비밀번호가 일치하지 않습니다"
-                }
+                defaultValue={email}
               />
               <br />
               <br />
@@ -228,7 +168,7 @@ class join extends Component {
                 value={nickname}
                 onChange={handleNicknameChange}
                 error={
-                  nickname === ""
+                  nickname === "" || nickname === ori_nickname
                     ? false
                     : (available_nickname === false) === true
                     ? true
@@ -272,15 +212,12 @@ class join extends Component {
             <br />
             <br />
             <Button
-              onClick={handleSubmit}
-              variant="outlined"
-              color="black"
+              onClick={this.handleSubmit}
+              variant="contained"
+              color="primary"
               component="span"
-              className={useStyles.button}
-              id="joinbtn"
-              endIcon={<Icon>send</Icon>}
             >
-              가입하기
+              정보수정
             </Button>
           </center>
         </div>
@@ -289,4 +226,4 @@ class join extends Component {
   }
 }
 
-export default join;
+export default chefupdate;

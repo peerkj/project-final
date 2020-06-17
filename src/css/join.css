@@ -1,4 +1,54 @@
-img {
-  width: "200px";
-  height: "200px";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+body{
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 200;
+  font-size: small;
+}
+
+.profileImg{
+  width: 120px;
+  height: 120px;
+  display: inline;
+  position: relative;
+  zIndex: 1;
+  top: 30px;
+  cursor: pointer;
+}
+
+#profileImg_delete{
+  cursor: pointer;
+  position: relative;
+  zIndex: 2;
+  top: -90px;
+  left: 45px;
+}
+
+#profileImg_add{
+  cursor: pointer;
+  position: relative;
+  zIndex: 2;
+  top: -80px;
+  left: 38px;
+}
+
+#divjoin{
+  width: 200px;
+}
+
+#joinbody{
+  position: absolute;
+  left:87px;
+}
+
+#joinbtn{
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  width: "120px";
+}
+
+.all_title{
+  position: absolute;
+  left:0;
+  margin-left: 9px;
 }

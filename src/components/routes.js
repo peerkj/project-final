@@ -7,11 +7,25 @@ import Home from "./home";
 import Counter from "./Counter";
 import Join from "./join";
 
+import FindId from "./findid";
+import FindPass from "./findpass";
+import Mypage from "./mypage";
+import Chefupdate from "./chefupdate";
+import Withdraw from "./withdraw";
+import PassUpdate from "./passupdate";
 export default () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/join" component={Join} />
     <Route exact path="/login" component={Login} />
     <Route exact path="/counter" component={Counter} />
+    <Route exact path="/findid" component={FindId} />
+    <Route exact path="/findpass" component={FindPass} />
+    <Route exact path="/mypage" component={Mypage} />
+    <Route exact path="/chefupdate" component={Chefupdate} />
+    <Route exact path="/withdraw" component={Withdraw} />
+    <Route exact path="/findid" component={FindId} />
+    <Route exact path="/findpass" component={FindPass} />
+    <Route exact path="/passupdate" component={PassUpdate} />
   </Switch>
 );
