@@ -3,6 +3,10 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+//test
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 import { Provider } from "mobx-react"; // MobX 에서 사용하는 Provider
 import RootStore from "./stores";
 
@@ -14,7 +18,9 @@ ReactDOM.render(
   <Provider {...root}>
     {/* *** ...root 으로 스토어 모두 자동으로 설정 */}
     <Router>
-      <App />
+      <DndProvider backend={HTML5Backend}>
+        <App />
+      </DndProvider>
     </Router>
   </Provider>,
   document.getElementById("root")
