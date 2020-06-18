@@ -8,7 +8,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import { inject, observer } from "mobx-react";
 import { DialogContent } from "@material-ui/core";
-import DialogContentText from "@material-ui/core/DialogContentText";
+
 import DialogActions from "@material-ui/core/DialogActions";
 
 import TextField from "@material-ui/core/TextField";
@@ -57,7 +57,8 @@ const Home = ({
   addFood,
   onChangeFood,
   handleEnter,
-  handleListFood
+  handleListFood,
+  refri_delete,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -81,15 +82,21 @@ const Home = ({
     addCount();
   };
 
-  const list = mylist.map((my) => {
+  const list = mylist.map((my, idx) => {
     return (
       <DragDropContainer
         targetKey="foo"
-        dragData={{ idx: my.key, food: my.food }}
+        dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
       >
         <img src="/img/orange.png" alt="" />
         <br />
-        <b>{my.food}</b>
+        <b>{my.refrig_name}</b>
+        <Close
+          id="profileImg_delete"
+          onClick={() => {
+            refri_delete(my.refrig_num);
+          }}
+        />
       </DragDropContainer>
     );
   });
@@ -226,7 +233,7 @@ const Home = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAddFood} color="primary">
-            확인
+            추가
           </Button>
           <Button onClick={handleAddOpen} color="primary">
             취소
@@ -260,5 +267,6 @@ export default inject(({ drag }) => ({
   addFood: drag.addFood,
   onChangeFood: drag.onChangeFood,
   handleEnter: drag.handleEnter,
-  handleListFood: drag.handleListFood
+  handleListFood: drag.handleListFood,
+  refri_delete: drag.refri_delete,
 }))(observer(Home));

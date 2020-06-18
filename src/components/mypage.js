@@ -124,10 +124,10 @@ class mypage extends Component {
                 onChange={handlePassChange}
                 value={password}
                 margin="dense"
-                id="name"
                 label="비밀번호 입력"
                 type="password"
                 fullWidth
+                id="name"
                 helperText={error}
                 error={error !== ""}
               />

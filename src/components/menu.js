@@ -10,20 +10,22 @@ import "../css/menu.css";
   change_ham: stores.menu.change_ham,
   handleLogout: stores.login.handleLogout,
   login_state: stores.info.login_state,
-  nickname: stores.withdraw.nickname,
-  imgBase64: stores.withdraw.imgBase64,
+  profile_name: stores.info.profile_name,
+  menu_profile: stores.withdraw.menu_profile,
+  menu_nick: stores.withdraw.menu_nick,
 }))
 @observer
 class header extends Component {
   render() {
     const {
+      menu_nick,
+      menu_profile,
       hamto,
       togglemenu,
       change_ham,
       handleLogout,
       login_state,
-      nickname,
-      imgBase64,
+      profile_name,
     } = this.props;
 
     return (
@@ -41,8 +43,9 @@ class header extends Component {
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
           <center>
             <div>
-              {imgBase64 !== "" ? (
-                <img src={imgBase64}
+              {profile_name ? (
+                <img
+                  src={menu_profile}
                   alt=""
                   style={{ height: "150px", marginTop: "30px", marginBottom: "20px" }}
                 />
@@ -54,8 +57,10 @@ class header extends Component {
                   />
                 )}
             </div>
-            {nickname ? (
-              <span style={{ fontWeight: "400", fontSize: "12pt" }}>{nickname} 님</span>
+            {menu_nick ? (
+              <span style={{ fontWeight: "400", fontSize: "12pt" }}>
+                {menu_nick} 님
+              </span>
             ) : (
                 <span></span>
               )}

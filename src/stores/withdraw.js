@@ -8,16 +8,30 @@ export default class WithdrawStore {
   @observable email = this.root.info.userEmail;
   @observable name = this.root.info.name;
   @observable nickname = this.root.info.nickname;
+  @observable menu_nick = this.root.info.nickname;
   @observable hp = this.root.info.hp;
   @observable profile = null;
   @observable
   imgBase64 = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
+  @observable
+  menu_profile = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
   @observable error = "";
   @observable nickname_check = false;
 
   constructor(root) {
     this.root = root;
   }
+
+  @action
+  reLoadState = () => {
+    this.email = this.root.info.userEmail;
+    this.name = this.root.info.name;
+    this.nickname = this.root.info.nickname;
+    this.menu_nick = this.root.info.nickname;
+    this.hp = this.root.info.hp;
+    this.imgBase64 = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
+    this.menu_profile = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
+  };
 
   @action
   checkImg = () => {
@@ -189,6 +203,7 @@ export default class WithdrawStore {
       })
         .then((res) => {
           this.root.info.getInfo();
+
           history.replace("/mypage");
         })
         .catch((err) => {
