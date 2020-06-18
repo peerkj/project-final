@@ -57,6 +57,7 @@ const Home = ({
   addFood,
   onChangeFood,
   handleEnter,
+  handleListFood
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -65,6 +66,7 @@ const Home = ({
     resetCount();
     changePot();
     setOpen(true);
+    handleListFood();
   };
 
   const handleClose = () => {
@@ -223,7 +225,7 @@ const Home = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAddOpen} color="primary">
+          <Button onClick={handleAddFood} color="primary">
             확인
           </Button>
           <Button onClick={handleAddOpen} color="primary">
@@ -258,4 +260,5 @@ export default inject(({ drag }) => ({
   addFood: drag.addFood,
   onChangeFood: drag.onChangeFood,
   handleEnter: drag.handleEnter,
+  handleListFood: drag.handleListFood
 }))(observer(Home));

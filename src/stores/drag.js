@@ -1,4 +1,6 @@
 import { observable, action, computed } from "mobx";
+import axios from "axios";
+import { CallToActionSharp } from '@material-ui/icons';
 
 export default class DragStore {
   @observable count = 0;
@@ -13,14 +15,9 @@ export default class DragStore {
   @observable e_store = [];
   @observable addopen = false;
   @observable addFood = "";
-  @observable mylist = [
-    { key: 0, food: "김치" },
-    { key: 1, food: "삼겹살" },
-    { key: 2, food: "목살" },
-    { key: 3, food: "닭" },
-    { key: 4, food: "두부" },
-  ];
+  @observable mylist = [];
   @observable pot_food = [];
+  @observable error = "";
 
   constructor(root) {
     this.root = root;
@@ -99,8 +96,72 @@ export default class DragStore {
   //재료 추가
   @action
   handleAddFood = () => {
+    let url = "http://localhost:9000/acorn/refri/put";
+    let put = new FormData();
+    put.append("email", this.root.info.userEmail);
+    put.append("refrig_name", this.addFood);
+    //유효성검사
+    if (this.available_addfood === "") {
+      this.error = "재료를 입력해주세요";
+    } else if (!this.available_addfood) {
+      this.error = "한글 1-10자로 입력해주세요"
+    } else {
+      axios({
+        method: "post",
+        url: url,
+        data: put,
+      }).then((res) => {
+
+      }).catch((err) => {
+        console.log("업로드오류:" + err);
+      })
+    }
     this.handleAddOpen();
   };
+
+  //리스트
+  @action
+  handleListFood = () => {
+    let url = "http://localhost:9000/acorn/refri/list?email=" + this.root.info.userEmail;
+
+    axios({
+      method: "get",
+      url: url
+    }).then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
+      console.log("리스트오류:" + err);
+    })
+
+  };
+
+  //재료삭제
+  @action
+  handleDeleteFood = (num) => {
+    let url = "http://localhost:9000/acorn/refri/delete?refri_num=" + num;
+
+
+    axios({
+      method: "get",
+      url: url
+    }).then((res) => {
+
+    }).catch((err) => {
+      console.log("재료삭제오류:" + err);
+    })
+
+
+  };
+
+
+  @action
+  handleCook = () => {
+    let url = "http://localhost:9000/acorn/refri/search";
+
+
+
+  };
+
   @action
   handleAddOpen = () => {
     this.addFood = "";
