@@ -64,7 +64,7 @@ class mypage extends Component {
       pass_open,
       new_password,
       new_password_re,
-      email
+      email,
     } = this.props;
     return (
       <div>

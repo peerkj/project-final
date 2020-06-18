@@ -41,7 +41,7 @@ class header extends Component {
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
           <center>
             <div>
-              {imgBase64 ? (
+              {imgBase64 !== "" ? (
                 <img src={imgBase64}
                   alt=""
                   style={{ height: "150px", marginTop: "30px", marginBottom: "20px" }}
