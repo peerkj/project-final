@@ -1,8 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import "../css/write.css";
-import { TextField, FormControlLabel, Checkbox, FormGroup, makeStyles, FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-import { Cancel, AddCircle, AddPhotoAlternate, Close } from '@material-ui/icons';
-import Button from '@material-ui/core/Button';
+import {
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    FormGroup,
+    makeStyles,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+} from "@material-ui/core";
+import {
+    Cancel,
+    AddCircle,
+    AddPhotoAlternate,
+    Close,
+} from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
 
 class write extends Component {
     render() {
@@ -20,26 +35,25 @@ class write extends Component {
             <div>
                 <div id="writebody">
                     <div>
-                        <div className="first_title">
-                            레시피 제목
-						</div>
+                        <div className="first_title">레시피 제목</div>
                         <div className="first_input">
                             <TextField
                                 className="inputwriteform"
                                 size="small"
                                 variant="outlined"
-                                style={{ marginLeft: "10px" }} />
+                                style={{ marginLeft: "10px" }}
+                            />
                         </div>
-                        <br /><br />
-                        <div className="first_title">
-                            요리 소개
-						</div>
+                        <br />
+                        <br />
+                        <div className="first_title">요리 소개</div>
                         <div className="first_input">
                             <TextField
                                 className="inputwriteform"
                                 size="small"
                                 variant="outlined"
-                                style={{ marginLeft: "21px" }} />
+                                style={{ marginLeft: "21px" }}
+                            />
                         </div>
                     </div>
 
@@ -47,9 +61,7 @@ class write extends Component {
                     <br />
 
                     <div>
-                        <div className="all_title">
-                            카테고리
-						</div>
+                        <div className="all_title">카테고리</div>
                         <br />
                         <div>
                             <FormGroup row>
@@ -69,9 +81,7 @@ class write extends Component {
                     </div>
                     <br />
 
-                    <div className="all_title">
-                        요리 정보
-					</div>
+                    <div className="all_title">요리 정보</div>
                     <br />
                     <FormControl className={useStyles.formControl}>
                         <InputLabel id="demo-simple-select-label">인원</InputLabel>
@@ -89,10 +99,12 @@ class write extends Component {
                             <MenuItem value={5}>5인분 이상</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControl className={useStyles.formControl}
+                    <FormControl
+                        className={useStyles.formControl}
                         style={{
-                            marginLeft: "5px"
-                        }}>
+                            marginLeft: "5px",
+                        }}
+                    >
                         <InputLabel id="demo-simple-select-label">시간</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -108,10 +120,12 @@ class write extends Component {
                             <MenuItem value={120}>2시간 이상</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControl className={useStyles.formControl}
+                    <FormControl
+                        className={useStyles.formControl}
                         style={{
-                            marginLeft: "5px"
-                        }}>
+                            marginLeft: "5px",
+                        }}
+                    >
                         <InputLabel id="demo-simple-select-label">난이도</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -120,19 +134,19 @@ class write extends Component {
                         // value={age}
                         // onChange={handleChange}
                         >
-                            <MenuItem value={'every'}>아무나</MenuItem>
-                            <MenuItem value={'easy'}>초급</MenuItem>
-                            <MenuItem value={'normal'}>중급</MenuItem>
-                            <MenuItem value={'diff'}>고급</MenuItem>
-                            <MenuItem value={'chef'}>요리사</MenuItem>
+                            <MenuItem value={"every"}>아무나</MenuItem>
+                            <MenuItem value={"easy"}>초급</MenuItem>
+                            <MenuItem value={"normal"}>중급</MenuItem>
+                            <MenuItem value={"diff"}>고급</MenuItem>
+                            <MenuItem value={"chef"}>요리사</MenuItem>
                         </Select>
                     </FormControl>
-                    <br /><br /><br />
+                    <br />
+                    <br />
+                    <br />
 
                     <div id="ingredient">
-                        <div className="all_title">
-                            재료 입력
-						</div>
+                        <div className="all_title">재료 입력</div>
                         <br />
                         <div>
                             <TextField
@@ -151,32 +165,22 @@ class write extends Component {
                                 size="small"
                                 className="inputingre"
                                 style={{
-                                    marginLeft: "5px"
+                                    marginLeft: "5px",
                                 }}
                             />
-                            <Cancel
-                                size="small"
-                                color="disabled" />
+                            <Cancel size="small" color="disabled" />
                         </div>
                     </div>
                     <div id="add_ingredient">
-                        <AddCircle
-                            size="small"
-                            color="primary"
-                        />
-                        <div className="subtext">
-                            재료 추가
-						</div>
+                        <AddCircle size="small" color="primary" />
+                        <div className="subtext">재료 추가</div>
                     </div>
                     <div>
                         <br />
-
-                        <div className="all_title">
-                            요리 순서
-						</div>
+                        <div className="all_title">요리 순서</div>
                         <br />
-						Step 1
-						<br />
+            Step 1
+            <br />
                         <TextField
                             id="filled-multiline-static"
                             multiline
@@ -191,32 +195,24 @@ class write extends Component {
                             style={{
                                 width: "95px",
                                 height: "95px",
-                                marginLeft: "5px"
+                                marginLeft: "5px",
                             }}
                         />
                         {/* {imgBase64 ? (
-							<Close onClick={handleRemove}
-								id="profileImg_delete" />
-							) : (
-							""
-						)} */}
-                        <Cancel
-                            size="small"
-                            color="disabled" />
+                     <Close onClick={handleRemove}
+                        id="profileImg_delete" />
+                     ) : (
+                     ""
+                  )} */}
+                        <Cancel size="small" color="disabled" />
                         <div>
-                            <AddCircle
-                                size="small"
-                                color="primary" />
-                            <div className="subtext">
-                                순서 추가
-							</div>
+                            <AddCircle size="small" color="primary" />
+                            <div className="subtext">순서 추가</div>
                         </div>
                     </div>
                     <br />
                     <div>
-                        <div className="all_title">
-                            완성 사진
-						</div>
+                        <div className="all_title">완성 사진</div>
                         <br />
                         <img
                             src="img/add_icon.png"
@@ -224,39 +220,36 @@ class write extends Component {
                             style={{
                                 width: "95px",
                                 height: "95px",
-                                marginLeft: "5px"
+                                marginLeft: "5px",
                             }}
                         />
                     </div>
                     <br />
 
-                    <div className="all_title">
-                        요리 Tip!
-					</div>
+                    <div className="all_title">요리 Tip!</div>
                     <br />
                     <TextField
                         size="small"
                         variant="filled"
                         style={{
-                            width: "300px"
+                            width: "300px",
                         }}
                     />
-                    <br /><br />
-                    <Button variant="outlined"
-                        size="small"
-                        style={{
-                            backgroundColor: "#002060",
-                            color: "#ffffff"
-                        }}>
-                        글쓰기
-					</Button>
+                    <br />
+                    <br />
                     <Button
                         variant="outlined"
                         size="small"
-                        onClick={() => {
-                        }}>
+                        style={{
+                            backgroundColor: "#002060",
+                            color: "#ffffff",
+                        }}
+                    >
+                        글쓰기
+          </Button>
+                    <Button variant="outlined" size="small" onClick={() => { }}>
                         취소
-					</Button>
+          </Button>
                 </div>
             </div>
         );

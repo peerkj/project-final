@@ -1,7 +1,15 @@
 import React, { Component } from "react";
-import { Button, Dialog, TextField, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  TextField,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
 import { inject, observer } from "mobx-react";
-import { Create, Lock, AccountCircle } from '@material-ui/icons';
+import { Create, Lock, AccountCircle } from "@material-ui/icons";
 
 @inject((stores) => ({
   password: stores.chefupdate.password,
@@ -64,49 +72,62 @@ class mypage extends Component {
       pass_open,
       new_password,
       new_password_re,
-      email
+      email,
     } = this.props;
     return (
       <div>
         <center>
           <div>
             {imgBase64 ? (
-              <img src={imgBase64}
+              <img
+                src={imgBase64}
                 alt=""
-                style={{ height: "150px", marginTop: "30px", marginBottom: "20px" }}
+                style={{
+                  height: "150px",
+                  marginTop: "30px",
+                  marginBottom: "20px",
+                }}
               />
             ) : (
-                <img
-                  src="img/basic_user.png"
-                  alt=""
-                  style={{ width: "200px" }}
-                />
+                <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
               )}
           </div>
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
         </center>
-        <br /><br /><br />
+        <br />
+        <br />
+        <br />
         <hr />
-        <br /><br />
+        <br />
+        <br />
         <ul style={{ marginLeft: "85px", padding: "10px" }}>
           <li style={{ padding: "10px" }}>
             <Create style={{ verticalAlign: "middle" }} />
-            <Button color="#000000" onClick={this.handleOpen1}
-              style={{ fontSize: "12pt" }}>
+            <Button
+              color="#000000"
+              onClick={this.handleOpen1}
+              style={{ fontSize: "12pt" }}
+            >
               회원정보 수정
             </Button>
           </li>
           <li style={{ padding: "10px" }}>
             <Lock style={{ verticalAlign: "middle" }} />
-            <Button color="#000000" onClick={this.handleOpen2}
-              style={{ fontSize: "12pt" }}>
+            <Button
+              color="#000000"
+              onClick={this.handleOpen2}
+              style={{ fontSize: "12pt" }}
+            >
               비밀번호 변경
             </Button>
           </li>
           <li style={{ padding: "10px" }}>
             <AccountCircle style={{ verticalAlign: "middle" }} />
-            <Button color="#000000" onClick={this.handleOpen3}
-              style={{ fontSize: "12pt" }}>
+            <Button
+              color="#000000"
+              onClick={this.handleOpen3}
+              style={{ fontSize: "12pt" }}
+            >
               회원 탈퇴
             </Button>
           </li>
@@ -124,10 +145,10 @@ class mypage extends Component {
                 onChange={handlePassChange}
                 value={password}
                 margin="dense"
-                id="name"
                 label="비밀번호 입력"
                 type="password"
                 fullWidth
+                id="name"
                 helperText={error}
                 error={error !== ""}
               />
