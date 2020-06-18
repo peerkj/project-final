@@ -10,6 +10,8 @@ import "../css/menu.css";
   change_ham: stores.menu.change_ham,
   handleLogout: stores.login.handleLogout,
   login_state: stores.info.login_state,
+  nickname: stores.withdraw.nickname,
+  imgBase64: stores.withdraw.imgBase64,
 }))
 @observer
 class header extends Component {
@@ -20,6 +22,8 @@ class header extends Component {
       change_ham,
       handleLogout,
       login_state,
+      nickname,
+      imgBase64,
     } = this.props;
 
     return (
@@ -35,25 +39,54 @@ class header extends Component {
           <Hamburger toggled={hamto} toggle={change_ham} />
         </div>
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
+          <center>
+            <div>
+              {imgBase64 ? (
+                <img
+                  src={imgBase64}
+                  alt=""
+                  style={{
+                    height: "150px",
+                    marginTop: "30px",
+                    marginBottom: "20px",
+                  }}
+                />
+              ) : (
+                <img
+                  src="img/basic_user.png"
+                  alt=""
+                  style={{ width: "200px", marginLeft: "13px" }}
+                />
+              )}
+            </div>
+            {nickname ? (
+              <span style={{ fontWeight: "400", fontSize: "12pt" }}>
+                {nickname} 님
+              </span>
+            ) : (
+              <span></span>
+            )}
+            <br />
+            {login_state ? (
+              <Link to="/mypage">MYPAGE</Link>
+            ) : (
+              <Link to="/login">LOGIN</Link>
+            )}
+            &ensp;
+            {login_state ? (
+              <span onClick={handleLogout}>LOGOUT</span>
+            ) : (
+              <Link to="/join">JOIN</Link>
+            )}
+          </center>
+          <br />
+          <hr />
           <ul>
             <li>
               <Link to="/">HOME</Link>
             </li>
             <li>
-              {login_state ? (
-                <b onClick={handleLogout}>LOGOUT</b>
-              ) : (
-                  <Link to="/login">LOGIN</Link>
-                )}
-              /
-              {login_state ? (
-                <Link to="/mypage">MYPAGE</Link>
-              ) : (
-                  <Link to="/join">JOIN</Link>
-                )}
-            </li>
-            <li>
-              <Link to="/counter">RECIPE</Link>
+              <Link to="/recipe">RECIPE</Link>
             </li>
             <li>
               <Link to="/counter">CHEF</Link>
