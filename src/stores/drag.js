@@ -91,6 +91,17 @@ export default class DragStore {
     this.count = 0;
   };
 
+  @computed
+  get checkFood() {
+    let check = true;
+    for (let i = 0; i < this.mylist.length; i++) {
+      if (this.addFood === this.mylist[i].refrig_name) {
+        check = false;
+        break;
+      }
+    }
+    return check;
+  }
   //재료 추가
   @action
   handleAddFood = () => {
@@ -100,9 +111,13 @@ export default class DragStore {
     put.append("refrig_name", this.addFood);
     //유효성검사
     if (this.available_addfood === "") {
-      this.error = "재료를 입력해주세요";
+      alert("재료를 입력해주세요");
     } else if (!this.available_addfood) {
-      this.error = "한글 1-10자로 입력해주세요";
+      alert("한글 1-10자로 입력해주세요");
+    } else if (!this.checkFood) {
+      alert("이미 추가된 재료입니다");
+    } else if (this.mylist.length > 9) {
+      alert("최대 9개까지 추가 가능합니다");
     } else {
       axios({
         method: "post",
@@ -111,13 +126,12 @@ export default class DragStore {
       })
         .then((res) => {
           this.handleListFood();
+          this.handleAddOpen();
         })
         .catch((err) => {
           console.log("업로드오류:" + err);
         });
     }
-
-    this.handleAddOpen();
   };
 
   //리스트
@@ -175,5 +189,48 @@ export default class DragStore {
   @action
   handleCook = () => {
     let url = "http://localhost:9000/acorn/refri/search";
+    let food = new FormData();
+    if (this.e_store.length === 0) {
+      alert("재료를 선택하세요");
+    } else {
+      for (let i = 0; i < this.e_store.length; i++) {
+        food.append("refrig_num", this.e_store[i].dragData.key);
+      }
+      axios({
+        method: "post",
+        url: url,
+        data: food,
+      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log("요리하기오류:" + err);
+        });
+    }
+  };
+  @action
+  handleRecipe = () => {
+    let url = "http://localhost:9000/acorn/refri/search";
+    let recipe = new FormData();
+    if (this.mylist.length === 0) {
+      alert("재료를 추가하세요");
+    } else {
+      for (let i = 0; i < this.mylist.length; i++) {
+        recipe.append("refrig_num", this.mylist[i].refrig_num);
+      }
+
+      axios({
+        method: "post",
+        url: url,
+        data: recipe,
+      })
+        .then((res) => {
+          console.dir(res.data);
+        })
+        .catch((err) => {
+          console.log("레시피불러오기오류:" + err);
+        });
+    }
   };
 }

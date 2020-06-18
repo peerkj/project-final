@@ -47,6 +47,7 @@ const Home = ({
   addPotFood,
   pot_food,
   deleteList,
+
   e_add,
   e_store,
   select_delete,
@@ -59,6 +60,8 @@ const Home = ({
   handleEnter,
   handleListFood,
   refri_delete,
+  handleCook,
+  handleRecipe,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -85,6 +88,7 @@ const Home = ({
   const list = mylist.map((my, idx) => {
     return (
       <DragDropContainer
+        key={my.refrig_num}
         targetKey="foo"
         dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
       >
@@ -102,7 +106,7 @@ const Home = ({
   });
   const pot_list = e_store.map((e) => {
     return (
-      <div>
+      <div key={e.dragData.key}>
         <b>{e.dragData.food}</b>
         <Close
           id="profileImg_delete"
@@ -149,6 +153,8 @@ const Home = ({
           </Toolbar>
         </AppBar>
         <div>
+          <br />
+          <br />
           {list}
 
           <DropTarget targetKey="foo" onHit={dropped}>
@@ -181,6 +187,9 @@ const Home = ({
           <button type="button" onClick={handleAddOpen}>
             추가
           </button>
+          <button type="button" onClick={handleRecipe}>
+            추천레시피보기
+          </button>
         </div>
       </Dialog>
 
@@ -196,7 +205,7 @@ const Home = ({
           <Button color="primary" variant="outlined" onClick={deleteList}>
             냄비비우기
           </Button>
-          <Button color="primary" variant="outlined">
+          <Button color="primary" variant="outlined" onClick={handleCook}>
             요리하기
           </Button>
           <br />
@@ -229,6 +238,7 @@ const Home = ({
           <Button onClick={handleAddFood} color="primary">
             추가
           </Button>
+
           <Button onClick={handleAddOpen} color="primary">
             취소
           </Button>
@@ -263,4 +273,6 @@ export default inject(({ drag }) => ({
   handleEnter: drag.handleEnter,
   handleListFood: drag.handleListFood,
   refri_delete: drag.refri_delete,
+  handleCook: drag.handleCook,
+  handleRecipe: drag.handleRecipe,
 }))(observer(Home));
