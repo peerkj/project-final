@@ -65,8 +65,8 @@ class header extends Component {
             ) : (
                 <Link to="/login">LOGIN</Link>
               )}
-              &ensp;
-              {login_state ? (
+            &ensp;
+            {login_state ? (
               <span onClick={handleLogout}>LOGOUT</span>
             ) : (
                 <Link to="/join">JOIN</Link>
