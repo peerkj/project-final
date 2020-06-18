@@ -1,4 +1,5 @@
 import { observable, action, computed } from "mobx";
+import axios from "axios";
 
 export default class DragStore {
   @observable count = 0;
@@ -13,13 +14,7 @@ export default class DragStore {
   @observable e_store = [];
   @observable addopen = false;
   @observable addFood = "";
-  @observable mylist = [
-    { key: 0, food: "김치" },
-    { key: 1, food: "삼겹살" },
-    { key: 2, food: "목살" },
-    { key: 3, food: "닭" },
-    { key: 4, food: "두부" },
-  ];
+  @observable mylist = [];
   @observable pot_food = [];
 
   constructor(root) {
@@ -99,14 +94,50 @@ export default class DragStore {
   //재료 추가
   @action
   handleAddFood = () => {
-    //유효성 검사/ ==="" or false
-    //재료 개수 -> e_store.length >9면 차단 재료가
-
-    //else{ axios () }
-    //email,this.addFood
+    let url = "http://localhost:9000/acorn/refri/put";
+    let put = new FormData();
+    put.append("email", this.root.info.userEmail);
+    put.append("refrig_name", this.addFood);
+    //유효성검사
+    if (this.available_addfood === "") {
+      this.error = "재료를 입력해주세요";
+    } else if (!this.available_addfood) {
+      this.error = "한글 1-10자로 입력해주세요";
+    } else {
+      axios({
+        method: "post",
+        url: url,
+        data: put,
+      })
+        .then((res) => {
+          this.handleListFood();
+        })
+        .catch((err) => {
+          console.log("업로드오류:" + err);
+        });
+    }
 
     this.handleAddOpen();
   };
+
+  //리스트
+  @action
+  handleListFood = () => {
+    let url =
+      "http://localhost:9000/acorn/refri/list?email=" +
+      this.root.info.userEmail;
+    axios({
+      method: "get",
+      url: url,
+    })
+      .then((res) => {
+        this.mylist = res.data;
+      })
+      .catch((err) => {
+        console.log("업로드오류:" + err);
+      });
+  };
+
   @action
   handleAddOpen = () => {
     this.addFood = "";
@@ -124,5 +155,25 @@ export default class DragStore {
   @action
   handleEnter = (e) => {
     if (e.key === "Enter") this.handleAddFood();
+  };
+  //재료삭제
+  @action
+  refri_delete = (num) => {
+    let url = "http://localhost:9000/acorn/refri/delete?refrig_num=" + num;
+    axios({
+      method: "get",
+      url: url,
+    })
+      .then((res) => {
+        this.handleListFood();
+      })
+      .catch((err) => {
+        console.log("재료삭제오류:" + err);
+      });
+  };
+
+  @action
+  handleCook = () => {
+    let url = "http://localhost:9000/acorn/refri/search";
   };
 }
