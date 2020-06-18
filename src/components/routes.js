@@ -15,6 +15,7 @@ import Withdraw from "./withdraw";
 import PassUpdate from "./passupdate";
 import Write from "./write";
 import Recipe from "./recipe";
+import RecipeDetail from "./recipedetail";
 export default () => (
   <Switch>
     <Route exact path="/" component={Home} />
@@ -31,5 +32,6 @@ export default () => (
     <Route exact path="/passupdate" component={PassUpdate} />
     <Route exact path="/write" component={Write} />
     <Route exact path="/recipe" component={Recipe} />
+    <Route exact path="/recipedetail" component={RecipeDetail} />
   </Switch>
 );
