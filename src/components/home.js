@@ -59,6 +59,7 @@ const Home = ({
   handleEnter,
   handleListFood,
   refri_delete,
+  handleRecipe,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -84,7 +85,7 @@ const Home = ({
 
   const list = mylist.map((my, idx) => {
     return (
-      <DragDropContainer
+      <DragDropContainer key={my.refrig_num}
         targetKey="foo"
         dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
       >
@@ -102,7 +103,7 @@ const Home = ({
   });
   const pot_list = e_store.map((e) => {
     return (
-      <div>
+      <div key={e.}>
         <b>{e.dragData.food}</b>
         <Close
           id="profileImg_delete"
@@ -184,6 +185,9 @@ const Home = ({
               ></Badge>
             </div>
           </DropTarget>
+          <button type="button" onClick={handleRecipe}>
+            추천레시피보기
+          </button>
           <button type="button" onClick={handleAddOpen}>
             추가
           </button>
@@ -269,4 +273,5 @@ export default inject(({ drag }) => ({
   handleEnter: drag.handleEnter,
   handleListFood: drag.handleListFood,
   refri_delete: drag.refri_delete,
+  handleRecipe: drag.handleRecipe,
 }))(observer(Home));

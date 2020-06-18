@@ -174,7 +174,21 @@ export default class DragStore {
   };
 
   @action
-  handleCook = () => {
+  handleRecipe = () => {
     let url = "http://localhost:9000/acorn/refri/search";
+    let recipe = new FormData();
+    for (let i = 0; i < this.mylist.length; i++) {
+      recipe.append("refrig_num", this.mylist[i].refrig_num);
+    }
+
+    axios({
+      method: "post",
+      url: url,
+      data: recipe
+    }).then((res) => {
+      console.dir(res.data);
+    }).catch((err) => {
+      console.log("레시피불러오기오류:" + err);
+    })
   };
 }
