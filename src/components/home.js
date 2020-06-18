@@ -47,7 +47,7 @@ const Home = ({
   addPotFood,
   pot_food,
   deleteList,
-
+  c,
   e_add,
   e_store,
   select_delete,
@@ -62,13 +62,15 @@ const Home = ({
   refri_delete,
   handleCook,
   handleRecipe,
+  refir,
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     resetCount();
-    changePot();
+    c();
+    // changePot();
     setOpen(true);
     handleListFood();
   };
@@ -158,18 +160,31 @@ const Home = ({
           {list}
 
           <DropTarget targetKey="foo" onHit={dropped}>
-            <img
-              style={{
-                width: "200px",
-                height: "200px",
-                position: "absolute",
-                left: "87px",
-                top: "420px",
-              }}
-              src={pot}
-              alt=""
-              onClick={clickPot}
-            />
+            <Button type="button" onClick={handleAddOpen}>
+              재료 추가
+            </Button>
+            <Button type="button" onClick={handleRecipe}>
+              추천 레시피 보기
+            </Button>
+            <div>
+              <img src={refir} alt="" width="400"
+                style={{ marginLeft: "-10px" }} />
+              <img src="img/refview.png" alt="" width="350px"
+                style={{ marginLeft: "15px" }} />
+            </div>
+            <div>
+              <center>
+                <img
+                  style={{
+                    width: "150px",
+                    marginTop: "60px"
+                  }}
+                  src={pot}
+                  alt=""
+                  onClick={clickPot}
+                />
+              </center>
+            </div>
             <div
               style={{
                 position: "absolute",
@@ -184,19 +199,14 @@ const Home = ({
               ></Badge>
             </div>
           </DropTarget>
-          <button type="button" onClick={handleAddOpen}>
-            추가
-          </button>
-          <button type="button" onClick={handleRecipe}>
-            추천레시피보기
-          </button>
+
         </div>
       </Dialog>
 
-      <Dialog open={openpot} onClose={clickPot}>
+      <Dialog>
         <DialogContent>
           <img
-            src="/img/binpot.png"
+            src={pot}
             alt=""
             style={{ width: "280px", marginLeft: "-10px" }}
           />
@@ -275,4 +285,7 @@ export default inject(({ drag }) => ({
   refri_delete: drag.refri_delete,
   handleCook: drag.handleCook,
   handleRecipe: drag.handleRecipe,
+  c: drag.c,
+  refir: drag.refir,
+
 }))(observer(Home));

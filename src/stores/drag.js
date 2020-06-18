@@ -8,7 +8,7 @@ export default class DragStore {
     "/img/pot/pot2.png",
     "/img/pot/pot3.png",
   ];
-  @observable pot = "/img/pot/pot1.png";
+  @observable pot = "";
   @observable open = false;
   @observable pot_timer = null;
   @observable e_store = [];
@@ -16,9 +16,19 @@ export default class DragStore {
   @observable addFood = "";
   @observable mylist = [];
   @observable pot_food = [];
+  @observable refir = "/img/refgif.gif";
 
   constructor(root) {
     this.root = root;
+  }
+
+  @action
+  c = () => {
+    this.refir = "/img/refgif.gif";
+    setTimeout(() => {
+      this.refir = "/img/refview.png";
+      this.pot = "/img/pot/potgif.gif";
+    }, 2100);
   }
 
   @action
@@ -67,15 +77,15 @@ export default class DragStore {
     this.changePot();
   };
 
-  @action
-  changePot = () => {
-    let i = 1;
-    this.pot_timer = setInterval(() => {
-      this.pot = this.pot_[i];
-      i++;
-      if (i === 3) i = 0;
-    }, 500);
-  };
+  // @action
+  // changePot = () => {
+  //   let i = 1;
+  //   this.pot_timer = setInterval(() => {
+  //     this.pot = this.pot_[i];
+  //     i++;
+  //     if (i === 3) i = 0;
+  //   }, 500);
+  // };
 
   @action
   stopPot = () => {
