@@ -99,6 +99,12 @@ export default class DragStore {
   //재료 추가
   @action
   handleAddFood = () => {
+    //유효성 검사/ ==="" or false
+    //재료 개수 -> e_store.length >9면 차단 재료가
+
+    //else{ axios () }
+    //email,this.addFood
+
     this.handleAddOpen();
   };
   @action

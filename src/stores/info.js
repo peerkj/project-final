@@ -35,6 +35,7 @@ export default class JoinStore {
         this.nickname = res.data.nickname;
         this.hp = res.data.hp;
         this.profile_name = res.data.profile;
+        this.root.withdraw.reLoadState();
       })
       .catch((err) => {
         console.log("업로드 오류:" + err);
