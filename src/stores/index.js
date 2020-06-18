@@ -10,6 +10,7 @@ import DragStore from "./drag";
 
 import TestStore from "./test";
 import InfoStore from "./info";
+import WriteStore from "./write";
 class RootStore {
   constructor() {
     this.counter = new CounterStore(this);
@@ -21,7 +22,7 @@ class RootStore {
     this.withdraw = new WithdrawStore(this);
     this.chefupdate = new ChefupdateStore(this);
     this.drag = new DragStore(this);
-
+    this.write = new WriteStore(this);
     this.test = new TestStore(this);
     this.info = new InfoStore(this);
   }

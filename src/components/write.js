@@ -18,9 +18,172 @@ import {
   Close,
 } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
+import { inject, observer } from "mobx-react";
 
+@inject((stores) => ({
+  //주,부 재료 추가
+  handelAddMain: stores.write.handelAddMain,
+  main_ingre: stores.write.main_ingre,
+  handleChange_main_i: stores.write.handleChange_main_i,
+  handleChange_main_q: stores.write.handleChange_main_q,
+  handelDelete_ingre: stores.write.handelDelete_ingre,
+  handelAddSub: stores.write.handelAddSub,
+  sub_ingre: stores.write.sub_ingre,
+  handleChange_sub_i: stores.write.handleChange_sub_i,
+  handleChange_sub_q: stores.write.handleChange_sub_q,
+  handelDelete_ingre_sub: stores.write.handelDelete_ingre_sub,
+
+  //
+  imgBase64: stores.write.imgBase64,
+  handleChangeImg: stores.write.handleChangeImg,
+  handleRemove: stores.write.handleRemove,
+  step: stores.write.step,
+  handelAddStep: stores.write.handelAddStep,
+  handelDelete_step: stores.write.handelDelete_step,
+}))
+@observer
 class write extends Component {
   render() {
+    const {
+      handelAddMain,
+      main_ingre,
+      handleChange_main_i,
+      handleChange_main_q,
+      handelDelete_ingre,
+      handelAddSub,
+      sub_ingre,
+      handleChange_sub_i,
+      handleChange_sub_q,
+      handelDelete_ingre_sub,
+
+      //
+      imgBase64,
+      handleChangeImg,
+      handleRemove,
+      step,
+      handelAddStep,
+      handelDelete_step,
+    } = this.props;
+
+    const m_i = main_ingre.map((i, idx) => {
+      return (
+        <div key={idx}>
+          <TextField
+            value={i.main_ingre}
+            onChange={(e) => {
+              handleChange_main_i(e, idx);
+            }}
+            id="outlined-helperText"
+            label="재료"
+            helperText="예) 돼지고기"
+            variant="outlined"
+            size="small"
+            className="inputingre"
+          />
+          <TextField
+            value={i.main_quantity}
+            onChange={(e) => {
+              handleChange_main_q(e, idx);
+            }}
+            id="outlined-helperText"
+            label="용량"
+            helperText="예) 300g"
+            variant="outlined"
+            size="small"
+            className="inputingre"
+            style={{
+              marginLeft: "5px",
+            }}
+          />
+          <Cancel
+            onClick={() => {
+              handelDelete_ingre(idx);
+            }}
+            size="small"
+            color="disabled"
+          />
+        </div>
+      );
+    });
+    const s_i = sub_ingre.map((i, idx) => {
+      return (
+        <div key={idx}>
+          <TextField
+            value={i.sub_ingre}
+            onChange={(e) => {
+              handleChange_sub_i(e, idx);
+            }}
+            id="outlined-helperText"
+            label="재료"
+            helperText="예) 돼지고기"
+            variant="outlined"
+            size="small"
+            className="inputingre"
+          />
+          <TextField
+            value={i.sub_quantity}
+            onChange={(e) => {
+              handleChange_sub_q(e, idx);
+            }}
+            id="outlined-helperText"
+            label="용량"
+            helperText="예) 300g"
+            variant="outlined"
+            size="small"
+            className="inputingre"
+            style={{
+              marginLeft: "5px",
+            }}
+          />
+          <Cancel
+            onClick={() => {
+              handelDelete_ingre_sub(idx);
+            }}
+            size="small"
+            color="disabled"
+          />
+        </div>
+      );
+    });
+    const step_list = step.map((i, idx) => {
+      return (
+        <div key={idx}>
+          <br />
+          Step {idx + 1}
+          <br />
+          <TextField
+            id="filled-multiline-static"
+            multiline
+            rows={3}
+            variant="filled"
+            style={{ width: "235px" }}
+            className="input"
+          />
+          <label htmlFor="contained-button-file">
+            {imgBase64 ? (
+              <img className="cookImg" src={imgBase64} alt="" />
+            ) : (
+              <img className="cookImg" src="img/add_icon.png" alt="" />
+            )}
+          </label>
+          <input
+            style={{ display: "none" }}
+            accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
+            id="contained-button-file"
+            multiple
+            type="file"
+            onChange={handleChangeImg}
+          />
+          <Cancel
+            onClick={() => {
+              handelDelete_step(idx);
+            }}
+            size="small"
+            color="disabled"
+          />
+        </div>
+      );
+    });
     const useStyles = makeStyles((theme) => ({
       formControl: {
         margin: theme.spacing(1),
@@ -34,113 +197,6 @@ class write extends Component {
     return (
       <div>
         <div id="writebody">
-          <div>
-            <div className="first_title">레시피 제목</div>
-            <div className="first_input">
-              <TextField
-                className="inputwriteform"
-                size="small"
-                variant="outlined"
-                style={{ marginLeft: "10px" }}
-              />
-            </div>
-            <br />
-            <br />
-            <div className="first_title">요리 소개</div>
-            <div className="first_input">
-              <TextField
-                className="inputwriteform"
-                size="small"
-                variant="outlined"
-                style={{ marginLeft: "21px" }}
-              />
-            </div>
-          </div>
-
-          <br />
-          <br />
-
-          <div>
-            <div className="all_title">카테고리</div>
-            <br />
-            <div>
-              <FormGroup row>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      // checked={state.checkedB}
-                      // onChange={handleChange}
-                      name="soup"
-                      color="primary"
-                    />
-                  }
-                  label="국/탕/찌개"
-                />
-              </FormGroup>
-            </div>
-          </div>
-          <br />
-
-          <div className="all_title">요리 정보</div>
-          <br />
-          <FormControl className={useStyles.formControl}>
-            <InputLabel id="demo-simple-select-label">인원</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className="selectwrite"
-              // value={age}
-              // onChange={handleChange}
-            >
-              <MenuItem value={1}>1인분</MenuItem>
-              <MenuItem value={2}>2인분</MenuItem>
-              <MenuItem value={3}>3인분</MenuItem>
-              <MenuItem value={4}>4인분</MenuItem>
-              <MenuItem value={5}>5인분 이상</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            className={useStyles.formControl}
-            style={{
-              marginLeft: "5px",
-            }}
-          >
-            <InputLabel id="demo-simple-select-label">시간</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className="selectwrite"
-              // value={age}
-              // onChange={handleChange}
-            >
-              <MenuItem value={15}>15분 이내</MenuItem>
-              <MenuItem value={30}>30분 이내</MenuItem>
-              <MenuItem value={60}>60분 이내</MenuItem>
-              <MenuItem value={90}>90분 이내</MenuItem>
-              <MenuItem value={120}>2시간 이상</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            className={useStyles.formControl}
-            style={{
-              marginLeft: "5px",
-            }}
-          >
-            <InputLabel id="demo-simple-select-label">난이도</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className="selectwrite"
-              // value={age}
-              // onChange={handleChange}
-            >
-              <MenuItem value={"every"}>아무나</MenuItem>
-              <MenuItem value={"easy"}>초급</MenuItem>
-              <MenuItem value={"normal"}>중급</MenuItem>
-              <MenuItem value={"diff"}>고급</MenuItem>
-              <MenuItem value={"chef"}>요리사</MenuItem>
-            </Select>
-          </FormControl>
           <br />
           <br />
           <br />
@@ -148,64 +204,32 @@ class write extends Component {
           <div id="ingredient">
             <div className="all_title">재료 입력</div>
             <br />
+            <b>주재료</b>
+            <br />
+            {m_i}
+
+            <br />
+            <div id="add_ingredient" onClick={handelAddMain}>
+              <AddCircle size="small" color="primary" />
+              <div className="subtext">재료 추가</div>
+            </div>
             <div>
-              <TextField
-                id="outlined-helperText"
-                label="재료"
-                helperText="예) 돼지고기"
-                variant="outlined"
-                size="small"
-                className="inputingre"
-              />
-              <TextField
-                id="outlined-helperText"
-                label="용량"
-                helperText="예) 300g"
-                variant="outlined"
-                size="small"
-                className="inputingre"
-                style={{
-                  marginLeft: "5px",
-                }}
-              />
-              <Cancel size="small" color="disabled" />
+              <br />
+              <b>부재료</b>
+              <br />
+              {s_i}
+              <div id="add_ingredient" onClick={handelAddSub}>
+                <AddCircle size="small" color="primary" />
+                <div className="subtext">재료 추가</div>
+              </div>
             </div>
           </div>
-          <div id="add_ingredient">
-            <AddCircle size="small" color="primary" />
-            <div className="subtext">재료 추가</div>
-          </div>
+
           <div>
             <br />
             <div className="all_title">요리 순서</div>
-            <br />
-            Step 1
-            <br />
-            <TextField
-              id="filled-multiline-static"
-              multiline
-              rows={3}
-              variant="filled"
-              style={{ width: "200px" }}
-              className="input"
-            />
-            <img
-              src="img/add_icon.png"
-              alt=""
-              style={{
-                width: "95px",
-                height: "95px",
-                marginLeft: "5px",
-              }}
-            />
-            {/* {imgBase64 ? (
-                     <Close onClick={handleRemove}
-                        id="profileImg_delete" />
-                     ) : (
-                     ""
-                  )} */}
-            <Cancel size="small" color="disabled" />
-            <div>
+            {step_list}
+            <div onClick={handelAddStep}>
               <AddCircle size="small" color="primary" />
               <div className="subtext">순서 추가</div>
             </div>

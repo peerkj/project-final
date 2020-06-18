@@ -27,3 +27,8 @@ body {
   font-weight: 200;
   display: inline;
 }
+.cookImg {
+  width: 95px;
+  height: 95px;
+  margin-left: 5px;
+}
