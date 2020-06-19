@@ -47,39 +47,35 @@ class header extends Component {
                 <img
                   src={menu_profile}
                   alt=""
-                  style={{
-                    height: "150px",
-                    marginTop: "30px",
-                    marginBottom: "20px",
-                  }}
+                  style={{ height: "150px", marginTop: "30px", marginBottom: "20px" }}
                 />
               ) : (
-                <img
-                  src="img/basic_user.png"
-                  alt=""
-                  style={{ width: "200px", marginLeft: "13px" }}
-                />
-              )}
+                  <img
+                    src="img/basic_user.png"
+                    alt=""
+                    style={{ width: "200px", marginLeft: "13px" }}
+                  />
+                )}
             </div>
             {menu_nick ? (
               <span style={{ fontWeight: "400", fontSize: "12pt" }}>
                 {menu_nick} 님
               </span>
             ) : (
-              <span></span>
-            )}
+                <span></span>
+              )}
             <br />
             {login_state ? (
               <Link to="/mypage">MYPAGE</Link>
             ) : (
-              <Link to="/login">LOGIN</Link>
-            )}
+                <Link to="/login">LOGIN</Link>
+              )}
             &ensp;
             {login_state ? (
               <span onClick={handleLogout}>LOGOUT</span>
             ) : (
-              <Link to="/join">JOIN</Link>
-            )}
+                <Link to="/join">JOIN</Link>
+              )}
           </center>
           <br />
           <hr />

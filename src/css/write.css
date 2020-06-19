@@ -14,7 +14,9 @@ body {
 .inputwriteform {
   width: 200px;
 }
-
+.selectcate{
+  width: 140px;
+}
 .selectwrite {
   width: 100px;
 }

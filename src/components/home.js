@@ -121,18 +121,24 @@ const Home = ({
 
   return (
     <div>
-      <img
-        src="/img/refrigerator.png"
-        style={{
-          width: "100px",
-
-          position: "absolute",
-          left: "280px",
-          top: "480px",
-        }}
-        onClick={handleClickOpen}
-        alt=""
-      />
+      <div style={{
+        width: "200px",
+        overflow: "hidden",
+        position: "absolute",
+        left: "230px",
+        top: "480px",
+        cursor: "pointer"
+      }}>
+        <b onClick={handleClickOpen}>나의냉장고</b>
+        <img
+          src="/img/refrigerator.png"
+          style={{
+            width: "100px"
+          }}
+          onClick={handleClickOpen}
+          alt=""
+        />
+      </div>
       <Dialog
         fullScreen
         open={open}

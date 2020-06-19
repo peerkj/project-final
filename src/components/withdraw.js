@@ -18,7 +18,7 @@ import { inject, observer } from "mobx-react";
 class withdraw extends Component {
   componentWillMount = () => {
     if (!this.props.login_state || !this.props.pass_check) {
-      this.props.history.replace("/");
+      this.props.history.push("/login");
     }
   };
 

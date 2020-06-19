@@ -7,7 +7,7 @@
   left: 0;
   transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
   overflow: scroll;
-  z-index: 1000;
+  z-index: 99;
   padding-top: 40px;
 }
 
@@ -34,7 +34,7 @@
   color: blue;
 }
 .hamburger-react {
-  z-index: 9999;
+  z-index: 100;
   float: right;
 }
 

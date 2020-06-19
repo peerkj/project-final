@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { TextField, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { Lock } from '@material-ui/icons';
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -64,56 +65,75 @@ class findid extends Component {
 
     return (
       <div>
-        <div id="divjoin">
-          <b>이름</b>
+        <div id="divjoin"
+          style={{
+            width: "290px",
+            height: "500px",
+            margin: "0 auto",
+          }}>
+          <div style={{ marginTop: "180px" }}>
+            <center>
+              <Lock style={{ verticalAlign: "middle" }} />
+              <span style={{
+                fontSize: "medium",
+                fontWeight: "300",
+                verticalAlign: "middle",
+              }}>
+                비밀번호 찾기</span>
+            </center>
+          </div>
+          <div style={{ position: "absolute", top: "340px", marginLeft: "55px" }}>
+            이름
           <br />
-          <TextField
-            id="standard-basic"
-            value={name}
-            onChange={handleNameChange}
-            error={!(name === "") ^ available_name}
-            helperText={
-              available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
-            }
-          />
-          <br />
-          <br />
-          <b>이메일</b>
-          <br />
-          <TextField
-            id="standard-basic"
-            name="email"
-            value={email}
-            onChange={handleEmailChange}
-            error={!(email === "") ^ available_email}
-            helperText={
-              available_email || email === ""
-                ? ""
-                : "이메일 형식으로 입력하세요"
-            }
-          />
-          <br />
-          <br />
-          <span
-            style={{
-              fontWeight: "300",
-              color: "red",
-              fontSize: "medium",
-            }}
-          >
-            {error}
-          </span>
-          <br />
-          <br />
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            color="primary"
-            component="span"
-          >
-            비밀번호 찾기
+            <TextField
+              id="standard-basic"
+              value={name}
+              onChange={handleNameChange}
+              error={!(name === "") ^ available_name}
+              helperText={
+                available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
+              }
+            />
+            <br /><br />
+            <span>이메일</span>
+            <br />
+            <TextField
+              id="standard-basic"
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+              error={!(email === "") ^ available_email}
+              helperText={
+                available_email || email === ""
+                  ? ""
+                  : "이메일 형식으로 입력하세요"
+              }
+            />
+            <br />
+            <br />
+            <center>
+              <span
+                style={{
+                  fontWeight: "400",
+                  color: "red",
+                  fontSize: "medium",
+                }}
+              >
+                {error === "" ? <br /> : error}
+              </span>
+            </center>
+            <br />
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "25px" }}
+              component="span"
+            >
+              비밀번호 찾기
           </Button>
-
+          </div>
+          <br />
+          <b>{result}</b>
           <br />
           {result_state && <Link to="/login">로그인</Link>}
           <div>
