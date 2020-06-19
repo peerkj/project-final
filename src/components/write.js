@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 import "../css/write.css";
 import {
   TextField,
@@ -34,17 +35,34 @@ import { inject, observer } from "mobx-react";
   handelDelete_ingre_sub: stores.write.handelDelete_ingre_sub,
 
   //
-  imgBase64: stores.write.imgBase64,
+
   handleChangeImg: stores.write.handleChangeImg,
   handleRemove: stores.write.handleRemove,
   step: stores.write.step,
   handelAddStep: stores.write.handelAddStep,
   handelDelete_step: stores.write.handelDelete_step,
+  changeStep: stores.write.changeStep,
+  onChangeStep: stores.write.onChangeStep,
+
+  //완성 사진
+  done: stores.write.done,
+  changeDone: stores.write.changeDone,
+  handelAddDone: stores.write.handelAddDone,
+  handelDelete_done: stores.write.handelDelete_done,
+  handleChangeDone: stores.write.handleChangeDone,
+  handleRemoveDone: stores.write.handleRemoveDone,
 }))
 @observer
 class write extends Component {
   render() {
     const {
+      done,
+      changeDone,
+      handelAddDone,
+      handelDelete_done,
+      handleChangeDone,
+      handleRemoveDone,
+      //
       handelAddMain,
       main_ingre,
       handleChange_main_i,
@@ -57,13 +75,21 @@ class write extends Component {
       handelDelete_ingre_sub,
 
       //
-      imgBase64,
       handleChangeImg,
       handleRemove,
       step,
       handelAddStep,
       handelDelete_step,
+      changeStep,
+      onChangeStep,
     } = this.props;
+    //이동한 STEP, 이동지점
+    const handleDrop = (e, idx) => {
+      changeStep(e.dragData.idx, idx);
+    };
+    const handleDropDone = (e, idx) => {
+      changeDone(e.dragData.idx, idx);
+    };
 
     const m_i = main_ingre.map((i, idx) => {
       return (
@@ -147,41 +173,112 @@ class write extends Component {
     });
     const step_list = step.map((i, idx) => {
       return (
-        <div key={idx}>
+        <DragDropContainer
+          key={idx}
+          targetKey="moveStep"
+          dragData={{ idx: idx }}
+        >
           <br />
           Step {idx + 1}
           <br />
-          <TextField
-            id="filled-multiline-static"
-            multiline
-            rows={3}
-            variant="filled"
-            style={{ width: "235px" }}
-            className="input"
-          />
-          <label htmlFor="contained-button-file">
-            {imgBase64 ? (
-              <img className="cookImg" src={imgBase64} alt="" />
-            ) : (
-              <img className="cookImg" src="img/add_icon.png" alt="" />
-            )}
-          </label>
-          <input
-            style={{ display: "none" }}
-            accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
-            id="contained-button-file"
-            multiple
-            type="file"
-            onChange={handleChangeImg}
-          />
-          <Cancel
-            onClick={() => {
-              handelDelete_step(idx);
+          <DropTarget
+            targetKey="moveStep"
+            onHit={(e) => {
+              handleDrop(e, idx);
             }}
-            size="small"
-            color="disabled"
-          />
-        </div>
+          >
+            <TextField
+              id={"filled-multiline-static" + idx}
+              multiline
+              rows={3}
+              variant="filled"
+              style={{ width: "235px" }}
+              className="input"
+              value={i.ex}
+              onChange={(e) => {
+                onChangeStep(e, idx);
+              }}
+            />
+            <div style={{ width: "100px" }}>
+              <label htmlFor={idx}>
+                {i.imgBase64 ? (
+                  <img className="cookImg" src={i.imgBase64} alt="" />
+                ) : (
+                  <img className="cookImg" src="img/add_icon.png" alt="" />
+                )}
+                {i.imgBase64 ? (
+                  <Close
+                    onClick={() => {
+                      handleRemove(idx);
+                    }}
+                    id="profileImg_delete"
+                  />
+                ) : (
+                  ""
+                )}
+              </label>
+            </div>
+            <input
+              onChange={(e) => {
+                handleChangeImg(e, idx);
+              }}
+              style={{ display: "none" }}
+              accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
+              id={idx}
+              type="file"
+            />
+            <Cancel
+              onClick={() => {
+                handelDelete_step(idx);
+              }}
+              size="small"
+              color="disabled"
+            />
+          </DropTarget>
+        </DragDropContainer>
+      );
+    });
+    const done_list = done.map((i, idx) => {
+      return (
+        <DragDropContainer
+          key={idx}
+          targetKey="moveDone"
+          dragData={{ idx: idx }}
+        >
+          <br />
+          <DropTarget
+            targetKey="moveDone"
+            onHit={(e) => {
+              handleDropDone(e, idx);
+            }}
+          >
+            <div style={{ width: "100px" }}>
+              <label htmlFor={idx + "done"}>
+                {i.imgBase64 ? (
+                  <img className="cookImg" src={i.imgBase64} alt="" />
+                ) : (
+                  <img className="cookImg" src="img/add_icon.png" alt="" />
+                )}
+              </label>
+            </div>
+            <input
+              onChange={(e) => {
+                handleChangeDone(e, idx);
+              }}
+              style={{ display: "none" }}
+              accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
+              id={idx + "done"}
+              type="file"
+            />
+            <Cancel
+              onClick={() => {
+                handelDelete_done(idx);
+              }}
+              size="small"
+              color="disabled"
+            />
+          </DropTarget>
+        </DragDropContainer>
       );
     });
     const useStyles = makeStyles((theme) => ({
@@ -238,15 +335,7 @@ class write extends Component {
           <div>
             <div className="all_title">완성 사진</div>
             <br />
-            <img
-              src="img/add_icon.png"
-              alt=""
-              style={{
-                width: "95px",
-                height: "95px",
-                marginLeft: "5px",
-              }}
-            />
+            {done_list}
           </div>
           <br />
 
