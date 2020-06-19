@@ -1,0 +1,15 @@
+.open{
+ display: inline;
+}
+
+.close{
+    display: none;
+   }
+
+.refclose{
+    display: inline;
+}
+
+.refopen{
+    display: none;
+}

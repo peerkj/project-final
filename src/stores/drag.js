@@ -3,12 +3,7 @@ import axios from "axios";
 
 export default class DragStore {
   @observable count = 0;
-  @observable pot_ = [
-    "/img/pot/pot1.png",
-    "/img/pot/pot2.png",
-    "/img/pot/pot3.png",
-  ];
-  @observable pot = "";
+  @observable pot = "img/pot/potgif.gif";
   @observable open = false;
   @observable pot_timer = null;
   @observable e_store = [];
@@ -16,21 +11,31 @@ export default class DragStore {
   @observable addFood = "";
   @observable mylist = [];
   @observable pot_food = [];
-  @observable refir = "/img/refgif.gif";
+  @observable refir = "";
+  @observable handle_style = "close"; // 냄비,버튼,...
+  @observable refir_style = "refclose";
 
   constructor(root) {
     this.root = root;
   }
 
+  //모달 open
   @action
-  c = () => {
+  r_open = () => {
     this.refir = "/img/refgif.gif";
     setTimeout(() => {
-      this.refir = "/img/refview.png";
-      this.pot = "/img/pot/potgif.gif";
-    }, 2100);
-  }
+      this.refir_style = "refopen";
+      this.handle_style = "open";
+    }, 5000);
 
+  }
+  //모달 close
+  @action
+  r_close = () => {
+    this.refir = "";
+    this.handle_style = "close";
+    this.refir_style = "refclose";
+  }
   @action
   addPotFood = (idx) => {
     this.pot_food.push(this.mylist[idx].food);
@@ -74,7 +79,7 @@ export default class DragStore {
     setTimeout(() => {
       this.pot = this.pot_[2];
     }, 350);
-    this.changePot();
+    this.pot = "img/pot/potgif.gif";
   };
 
   // @action
