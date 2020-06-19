@@ -51,6 +51,8 @@ import { inject, observer } from "mobx-react";
   handelDelete_done: stores.write.handelDelete_done,
   handleChangeDone: stores.write.handleChangeDone,
   handleRemoveDone: stores.write.handleRemoveDone,
+
+  insertRecipe: stores.write.insertRecipe,
 }))
 @observer
 class write extends Component {
@@ -82,6 +84,7 @@ class write extends Component {
       handelDelete_step,
       changeStep,
       onChangeStep,
+      insertRecipe,
     } = this.props;
     //이동한 STEP, 이동지점
     const handleDrop = (e, idx) => {
@@ -95,7 +98,7 @@ class write extends Component {
       return (
         <div key={idx}>
           <TextField
-            value={i.main_ingre}
+            value={i.ingre_name}
             onChange={(e) => {
               handleChange_main_i(e, idx);
             }}
@@ -107,7 +110,7 @@ class write extends Component {
             className="inputingre"
           />
           <TextField
-            value={i.main_quantity}
+            value={i.quantity}
             onChange={(e) => {
               handleChange_main_q(e, idx);
             }}
@@ -293,6 +296,9 @@ class write extends Component {
 
     return (
       <div>
+        <button type="button" onClick={insertRecipe}>
+          클릭
+        </button>
         <div id="writebody">
           <br />
           <br />

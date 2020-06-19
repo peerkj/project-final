@@ -1,9 +1,9 @@
 import { observable, action, computed } from "mobx";
-
+import axios from "axios";
 export default class WriteStore {
   //주 재료
 
-  @observable main_ingre = [{ main_ingre: "", main_quantity: "" }];
+  @observable main_ingre = [{ sort: "주재료", ingre_name: "", quantity: "" }];
   @observable sub_ingre = [{ sub_ingre: "", sub_quantity: "" }];
   @observable step = [{ ex: "", profile: null, imgBase64: "" }];
   @observable done = [{ profile: null, imgBase64: "" }];
@@ -75,7 +75,7 @@ export default class WriteStore {
   //주 재료 추가
   @action
   handelAddMain = () => {
-    this.main_ingre.push({ main_ingre: "", main_quantity: "" });
+    this.main_ingre.push({ sort: "주재료", ingre_name: "", quantity: "" });
   };
   @action
   handelAddSub = () => {
@@ -88,7 +88,7 @@ export default class WriteStore {
   //재료 입력
   @action
   handleChange_main_i = (e, idx) => {
-    this.main_ingre[idx].main_ingre = e.target.value;
+    this.main_ingre[idx].ingre_name = e.target.value;
   };
   @action
   handleChange_sub_i = (e, idx) => {
@@ -97,7 +97,7 @@ export default class WriteStore {
   //용량 입력
   @action
   handleChange_main_q = (e, idx) => {
-    this.main_ingre[idx].main_quantity = e.target.value;
+    this.main_ingre[idx].quantity = e.target.value;
   };
   @action
   handleChange_sub_q = (e, idx) => {
@@ -143,5 +143,45 @@ export default class WriteStore {
   handleRemove = (idx) => {
     this.step[idx].imgBase64 = "";
     this.step[idx].profile = null;
+  };
+
+  @action
+  insertRecipe = () => {
+    let url = "http://localhost:9000/acorn/recipe/regist";
+    let submit = new FormData();
+    //submit.append("repre_photofile",);  //대표사진(썸네일)
+    // submit.append("subject", this.subject);
+    // submit.append("summary", this.summary);
+    // submit.append("food_cate", this.foodcatevalue);
+    // submit.append("portion", this.portionvalue);
+    // submit.append("time", this.timevalue);
+    // submit.append("difficult", this.difftvalue);
+    // submit.append("tip", this.tip);
+    // submit.append("ingreList", this.main_ingre);
+
+    submit.append("ingreList", this.main_ingre[0]); //주재료인지 부재료인지
+
+    for (var value of submit.entries()) {
+      console.log(value[0]);
+    }
+    // //순서
+    // for (let i = 0; i < e.step.length; i++) {
+    //     submit.append("orderList[" + i + "].order_num", i + 1); //순서
+    //     submit.append("orderList[" + i + "].content",e.step[i].value);    //설명
+    //     submit.append("orderList[" + i + "].photofile",);  //사진
+    // }
+    // //완성사진
+    // for (let i = 0; i < ; i++) {
+    //     submit.append("comp_photoList[" + i + "]",);
+    // }
+    axios({
+      method: "post",
+      url: url,
+      data: submit,
+    })
+      .then((res) => {})
+      .catch((err) => {
+        console.log("레시피 업로드 오류:" + err);
+      });
   };
 }

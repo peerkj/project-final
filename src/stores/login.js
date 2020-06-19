@@ -51,7 +51,7 @@ export default class loginStore {
             this.root.info.getInfo();
 
             this.root.findPass.modal_open = false;
-            history.replace("/");
+            history.go(-1);
           } else {
             //실패
             this.error = "회원정보와 일치하지 않습니다.";
