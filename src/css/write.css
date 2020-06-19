@@ -29,3 +29,17 @@ body {
   font-weight: 200;
   display: inline;
 }
+.cookImg {
+  width: 95px;
+  height: 95px;
+  margin-left: 5px;
+  display: inline;
+}
+#profileImg_delete {
+  cursor: pointer;
+  display: inline;
+  position: relative;
+  zindex: 2;
+  top: -70px;
+  left: -10px;
+}
