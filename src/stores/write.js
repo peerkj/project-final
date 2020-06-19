@@ -13,10 +13,11 @@ export default class WriteStore {
     @observable tip = ""; //요리팁
 
 
-    @observable main_ingre = [{ main_ingre: "", main_quantity: "" }];
-    @observable sub_ingre = [{ sub_ingre: "", sub_quantity: "" }];
-    @observable step = [{ ex: "", profile: null, imgBase64: "" }];
-    @observable done = [{ profile: null, imgBase64: "" }];
+    @observable main_ingre = [{ sort: '주재료', ingre_name: "", quantity: "" }];
+    @observable sub_ingre = [{ sort: '부재료', ingre_name: "", quantity: "" }];
+    @observable step = [{ content: "", photofile: null, imgBase64: "" }];
+    @observable done = [{ comp_photoList: null, imgBase64: "" }];
+    @observable represent = { repre_photofile: null, imgBase64: "" }; //대표사진
 
 
 
@@ -89,7 +90,7 @@ export default class WriteStore {
     //완성 사진 추가
     @action
     handelAddDone = () => {
-        this.done.push({ profile: null, imgBase64: "" });
+        this.done.push({ comp_photoList: null, imgBase64: "" });
     };
     //완성 사진 삭제
     handelDelete_done = (idx) => {
@@ -115,7 +116,7 @@ export default class WriteStore {
             };
             if (e.target.files[0]) {
                 reader.readAsDataURL(e.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
-                this.done[idx].profile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
+                this.done[idx].comp_photoList = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
             }
             this.handelAddDone();
         }
@@ -123,43 +124,52 @@ export default class WriteStore {
     @action
     handleRemoveDone = (idx) => {
         this.done[idx].imgBase64 = "";
-        this.done[idx].profile = null;
+        this.done[idx].comp_photoList = null;
     };
 
     //주 재료 추가
     @action
     handelAddMain = () => {
-        this.main_ingre.push({ main_ingre: "", main_quantity: "" });
+        if (this.main_ingre.length < 20)
+            this.main_ingre.push({ sort: "주재료", ingre_name: "", quantity: "" });
+        else
+            alert("주재료 추가는 최대 20개까지 가능합니다.");
     };
     @action
     handelAddSub = () => {
-        this.sub_ingre.push({ sub_ingre: "", sub_quantity: "" });
+        if (this.sub_ingre.length < 20)
+            this.sub_ingre.push({ sort: "부재료", ingre_name: "", quantity: "" });
+        else
+            alert("부재료 추가는 최대 20개까지 가능합니다.");
     };
     @action
     handelAddStep = () => {
-        this.step.push({ ex: "", profile: null, imgBase64: "" });
+        if (this.step.length < 30)
+            this.step.push({ content: "", photofile: null, imgBase64: "" });
+        else
+            alert("순서 추가는 최대 30개까지 가능합니다.");
     };
     //재료 입력
     @action
     handleChange_main_i = (e, idx) => {
-        this.main_ingre[idx].main_ingre = e.target.value;
+        this.main_ingre[idx].ingre_name = e.target.value;
     };
     @action
     handleChange_sub_i = (e, idx) => {
-        this.sub_ingre[idx].sub_ingre = e.target.value;
+        this.sub_ingre[idx].ingre_name = e.target.value;
     };
     //용량 입력
     @action
     handleChange_main_q = (e, idx) => {
-        this.main_ingre[idx].main_quantity = e.target.value;
+        this.main_ingre[idx].quantity = e.target.value;
     };
     @action
     handleChange_sub_q = (e, idx) => {
-        this.sub_ingre[idx].sub_quantity = e.target.value;
+        this.sub_ingre[idx].quantity = e.target.value;
     };
     @action
     onChangeStep = (e, idx) => {
-        this.step[idx].ex = e.target.value;
+        this.step[idx].content = e.target.value;
     };
     //삭제
     handelDelete_ingre = (idx) => {
@@ -189,21 +199,55 @@ export default class WriteStore {
             };
             if (e.target.files[0]) {
                 reader.readAsDataURL(e.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
-                this.step[idx].profile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
+                this.step[idx].photofile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
             }
         }
     };
+
+
     @action
     handleRemove = (idx) => {
         this.step[idx].imgBase64 = "";
-        this.step[idx].profile = null;
+        this.step[idx].photofile = null;
     };
 
-    @computed
-    get insertRecipe() {
+    //대표사진
+    @action
+    handleChangeRe = (e) => {
+        let reader = new FileReader();
+        let fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp)$/;
+
+        if (!fileForm.test(e.target.value.toLowerCase()) && e.target.value !== "") {
+            alert("이미지 파일만 업로드하세요!");
+            e.target.value = "";
+        } else if (e.target.value === "") {
+        } else {
+            reader.onloadend = (e) => {
+                // 2. 읽기가 완료되면 아래코드가 실행
+                const base64 = reader.result; //reader.result는 이미지를 인코딩(base64 ->이미지를 text인코딩)한 결괏값이 나온다.
+                if (base64) {
+                    this.represent.imgBase64 = base64.toString(); // 파일 base64 상태 업데이트
+                }
+            };
+            if (e.target.files[0]) {
+                reader.readAsDataURL(e.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
+                this.represent.repre_photofile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
+            }
+        }
+    };
+
+    @action
+    handleRemoveRe = () => {
+        this.represent.imgBase64 = "";
+        this.represent.repre_photofile = null;
+    };
+
+    //글쓰기
+    @action
+    insertRecipe = () => {
         let url = "http://localhost:9000/acorn/recipe/regist";
         let submit = new FormData();
-        //submit.append("repre_photofile",);  //대표사진(썸네일)
+        submit.append("repre_photofile", this.represent.repre_photofile);  //대표사진(썸네일)
         submit.append("subject", this.subject);
         submit.append("summary", this.summary);
         submit.append("food_cate", this.foodcatevalue);
@@ -211,35 +255,116 @@ export default class WriteStore {
         submit.append("time", this.timevalue);
         submit.append("difficult", this.difftvalue);
         submit.append("tip", this.tip);
+        submit.append("ingreList", this.main_ingre);
+        submit.append("email", this.root.info.userEmail);
 
-        // //재료
-        // for (let i = 0; i < ; i++) {
-        //     submit.append("ingreList[" + i + "].sort",);    //주재료인지 부재료인지
-        //     submit.append("ingreList[" + i + "].ingre_name",);  //재료명
-        //     submit.append("ingreList[" + i + "].quantity",);    //용량
-        // }
-        // //순서
-        // for (let i = 0; i < ; i++) {
-        //     submit.append("orderList[" + i + "].order_num", i + 1); //순서
-        //     submit.append("orderList[" + i + "].content",);    //설명
-        //     submit.append("orderList[" + i + "].photofile",);  //사진
-        // }
-        // //완성사진
-        // for (let i = 0; i < ; i++) {
-        //     submit.append("comp_photoList[" + i + "]",);
-        // }
-        axios({
-            method: "post",
-            url: url,
-            data: submit
-        })
-            .then((res) => {
 
+        let check_main = false; //주재료
+        let check_sub = false; //부재료
+        let check_step = false; //요리순서
+        let check_done = false; //완성사진
+        //주재료
+        for (let i = 0; i < this.main_ingre.length; i++) {
+            if (this.main_ingre[i].ingre_name === "" || this.main_ingre[i].quantity === "") {
+                check_main = true;
+                break;
+            }
+            submit.append("ingreList[" + i + "].sort", this.main_ingre[i].sort);    //주재료인지 부재료인지
+            submit.append("ingreList[" + i + "].ingre_name", this.main_ingre[i].ingre_name);  //재료명
+            submit.append("ingreList[" + i + "].quantity", this.main_ingre[i].quantity);    //용량
+
+        }
+        let j = 0;
+        //부재료
+        for (let i = this.main_ingre.length; i < this.main_ingre.length + this.sub_ingre.length; i++) {
+            if (this.sub_ingre[j].ingre_name === "" || this.sub_ingre[j].quantity === "") {
+                check_sub = true;
+                break;
+            }
+
+            submit.append("ingreList[" + i + "].sort", this.sub_ingre[j].sort);    //주재료인지 부재료인지
+            submit.append("ingreList[" + i + "].ingre_name", this.sub_ingre[j].ingre_name);  //재료명
+            submit.append("ingreList[" + i + "].quantity", this.sub_ingre[j].quantity);    //용량
+            j++;
+        }
+
+        //순서
+        for (let i = 0; i < this.step.length; i++) {
+            if (this.step[i].content === "") {
+                check_step = true;
+                break;
+            }
+
+            submit.append("orderList[" + i + "].order_num", i + 1); //순서
+            submit.append("orderList[" + i + "].content", this.step[i].content);    //설명
+            submit.append("orderList[" + i + "].photofile", this.step[i].photofile);  //사진
+        }
+        //완성사진
+        let p = this.done.length;
+        if (p > 1)
+            p--;
+        for (let i = 0; i < p; i++) {
+            if (this.done[i].comp_photoList === null) {
+                check_done = true;
+                break;
+            }
+
+            submit.append("comp_photoList[" + i + "]", this.done[i].comp_photoList);
+        }
+
+        if (this.represent.repre_photofile === null) {
+            alert("대표사진을 등록해주세요");
+        } else if (this.subject === "") {
+            alert("제목을 입력해주세요");
+        } else if (this.summary === "") {
+            alert("내용을 입력해주세요");
+        } else if (this.foodcatevalue === "") {
+            alert("카테고리를 선택해주세요");
+        } else if (this.portionvalue === "" || this.timevalue === "" || this.difftvalue === "") {
+            alert("요리정보를 선택해주세요")
+        } else if (check_main) {
+            alert("주재료 정보를 입력해주세요");
+        } else if (check_sub) {
+            alert("부재료 정보를 입력해주세요");
+        } else if (check_step) {
+            alert("요리순서 정보를 입력해주세요");
+        } else if (check_done) {
+            alert("완성사진을 한 개 이상 등록해주세요");
+        } else if (this.tip === "") {
+            alert("요리 Tip을 입력해주세요");
+        } else {
+
+            axios({
+                method: "post",
+                url: url,
+                data: submit
             })
-            .catch((err) => {
-                console.log("레시피 업로드 오류:" + err);
-            })
+                .then((res) => {
+
+                })
+                .catch((err) => {
+                    console.log("레시피 업로드 오류:" + err);
+                })
+        }
     }
+
+    //유효성
+    @action
+    handleReset = () => {
+        this.subject = "";
+        this.summary = "";
+        this.foodcatevalue = "";
+        this.portionvalue = "";
+        this.timevalue = "";
+        this.difftvalue = "";
+        this.tip = "";
+
+        this.main_ingre = [{ sort: '주재료', ingre_name: "", quantity: "" }];
+        this.sub_ingre = [{ sort: '부재료', ingre_name: "", quantity: "" }];
+        this.step = [{ content: "", photofile: null, imgBase64: "" }];
+        this.done = [{ comp_photoList: null, imgBase64: "" }];
+        this.represent = { repre_photofile: null, imgBase64: "" };
+    };
 
 }
 

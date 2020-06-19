@@ -37,7 +37,7 @@ class mypage extends Component {
   componentWillMount = () => {
     this.props.handleReset();
     if (!this.props.login_state) {
-      this.props.history.replace("/");
+      this.props.history.push("/login");
     }
   };
 
@@ -89,8 +89,8 @@ class mypage extends Component {
                 }}
               />
             ) : (
-              <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
-            )}
+                <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
+              )}
           </div>
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
         </center>
@@ -200,8 +200,8 @@ class mypage extends Component {
                   new_password_re === ""
                     ? false
                     : !available_pass_re
-                    ? true
-                    : false
+                      ? true
+                      : false
                 }
                 helperText={
                   available_pass_re || new_password_re === ""

@@ -46,7 +46,7 @@ import { Add, Close, StorefrontSharp } from "@material-ui/icons";
 class chefupdate extends Component {
   componentWillMount = () => {
     if (!this.props.login_state || !this.props.pass_check) {
-      this.props.history.replace("/");
+      this.props.history.push("/login");
     }
     this.props.reloadimg();
   };

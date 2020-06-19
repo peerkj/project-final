@@ -28,7 +28,6 @@ import { inject, observer } from "mobx-react";
   handleTimeChange: stores.write.handleTimeChange,
   handleDiffChange: stores.write.handleDiffChange,
   handleTipChange: stores.write.handleTipChange,
-  click: stores.write.click,
   //주,부 재료 추가
   handelAddMain: stores.write.handelAddMain,
   main_ingre: stores.write.main_ingre,
@@ -59,13 +58,29 @@ import { inject, observer } from "mobx-react";
   handleChangeDone: stores.write.handleChangeDone,
   handleRemoveDone: stores.write.handleRemoveDone,
 
+  //
+  represent: stores.write.represent,
+  handleChangeRe: stores.write.handleChangeRe,
+  handleRemoveRe: stores.write.handleRemoveRe,
+  //
+  insertRecipe: stores.write.insertRecipe,
+
+  handleReset: stores.write.handleReset,
+  login_state: stores.info.login_state,
+
 }))
 
 @observer
 class write extends Component {
+  componentWillMount = () => {
+    this.props.handleReset();
+    if (!this.props.login_state) {
+      this.props.history.push("/login");
+    }
+  };
+
   render() {
     const {
-      click,
       subject,
       summary,
       tip,
@@ -102,6 +117,13 @@ class write extends Component {
       handelDelete_step,
       changeStep,
       onChangeStep,
+
+      //
+      represent,
+      handleChangeRe,
+      handleRemoveRe,
+      //
+      insertRecipe,
     } = this.props;
 
     const useStyles = makeStyles((theme) => ({
@@ -126,7 +148,7 @@ class write extends Component {
       return (
         <div key={idx}>
           <TextField
-            value={i.main_ingre}
+            value={i.ingre_name}
             onChange={(e) => {
               handleChange_main_i(e, idx);
             }}
@@ -138,7 +160,7 @@ class write extends Component {
             className="inputingre"
           />
           <TextField
-            value={i.main_quantity}
+            value={i.quantity}
             onChange={(e) => {
               handleChange_main_q(e, idx);
             }}
@@ -166,7 +188,7 @@ class write extends Component {
       return (
         <div key={idx}>
           <TextField
-            value={i.sub_ingre}
+            value={i.ingre_name}
             onChange={(e) => {
               handleChange_sub_i(e, idx);
             }}
@@ -178,7 +200,7 @@ class write extends Component {
             className="inputingre"
           />
           <TextField
-            value={i.sub_quantity}
+            value={i.quantity}
             onChange={(e) => {
               handleChange_sub_q(e, idx);
             }}
@@ -225,7 +247,7 @@ class write extends Component {
               variant="filled"
               style={{ width: "235px" }}
               className="input"
-              value={i.ex}
+              value={i.content}
               onChange={(e) => {
                 onChangeStep(e, idx);
               }}
@@ -315,20 +337,37 @@ class write extends Component {
 
     return (
       <div>
-        <button onClick={click}>버튼</button>
+
 
         <div id="writebody">
           <div>
             <div className="all_title">대표 사진</div>
             <br />
-            <img
-              src="img/add_icon.png"
-              alt=""
-              style={{
-                width: "95px",
-                height: "95px",
-                marginLeft: "5px",
-              }}
+            <div style={{ width: "100px" }}>
+              <label htmlFor="repre">
+                {represent.imgBase64 ? (
+                  <img className="cookImg" src={represent.imgBase64} alt="" />
+                ) : (
+                    <img className="cookImg" src="img/add_icon.png" alt="" />
+                  )}
+                {represent.imgBase64 ? (
+                  <Close
+                    onClick={() => {
+                      handleRemoveRe();
+                    }}
+                    id="profileImg_delete"
+                  />
+                ) : (
+                    ""
+                  )}
+              </label>
+            </div>
+            <input
+              onChange={handleChangeRe}
+              style={{ display: "none" }}
+              accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
+              id="repre"
+              type="file"
             />
           </div>
           <div>
@@ -372,17 +411,17 @@ class write extends Component {
 
               onChange={handleFoodcateChange}
             >
-              <MenuItem value={"구이"}>구이</MenuItem>
-              <MenuItem value={"국/탕/찌개"}>국/탕/찌개</MenuItem>
-              <MenuItem value={"디저트"}>디저트</MenuItem>
-              <MenuItem value={"면"}>면</MenuItem>
-              <MenuItem value={"무침"}>무침</MenuItem>
-              <MenuItem value={"밥/죽/떡"}>밥/죽/떡</MenuItem>
-              <MenuItem value={"볶음"}>볶음</MenuItem>
-              <MenuItem value={"양념/소스"}>양념/소스</MenuItem>
-              <MenuItem value={"조림/찜"}>조림/찜</MenuItem>
-              <MenuItem value={"튀김/부침"}>튀김/부침</MenuItem>
-              <MenuItem value={"기타"}>기타</MenuItem>
+              <MenuItem value="구이">구이</MenuItem>
+              <MenuItem value="국/탕/찌개">국/탕/찌개</MenuItem>
+              <MenuItem value="디저트">디저트</MenuItem>
+              <MenuItem value="면">면</MenuItem>
+              <MenuItem value="무침">무침</MenuItem>
+              <MenuItem value="밥/죽/떡">밥/죽/떡</MenuItem>
+              <MenuItem value="볶음">볶음</MenuItem>
+              <MenuItem value="양념/소스">양념/소스</MenuItem>
+              <MenuItem value="조림/찜">조림/찜</MenuItem>
+              <MenuItem value="튀김/부침">튀김/부침</MenuItem>
+              <MenuItem value="기타">기타</MenuItem>
             </Select>
           </FormControl>
           <br />
@@ -398,11 +437,11 @@ class write extends Component {
               className="selectwrite"
               onChange={handlePortionChange}
             >
-              <MenuItem value={1}>1인분</MenuItem>
-              <MenuItem value={2}>2인분</MenuItem>
-              <MenuItem value={3}>3인분</MenuItem>
-              <MenuItem value={4}>4인분</MenuItem>
-              <MenuItem value={5}>5인분 이상</MenuItem>
+              <MenuItem value="1인분">1인분</MenuItem>
+              <MenuItem value="2인분">2인분</MenuItem>
+              <MenuItem value="3인분">3인분</MenuItem>
+              <MenuItem value="4인분">4인분</MenuItem>
+              <MenuItem value="5인분 이상">5인분 이상</MenuItem>
             </Select>
           </FormControl>
           <FormControl
@@ -418,11 +457,11 @@ class write extends Component {
               className="selectwrite"
               onChange={handleTimeChange}
             >
-              <MenuItem value={15}>15분 이내</MenuItem>
-              <MenuItem value={30}>30분 이내</MenuItem>
-              <MenuItem value={60}>60분 이내</MenuItem>
-              <MenuItem value={90}>90분 이내</MenuItem>
-              <MenuItem value={120}>2시간 이상</MenuItem>
+              <MenuItem value="15분 이내">15분 이내</MenuItem>
+              <MenuItem value="30분 이내">30분 이내</MenuItem>
+              <MenuItem value="60분 이내">60분 이내</MenuItem>
+              <MenuItem value="90분 이내">90분 이내</MenuItem>
+              <MenuItem value="2시간 이상">2시간 이상</MenuItem>
             </Select>
           </FormControl>
           <FormControl
@@ -438,11 +477,11 @@ class write extends Component {
               className="selectwrite"
               onChange={handleDiffChange}
             >
-              <MenuItem value={"every"}>아무나</MenuItem>
-              <MenuItem value={"easy"}>초급</MenuItem>
-              <MenuItem value={"normal"}>중급</MenuItem>
-              <MenuItem value={"diff"}>고급</MenuItem>
-              <MenuItem value={"chef"}>요리사</MenuItem>
+              <MenuItem value="아무나">아무나</MenuItem>
+              <MenuItem value="초급">초급</MenuItem>
+              <MenuItem value="중급">중급</MenuItem>
+              <MenuItem value="고급">고급</MenuItem>
+              <MenuItem value="요리사">요리사</MenuItem>
             </Select>
           </FormControl>
           <br />
@@ -508,6 +547,7 @@ class write extends Component {
             <br />
             <br />
             <Button
+              onClick={insertRecipe}
               variant="outlined"
               size="small"
               style={{
