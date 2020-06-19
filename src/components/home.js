@@ -190,9 +190,6 @@ const Home = ({
               ></Badge>
             </div>
           </DropTarget>
-          <button type="button" onClick={handleRecipe}>
-            추천레시피보기
-          </button>
           <button type="button" onClick={handleAddOpen}>
             추가
           </button>

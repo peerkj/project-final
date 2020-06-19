@@ -222,6 +222,7 @@ export default class JoinStore {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
+          alert("가입을 축하합니다!!");
           window.location.replace("/login");
         })
         .catch((err) => {
