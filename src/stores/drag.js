@@ -22,11 +22,11 @@ export default class DragStore {
   //모달 open
   @action
   r_open = () => {
-    this.refir = "/img/refgif.gif";
+    this.refir = "/img/refgif2.gif";
     setTimeout(() => {
       this.refir_style = "refopen";
       this.handle_style = "open";
-    }, 5000);
+    }, 2000);
 
   }
   //모달 close
@@ -77,20 +77,10 @@ export default class DragStore {
     this.stopPot();
     this.pot = "/img/pot/openpot.png";
     setTimeout(() => {
-      this.pot = this.pot_[2];
+      this.pot = "img/pot/potgif.gif";
     }, 350);
-    this.pot = "img/pot/potgif.gif";
-  };
 
-  // @action
-  // changePot = () => {
-  //   let i = 1;
-  //   this.pot_timer = setInterval(() => {
-  //     this.pot = this.pot_[i];
-  //     i++;
-  //     if (i === 3) i = 0;
-  //   }, 500);
-  // };
+  };
 
   @action
   stopPot = () => {

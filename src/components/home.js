@@ -92,14 +92,16 @@ const Home = ({
 				targetKey="foo"
 				dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
 			>
-				<img src="/img/orange.png" alt="" />
-				<br />
-				<b>{my.refrig_name}</b>
+				<img src="/img/pot/dish.png" alt="" width="100px"></img>
+				<span style={{
+					magintop: " -100px"
+				}}>{my.refrig_name}</span>
 				<Close
 					id="profileImg_delete"
-					onClick={() => {
-						refri_delete(my.refrig_num);
-					}}
+					onClick={
+						() => {
+							refri_delete(my.refrig_num);
+						}}
 				/>
 			</DragDropContainer>
 		);
@@ -138,13 +140,11 @@ const Home = ({
 				open={open}
 				onClose={handleClose}
 				TransitionComponent={Transition}
-				style={{ backgroundImage: "url(/img/refrigerator.png)" }}
 			>
-				<AppBar className={classes.appBar}>
-					<Toolbar>
+				<AppBar className={classes.appBar} style={{ height: "50px", color: "#000000" }}>
+					<Toolbar >
 						<IconButton
 							edge="start"
-							color="inherit"
 							onClick={handleClose}
 							aria-label="close"
 						>
@@ -154,45 +154,44 @@ const Home = ({
 				</AppBar>
 				<div>
 					<br />
-					<br />
-					{list}
-
 					<DropTarget targetKey="foo" onHit={dropped}>
 						<div>
 							<center>
-								<img className={refir_style} src={refir} alt="" width="374"
-									style={{ marginLeft: "-6px" }} />
-								<img className={handle_style} src="img/refview.png" alt="" width="330" />
-								<Button
-									onClick={handleRecipe}
-									size="small"
-									startIcon={<ThumbUp />}
-									variant="outlined"
-									className={handle_style}
-								>
-									추천 레시피 보기
+								<div className={handle_style}>
+									<Button
+										onClick={handleRecipe}
+										size="small"
+										startIcon={<ThumbUp />}
+										variant="outlined"
+									>
+										추천 레시피 보기
 								</Button>
-								&ensp;
-								<Button
-									variant="outlined"
-									size="small"
-									startIcon={<AddCircle />}
-									onClick={handleAddOpen}
-									className={handle_style}
-								>재료 추가</Button>
+								</div>
+								<img className={refir_style} src={refir} alt="" width="540"
+									style={{ marginLeft: "-80px" }} />
+								<div className={handle_style}>
+									<img src="img/refview.png" alt="" width="330" />
+									{list}
+									<br />
+									<div onClick={handleAddOpen}>
+										<AddCircle style={{ fontSize: "10pt" }} />
+										<span>추가</span>
+									</div>
+								</div>
 							</center>
 						</div>
-						<div>
+						<br />
+						<div className={handle_style}>
 							<center>
+								<span>재료를 드래그하여 냄비에 넣어 주세요.</span>
+								<br />
 								<img
 									style={{
-										width: "150px",
-										marginTop: "60px"
+										width: "150px"
 									}}
 									src={pot}
 									alt=""
 									onClick={clickPot}
-									className={handle_style}
 								/>
 							</center>
 						</div>
