@@ -68,6 +68,7 @@ import { inject, observer } from "mobx-react";
   handleReset: stores.write.handleReset,
   login_state: stores.info.login_state,
 
+
 }))
 
 @observer
@@ -124,6 +125,7 @@ class write extends Component {
       handleRemoveRe,
       //
       insertRecipe,
+
     } = this.props;
 
     const useStyles = makeStyles((theme) => ({
