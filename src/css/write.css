@@ -6,11 +6,6 @@ body {
   font-size: small;
 }
 
-.first_title,
-.first_input {
-  display: inline;
-}
-
 .inputwriteform {
   width: 200px;
 }
@@ -30,10 +25,11 @@ body {
   display: inline;
 }
 .cookImg {
-  width: 95px;
-  height: 95px;
-  margin-left: 5px;
+  width: 110px;
+  height: 110px;
+  margin-left: 20px;
   display: inline;
+  margin-top: 30px;
 }
 #profileImg_delete {
   cursor: pointer;
@@ -42,4 +38,9 @@ body {
   zindex: 2;
   top: -70px;
   left: -10px;
+}
+
+.all_title{
+  position: absolute;
+  margin-left: 9px;
 }

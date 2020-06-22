@@ -339,13 +339,9 @@ class write extends Component {
 
     return (
       <div>
-
-
         <div id="writebody">
           <div>
-            <div className="all_title">대표 사진</div>
-            <br />
-            <div style={{ width: "100px" }}>
+            <div style={{ width: "150px", float: "right", }}>
               <label htmlFor="repre">
                 {represent.imgBase64 ? (
                   <img className="cookImg" src={represent.imgBase64} alt="" />
@@ -357,12 +353,14 @@ class write extends Component {
                     onClick={() => {
                       handleRemoveRe();
                     }}
-                    id="profileImg_delete"
+                    style={{ marginLeft: "100px" }}
                   />
                 ) : (
                     ""
                   )}
               </label>
+              <br />
+              <span style={{ marginLeft: "48px" }}>대표 사진</span>
             </div>
             <input
               onChange={handleChangeRe}
@@ -373,28 +371,25 @@ class write extends Component {
             />
           </div>
           <div>
-            <div className="first_title">레시피 제목</div>
-            <div className="first_input">
+            <div>레시피 제목</div>
+            <div>
               <TextField
                 onChange={handleSubjectChange}
                 value={subject}
                 className="inputwriteform"
                 size="small"
                 variant="outlined"
-                style={{ marginLeft: "10px" }}
               />
             </div>
             <br />
-            <br />
-            <div className="first_title">요리 소개</div>
-            <div className="first_input">
+            <div>요리 소개</div>
+            <div>
               <TextField
                 onChange={handleSummaryChange}
                 value={summary}
                 className="inputwriteform"
                 size="small"
                 variant="outlined"
-                style={{ marginLeft: "21px" }}
               />
             </div>
           </div>
