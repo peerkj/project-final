@@ -8,6 +8,7 @@ export default class JoinStore {
   @observable nickname = localStorage.getItem("nickname");
   @observable hp = localStorage.getItem("hp");
   @observable profile_name = localStorage.getItem("profile_name");
+
   constructor(root) {
     this.root = root;
   }
