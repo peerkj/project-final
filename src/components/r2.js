@@ -1,45 +1,55 @@
-import React, { useEffect, useState, useContext } from "react";
-// ...
+import React, { useState, useEffect } from "react";
+import useIntersect from "./useIntersect";
+import { inject, observer } from "mobx-react";
+import "./styles.css";
 
-function ProductPage() {
-  const [target, setTarget] = useState(null);
-  // ...
+const fakeFetch = (delay = 800) => new Promise((res) => setTimeout(res, delay));
+// const ListItem = ({ number }) => (
+//   <div className="ListItem">
+//     <span>{number}</span>
+//   </div>
+// );
+const R = ({ list, state, getList, changeState, addState }) => {
+  //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
+  //   /* fake async fetch */
 
-  const _fetchProductItems = () => {
-    const productItems = apiProductItems(itemLength);
+  const ListItem = list.slice(0, state.itemCount).map((l, limit) => {
+    return <div className="ListItem">{l.rec_num}</div>;
+  });
 
-    if (!productItems.length) {
-      actions.isLoaded(dispatch)(false);
-      return;
-    }
-
-    // ...
+  const fetchItems = async () => {
+    changeState();
+    getList();
+    await fakeFetch();
+    addState();
   };
+  /* initial fetch */
 
-  useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(_onIntersect, { threshold: 1 });
-      observer.observe(target);
-    }
+  const [_, setRef] = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    await fetchItems();
+    observer.observe(entry.target);
+  }, {});
 
-    return () => observer && observer.disconnect();
-  }, [target]);
-
-  const _onIntersect = ([entry]) => {
-    if (entry.isIntersecting) {
-      _fetchProductItems();
-    }
-  };
-
-  // ...
+  //if (state1.itemCount) return null;
 
   return (
-    <>
-      // ...
-      {state.isLoaded && <div ref={setTarget}>loading</div>}
-    </>
+    <div className="App">
+      {/* {[...Array(state.itemCount)].map((_, i) => {
+        return <ListItem key={i} number={i} />;
+      })} */}
+      {ListItem}
+      <div ref={setRef} className="Loading">
+        {state.isLoading && "Loading..."}
+      </div>
+    </div>
   );
-}
+};
 
-export default ProductPage;
+export default inject(({ recipe }) => ({
+  list: recipe.list,
+  getList: recipe.getList,
+  state: recipe.state,
+  changeState: recipe.changeState,
+  addState: recipe.addState,
+}))(observer(R));
