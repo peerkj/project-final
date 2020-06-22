@@ -100,7 +100,7 @@ export default class JoinStore {
     let reader = new FileReader();
     let fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp)$/;
     console.log("변경");
-    if (!fileForm.test(e.target.value.toLowerCase())) {
+    if (!fileForm.test(e.target.value.toLowerCase()) && e.target.value !== "") {
       alert("이미지 파일만 업로드하세요!!!!!");
       e.target.value = "";
     } else {
@@ -222,6 +222,7 @@ export default class JoinStore {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
+          alert("가입을 축하합니다!!");
           window.location.replace("/login");
         })
         .catch((err) => {

@@ -1,28 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 
-body{
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: 300;
-	font-size: small;
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 300;
+  font-size: small;
 }
 
-.first_title, .first_input{
-	display: inline;
+.first_title,
+.first_input {
+  display: inline;
 }
 
-.inputwriteform{	
-	width: 200px;
+.inputwriteform {
+  width: 200px;
+}
+.selectcate{
+  width: 140px;
+}
+.selectwrite {
+  width: 100px;
 }
 
-.selectwrite{
-	width: 100px;
+.inputingre {
+  width: 150px;
 }
 
-.inputingre{
-	width: 150px;
+.subtext {
+  font-weight: 200;
+  display: inline;
 }
-
-.subtext{
-	font-weight: 200;
-	display: inline;
+.cookImg {
+  width: 95px;
+  height: 95px;
+  margin-left: 5px;
+  display: inline;
+}
+#profileImg_delete {
+  cursor: pointer;
+  display: inline;
+  position: relative;
+  zindex: 2;
+  top: -70px;
+  left: -10px;
 }

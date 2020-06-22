@@ -15,6 +15,7 @@ export default class DragStore {
   @observable handle_style = "close"; // 냄비,버튼,...
   @observable refir_style = "refclose";
   @observable binpot = false;
+  @observable error = "";
 
   constructor(root) {
     this.root = root;
@@ -202,7 +203,7 @@ export default class DragStore {
   };
 
   @action
-  handleCook = () => {
+  handleRecipe = () => {
     let url = "http://localhost:9000/acorn/refri/search";
     let food = new FormData();
     if (this.e_store.length === 0) {
