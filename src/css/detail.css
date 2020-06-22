@@ -25,3 +25,23 @@
     height: 80px;
     text-align: center;
 }
+
+.stepnum{
+    width: 30px;
+    height: 30px;
+    border:1px solid mediumblue;
+    border-radius: 30px;
+    text-align: center;
+    line-height: 30px;
+    font-weight: bold;
+    color:white;
+    background-color: mediumblue;
+    margin: 10px;
+    float: left;
+}
+
+.stepnc::after{
+    content: "";
+    display: block;
+    clear: both;
+}
