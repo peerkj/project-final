@@ -283,6 +283,7 @@ class join extends Component {
               가입하기
             </Button>
           </center>
+          <br /><br />
         </div>
       </div>
     );

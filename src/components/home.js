@@ -1,10 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Dialog, AppBar, Toolbar, Badge, DialogContent, DialogActions, TextField, DialogTitle } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
+import { Button, Dialog, AppBar, Toolbar, Badge, DialogContent, DialogActions, TextField, DialogTitle, Slide, IconButton, InputAdornment, FormControl, InputLabel, Input } from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
-import { Close, AddCircle, ThumbUp } from "@material-ui/icons";
-import Slide from "@material-ui/core/Slide";
+import { Close, AddCircle, ThumbUp, RestaurantMenu, DeleteOutline, Search } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import "../css/home.css";
 
@@ -20,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
 		height: "40px",
 		minWidth: "40px",
 		borderRadius: "40px",
+	},
+	margin: {
+		margin: theme.spacing(1),
 	},
 }));
 
@@ -60,7 +61,10 @@ const Home = ({
 	handle_style,
 	r_open,
 	r_close,
-	refir_style
+	refir_style,
+	binpot,
+	handleKeyPress,
+	//handleSearchRecipe
 }) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
@@ -74,7 +78,6 @@ const Home = ({
 
 	const handleClose = () => {
 		setOpen(false);
-
 		r_close();
 	};
 	const dropped = (e) => {
@@ -92,9 +95,10 @@ const Home = ({
 				targetKey="foo"
 				dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
 			>
-				<img src="/img/pot/dish.png" alt="" width="100px"></img>
+				<img src="/img/pot/dish.png" alt="" width="100px"
+					style={{ marginTop: "-15px" }}></img>
 				<span style={{
-					magintop: " -100px"
+					position: "absolute", top: "28px", left: "32px"
 				}}>{my.refrig_name}</span>
 				<Close
 					id="profileImg_delete"
@@ -102,34 +106,59 @@ const Home = ({
 						() => {
 							refri_delete(my.refrig_num);
 						}}
+					style={{
+						marginLeft: "-25px"
+					}}
 				/>
 			</DragDropContainer>
 		);
 	});
 	const pot_list = e_store.map((e) => {
 		return (
-			<div key={e.dragData.key}>
-				<b>{e.dragData.food}</b>
+			<div key={e.dragData.key} style={{}}>
+				<span
+					style={{ fontSize: "10pt", fontWeight: "400" }}
+				>{e.dragData.food}</span>
 				<Close
 					id="profileImg_delete"
 					onClick={() => {
 						select_delete(e);
 					}}
+					style={{ position: "relative", top: "-1px", left: "1px", fontSize: "12pt" }}
 				/>
-				<br />
 			</div>
 		);
 	});
 
 	return (
-		<div>
+		<div width="375px">
+			<center>
+				<FormControl className={classes.margin} style={{ marginTop: "230px" }}>
+					{/* <InputLabel htmlFor="input-with-icon-adornment">재료 검색 시 예)#삼겹살</InputLabel> */}
+					<Input
+						id="input-with-icon-adornment"
+						startAdornment={
+							<InputAdornment position="start">
+								<Search />
+							</InputAdornment>
+						}
+						onKeyPress={handleKeyPress}
+					/>
+				</FormControl>
+			</center>
+			<span style={{
+				fontSize: "12pt",
+				fontWeight: "300",
+				position: "absolute",
+				top: "600px",
+				left: "170px"
+			}}>나만의 냉장고</span>
 			<img
 				src="/img/refrigerator.png"
 				style={{
-					width: "100px",
-
+					width: "200px",
 					position: "absolute",
-					left: "280px",
+					left: "210px",
 					top: "480px",
 				}}
 				onClick={handleClickOpen}
@@ -154,35 +183,40 @@ const Home = ({
 				</AppBar>
 				<div>
 					<br />
-					<DropTarget targetKey="foo" onHit={dropped}>
-						<div>
-							<center>
-								<div className={handle_style}>
-									<Button
-										onClick={handleRecipe}
-										size="small"
-										startIcon={<ThumbUp />}
-										variant="outlined"
-									>
-										추천 레시피 보기
+					<div style={{ width: "375px" }}>
+						<center>
+							<div className={handle_style}>
+								<Button
+									onClick={handleRecipe}
+									size="small"
+									startIcon={<ThumbUp />}
+									variant="outlined"
+								>
+									추천 레시피 보기
 								</Button>
+								<br /><br />
+								<div onClick={handleAddOpen}>
+									<AddCircle style={{ fontSize: "10pt" }} />
+									<span>재료 추가</span>
 								</div>
-								<img className={refir_style} src={refir} alt="" width="540"
-									style={{ marginLeft: "-80px" }} />
-								<div className={handle_style}>
-									<img src="img/refview.png" alt="" width="330" />
-									{list}
-									<br />
-									<div onClick={handleAddOpen}>
-										<AddCircle style={{ fontSize: "10pt" }} />
-										<span>추가</span>
-									</div>
-								</div>
-							</center>
-						</div>
-						<br />
+							</div>
+							<img className={refir_style} src={refir} alt="" width="540"
+								style={{ marginLeft: "-80px" }} />
+							<div className={handle_style} width="330">
+								<img src="img/refview2.png" alt="" width="330" />
+								<span style={{
+									position: "absolute",
+									top: "155px",
+									left: "0px",
+									width: "370px",
+									height: "320px"
+								}}>{list}</span>
+							</div>
+						</center>
+					</div>
+					<DropTarget targetKey="foo" onHit={dropped}>
 						<div className={handle_style}>
-							<center>
+							<center style={{ width: "375px" }}>
 								<span>재료를 드래그하여 냄비에 넣어 주세요.</span>
 								<br />
 								<img
@@ -206,6 +240,7 @@ const Home = ({
 								className={useStyles.badge}
 								badgeContent={count}
 								color="secondary"
+								style={{ top: "85px", left: "-10px" }}
 							></Badge>
 						</div>
 					</DropTarget>
@@ -213,21 +248,44 @@ const Home = ({
 				</div>
 			</Dialog>
 
-			<Dialog>
+			<Dialog open={binpot} onClose={clickPot}>
 				<DialogContent>
-					<img
-						src={pot}
-						alt=""
-						style={handle_style}
-					/>
+					<Close
+						onClick={clickPot}
+						style={{ float: "right" }} />
 					<br />
-					{pot_list}
-					<Button color="primary" variant="outlined" onClick={deleteList}>
-						냄비 비우기
-					</Button>
-					<Button color="primary" variant="outlined" onClick={handleCook}>
-						요리하기
-					</Button>
+					<center>
+						<img
+							src="img/pot/boiledpot.gif"
+							alt=""
+							width="250px"
+						/>
+						<br />
+						<div style={{
+							width: "200px",
+							height: "180px",
+							border: "1px solid #c5c5c5",
+							borderRadius: "10px",
+							marginBottom: "10px",
+							padding: "1px"
+						}}>{pot_list}</div>
+						<Button
+							size="small"
+							variant="outlined"
+							onClick={deleteList}
+							startIcon={<DeleteOutline />}
+						>
+							비우기
+						</Button>
+						&ensp;
+						<Button
+							size="small"
+							variant="outlined"
+							startIcon={<RestaurantMenu />}
+							onClick={handleCook}>
+							요리하기
+						</Button>
+					</center>
 					<br />
 				</DialogContent>
 			</Dialog>
@@ -299,6 +357,9 @@ export default inject(({ drag }) => ({
 	r_close: drag.r_close,
 	handle_style: drag.handle_style,
 	refir: drag.refir,
-	refir_style: drag.refir_style
+	refir_style: drag.refir_style,
+	binpot: drag.binpot,
+	handleKeyPress: drag.handleKeyPress,
+	//handleSearchRecipe: drag, handleSearchRecipe
 
 }))(observer(Home));

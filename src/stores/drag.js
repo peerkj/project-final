@@ -14,19 +14,29 @@ export default class DragStore {
   @observable refir = "";
   @observable handle_style = "close"; // 냄비,버튼,...
   @observable refir_style = "refclose";
+  @observable binpot = false;
 
   constructor(root) {
     this.root = root;
   }
 
+  @action
+  handleKeyPress = (e) => {
+    if (e.key === "Enter") this.handleSearchRecipe();
+  };
+
+  // @action
+  // handleSearchRecipe=()={
+  // };
+
   //모달 open
   @action
   r_open = () => {
-    this.refir = "/img/refgif2.gif";
+    // this.refir = "/img/refgif2.gif";
     setTimeout(() => {
       this.refir_style = "refopen";
       this.handle_style = "open";
-    }, 2000);
+    }, 10);
 
   }
   //모달 close
@@ -69,7 +79,7 @@ export default class DragStore {
 
   @action
   clickPot = () => {
-    this.open = !this.open;
+    this.binpot = !this.binpot;
   };
 
   @action
