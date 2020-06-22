@@ -21,6 +21,36 @@ export default class CounterStore {
     this.state.isLoading = false;
   };
 
+  @action
+  setList = () => {
+    for (let i = 0; i < this.list.length; i++) {
+      this.getInfo(this.list[i].email, i);
+    }
+  };
+
+  //정보 얻기
+  @action
+  getInfo = (email, idx) => {
+    let url = "http://localhost:9000/acorn/chef/modform?email=" + email;
+    //유효성 검사
+    axios({
+      method: "get",
+      url: url,
+      //headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((res) => {
+        this.list[idx] = {
+          ...this.list[idx],
+          nickname: res.data.nickname,
+          profile: res.data.profile,
+        };
+        console.log(this.list[idx].nickname);
+      })
+      .catch((err) => {
+        console.log("업로드 오류:" + err);
+      });
+  };
+
   //리스트
   @action
   getList = () => {
@@ -39,6 +69,7 @@ export default class CounterStore {
         } else {
           this.list = [...this.list, ...res.data];
         }
+        this.setList();
       })
       .catch((err) => {
         console.log("업로드오류:" + err);

@@ -13,8 +13,35 @@ const R = ({ list, state, getList, changeState, addState }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
 
-  const ListItem = list.slice(0, state.itemCount).map((l, limit) => {
-    return <div className="ListItem">{l.rec_num}</div>;
+  const ListItem = list.slice(0, state.itemCount).map((l) => {
+    return (
+      <div className="ListItem">
+        <div>
+          <img
+            width="35px"
+            src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
+            alt=""
+          />
+          {l.subject}
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          {l.writeday.substring(0, 10)}
+          <br />
+          {l.nickname}
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          {l.readcount}
+        </div>
+        <br />
+        <hr />
+        <div>
+          <img
+            width="100px"
+            src={`http://localhost:9000/acorn/image/recipe/${l.repre_photo}`}
+            alt=""
+          />
+        </div>
+        <br />
+      </div>
+    );
   });
 
   const fetchItems = async () => {
