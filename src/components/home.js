@@ -143,7 +143,6 @@ const Home = ({
         fullScreen
         open={open}
         onClose={handleClose}
-        TransitionComponent={Transition}
         style={{ backgroundImage: "url(/img/refrigerator.png)" }}
       >
         <AppBar className={classes.appBar}>

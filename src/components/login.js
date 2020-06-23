@@ -20,6 +20,8 @@ import "../css/login.css";
   modal_open: stores.findPass.modal_open,
   handleOpen: stores.findPass.handleOpen,
   error: stores.login.error,
+
+  handleEnter: stores.login.handleEnter,
 }))
 @observer
 class login extends Component {
@@ -31,9 +33,6 @@ class login extends Component {
     }
   };
 
-  handleSubmit = () => {
-    this.props.handleLogin(this.props.history);
-  };
 
   render() {
     const {
@@ -44,8 +43,11 @@ class login extends Component {
       available_email,
       modal_open,
       handleOpen,
+      handleLogin,
       history,
       error,
+
+      handleEnter,
     } = this.props;
 
     return (
@@ -98,6 +100,9 @@ class login extends Component {
                     autoComplete="current-password"
                     value={password}
                     onChange={handlePassChange}
+                    onKeyPress={(e) => {
+                      handleEnter(e, history);
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -105,7 +110,9 @@ class login extends Component {
             <br />
             <center>
               <Button
-                onClick={this.handleSubmit}
+                onClick={() => {
+                  handleLogin(history);
+                }}
                 variant="contained"
                 style={{ backgroundColor: "#002060", color: "#ffffff" }}
               >

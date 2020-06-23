@@ -22,6 +22,8 @@ export default class WithdrawStore {
     this.root = root;
   }
 
+
+
   @action
   reLoadState = () => {
     this.email = this.root.info.userEmail;

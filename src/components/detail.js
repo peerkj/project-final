@@ -194,7 +194,10 @@ class Detail extends Component {
                         <hr />
 
                         <b>조리순서</b><br />
-
+                        <button>기본</button>
+                        <button>이미지슬라이더</button>
+                        <button>글만</button>
+                        
                         {step}
                         <br />
                         <br />
@@ -202,7 +205,7 @@ class Detail extends Component {
                         <div>
                             <img src={`http://localhost:9000/acorn/image/recipe/${comp_img}`} alt="" />
                             <button onClick={sliderL}>&lt;</button>
-                            <button onClick={sliderP}>일시y정지</button>
+                            <button onClick={sliderP}>일시정지</button>
                             <button onClick={changeComp}>재생</button>
                             <button onClick={sliderR}>&gt;</button>
                         </div><br /><br />
