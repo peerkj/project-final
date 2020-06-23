@@ -56,7 +56,7 @@ class login extends Component {
               <AccountCircle style={{ verticalAlign: "middle" }} />
               <span style={{
                 fontSize: "medium",
-                fontWeight: "500",
+                fontWeight: "400",
                 verticalAlign: "middle"
               }}>
                 로그인
