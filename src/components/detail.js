@@ -2,6 +2,20 @@ import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import "../css/detail.css";
 import Info from "@material-ui/icons/InfoOutlined";
+import { Close } from "@material-ui/icons";
+import {
+    Button,
+    Dialog,
+    TextField,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    AppBar,
+    Toolbar,
+    IconButton,
+
+} from "@material-ui/core";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // **** 최하단에 잇던 observer 가 이렇게 위로 올라옵니다.
 @inject((stores) => ({
@@ -18,7 +32,18 @@ import Info from "@material-ui/icons/InfoOutlined";
     sliderR: stores.detail.sliderR,
     sliderL: stores.detail.sliderL,
     sliderP: stores.detail.sliderP,
+
+    //공유모달
+    modal_open: stores.detail.modal_open,
+    handleShare: stores.detail.handleShare,
+    url: stores.detail.url,
+    onCopy: stores.detail.onCopy,
+
+    //댓글모달
+    comment_open: stores.detail.comment_open,
+    handleComment: stores.detail.handleComment,
 }))
+
 
 @observer
 class Detail extends Component {
@@ -29,6 +54,8 @@ class Detail extends Component {
 
     };
     render() {
+
+
 
         const {
             all,
@@ -43,6 +70,16 @@ class Detail extends Component {
             sliderL,
             sliderP,
             changeComp,
+
+            //공유모달
+            modal_open,
+            handleShare,
+            url,
+            onCopy,
+
+            //댓글모달
+            comment_open,
+            handleComment
         } = this.props;
 
         //완성사진
@@ -121,6 +158,12 @@ class Detail extends Component {
                             <div className="ptd">{all.time}</div>
                             <div className="ptd">{all.difficult}</div>
                         </div>
+                        <div>
+                            <div><button onClick={handleShare}>공유</button></div>
+                            <div><button>스크랩</button></div>
+                            <div><button onClick={handleComment}>댓글</button></div>
+                            <div><button>좋아요</button></div>
+                        </div>
                     </div>
                     <div style={{ width: "100%", border: "1px solid black" }}>
                         재료<br />
@@ -133,6 +176,7 @@ class Detail extends Component {
                         <hr />
 
                         <b>조리순서</b><br />
+
                         {step}
                         <br />
                         <br />
@@ -140,7 +184,7 @@ class Detail extends Component {
                         <div>
                             <img src={`http://localhost:9000/acorn/image/recipe/${comp_img}`} alt="" />
                             <button onClick={sliderL}>&lt;</button>
-                            <button onClick={sliderP}>일시정지</button>
+                            <button onClick={sliderP}>일시y정지</button>
                             <button onClick={changeComp}>재생</button>
                             <button onClick={sliderR}>&gt;</button>
                         </div><br /><br />
@@ -150,6 +194,52 @@ class Detail extends Component {
 
                 </div>
                 {/* Default */}
+
+                {/* 공유모달 */}
+                <div>
+                    <Dialog
+                        open={modal_open}
+                        onClose={handleShare}
+                    >
+                        <DialogTitle id="form-dialog-title">
+                            URL 복사하기
+                            
+                            <IconButton edge="end" onClick={handleShare} aria-label="close">
+                                <Close />
+                            </IconButton>
+                        </DialogTitle>
+
+                        <DialogContent>
+                            <TextField
+                                value={url}
+                                readOnly
+                                fullWidth
+                                variant="filled"
+                                size="small"
+                            />
+                            <CopyToClipboard text={url} onCopy={onCopy}>
+                                <Button color="primary" variant="contained">복사하기</Button>
+                            </CopyToClipboard>
+                        </DialogContent>
+                    </Dialog>
+                </div>
+                {/* 공유모달 */}
+
+
+                {/* 댓글모달 */}
+                <Dialog fullScreen open={comment_open} onClose={handleComment}>
+                    <AppBar>
+                        <Toolbar>
+                            <IconButton edge="start" color="inherit" onClick={handleComment} aria-label="close">
+                                <Close />
+                            </IconButton>
+                            댓글모달
+                        </Toolbar>
+                    </AppBar>
+
+                </Dialog>
+                {/* 댓글모달 */}
+
             </div>
         );
     }

@@ -45,3 +45,9 @@
     display: block;
     clear: both;
 }
+
+.shareclosebtn{
+    width: 25px;
+    position: absolute;
+    right: 10px;
+}

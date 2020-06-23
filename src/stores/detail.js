@@ -17,10 +17,38 @@ export default class DetailStore {
 
     @observable comp_pause = null;
 
+    //공유모달
+
+    @observable modal_open = false;
+    @observable url = window.location.href;
+    @observable copied = "false";
+
+
+    //댓글모달
+    @observable comment_open = false;
+
     constructor(root) {
         this.root = root;
     }
 
+    //공유모달
+    @action
+    handleShare = () => {
+
+        this.modal_open = !this.modal_open;
+    }
+
+    @action
+    onCopy = () => {
+        this.copied = true;
+    }
+
+
+    //댓글모달
+    handleComment = () => {
+        this.comment_open = !this.comment_open;
+    }
+    //
     @action
     getRecipe = () => {
         let url = "http://localhost:9000/acorn/recipe/select?rec_num=4";
@@ -47,7 +75,6 @@ export default class DetailStore {
         let url =
             "http://localhost:9000/acorn/chef/modform?email=" + email;
 
-        //유효성 검사
         axios({
             method: "get",
             url: url,
@@ -103,5 +130,22 @@ export default class DetailStore {
         clearInterval(this.comp_pause);
     }
 
+    //좋아요체크
+    @action
+    checkJoayo = () => {
+        let url = "http://localhost:9000/acorn/connect/joayocheck";
+        let check = new FormData();
+
+        check.append("email", this.root.info.userEmail);
+        check.append("rec_num",)
+        axios({
+            method: "get",
+            url: url,
+        }).then((res) => {
+
+        }).catch((err) => {
+
+        })
+    }
 
 }
