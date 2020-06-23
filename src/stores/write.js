@@ -21,21 +21,6 @@ export default class WriteStore {
     this.root = root;
   }
 
-  @action
-  a = () => {
-    const ingre = [...this.main_ingre, ...this.sub_ingre];
-    let check = false;
-    for (let i = 0; i < ingre.length - 1; i++) {
-      for (let j = i + 1; j < ingre.length; j++) {
-        if (ingre[i].ingre_name === ingre[j].ingre_name) {
-          check = true;
-          break;
-        }
-      }
-    }
-    console.log("결과", check);
-  };
-
   //input
   @action
   handleSubjectChange = (e) => {
@@ -259,8 +244,6 @@ export default class WriteStore {
   //글쓰기
   @action
   insertRecipe = () => {
-    this.a();
-
     let url = "http://localhost:9000/acorn/recipe/regist";
     let submit = new FormData();
     submit.append("repre_photofile", this.represent.repre_photofile); //대표사진(썸네일)
@@ -274,6 +257,7 @@ export default class WriteStore {
     submit.append("ingreList", this.main_ingre);
     submit.append("email", this.root.info.userEmail);
 
+    //
     let check_main = false; //주재료
     let check_sub = false; //부재료
     let check_step = false; //요리순서
@@ -297,8 +281,8 @@ export default class WriteStore {
         this.main_ingre[i].quantity
       ); //용량
     }
-    let j = 0;
     //부재료
+    let j = 0;
     for (
       let i = this.main_ingre.length;
       i < this.main_ingre.length + this.sub_ingre.length;
@@ -365,6 +349,8 @@ export default class WriteStore {
       alert("주재료 정보를 입력해주세요");
     } else if (check_sub) {
       alert("부재료 정보를 입력해주세요");
+    } else if (this.checkIngre()) {
+      alert("중복된 재료가 있습니다");
     } else if (check_step) {
       alert("요리순서 정보를 입력해주세요");
     } else if (check_done) {
@@ -400,5 +386,21 @@ export default class WriteStore {
     this.step = [{ content: "", photofile: null, imgBase64: "" }];
     this.done = [{ comp_photoList: null, imgBase64: "" }];
     this.represent = { repre_photofile: null, imgBase64: "" };
+  };
+
+  @action
+  checkIngre = () => {
+    const ingre = [...this.main_ingre, ...this.sub_ingre];
+    let check = false;
+    for (let i = 0; i < ingre.length - 1; i++) {
+      for (let j = i + 1; j < ingre.length; j++) {
+        if (ingre[i].ingre_name === ingre[j].ingre_name) {
+          check = true;
+          break;
+        }
+      }
+    }
+
+    return check;
   };
 }
