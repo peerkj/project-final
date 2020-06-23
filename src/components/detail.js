@@ -16,6 +16,7 @@ import {
 
 } from "@material-ui/core";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import queryString from "query-string";
 
 // **** 최하단에 잇던 observer 가 이렇게 위로 올라옵니다.
 @inject((stores) => ({
@@ -42,6 +43,12 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
     //댓글모달
     comment_open: stores.detail.comment_open,
     handleComment: stores.detail.handleComment,
+
+    checkjoa:stores.detail.checkjoa,
+    Joayo:stores.detail.Joayo,
+
+    checkscr:stores.detail.checkscr,
+    Scrap:stores.detail.Scrap,
 }))
 
 
@@ -49,10 +56,11 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 class Detail extends Component {
 
     componentWillMount = () => {
-        this.props.getRecipe();
+        let query = queryString.parse(this.props.location.search);
+        window.scrollTo(0, 0);
+        this.props.getRecipe(query.recipe);
         this.props.changeComp();
-
-    };
+      };
     render() {
 
 
@@ -79,7 +87,13 @@ class Detail extends Component {
 
             //댓글모달
             comment_open,
-            handleComment
+            handleComment,
+
+            checkjoa,
+            Joayo,
+
+            checkscr,
+            Scrap,
         } = this.props;
 
         //완성사진
@@ -160,9 +174,13 @@ class Detail extends Component {
                         </div>
                         <div>
                             <div><button onClick={handleShare}>공유</button></div>
-                            <div><button>스크랩</button></div>
+                            <div><button onClick={Scrap}>{checkscr===0?"스크랩하기":"스크랩취소"}</button></div>
                             <div><button onClick={handleComment}>댓글</button></div>
-                            <div><button>좋아요</button></div>
+                            <div>
+                                <button onClick={Joayo}>
+                                {checkjoa===0?"좋아요":"좋아요취소"}
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div style={{ width: "100%", border: "1px solid black" }}>
