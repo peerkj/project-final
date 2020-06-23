@@ -68,8 +68,8 @@ export default class WithdrawStore {
   handleChangeImg = (e) => {
     let reader = new FileReader();
     let fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp)$/;
-    console.log("변경");
-    if (!fileForm.test(e.target.value.toLowerCase())) {
+
+    if (!fileForm.test(e.target.value.toLowerCase()) && e.target.value !== "") {
       alert("이미지 파일만 업로드하세요!!!!!");
       e.target.value = "";
     } else {
@@ -85,6 +85,7 @@ export default class WithdrawStore {
         this.profile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
       }
     }
+    console.log(this.imgBase64);
   };
 
   //유효성

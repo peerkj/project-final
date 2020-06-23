@@ -10,7 +10,7 @@ import Join from "./join";
 import FindId from "./findid";
 import FindPass from "./findpass";
 import Mypage from "./mypage";
-import Chefupdate from "./chefupdate";
+import Chefupdate from "./chefupdate2";
 import Withdraw from "./withdraw";
 import PassUpdate from "./passupdate";
 import Recipe from "./r2";

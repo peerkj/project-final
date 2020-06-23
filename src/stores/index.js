@@ -12,6 +12,7 @@ import InfoStore from "./info";
 import WriteStore from "./write";
 import DetailStore from "./detail";
 import RecipeStore from "./recipe";
+import CU from "./cu";
 class RootStore {
   constructor() {
     this.counter = new CounterStore(this);
@@ -23,11 +24,11 @@ class RootStore {
     this.withdraw = new WithdrawStore(this);
     this.chefupdate = new ChefupdateStore(this);
     this.drag = new DragStore(this);
-
     this.info = new InfoStore(this);
     this.write = new WriteStore(this);
     this.detail = new DetailStore(this);
     this.recipe = new RecipeStore(this);
+    this.cu = new CU(this);
   }
 }
 

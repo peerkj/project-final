@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button, Dialog, AppBar, Toolbar, Badge } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
-import { Add, Close } from "@material-ui/icons";
+import { Close } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import { inject, observer } from "mobx-react";
@@ -121,19 +121,21 @@ const Home = ({
 
   return (
     <div>
-      <div style={{
-        width: "200px",
-        overflow: "hidden",
-        position: "absolute",
-        left: "230px",
-        top: "480px",
-        cursor: "pointer"
-      }}>
+      <div
+        style={{
+          width: "200px",
+          overflow: "hidden",
+          position: "absolute",
+          left: "230px",
+          top: "480px",
+          cursor: "pointer",
+        }}
+      >
         <b onClick={handleClickOpen}>나의냉장고</b>
         <img
           src="/img/refrigerator.png"
           style={{
-            width: "100px"
+            width: "100px",
           }}
           onClick={handleClickOpen}
           alt=""
