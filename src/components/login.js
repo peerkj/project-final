@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  TextField,
-  Grid,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-} from "@material-ui/core";
+import { TextField, Grid, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 import { AccountCircle, Https, Email } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
@@ -28,6 +20,8 @@ import "../css/login.css";
   modal_open: stores.findPass.modal_open,
   handleOpen: stores.findPass.handleOpen,
   error: stores.login.error,
+
+  handleEnter: stores.login.handleEnter,
 }))
 @observer
 class login extends Component {
@@ -39,9 +33,6 @@ class login extends Component {
     }
   };
 
-  handleSubmit = () => {
-    this.props.handleLogin(this.props.history);
-  };
 
   render() {
     const {
@@ -52,34 +43,25 @@ class login extends Component {
       available_email,
       modal_open,
       handleOpen,
-
+      handleLogin,
+      history,
       error,
+
+      handleEnter,
     } = this.props;
 
     return (
       <div>
-        <div style={{ width: "290px", margin: "0 auto" }}>
+        <div style={{ width: "290px", margin: "0 auto", }}>
           <div style={{ marginTop: "200px" }}>
             <center>
               <AccountCircle style={{ verticalAlign: "middle" }} />
-              <span
-                style={{
-                  fontSize: "medium",
-                  fontWeight: "300",
-                  verticalAlign: "middle",
-                }}
-              >
+              <span style={{ fontSize: "medium", fontWeight: "300", verticalAlign: "middle" }}>
                 로그인
-              </span>
+            </span>
             </center>
-            <br />
-            <br />
-            <Grid
-              container
-              spacing={1}
-              alignItems="flex-start"
-              style={{ marginLeft: "22px" }}
-            >
+            <br /><br />
+            <Grid container spacing={1} alignItems="flex-start" style={{ marginLeft: "22px" }}>
               <Grid item style={{ padding: "10px 1px" }}>
                 <Email />
               </Grid>
@@ -103,11 +85,7 @@ class login extends Component {
             </Grid>
 
             <div>
-              <Grid
-                container
-                spacing={1}
-                style={{ marginLeft: "22px", marginTop: "3px" }}
-              >
+              <Grid container spacing={1} style={{ marginLeft: "22px", marginTop: "3px" }}>
                 <Grid item style={{ padding: "10px 1px" }}>
                   <Https />
                 </Grid>
@@ -122,6 +100,9 @@ class login extends Component {
                     autoComplete="current-password"
                     value={password}
                     onChange={handlePassChange}
+                    onKeyPress={(e) => {
+                      handleEnter(e, history);
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -129,29 +110,31 @@ class login extends Component {
             <br />
             <center>
               <Button
-                onClick={this.handleSubmit}
+                onClick={() => {
+                  handleLogin(history);
+                }}
                 variant="contained"
                 style={{ backgroundColor: "#002060", color: "#ffffff" }}
               >
                 로그인
-              </Button>
+          </Button>
               <br />
               <br />
               <span style={{ color: "#BDBDBD" }}>계정이 없으신가요?</span>
-              &nbsp;&nbsp;
-              <Link to="/join">회원가입</Link>
+          &nbsp;&nbsp;
+          <Link to="/join">회원가입</Link>
               <br />
               <Link to="/findid" style={{ textDecoration: "none" }}>
                 이메일 찾기
-              </Link>
-              &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-              <Link
+          </Link>
+          &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+          <Link
                 to="/findpass"
                 style={{ textDecoration: "none" }}
                 activeStyle={{ color: "#BDBDBD" }}
               >
                 비밀번호 찾기
-              </Link>
+          </Link>
             </center>
           </div>
         </div>

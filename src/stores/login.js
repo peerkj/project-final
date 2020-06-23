@@ -10,6 +10,11 @@ export default class loginStore {
   }
 
   @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleLogin(history);
+  };
+
+  @action
   handleReset = () => {
     this.email = "";
     this.password = "";
