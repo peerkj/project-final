@@ -33,11 +33,11 @@ export default class DragStore {
   //모달 open
   @action
   r_open = () => {
-    // this.refir = "/img/refgif2.gif";
+    this.refir = "/img/refgif2.gif";
     setTimeout(() => {
       this.refir_style = "refopen";
       this.handle_style = "open";
-    }, 10);
+    }, 2000);
 
   }
   //모달 close

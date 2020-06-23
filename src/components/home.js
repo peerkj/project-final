@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Dialog, AppBar, Toolbar, Badge, DialogContent, DialogActions, TextField, DialogTitle, Slide, IconButton, InputAdornment, FormControl, InputLabel, Input } from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 import { Close, AddCircle, ThumbUp, RestaurantMenu, DeleteOutline, Search } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import "../css/home.css";
+
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -168,7 +169,7 @@ const Home = ({
 				fullScreen
 				open={open}
 				onClose={handleClose}
-				TransitionComponent={Transition}
+			// TransitionComponent={Transition}
 			>
 				<AppBar className={classes.appBar} style={{ height: "50px", backgroundColor: "#002060" }}>
 					<Toolbar >
@@ -200,8 +201,8 @@ const Home = ({
 									<span>재료 추가</span>
 								</div>
 							</div>
-							<img className={refir_style} src={refir} alt="" width="540"
-								style={{ marginLeft: "-80px" }} />
+							<img className={refir_style} src={refir} alt="" width="530"
+								style={{ marginLeft: "-77px" }} />
 							<div className={handle_style} width="330">
 								<img src="img/refview2.png" alt="" width="330" />
 								<span style={{

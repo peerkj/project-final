@@ -94,11 +94,7 @@ class mypage extends Component {
           </div>
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
         </center>
-        <br />
-        <br />
-        <br />
-        <hr />
-        <br />
+        <hr style={{ marginTop: "50px" }} />
         <ul style={{ marginLeft: "85px", padding: "10px" }}>
           <li style={{ padding: "10px" }}>
             <Create style={{ verticalAlign: "middle" }} />
