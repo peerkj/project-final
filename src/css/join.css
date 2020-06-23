@@ -47,8 +47,9 @@ body{
   width: "120px";
 }
 
-.all_title{
+.all_titles{
   position: absolute;
   left:0;
-  margin-left: 9px;
+  font-weight: 400;
+  font-size: 12pt;
 }

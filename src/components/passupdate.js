@@ -23,40 +23,62 @@ class withdraw extends Component {
     const { handleChange, handleWithdraw } = this.props;
     return (
       <div>
-        <div>
-          <h3>탈퇴사유를 선택하세요</h3>
-          <FormControl component="fieldset">
-            <RadioGroup
-              defaultValue="reason1"
-              aria-label="reason"
-              name="reason"
-              onChange={handleChange}
-            >
-              <FormControlLabel
-                value="reason1"
-                control={<Radio />}
-                label="서비스 불만"
-              />
-              <FormControlLabel
-                value="reason2"
-                control={<Radio />}
-                label="다른 서비스 이용"
-              />
-              <FormControlLabel
-                value="reason3"
-                control={<Radio />}
-                label="홈페이지 정보 부족"
-              />
-              <FormControlLabel
-                value="reason4"
-                control={<Radio />}
-                label="기타"
-              />
-            </RadioGroup>
-            <Button onClick={this.onClick} variant="contained" color="primary">
-              회원탈퇴
-            </Button>
-          </FormControl>
+        <div style={{
+          width: "240px",
+          marginTop: "80px",
+          marginLeft: "30px",
+          border: "1px solid #e5e3e3",
+          borderRadius: "20px",
+          padding: "30px"
+        }}>
+          <center>
+            <span
+              style={{
+                fontSize: "14pt",
+                fontWeight: "500",
+              }}
+            >탈퇴 사유를 선택하세요</span>
+          </center>
+          <br />
+          <br />
+          <div style={{ width: "185px", margin: "0 auto" }}>
+            <FormControl component="fieldset">
+              <RadioGroup
+                defaultValue="reason1"
+                aria-label="reason"
+                name="reason"
+                onChange={handleChange}
+                style={{ marginLeft: "10px" }}
+              >
+                <FormControlLabel
+                  value="reason1"
+                  control={<Radio />}
+                  label="서비스 불만"
+                />
+                <FormControlLabel
+                  value="reason2"
+                  control={<Radio />}
+                  label="다른 서비스 이용"
+                />
+                <FormControlLabel
+                  value="reason3"
+                  control={<Radio />}
+                  label="홈페이지 정보 부족"
+                />
+                <FormControlLabel
+                  value="reason4"
+                  control={<Radio />}
+                  label="기타"
+                />
+              </RadioGroup>
+              <center>
+                <Button onClick={this.onClick} variant="contained"
+                  style={{ backgroundColor: "#002060", color: "#ffffff", marginTop: "40px" }}>
+                  탈퇴하기
+                </Button>
+              </center>
+            </FormControl>
+          </div>
         </div>
       </div>
     );

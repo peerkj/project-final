@@ -51,15 +51,20 @@ class login extends Component {
     return (
       <div>
         <div style={{ width: "290px", margin: "0 auto", }}>
-          <div style={{ marginTop: "200px" }}>
+          <div style={{ marginTop: "150px" }}>
             <center>
               <AccountCircle style={{ verticalAlign: "middle" }} />
-              <span style={{ fontSize: "medium", fontWeight: "300", verticalAlign: "middle" }}>
+              <span style={{
+                fontSize: "medium",
+                fontWeight: "500",
+                verticalAlign: "middle"
+              }}>
                 로그인
-            </span>
+              </span>
             </center>
             <br /><br />
-            <Grid container spacing={1} alignItems="flex-start" style={{ marginLeft: "22px" }}>
+            <Grid container spacing={1} alignItems="flex-start"
+              style={{ marginLeft: "5px" }}>
               <Grid item style={{ padding: "10px 1px" }}>
                 <Email />
               </Grid>
@@ -81,27 +86,24 @@ class login extends Component {
                 />
               </Grid>
             </Grid>
-
-            <div>
-              <Grid container spacing={1} style={{ marginLeft: "22px", marginTop: "3px" }}>
-                <Grid item style={{ padding: "10px 1px" }}>
-                  <Https />
-                </Grid>
-                <Grid item>
-                  <TextField
-                    id="outlined-password-input"
-                    name="password"
-                    variant="outlined"
-                    size="small"
-                    label="Password"
-                    type="password"
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={handlePassChange}
-                  />
-                </Grid>
+            <Grid container spacing={1} style={{ marginTop: "3px", marginLeft: "5px" }}>
+              <Grid item style={{ padding: "10px 1px" }}>
+                <Https />
               </Grid>
-            </div>
+              <Grid item>
+                <TextField
+                  id="outlined-password-input"
+                  name="password"
+                  variant="outlined"
+                  size="small"
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={handlePassChange}
+                />
+              </Grid>
+            </Grid>
             <br />
             <center>
               <Button
@@ -120,7 +122,7 @@ class login extends Component {
               <Link to="/findid" style={{ textDecoration: "none" }}>
                 이메일 찾기
           </Link>
-          &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+          &ensp;|&ensp;
           <Link
                 to="/findpass"
                 style={{ textDecoration: "none" }}

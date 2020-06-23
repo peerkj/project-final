@@ -170,14 +170,14 @@ const Home = ({
 				onClose={handleClose}
 				TransitionComponent={Transition}
 			>
-				<AppBar className={classes.appBar} style={{ height: "50px", color: "#000000" }}>
+				<AppBar className={classes.appBar} style={{ height: "50px", backgroundColor: "#002060" }}>
 					<Toolbar >
 						<IconButton
 							edge="start"
 							onClick={handleClose}
 							aria-label="close"
 						>
-							<Close />
+							<Close style={{ color: "#ffffff", marginTop: "-5px" }} />
 						</IconButton>
 					</Toolbar>
 				</AppBar>

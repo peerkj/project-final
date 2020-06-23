@@ -137,7 +137,7 @@ class chefupdate extends Component {
               onChange={handleChangeImg}
             />
             <div id="divjoin">
-              <span class="all_title">E-mail</span>
+              <span class="all_titles">E-mail</span>
               <br />
               <TextField
                 aria-readonly
@@ -146,7 +146,7 @@ class chefupdate extends Component {
               />
               <br />
               <br />
-              <span class="all_title">이름</span>
+              <span class="all_titles">이름</span>
               <br />
               <TextField
                 id="standard-basic"
@@ -161,7 +161,7 @@ class chefupdate extends Component {
               />
               <br />
               <br />
-              <span class="all_title">닉네임</span>
+              <span class="all_titles">닉네임</span>
               <br />
               <TextField
                 id="standard-basic"
@@ -188,7 +188,7 @@ class chefupdate extends Component {
               />
               <br />
               <br />
-              <span class="all_title">전화 번호</span>
+              <span class="all_titles">전화 번호</span>
               <br />
               <TextField
                 id="standard-basic"

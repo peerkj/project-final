@@ -89,7 +89,7 @@ class mypage extends Component {
                 }}
               />
             ) : (
-                <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
+                <img src="img/basic_user.png" alt="" style={{ width: "150px" }} />
               )}
           </div>
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
@@ -98,7 +98,6 @@ class mypage extends Component {
         <br />
         <br />
         <hr />
-        <br />
         <br />
         <ul style={{ marginLeft: "85px", padding: "10px" }}>
           <li style={{ padding: "10px" }}>

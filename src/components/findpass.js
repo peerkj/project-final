@@ -71,18 +71,18 @@ class findid extends Component {
             height: "500px",
             margin: "0 auto",
           }}>
-          <div style={{ marginTop: "180px" }}>
+          <div style={{ marginTop: "130px" }}>
             <center>
               <Lock style={{ verticalAlign: "middle" }} />
               <span style={{
                 fontSize: "medium",
-                fontWeight: "300",
+                fontWeight: "400",
                 verticalAlign: "middle",
               }}>
                 비밀번호 찾기</span>
             </center>
           </div>
-          <div style={{ position: "absolute", top: "340px", marginLeft: "55px" }}>
+          <div style={{ marginTop: "50px", marginLeft: "55px" }}>
             이름
           <br />
             <TextField
@@ -93,6 +93,7 @@ class findid extends Component {
               helperText={
                 available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
               }
+              style={{ width: "200px" }}
             />
             <br /><br />
             <span>이메일</span>
@@ -108,6 +109,7 @@ class findid extends Component {
                   ? ""
                   : "이메일 형식으로 입력하세요"
               }
+              style={{ width: "200px" }}
             />
             <br />
             <br />
@@ -126,7 +128,7 @@ class findid extends Component {
             <Button
               onClick={handleSubmit}
               variant="contained"
-              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "25px" }}
+              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "35px" }}
               component="span"
             >
               비밀번호 찾기

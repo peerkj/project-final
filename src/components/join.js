@@ -141,7 +141,7 @@ class join extends Component {
             />
             <br />
             <div id="divjoin">
-              <span class="all_title">E-mail</span>
+              <span class="all_titles">E-mail</span>
               <br />
               <TextField
                 error={
@@ -169,7 +169,7 @@ class join extends Component {
               />
               <br />
               <br />
-              <span class="all_title">비밀번호</span>
+              <span class="all_titles">비밀번호</span>
               <br />
               <TextField
                 id="standard-password-input"
@@ -187,7 +187,7 @@ class join extends Component {
               />
               <br />
               <br />
-              <span class="all_title">비밀번호 확인</span>
+              <span class="all_titles">비밀번호 확인</span>
               <br />
               <TextField
                 onChange={handlePassCheckChange}
@@ -207,7 +207,7 @@ class join extends Component {
               />
               <br />
               <br />
-              <span class="all_title">이름</span>
+              <span class="all_titles">이름</span>
               <br />
               <TextField
                 id="standard-basic"
@@ -222,7 +222,7 @@ class join extends Component {
               />
               <br />
               <br />
-              <span class="all_title">닉네임</span>
+              <span class="all_titles">닉네임</span>
               <br />
               <TextField
                 id="standard-basic"
@@ -249,7 +249,7 @@ class join extends Component {
               />
               <br />
               <br />
-              <span class="all_title">전화 번호</span>
+              <span class="all_titles">전화 번호</span>
               <br />
               <TextField
                 id="standard-basic"

@@ -131,7 +131,7 @@ class write extends Component {
     const useStyles = makeStyles((theme) => ({
       formControl: {
         margin: theme.spacing(1),
-        minWidth: 120,
+        width: 200,
       },
       selectEmpty: {
         marginTop: theme.spacing(2),
@@ -146,9 +146,10 @@ class write extends Component {
       changeDone(e.dragData.idx, idx);
     };
 
+    //주재료 입력
     const m_i = main_ingre.map((i, idx) => {
       return (
-        <div key={idx}>
+        <div key={idx} className="inputingre_margin">
           <TextField
             value={i.ingre_name}
             onChange={(e) => {
@@ -182,13 +183,16 @@ class write extends Component {
             }}
             size="small"
             color="disabled"
+            className="inputcancle"
           />
         </div>
       );
     });
+
+    // 부재료 입력
     const s_i = sub_ingre.map((i, idx) => {
       return (
-        <div key={idx}>
+        <div key={idx} className="inputingre_margin">
           <TextField
             value={i.ingre_name}
             onChange={(e) => {
@@ -196,7 +200,7 @@ class write extends Component {
             }}
             id="outlined-helperText"
             label="재료"
-            helperText="예) 돼지고기"
+            helperText="예) 양파"
             variant="outlined"
             size="small"
             className="inputingre"
@@ -208,7 +212,7 @@ class write extends Component {
             }}
             id="outlined-helperText"
             label="용량"
-            helperText="예) 300g"
+            helperText="예) 1/2개"
             variant="outlined"
             size="small"
             className="inputingre"
@@ -222,10 +226,13 @@ class write extends Component {
             }}
             size="small"
             color="disabled"
+            className="inputcancle"
           />
         </div>
       );
     });
+
+    //요리 순서
     const step_list = step.map((i, idx) => {
       return (
         <DragDropContainer
@@ -247,32 +254,39 @@ class write extends Component {
               multiline
               rows={3}
               variant="filled"
-              style={{ width: "235px" }}
+              style={{ width: "230px" }}
               className="input"
               value={i.content}
               onChange={(e) => {
                 onChangeStep(e, idx);
               }}
             />
-            <div style={{ width: "100px" }}>
-              <label htmlFor={idx}>
-                {i.imgBase64 ? (
-                  <img className="cookImg" src={i.imgBase64} alt="" />
-                ) : (
-                    <img className="cookImg" src="img/add_icon.png" alt="" />
-                  )}
-                {i.imgBase64 ? (
-                  <Close
-                    onClick={() => {
-                      handleRemove(idx);
-                    }}
-                    id="profileImg_delete"
-                  />
-                ) : (
-                    ""
-                  )}
-              </label>
-            </div>
+            <label htmlFor={idx}>
+              {i.imgBase64 ? (
+                <img className="cookImg" src={i.imgBase64} alt="" />
+              ) : (
+                  <img className="cookImg" src="img/add_icon2.png" alt="" />
+                )}
+            </label>
+            {i.imgBase64 ? (
+              <Close
+                onClick={() => {
+                  handleRemove(idx);
+                }}
+                size="small"
+                style={{ position: "relative", left: "-21px", top: "-75px" }}
+              />
+            ) : (
+                ""
+              )}
+            <Cancel
+              onClick={() => {
+                handelDelete_step(idx);
+              }}
+              size="small"
+              color="disabled"
+              style={{ position: "absolute", top: "75px", left: "335px" }}
+            />
             <input
               onChange={(e) => {
                 handleChangeImg(e, idx);
@@ -282,17 +296,13 @@ class write extends Component {
               id={idx}
               type="file"
             />
-            <Cancel
-              onClick={() => {
-                handelDelete_step(idx);
-              }}
-              size="small"
-              color="disabled"
-            />
+
           </DropTarget>
         </DragDropContainer>
       );
     });
+
+    //완성 사진
     const done_list = done.map((i, idx) => {
       return (
         <DragDropContainer
@@ -307,12 +317,12 @@ class write extends Component {
               handleDropDone(e, idx);
             }}
           >
-            <div style={{ width: "100px" }}>
+            <div className="finishImg">
               <label htmlFor={idx + "done"}>
                 {i.imgBase64 ? (
-                  <img className="cookImg" src={i.imgBase64} alt="" />
+                  <img className="finishImg" src={i.imgBase64} alt="" />
                 ) : (
-                    <img className="cookImg" src="img/add_icon.png" alt="" />
+                    <img className="finishImg" src="img/add_icon2.png" alt="" />
                   )}
               </label>
             </div>
@@ -331,6 +341,7 @@ class write extends Component {
               }}
               size="small"
               color="disabled"
+              style={{ position: "relative", top: "-140px", left: "140px" }}
             />
           </DropTarget>
         </DragDropContainer>
@@ -341,26 +352,25 @@ class write extends Component {
       <div>
         <div id="writebody">
           <div>
-            <div style={{ width: "150px", float: "right", }}>
+            {/* 대표 사진 */}
+            <div style={{ width: "150px", float: "right", marginTop: "15px" }}>
               <label htmlFor="repre">
                 {represent.imgBase64 ? (
-                  <img className="cookImg" src={represent.imgBase64} alt="" />
+                  <img className="thumbnail" src={represent.imgBase64} alt="" />
                 ) : (
-                    <img className="cookImg" src="img/add_icon.png" alt="" />
-                  )}
-                {represent.imgBase64 ? (
-                  <Close
-                    onClick={() => {
-                      handleRemoveRe();
-                    }}
-                    style={{ marginLeft: "100px" }}
-                  />
-                ) : (
-                    ""
+                    <img className="thumbnail" src="img/add_icon3.png" alt="" />
                   )}
               </label>
-              <br />
-              <span style={{ marginLeft: "48px" }}>대표 사진</span>
+              {represent.imgBase64 ? (
+                <Close
+                  onClick={() => {
+                    handleRemoveRe();
+                  }}
+                  id="thumbnail_delete"
+                />
+              ) : (
+                  ""
+                )}
             </div>
             <input
               onChange={handleChangeRe}
@@ -369,195 +379,192 @@ class write extends Component {
               id="repre"
               type="file"
             />
-          </div>
-          <div>
-            <div>레시피 제목</div>
+            <br />
             <div>
-              <TextField
-                onChange={handleSubjectChange}
-                value={subject}
-                className="inputwriteform"
-                size="small"
-                variant="outlined"
-              />
-            </div>
-            <br />
-            <div>요리 소개</div>
-            <div>
-              <TextField
-                onChange={handleSummaryChange}
-                value={summary}
-                className="inputwriteform"
-                size="small"
-                variant="outlined"
-              />
-            </div>
-          </div>
-
-          <br />
-          <br />
-
-          <div className="all_title">카테고리</div>
-          <br />
-          <FormControl className={useStyles.formControl}>
-            <InputLabel id="demo-simple-select-label">카테고리 선택</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className="selectcate"
-
-              onChange={handleFoodcateChange}
-            >
-              <MenuItem value="구이">구이</MenuItem>
-              <MenuItem value="국/탕/찌개">국/탕/찌개</MenuItem>
-              <MenuItem value="디저트">디저트</MenuItem>
-              <MenuItem value="면">면</MenuItem>
-              <MenuItem value="무침">무침</MenuItem>
-              <MenuItem value="밥/죽/떡">밥/죽/떡</MenuItem>
-              <MenuItem value="볶음">볶음</MenuItem>
-              <MenuItem value="양념/소스">양념/소스</MenuItem>
-              <MenuItem value="조림/찜">조림/찜</MenuItem>
-              <MenuItem value="튀김/부침">튀김/부침</MenuItem>
-              <MenuItem value="기타">기타</MenuItem>
-            </Select>
-          </FormControl>
-          <br />
-          <br />
-          <br />
-          <div className="all_title">요리 정보</div>
-          <br />
-          <FormControl className={useStyles.formControl}>
-            <InputLabel id="demo-simple-select-label">인원</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className="selectwrite"
-              onChange={handlePortionChange}
-            >
-              <MenuItem value="1인분">1인분</MenuItem>
-              <MenuItem value="2인분">2인분</MenuItem>
-              <MenuItem value="3인분">3인분</MenuItem>
-              <MenuItem value="4인분">4인분</MenuItem>
-              <MenuItem value="5인분 이상">5인분 이상</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            className={useStyles.formControl}
-            style={{
-              marginLeft: "5px",
-            }}
-          >
-            <InputLabel id="demo-simple-select-label">시간</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className="selectwrite"
-              onChange={handleTimeChange}
-            >
-              <MenuItem value="15분 이내">15분 이내</MenuItem>
-              <MenuItem value="30분 이내">30분 이내</MenuItem>
-              <MenuItem value="60분 이내">60분 이내</MenuItem>
-              <MenuItem value="90분 이내">90분 이내</MenuItem>
-              <MenuItem value="2시간 이상">2시간 이상</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl
-            className={useStyles.formControl}
-            style={{
-              marginLeft: "5px",
-            }}
-          >
-            <InputLabel id="demo-simple-select-label">난이도</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              className="selectwrite"
-              onChange={handleDiffChange}
-            >
-              <MenuItem value="아무나">아무나</MenuItem>
-              <MenuItem value="초급">초급</MenuItem>
-              <MenuItem value="중급">중급</MenuItem>
-              <MenuItem value="고급">고급</MenuItem>
-              <MenuItem value="요리사">요리사</MenuItem>
-            </Select>
-          </FormControl>
-          <br />
-          <br />
-          <br />
-          <div id="writebody">
-            <br />
-            <br />
-            <br />
-
-            <div id="ingredient">
-              <div className="all_title">재료 입력</div>
-              <br />
-              <b>주재료</b>
-              <br />
-              {m_i}
-
-              <br />
-              <div id="add_ingredient" onClick={handelAddMain}>
-                <AddCircle size="small" color="primary" />
-                <div className="subtext">재료 추가</div>
-              </div>
+              <div className="all_title">레시피 제목</div>
               <div>
-                <br />
-                <b>부재료</b>
-                <br />
-                {s_i}
-                <div id="add_ingredient" onClick={handelAddSub}>
-                  <AddCircle size="small" color="primary" />
-                  <div className="subtext">재료 추가</div>
-                </div>
+                <TextField
+                  onChange={handleSubjectChange}
+                  value={subject}
+                  className="inputwriteform"
+                  size="small"
+                  variant="outlined"
+                />
+              </div>
+              <br />
+              <div className="all_title">요리 소개</div>
+              <div>
+                <TextField
+                  onChange={handleSummaryChange}
+                  value={summary}
+                  className="inputwriteform"
+                  size="small"
+                  variant="outlined"
+                />
               </div>
             </div>
-
-            <div>
-              <br />
-              <div className="all_title">요리 순서</div>
-              {step_list}
-              <div onClick={handelAddStep}>
-                <AddCircle size="small" color="primary" />
-                <div className="subtext">순서 추가</div>
-              </div>
-            </div>
             <br />
-            <div>
-              <div className="all_title">완성 사진</div>
-              <br />
-              {done_list}
-            </div>
             <br />
-
-            <div className="all_title">요리 Tip!</div>
+            <div className="all_title">카테고리</div>
+            <FormControl className={useStyles.formControl}>
+              <InputLabel id="demo-simple-select-label"></InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={handleFoodcateChange}
+                style={{ width: "160px", marginTop: "-4px" }}
+              >
+                <MenuItem value="구이">구이</MenuItem>
+                <MenuItem value="국/탕/찌개">국/탕/찌개</MenuItem>
+                <MenuItem value="디저트">디저트</MenuItem>
+                <MenuItem value="면">면</MenuItem>
+                <MenuItem value="무침">무침</MenuItem>
+                <MenuItem value="밥/죽/떡">밥/죽/떡</MenuItem>
+                <MenuItem value="볶음">볶음</MenuItem>
+                <MenuItem value="양념/소스">양념/소스</MenuItem>
+                <MenuItem value="조림/찜">조림/찜</MenuItem>
+                <MenuItem value="튀김/부침">튀김/부침</MenuItem>
+                <MenuItem value="기타">기타</MenuItem>
+              </Select>
+            </FormControl>
             <br />
-            <TextField
-              onChange={handleTipChange}
-              value={tip}
-              size="small"
-              variant="filled"
+            <br />
+            <br />
+            <div className="all2nd_title">요리 정보</div>
+            <FormControl className={useStyles.formControl}>
+              <InputLabel id="demo-simple-select-label">인원</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={handlePortionChange}
+                style={{ width: "110px" }}
+              >
+                <MenuItem value="1인분">1인분</MenuItem>
+                <MenuItem value="2인분">2인분</MenuItem>
+                <MenuItem value="3인분">3인분</MenuItem>
+                <MenuItem value="4인분">4인분</MenuItem>
+                <MenuItem value="5인분 이상">5인분 이상</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              className={useStyles.formControl}
               style={{
-                width: "300px",
+                marginLeft: "10px",
               }}
-            />
+            >
+              <InputLabel id="demo-simple-select-label">시간</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={handleTimeChange}
+                style={{ width: "110px" }}
+              >
+                <MenuItem value="15분 이내">15분 이내</MenuItem>
+                <MenuItem value="30분 이내">30분 이내</MenuItem>
+                <MenuItem value="60분 이내">60분 이내</MenuItem>
+                <MenuItem value="90분 이내">90분 이내</MenuItem>
+                <MenuItem value="2시간 이상">2시간 이상</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              className={useStyles.formControl}
+              style={{
+                marginLeft: "10px",
+              }}
+            >
+              <InputLabel id="demo-simple-select-label">난이도</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                onChange={handleDiffChange}
+                style={{ width: "110px" }}
+              >
+                <MenuItem value="아무나">아무나</MenuItem>
+                <MenuItem value="초급">초급</MenuItem>
+                <MenuItem value="중급">중급</MenuItem>
+                <MenuItem value="고급">고급</MenuItem>
+                <MenuItem value="요리사">요리사</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <hr className="line" />
+          <div id="ingredient">
+            <div className="all_title">재료 입력</div>
+            <span className="subtitle">주재료</span>
             <br />
+            {m_i}
             <br />
+            <center>
+              <div id="add_ingredient" onClick={handelAddMain}>
+                <AddCircle size="small" style={{ color: "#002060", verticalAlign: "middle" }} />
+                <div className="subtext" style={{ verticalAlign: "middle" }}>재료 추가</div>
+              </div>
+            </center>
+            <hr id="mdline" />
+            <div>
+              <br />
+              <span className="subtitle">부재료</span>
+              <br />
+              {s_i}
+              <br />
+              <center>
+                <div id="add_ingredient" onClick={handelAddSub}>
+                  <AddCircle size="small" style={{ color: "#002060", verticalAlign: "middle" }} />
+                  <div className="subtext" style={{ verticalAlign: "middle" }}>재료 추가</div>
+                </div>
+              </center>
+            </div>
+          </div>
+          <hr className="line" />
+          <div>
+            <div className="all2nd_title">요리 순서</div>
+            <div style={{ color: "#c4c4c4" }}>Tip! 드래그로 순서를 바꿀 수 있습니다</div>
+            {step_list}
+            <center>
+              <div onClick={handelAddStep} style={{ marginTop: "10px" }}>
+                <AddCircle size="small" style={{ color: "#002060", verticalAlign: "middle" }} />
+                <div className="subtext" style={{ verticalAlign: "middle" }}>순서 추가</div>
+              </div>
+            </center>
+          </div>
+          <hr className="line" />
+          <div>
+            <div className="all2nd_title">완성 사진</div>
+            <div>여러장 첨부 가능</div>
+            <div style={{ color: "#c4c4c4" }}>Tip! 드래그로 순서를 바꿀 수 있습니다</div>
+            {done_list}
+          </div>
+          <hr className="line" />
+          <div className="all2nd_title">요리 Tip!</div>
+          <br />
+          <TextField
+            onChange={handleTipChange}
+            value={tip}
+            size="small"
+            variant="filled"
+            style={{
+              width: "300px",
+            }}
+          />
+          <hr className="line" />
+          <center>
+            <Button variant="outlined" size="medium" onClick={() => { }}>
+              취소
+            </Button>
             <Button
               onClick={insertRecipe}
               variant="outlined"
-              size="small"
+              size="medium"
               style={{
                 backgroundColor: "#002060",
                 color: "#ffffff",
+                marginLeft: "5px"
               }}
             >
               글쓰기
           </Button>
-            <Button variant="outlined" size="small" onClick={() => { }}>
-              취소
-          </Button>
-          </div>
+          </center>
+          <br /><br /><br />
         </div>
       </div>
     );
