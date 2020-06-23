@@ -18,8 +18,8 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <Provider {...root}>
+    {/* *** ...root 으로 스토어 모두 자동으로 설정 */}
     <MuiThemeProvider theme={theme}>
-      {/* *** ...root 으로 스토어 모두 자동으로 설정 */}
       <Router>
         <App />
       </Router>

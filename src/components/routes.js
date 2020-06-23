@@ -10,7 +10,6 @@ import FindPass from "./findpass";
 import Mypage from "./mypage";
 import Chefupdate from "./chefupdate";
 import Withdraw from "./withdraw";
-import PassUpdate from "./passupdate";
 import Recipe from "./recipe";
 import Write from "./write";
 import Detail from "./detail";
@@ -27,7 +26,6 @@ export default () => (
     <Route exact path="/withdraw" component={Withdraw} />
     <Route exact path="/findid" component={FindId} />
     <Route exact path="/findpass" component={FindPass} />
-    <Route exact path="/passupdate" component={PassUpdate} />
     <Route exact path="/write" component={Write} />
     <Route exact path="/detail" component={Detail} />
   </Switch>
