@@ -12,6 +12,7 @@ import TestStore from "./test";
 import InfoStore from "./info";
 import WriteStore from "./write";
 import DetailStore from "./detail";
+import RecipeStore from "./recipe";
 class RootStore {
   constructor() {
     this.counter = new CounterStore(this);
@@ -27,6 +28,7 @@ class RootStore {
     this.info = new InfoStore(this);
     this.write = new WriteStore(this);
     this.detail = new DetailStore(this);
+    this.recipe = new RecipeStore(this);
   }
 }
 

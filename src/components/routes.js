@@ -13,7 +13,7 @@ import Mypage from "./mypage";
 import Chefupdate from "./chefupdate";
 import Withdraw from "./withdraw";
 import PassUpdate from "./passupdate";
-import Recipe from "./recipe";
+import Recipe from "./r2";
 import Write from "./write";
 import Detail from "./detail";
 export default () => (
