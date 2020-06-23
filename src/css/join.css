@@ -11,9 +11,10 @@ body{
   height: 120px;
   display: inline;
   position: relative;
-  zIndex: 1;
+  z-index: 1;
   top: 30px;
   cursor: pointer;
+  border-radius: 200px;
 }
 
 #profileImg_delete{

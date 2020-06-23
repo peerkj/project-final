@@ -86,6 +86,7 @@ class mypage extends Component {
                   height: "150px",
                   marginTop: "30px",
                   marginBottom: "20px",
+                  borderRadius: "150px"
                 }}
               />
             ) : (

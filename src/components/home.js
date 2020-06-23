@@ -249,7 +249,8 @@ const Home = ({
 				</div>
 			</Dialog>
 
-			<Dialog open={binpot} onClose={clickPot}>
+			<Dialog open={binpot} onClose={clickPot}
+				style={{ position: "absolute", top: "35px", left: "7px" }}>
 				<DialogContent>
 					<Close
 						onClick={clickPot}
@@ -296,7 +297,7 @@ const Home = ({
 				onClose={handleAddOpen}
 				aria-labelledby="form-dialog-title"
 			>
-				<DialogTitle id="form-dialog-title">냉장고 추가</DialogTitle>
+				<DialogTitle id="form-dialog-title">냉장고 재료 추가</DialogTitle>
 				<DialogContent>
 					<TextField
 						margin="dense"
