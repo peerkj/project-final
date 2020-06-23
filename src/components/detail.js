@@ -9,7 +9,6 @@ import Info from "@material-ui/icons/InfoOutlined";
 @inject((stores) => ({
   all: stores.detail.all,
   getRecipe: stores.detail.getRecipe,
-  comp_list: stores.detail.comp_list,
   ing_list: stores.detail.ing_list,
   step_list: stores.detail.step_list,
   nickname: stores.detail.nickname,
@@ -32,7 +31,7 @@ class Detail extends Component {
   render() {
     const {
       all,
-      comp_list,
+
       ing_list,
       step_list,
       nickname,
@@ -46,9 +45,9 @@ class Detail extends Component {
     } = this.props;
 
     //주재료
-    const main = ing_list.map((i) => {
+    const main = ing_list.map((i, idx) => {
       return (
-        <div>
+        <div key={idx}>
           {i.sort === "주재료" ? i.ingre_name : ""}
           {i.sort === "주재료" ? <Info /> : ""}&nbsp;
           {i.sort === "주재료" ? i.quantity : ""}
@@ -57,9 +56,9 @@ class Detail extends Component {
     });
 
     //부재료
-    const sub = ing_list.map((i) => {
+    const sub = ing_list.map((i, idx) => {
       return (
-        <div>
+        <div key={idx}>
           {i.sort === "부재료" ? i.ingre_name : ""}
           {i.sort === "부재료" ? <Info /> : ""}&nbsp;
           {i.sort === "부재료" ? i.quantity : ""}
@@ -70,7 +69,7 @@ class Detail extends Component {
     //조리순서
     const step = step_list.map((i, num) => {
       return (
-        <div>
+        <div key={num}>
           <div className="stepnc">
             <div className="stepnum">{num + 1}</div>
             <p style={{ float: "left" }}>
@@ -86,8 +85,6 @@ class Detail extends Component {
         </div>
       );
     });
-
-    //<img src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`} alt="" />
 
     return (
       <div>

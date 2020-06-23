@@ -20,7 +20,7 @@ class withdraw extends Component {
   };
 
   render() {
-    const { handleChange, handleWithdraw } = this.props;
+    const { handleChange } = this.props;
     return (
       <div>
         <div>

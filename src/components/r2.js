@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useIntersect from "./useIntersect";
 import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
@@ -11,13 +11,32 @@ const fakeFetch = (delay = 800) => new Promise((res) => setTimeout(res, delay));
 //     <span>{number}</span>
 //   </div>
 // );
-const R = ({ list, state, getList, changeState, addState, history }) => {
+const R = ({
+  list,
+  state,
+  getList,
+  changeState,
+  addState,
+  history,
+  updateList,
+  setView,
+}) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
 
-  const ListItem = list.slice(0, state.itemCount).map((l) => {
+  useEffect(() => {
+    updateList();
+  });
+  const ListItem = list.slice(0, state.itemCount).map((l, idx) => {
     return (
-      <Link className="ListItem" to={`/detail?recipe=${l.rec_num}`}>
+      <Link
+        key={l.rec_num}
+        className="ListItem"
+        to={`/detail?recipe=${l.rec_num}`}
+        onClick={() => {
+          setView(l.rec_num, idx);
+        }}
+      >
         <div>
           <img
             width="35px"
@@ -29,8 +48,7 @@ const R = ({ list, state, getList, changeState, addState, history }) => {
           {l.writeday.substring(0, 10)}
           <br />
           {l.nickname}
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          {l.readcount}
+          &nbsp;&nbsp;&nbsp;&nbsp; 조회수{l.readcount}
         </div>
         <br />
         <hr />
@@ -41,6 +59,8 @@ const R = ({ list, state, getList, changeState, addState, history }) => {
             alt=""
           />
         </div>
+        <br />
+        조아용{l.joayo}&nbsp;&nbsp;&nbsp;&nbsp; 스크랩수{l.scrap}
         <br />
       </Link>
     );
@@ -64,9 +84,6 @@ const R = ({ list, state, getList, changeState, addState, history }) => {
 
   return (
     <div className="App">
-      {/* {[...Array(state.itemCount)].map((_, i) => {
-        return <ListItem key={i} number={i} />;
-      })} */}
       <button
         style={{ position: "fixed", left: "250px", top: "600px" }}
         onClick={() => {
@@ -97,4 +114,6 @@ export default inject(({ recipe }) => ({
   state: recipe.state,
   changeState: recipe.changeState,
   addState: recipe.addState,
+  updateList: recipe.updateList,
+  setView: recipe.setView,
 }))(observer(R));
