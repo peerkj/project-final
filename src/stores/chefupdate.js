@@ -20,6 +20,17 @@ export default class loginStore {
     this.password = "";
     this.modal_open = !this.modal_open;
   };
+
+  @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleUpdate(history);
+  };
+
+  @action
+  handleEnter2 = (e) => {
+    if (e.key === "Enter") this.handlePassUpdate();
+  };
+
   @action
   handleOpen2 = () => {
     this.new_password = "";
@@ -100,6 +111,7 @@ export default class loginStore {
               this.idx = "";
               this.error = "";
               this.pass_open = true;
+              alert("비밀번호가 변경되었습니다");
             }
           } else {
             //실패

@@ -5,7 +5,6 @@ import {
   TextField,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
@@ -16,7 +15,6 @@ import { Create, Lock, AccountCircle } from "@material-ui/icons";
   modal_open: stores.chefupdate.modal_open,
   handleOpen: stores.chefupdate.handleOpen,
   handlePassChange: stores.chefupdate.handlePassChange,
-  handleUpdate: stores.chefupdate.handleUpdate,
   handleReset: stores.chefupdate.handleReset,
   login_state: stores.info.login_state,
   error: stores.chefupdate.error,
@@ -29,8 +27,11 @@ import { Create, Lock, AccountCircle } from "@material-ui/icons";
   available_newpassword: stores.chefupdate.available_newpassword,
   available_pass_re: stores.chefupdate.available_pass_re,
   handlePassUpdate: stores.chefupdate.handlePassUpdate,
-  email: stores.withdraw.email,
-  imgBase64: stores.withdraw.imgBase64,
+  email: stores.cu.email,
+  imgBase64: stores.cu.menu_profile,
+  handleEnter: stores.chefupdate.handleEnter,
+  handleUpdate: stores.chefupdate.handleUpdate,
+  handleEnter2: stores.chefupdate.handleEnter2,
 }))
 @observer
 class mypage extends Component {
@@ -39,20 +40,6 @@ class mypage extends Component {
     if (!this.props.login_state) {
       this.props.history.push("/login");
     }
-  };
-
-  handleUpdate = () => {
-    this.props.handleUpdate(this.props.history);
-  };
-
-  handleOpen1 = () => {
-    this.props.handleOpen(1);
-  };
-  handleOpen2 = () => {
-    this.props.handleOpen(2);
-  };
-  handleOpen3 = () => {
-    this.props.handleOpen(3);
   };
 
   render() {
@@ -73,6 +60,10 @@ class mypage extends Component {
       new_password,
       new_password_re,
       email,
+      handleEnter,
+      handleUpdate,
+      history,
+      handleEnter2,
     } = this.props;
     return (
       <div>
@@ -89,7 +80,7 @@ class mypage extends Component {
                 }}
               />
             ) : (
-                <img src="img/basic_user.png" alt="" style={{ width: "150px" }} />
+                <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
               )}
           </div>
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
@@ -101,7 +92,9 @@ class mypage extends Component {
             <Create style={{ verticalAlign: "middle" }} />
             <Button
               color="#000000"
-              onClick={this.handleOpen1}
+              onClick={() => {
+                handleOpen(1);
+              }}
               style={{ fontSize: "12pt" }}
             >
               회원정보 수정
@@ -111,7 +104,9 @@ class mypage extends Component {
             <Lock style={{ verticalAlign: "middle" }} />
             <Button
               color="#000000"
-              onClick={this.handleOpen2}
+              onClick={() => {
+                handleOpen(2);
+              }}
               style={{ fontSize: "12pt" }}
             >
               비밀번호 변경
@@ -121,7 +116,9 @@ class mypage extends Component {
             <AccountCircle style={{ verticalAlign: "middle" }} />
             <Button
               color="#000000"
-              onClick={this.handleOpen3}
+              onClick={() => {
+                handleOpen(3);
+              }}
               style={{ fontSize: "12pt" }}
             >
               회원 탈퇴
@@ -138,6 +135,10 @@ class mypage extends Component {
             <DialogTitle id="form-dialog-title">비밀번호 확인</DialogTitle>
             <DialogContent>
               <TextField
+                autoFocus
+                onKeyPress={(e) => {
+                  handleEnter(e, history);
+                }}
                 onChange={handlePassChange}
                 value={password}
                 margin="dense"
@@ -150,7 +151,12 @@ class mypage extends Component {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.handleUpdate} color="primary">
+              <Button
+                onClick={() => {
+                  handleUpdate(history);
+                }}
+                color="primary"
+              >
                 확인
               </Button>
               <Button onClick={handleOpen} color="primary">
@@ -168,6 +174,7 @@ class mypage extends Component {
             <DialogTitle id="form-dialog-title">비밀번호 변경</DialogTitle>
             <DialogContent>
               <TextField
+                autoFocus
                 onChange={handleNewPassChange}
                 value={new_password}
                 margin="dense"
@@ -185,6 +192,7 @@ class mypage extends Component {
             </DialogContent>
             <DialogContent>
               <TextField
+                onKeyPress={handleEnter2}
                 onChange={handleNewPassReChange}
                 value={new_password_re}
                 margin="dense"

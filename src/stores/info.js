@@ -8,6 +8,7 @@ export default class JoinStore {
   @observable nickname = localStorage.getItem("nickname");
   @observable hp = localStorage.getItem("hp");
   @observable profile_name = localStorage.getItem("profile_name");
+
   constructor(root) {
     this.root = root;
   }
@@ -35,7 +36,7 @@ export default class JoinStore {
         this.nickname = res.data.nickname;
         this.hp = res.data.hp;
         this.profile_name = res.data.profile;
-        this.root.withdraw.reLoadState();
+        this.root.cu.reLoadState();
       })
       .catch((err) => {
         console.log("업로드 오류:" + err);

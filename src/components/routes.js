@@ -8,9 +8,9 @@ import Join from "./join";
 import FindId from "./findid";
 import FindPass from "./findpass";
 import Mypage from "./mypage";
-import Chefupdate from "./chefupdate";
+import Chefupdate from "./chefupdate2";
 import Withdraw from "./withdraw";
-import Recipe from "./recipe";
+import Recipe from "./r2";
 import Write from "./write";
 import Detail from "./detail";
 export default () => (

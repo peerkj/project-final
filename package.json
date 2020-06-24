@@ -10,7 +10,9 @@
     "hamburger-react": "^2.1.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
+    "query-string": "^6.13.1",
     "react": "latest",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",
     "react-dom": "latest",
@@ -108,7 +110,7 @@
   },
   "title": "Material demo",
   "devDependencies": {
-    "react-scripts": "latest"
+    "react-scripts": "^3.4.1"
   },
   "description": "https://github.com/mui-org/material-ui/blob/master/docs/src/pages/components/buttons/UploadButtons.js"
 }
