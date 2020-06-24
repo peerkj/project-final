@@ -127,7 +127,7 @@ const R = ({
             </IconButton>
           }
           title={l.nickname}
-          subheader={l.writeday.substring(0, 10)}
+          subheader={l.timeDiffer.substring(0, 10)}
         />
         <Link
           key={l.rec_num}

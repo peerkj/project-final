@@ -72,14 +72,15 @@ export default class CounterStore {
       };
       if (e.target.files[0]) {
         reader.readAsDataURL(e.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
-        this.profile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
+        this.commentp = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
       }
     }
   };
 
   @action
   handleSubmit = (com_num = 0, regroup = 0, restep = 0, relevel = 0) => {
-    alert("야");
+    console.log(this.root.info.userEmail);
+    console.log(this.root.detail.rec_num);
     let url = "http://localhost:9000/acorn/comment/regist";
     let submit = new FormData();
     submit.append("email", this.root.info.userEmail);

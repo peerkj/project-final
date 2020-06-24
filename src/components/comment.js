@@ -117,12 +117,7 @@ class comment extends Component {
               />
             </DialogContent>
             <DialogActions>
-              <Button
-                onclick={() => {
-                  alert("잉");
-                }}
-                color="primary"
-              >
+              <Button onClick={handleSubmit} color="primary">
                 등록
               </Button>
               <Button onClick={handleOpen} color="primary">
