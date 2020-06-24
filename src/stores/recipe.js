@@ -42,7 +42,7 @@ export default class CounterStore {
   //카운트 업데이트
   @action
   updateCount = (rec_num, idx) => {
-    let url = "http://192.168.0.41:9000/acorn/recipe/count?rec_num=" + rec_num;
+    let url = "http://localhost:9000/acorn/recipe/count?rec_num=" + rec_num;
     //유효성 검사
     axios({
       method: "get",
@@ -66,7 +66,7 @@ export default class CounterStore {
   getList = () => {
     let scroll = 0;
     if (this.list.length > 0) scroll = 1;
-    let url = "http://192.168.0.41:9000/acorn/recipe/list?scroll=" + scroll;
+    let url = "http://localhost:9000/acorn/recipe/list?scroll=" + scroll;
 
     axios({
       method: "get",
