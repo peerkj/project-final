@@ -13,4 +13,40 @@
 
 .Loading {
   height: 60px;
+  margin-top: 20px;
+}
+.r2listThumbnail{
+  position: relative; 
+  padding-top: 75%; /* 4:3 ratio */ 
+  overflow: hidden;
+  width: 359px;
+  margin-left: -16px;
+}
+.r2listThumbnail .centered{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  -webkit-transform: translate(50%,50%); 
+  -ms-transform: translate(50%,50%); 
+  transform: translate(50%,50%);
+}
+.r2listImg{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  max-width: 100%; 
+  height: auto;
+  -webkit-transform: translate(-50%,-50%); 
+  -ms-transform: translate(-50%,-50%); 
+  transform: translate(-50%,-50%);
+}
+.r2listImg.portrait{
+  width:100%;
+  height:auto;
+}
+.r2listImg.landscape{
+  width:auto;
+  height: 100%;
 }

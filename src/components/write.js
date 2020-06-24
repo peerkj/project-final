@@ -82,6 +82,7 @@ class write extends Component {
 
   render() {
     const {
+      history,
       subject,
       summary,
       tip,
@@ -356,9 +357,9 @@ class write extends Component {
             <div style={{ width: "150px", float: "right", marginTop: "15px" }}>
               <label htmlFor="repre">
                 {represent.imgBase64 ? (
-                  <img className="thumbnail" src={represent.imgBase64} alt="" />
+                  <img className="writeThumbnail" src={represent.imgBase64} alt="" />
                 ) : (
-                    <img className="thumbnail" src="img/add_icon3.png" alt="" />
+                    <img className="writeThumbnail" src="img/add_icon3.png" alt="" />
                   )}
               </label>
               {represent.imgBase64 ? (
@@ -548,7 +549,10 @@ class write extends Component {
           />
           <hr className="line" />
           <center>
-            <Button variant="outlined" size="medium" onClick={() => { }}>
+            <Button variant="outlined" size="medium"
+              onClick={() => {
+                history.push("/recipe");
+              }}>
               취소
             </Button>
             <Button

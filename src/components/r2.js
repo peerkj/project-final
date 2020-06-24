@@ -5,16 +5,17 @@ import { inject, observer } from "mobx-react";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 import {
+  Button,
+  Icon,
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
   CardActions,
   Avatar,
   IconButton,
-  Typography, TextField, BottomNavigation, BottomNavigationAction
+  Typography, TextField, BottomNavigation, BottomNavigationAction, Menu, MenuItem
 } from '@material-ui/core';
-import { MoreVert, BookmarkBorder, Restore, Bookmark, Pageview } from '@material-ui/icons';
+import { Search, Create, MoreVert, Restore, Bookmark, Pageview, FavoriteBorder, BookmarkBorder, ExpandLess } from '@material-ui/icons';
 import "../css/styles.css";
 
 const fakeFetch = (delay = 800) => new Promise((res) => setTimeout(res, delay));
@@ -40,6 +41,7 @@ const R = ({
     updateList();
   });
 
+  //리스트 박스 디자인 관련
   const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 345,
@@ -63,42 +65,95 @@ const R = ({
     },
   }));
 
+  //리스트 점 3개
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const dothandleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const dothandleClose = () => {
+    setAnchorEl(null);
+  };
+
+  //리스트 박스
   const ListItem = list.slice(0, state.itemCount).map((l, idx) => {
     return (
-      <Link
-        key={l.rec_num}
-        className="ListItem"
-        to={`/detail?recipe=${l.rec_num}`}
-        onClick={() => {
-          setView(l.rec_num, idx);
-        }}
-      >
-        <Card className={useStyles.root} style={{ marginTop: "10px" }}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="recipe" className={useStyles.avatar}>
-                {l.nickname}
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVert />
-              </IconButton>
-            }
-            title={l.subject}
-            subheader={l.writeday.substring(0, 10)}
-          />
-          <br />
-          {l.nickname}
-           조회수{l.readcount}
-          <img
-            width="100px"
-            src={`http://localhost:9000/acorn/image/recipe/${l.repre_photo}`}
-            alt=""
-          />
-        조아용{l.joayo} 스크랩수{l.scrap}
-        </Card>
-      </Link>
+      <Card className={useStyles.root} style={{ marginTop: "10px" }}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={useStyles.avatar}>
+              <img
+                width="40px"
+                src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
+                alt=""
+              />
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              {/* 점 3개 */}
+              <MoreVert aria-controls="simple-menu" aria-haspopup="true" onClick={dothandleClick} />
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={dothandleClose}
+              >
+                <MenuItem onClick={dothandleClose}>공유</MenuItem>
+                <MenuItem onClick={dothandleClose}>수정</MenuItem>
+                <MenuItem onClick={dothandleClose}>삭제</MenuItem>
+              </Menu>
+            </IconButton>
+          }
+          title={l.nickname}
+          subheader={l.writeday.substring(0, 10)}
+        />
+        <Link
+          key={l.rec_num}
+          className="ListItem"
+          to={`/detail?recipe=${l.rec_num}`}
+          onClick={() => {
+            setView(l.rec_num, idx);
+          }}
+        >
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <span style={{
+                fontWeight: "400",
+                fontSize: "10pt",
+                float: "right",
+                marginTop: "-30px"
+              }}>조회 {l.readcount}</span>
+              <div className="r2listThumbnail">
+                <div className="centered">
+                  <img
+                    className="r2listImg"
+                    src={`http://localhost:9000/acorn/image/recipe/${l.repre_photo}`}
+                    alt=""
+                  />
+                </div>
+              </div>
+              <br />
+              <center>
+                {l.subject}
+              </center>
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing style={{ float: "right" }}>
+            <IconButton aria-label="share">
+              <FavoriteBorder color="disabled" fontSize="small" />&nbsp;
+              <span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}>{l.joayo}</span>
+							&ensp;
+              <BookmarkBorder color="disabled" fontSize="small" />&nbsp;
+							<span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}>{l.scrap}</span>
+							&nbsp;
+            </IconButton>
+          </CardActions>
+        </Link>
+      </Card>
+
     );
   });
 
@@ -120,41 +175,82 @@ const R = ({
 
   return (
     <div className="RecipeApp">
-      <div>
-        <img src="/img/magnifying.png" alt="" width="40px" />
-        <TextField id="outlined-basic" variant="outlined" size="small" />
-        <BottomNavigation
-          // value={value}
-          // onChange={(event, newValue) => {
-          // 	setValue(newValue);
-          // }}
-          showLabels
-        >
-          <BottomNavigationAction label="최신순" icon={<Restore />} />
-          <BottomNavigationAction label="스크랩순" icon={<Bookmark />} />
-          <BottomNavigationAction label="조회순" icon={<Pageview />} />
-        </BottomNavigation>
+      <div style={{ marginBottom: "15px" }}>
+        {/* 검색창 */}
+        <center style={{ marginTop: "20px" }}>
+          <Search width="40px"
+            fontSize="large"
+            style={{ verticalAlign: "middle" }} />
+          <TextField id="outlined-basic" variant="outlined" size="small"
+            style={{ verticalAlign: "middle" }} />
+
+
+          {/* 리스트 분류,정렬 */}
+          <div style={{ marginTop: "10px" }}>
+            <BottomNavigation
+              // value={value}
+              // onChange={(event, newValue) => {
+              // 	setValue(newValue);
+              // }}
+              showLabels
+              style={{ width: "150px" }}
+            >
+              <BottomNavigationAction label="최신순" icon={<Restore />} />
+              <BottomNavigationAction label="스크랩순" icon={<Bookmark />} />
+              <BottomNavigationAction label="조회순" icon={<Pageview />} />
+            </BottomNavigation>
+          </div>
+        </center>
       </div>
-      <button
-        style={{ position: "fixed", left: "250px", top: "600px" }}
+
+      {/* 리스트*/}
+      {ListItem}
+
+      {/* 로딩 */}
+      <center>
+        <div ref={setRef} className="Loading">
+          {state.isLoading && "Loading..."}
+        </div>
+      </center>
+
+      {/* 위로 가기, 글쓰기 버튼 */}
+      <Link
         onClick={() => {
           window.scrollTo(0, 0);
-        }}
-      >
-        TOP
-      </button>
-      <button
-        style={{ position: "fixed", left: "300px", top: "600px" }}
+        }}>
+        <ExpandLess
+          style={{
+            position: "fixed",
+            left: "290px",
+            top: "610px",
+            width: "30px",
+            height: "30px",
+            border: "1px solid #575757",
+            backgroundColor: "#ffffff",
+            opacity: "0.8",
+            color: "#000000"
+          }}
+        />
+      </Link>
+      <Link
         onClick={() => {
           history.push("/write");
-        }}
-      >
-        글쓰기
-      </button>
-      {ListItem}
-      <div ref={setRef} className="Loading">
-        {state.isLoading && "Loading..."}
-      </div>
+        }}>
+        <Create
+          style={{
+            position: "fixed",
+            left: "330px",
+            top: "610px",
+            width: "30px",
+            height: "30px",
+            border: "1px solid #575757",
+            backgroundColor: "#ffffff",
+            opacity: "0.8",
+            color: "#000000",
+            fontSize: "10pt"
+          }}
+        />
+      </Link>
     </div>
   );
 };
