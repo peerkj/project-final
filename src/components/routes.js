@@ -16,6 +16,7 @@ import PassUpdate from "./passupdate";
 import Recipe from "./r2";
 import Write from "./write";
 import Detail from "./detail";
+
 export default () => (
   <Switch>
     <Route exact path="/" component={Home} />

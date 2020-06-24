@@ -16,6 +16,7 @@
     "react-dnd-html5-backend": "^11.1.3",
     "react-dom": "latest",
     "react-drag-drop-container": "^6.1.1",
+    "react-js-pull-to-refresh": "^1.2.2",
     "react-router-dom": "^5.2.0"
   },
   "scripts": {

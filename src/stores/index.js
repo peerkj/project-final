@@ -13,6 +13,7 @@ import WriteStore from "./write";
 import DetailStore from "./detail";
 import RecipeStore from "./recipe";
 import CU from "./cu";
+import CommentStore from './comment';
 class RootStore {
   constructor() {
     this.counter = new CounterStore(this);
@@ -29,6 +30,7 @@ class RootStore {
     this.detail = new DetailStore(this);
     this.recipe = new RecipeStore(this);
     this.cu = new CU(this);
+    this.comment = new CommentStore(this);
   }
 }
 
