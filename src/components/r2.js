@@ -86,7 +86,11 @@ const R = ({
           action={
             <IconButton aria-label="settings">
               {/* 점 3개 */}
-              <MoreVert aria-controls="simple-menu" aria-haspopup="true" onClick={dothandleClick} />
+              <MoreVert
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={dothandleClick}
+              />
               <Menu
                 id="simple-menu"
                 anchorEl={anchorEl}
@@ -101,7 +105,7 @@ const R = ({
             </IconButton>
           }
           title={l.nickname}
-          subheader={l.writeday.substring(0, 10)}
+          subheader={l.timeDiffer.substring(0, 10)}
         />
         <Link
           key={l.rec_num}
@@ -113,12 +117,16 @@ const R = ({
         >
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              <span style={{
-                fontWeight: "400",
-                fontSize: "10pt",
-                float: "right",
-                marginTop: "-30px"
-              }}>조회 {l.readcount}</span>
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "10pt",
+                  float: "right",
+                  marginTop: "-30px",
+                }}
+              >
+                조회 {l.readcount}
+              </span>
               <div className="r2listThumbnail">
                 <div className="centered">
                   <img
@@ -150,8 +158,7 @@ const R = ({
             </IconButton>
           </CardActions>
         </Link>
-      </Card>
-
+      </Card >
     );
   });
 
@@ -176,12 +183,17 @@ const R = ({
       <div style={{ marginBottom: "15px" }}>
         {/* 검색창 */}
         <center style={{ marginTop: "20px" }}>
-          <Search width="40px"
+          <Search
+            width="40px"
             fontSize="large"
-            style={{ verticalAlign: "middle" }} />
-          <TextField id="outlined-basic" variant="outlined" size="small"
-            style={{ verticalAlign: "middle" }} />
-
+            style={{ verticalAlign: "middle" }}
+          />
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            size="small"
+            style={{ verticalAlign: "middle" }}
+          />
 
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
@@ -215,7 +227,8 @@ const R = ({
       <Link
         onClick={() => {
           window.scrollTo(0, 0);
-        }}>
+        }}
+      >
         <ExpandLess
           style={{
             position: "fixed",
@@ -226,14 +239,15 @@ const R = ({
             border: "1px solid #575757",
             backgroundColor: "#ffffff",
             opacity: "0.8",
-            color: "#000000"
+            color: "#000000",
           }}
         />
       </Link>
       <Link
         onClick={() => {
           history.push("/write");
-        }}>
+        }}
+      >
         <Create
           style={{
             position: "fixed",
@@ -245,7 +259,7 @@ const R = ({
             backgroundColor: "#ffffff",
             opacity: "0.8",
             color: "#000000",
-            fontSize: "10pt"
+            fontSize: "10pt",
           }}
         />
       </Link>

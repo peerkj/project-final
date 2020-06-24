@@ -54,6 +54,8 @@ export default class DetailStore {
   //댓글모달
   @action
   handleComment = () => {
+    this.root.comment.comment_list = [];
+    this.root.comment.scroll = 0;
     this.comment_open = !this.comment_open;
   };
 
@@ -87,7 +89,6 @@ export default class DetailStore {
   changeComp = () => {
     if (this.comp_pause === null) {
       this.comp_pause = setInterval(() => {
-        console.log("변화");
         this.comp_index++;
         if (this.comp_index === this.comp_list.length) this.comp_index = 0;
         this.comp_img = this.comp_list[this.comp_index];
@@ -141,7 +142,6 @@ export default class DetailStore {
   //일시정지
   @action
   sliderP = () => {
-    console.log("정지");
     clearInterval(this.comp_pause);
     this.comp_pause = null;
   };
