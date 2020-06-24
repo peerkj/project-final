@@ -65,9 +65,10 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
-    let url =
-      "http://localhost:9000/acorn/recipe/list?scroll=" + this.scroll;
-    this.scroll++;
+    let scroll = 0;
+    if (this.list.length > 0) scroll = 1;
+    let url = "http://localhost:9000/acorn/recipe/list?scroll=" + scroll;
+
     axios({
       method: "get",
       url: url,
