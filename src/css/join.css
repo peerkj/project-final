@@ -40,14 +40,14 @@ body {
   left: 87px;
 }
 
-#joinbtn{
+#joinbtn {
   font-weight: 400;
   width: 120px;
 }
 
-.all_titles{
+.all_titles {
   position: absolute;
-  left:0;
+  left: 0;
   font-weight: 300;
   font-size: 10pt;
 }
