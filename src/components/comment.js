@@ -12,13 +12,23 @@ import {
 @inject((stores) => ({
     modal_open: stores.comment.modal_open,
     handleOpen: stores.comment.handleOpen,
+    imgBase64: stores.comment.imgBase64,
+    handleChangeImg: stores.comment.handleChangeImg,
+    content: stores.comment.content,
+    handleCommentChange: stores.comment.handleCommentChange,
+    handleSubmit: stores.comment.handleSubmit,
 }))
 @observer
 class comment extends Component {
     render() {
         const {
             modal_open,
-            handleOpen
+            handleOpen,
+            imgBase64,
+            handleChangeImg,
+            content,
+            handleCommentChange,
+            handleSubmit,
         }
             = this.props;
 
@@ -43,18 +53,45 @@ class comment extends Component {
                                 id="outlined-basic"
                                 placeholder="댓글을 입력하세요"
                                 variant="outlined"
+                                value={content}
+                                onChange={handleCommentChange}
+                            />
+                            <div style={{ marginTop: "15px" }}>
+
+                                <label htmlFor="comphoto">
+                                    {imgBase64 ? (
+                                        <img src={imgBase64} alt="" />
+                                    ) : (
+                                            <img
+                                                width="100px"
+
+                                                src="img/add_icon2.png"
+                                                alt=""
+                                            />
+                                        )}
+                                </label>
+                            </div>
+                            <input
+                                style={{ display: "none" }}
+                                accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
+                                id="comphoto"
+                                multiple
+                                type="file"
+                                onChange={handleChangeImg}
                             />
                         </DialogContent>
                         <DialogActions>
                             <Button
-
+                                onClick={() => {
+                                    handleSubmit();
+                                }}
                                 color="primary"
                             >
-                                확인
-              </Button>
+                                등록
+                            </Button>
                             <Button onClick={handleOpen} color="primary">
                                 취소
-              </Button>
+                            </Button>
                         </DialogActions>
                     </Dialog>
                 </div>
