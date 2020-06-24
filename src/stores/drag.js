@@ -3,12 +3,7 @@ import axios from "axios";
 
 export default class DragStore {
   @observable count = 0;
-  @observable pot_ = [
-    "/img/pot/pot1.png",
-    "/img/pot/pot2.png",
-    "/img/pot/pot3.png",
-  ];
-  @observable pot = "/img/pot/pot1.png";
+  @observable pot = "img/pot/potgif.gif";
   @observable open = false;
   @observable pot_timer = null;
   @observable e_store = [];
@@ -16,12 +11,42 @@ export default class DragStore {
   @observable addFood = "";
   @observable mylist = [];
   @observable pot_food = [];
+  @observable refir = "";
+  @observable handle_style = "close"; // 냄비,버튼,...
+  @observable refir_style = "refclose";
+  @observable binpot = false;
   @observable error = "";
 
   constructor(root) {
     this.root = root;
   }
 
+  @action
+  handleKeyPress = (e) => {
+    if (e.key === "Enter") this.handleSearchRecipe();
+  };
+
+  // @action
+  // handleSearchRecipe=()={
+  // };
+
+  //모달 open
+  @action
+  r_open = () => {
+    this.refir = "/img/refgif2.gif";
+    setTimeout(() => {
+      this.refir_style = "refopen";
+      this.handle_style = "open";
+    }, 2000);
+
+  }
+  //모달 close
+  @action
+  r_close = () => {
+    this.refir = "";
+    this.handle_style = "close";
+    this.refir_style = "refclose";
+  }
   @action
   addPotFood = (idx) => {
     this.pot_food.push(this.mylist[idx].food);
@@ -55,7 +80,7 @@ export default class DragStore {
 
   @action
   clickPot = () => {
-    this.open = !this.open;
+    this.binpot = !this.binpot;
   };
 
   @action
@@ -63,19 +88,9 @@ export default class DragStore {
     this.stopPot();
     this.pot = "/img/pot/openpot.png";
     setTimeout(() => {
-      this.pot = this.pot_[2];
+      this.pot = "img/pot/potgif.gif";
     }, 350);
-    this.changePot();
-  };
 
-  @action
-  changePot = () => {
-    let i = 1;
-    this.pot_timer = setInterval(() => {
-      this.pot = this.pot_[i];
-      i++;
-      if (i === 3) i = 0;
-    }, 500);
   };
 
   @action

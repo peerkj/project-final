@@ -71,18 +71,18 @@ class findid extends Component {
             width: "290px",
             margin: "0 auto",
           }}>
-          <div style={{ marginTop: "170px" }}>
+          <div style={{ marginTop: "120px" }}>
             <center>
               <Email style={{ verticalAlign: "middle" }} />
               <span style={{
                 fontSize: "medium",
-                fontWeight: "300",
+                fontWeight: "400",
                 verticalAlign: "middle",
               }}>
                 이메일 찾기</span>
             </center>
           </div>
-          <div style={{ position: "absolute", top: "310px", marginLeft: "55px" }}>
+          <div style={{ marginTop: "50px", marginLeft: "50px" }}>
             <span>이름</span>
             < br />
             <TextField
@@ -93,6 +93,7 @@ class findid extends Component {
               helperText={
                 available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
               }
+              style={{ width: "200px" }}
             />
             <br /><br />
             <span>전화번호</span>
@@ -103,6 +104,7 @@ class findid extends Component {
               onChange={handleHpChange}
               error={!(hp === "010") ^ available_hp}
               helperText={!available_hp && "하이픈(-) 없이 입력"}
+              style={{ width: "200px" }}
             />
             <br />
             <br />
@@ -122,7 +124,7 @@ class findid extends Component {
             <Button
               onClick={handleSubmit}
               variant="contained"
-              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "35px" }}
+              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "45px" }}
               component="span"
             >
               이메일 찾기
