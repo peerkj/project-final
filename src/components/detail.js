@@ -5,7 +5,7 @@ import Comment from "./comment";
 
 import "../css/detail.css";
 import Info from "@material-ui/icons/InfoOutlined";
-import { Close } from "@material-ui/icons";
+import { Share, Close, People, Timer, Star, ChatBubbleOutline, Bookmark, ThumbUp } from "@material-ui/icons";
 import {
   Button,
   Dialog,
@@ -19,7 +19,7 @@ import {
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import queryString from "query-string";
 
-// **** 최하단에 잇던 observer 가 이렇게 위로 올라옵니다.
+// **** 최하단에 있던 observer 가 이렇게 위로 올라옵니다.
 @inject((stores) => ({
   all: stores.detail.all,
   getRecipe: stores.detail.getRecipe,
@@ -179,14 +179,21 @@ class Detail extends Component {
     return (
       <div>
         {/* Default */}
+        {/* 썸네일 */}
         <div
-          style={{ width: "100%", height: "300px", border: "1px solid black" }}
+          style={{ width: "100%", height: "270px" }}
         >
-          <img
-            src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
-            alt=""
-          />
+          <div className="detailThumbnail">
+            <div className="centered">
+              <img
+                className="detailThumbnailImg"
+                src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
+                alt=""
+              />
+            </div>
+          </div>
         </div>
+        {/* 글 정보 */}
         <div>
           <div
             style={{
@@ -195,41 +202,54 @@ class Detail extends Component {
               border: "1px solid black",
             }}
           >
-            <img
-              className="de_profile"
-              src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
-              alt=""
-            />
-            <br />
-            <br />
-            <p style={{ textAlign: "center" }}>{all.nickname}</p>
-            <p style={{ textAlign: "center" }}>
-              <b>{all.subject}</b>
-            </p>
-            <p style={{ textAlign: "center" }}>"{all.summary}"</p>
-            <div className="ptdGroup">
-              <div className="ptd">{all.portion}</div>
-              <div className="ptd">{all.time}</div>
-              <div className="ptd">{all.difficult}</div>
-            </div>
-            <div>
-              <div>
-                <button onClick={handleShare}>공유</button>
+            <center>
+              <img
+                className="de_profile"
+                src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
+                alt=""
+              />
+              <p style={{ fontWeight: "500", fontSize: "10pt" }}>
+                {all.nickname}
+              </p>
+
+              {/* 요리 제목 */}
+              <p style={{ fontWeight: "500", fontSize: "16pt" }}>
+                {all.subject}
+              </p>
+
+              {/* 요리 설명 */}
+              <p>
+                <img src="/img/quote1.png" alt="" width="16px" />
+                <span style={{ fontWeight: "500", fontSize: "12pt" }}>
+                  {all.summary}
+                </span>
+                <img src="/img/quote2.png" alt="" width="16px" />
+              </p>
+              <br />
+              <div className="ptdGroup">
+                <div className="ptd"><People /><br />{all.portion}</div>
+                <div className="ptd"><Timer /><br />{all.time}</div>
+                <div className="ptd"><Star /><br />{all.difficult}</div>
               </div>
               <div>
-                <button onClick={Scrap}>
-                  {checkscr === 0 ? "스크랩하기" : "스크랩취소"}
-                </button>
+                <div>
+                  <Share onClick={handleShare} /><br />
+                  URL 복사
+                </div>
+                <div>
+                  <Bookmark onClick={Scrap} /><br />
+                  {checkscr === 0 ? "스크랩하기" : "스크랩 취소"}
+                </div>
+                <div>
+                  <ThumbUp onClick={Joayo} /><br />
+                  {checkjoa === 0 ? "좋아요" : "좋아요 취소"}
+                </div>
+                <div>
+                  <ChatBubbleOutline onClick={handleComment} /><br />
+                  댓글 0개
+                </div>
               </div>
-              <div>
-                <button onClick={handleComment}>댓글</button>
-              </div>
-              <div>
-                <button onClick={Joayo}>
-                  {checkjoa === 0 ? "좋아요" : "좋아요취소"}
-                </button>
-              </div>
-            </div>
+            </center>
           </div>
           <div style={{ width: "100%", border: "1px solid black" }}>
             재료

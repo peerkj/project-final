@@ -105,7 +105,7 @@ const R = ({
             </IconButton>
           }
           title={l.nickname}
-          subheader={l.timeDiffer.substring(0, 10)}
+          subheader={l.timeDiffer}
         />
         <Link
           key={l.rec_num}
