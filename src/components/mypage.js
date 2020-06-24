@@ -84,9 +84,8 @@ class mypage extends Component {
                 alt=""
                 style={{
                   height: "150px",
-                  marginTop: "30px",
+                  marginTop: "40px",
                   marginBottom: "20px",
-                  borderRadius: "150px"
                 }}
               />
             ) : (
@@ -96,7 +95,8 @@ class mypage extends Component {
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
         </center>
         <hr style={{ marginTop: "50px" }} />
-        <ul style={{ marginLeft: "85px", padding: "10px" }}>
+        <br />
+        <ul style={{ marginLeft: "90px", padding: "10px" }}>
           <li style={{ padding: "10px" }}>
             <Create style={{ verticalAlign: "middle" }} />
             <Button
