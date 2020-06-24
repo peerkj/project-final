@@ -273,9 +273,12 @@ class Detail extends Component {
             <br />
             <div>
               <img
+                width="200px"
+                height="200px"
                 src={`http://localhost:9000/acorn/image/recipe/${comp_img}`}
                 alt=""
               />
+              <br />
               <button onClick={sliderL}>&lt;</button>
               <button onClick={sliderP}>일시정지</button>
               <button onClick={changeComp}>재생</button>

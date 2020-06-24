@@ -85,27 +85,43 @@ export default class DetailStore {
 
   @action
   changeComp = () => {
-    this.comp_pause = setInterval(() => {
-      this.comp_img = this.comp_list[this.comp_index];
-      this.comp_index++;
-      if (this.comp_index === this.comp_list.length) this.comp_index = 0;
-    }, 2000);
+    if (this.comp_pause === null) {
+      this.comp_pause = setInterval(() => {
+        console.log("변화");
+        this.comp_index++;
+        if (this.comp_index === this.comp_list.length) this.comp_index = 0;
+        this.comp_img = this.comp_list[this.comp_index];
+      }, 2000);
+    }
   };
 
   // >버튼
   @action
   sliderR = () => {
-    if (this.comp_index === this.comp_list.length - 1)
-      this.comp_img = this.comp_list[0];
-    else this.comp_img = this.comp_list[this.comp_index++];
+    this.sliderP();
+    if (this.comp_index >= this.comp_list.length - 1) {
+      this.comp_index = 0;
+      this.comp_img = this.comp_list[this.comp_index];
+    } else {
+      this.comp_index++;
+
+      this.comp_img = this.comp_list[this.comp_index];
+    }
+    this.changeComp();
   };
 
   // <버튼
   @action
   sliderL = () => {
-    if (this.comp_index === 0)
-      this.comp_img = this.comp_list[this.comp_list.length - 1];
-    else this.comp_img = this.comp_list[this.comp_index--];
+    this.sliderP();
+    if (this.comp_index === 0) {
+      this.comp_index = this.comp_list.length - 1;
+      this.comp_img = this.comp_list[this.comp_index];
+    } else {
+      this.comp_index--;
+      this.comp_img = this.comp_list[this.comp_index];
+    }
+    this.changeComp();
   };
 
   // >버튼
@@ -125,7 +141,9 @@ export default class DetailStore {
   //일시정지
   @action
   sliderP = () => {
+    console.log("정지");
     clearInterval(this.comp_pause);
+    this.comp_pause = null;
   };
 
   //좋아요체크
