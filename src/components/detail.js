@@ -336,9 +336,14 @@ class Detail extends Component {
               >
                 <Close />
               </IconButton>
-              <Comment />
             </Toolbar>
           </AppBar>
+
+          <div>
+            <br />
+            <br />
+            <Comment />
+          </div>
         </Dialog>
         {/* 댓글모달 */}
       </div>

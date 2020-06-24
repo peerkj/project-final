@@ -45,7 +45,7 @@ const R = ({
           />
           {l.subject}
           &nbsp;&nbsp;&nbsp;&nbsp;
-          {l.writeday.substring(0, 10)}
+          {l.timeDiffer}
           <br />
           {l.nickname}
           &nbsp;&nbsp;&nbsp;&nbsp; 조회수{l.readcount}

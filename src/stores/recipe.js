@@ -5,6 +5,7 @@ export default class CounterStore {
   @observable list = [];
   @observable state = { itemCount: 0, isLoading: false };
   @observable view = { num: -1, idx: -1 };
+  @observable scroll = 0;
   // **** 추가됨
   constructor(root) {
     this.root = root;
@@ -64,17 +65,16 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
-    let scroll = 0;
-    if (this.list.length > 0) scroll = 1;
-    let url = "http://192.168.0.41:9000/acorn/recipe/list?scroll=" + scroll;
-
+    let url =
+      "http://192.168.0.41:9000/acorn/recipe/list?scroll=" + this.scroll;
+    this.scroll++;
     axios({
       method: "get",
       url: url,
     })
       .then((res) => {
         console.log(res.data);
-        if (scroll === 0) {
+        if (this.scroll === 1) {
           this.list = res.data;
         } else {
           this.list = [...this.list, ...res.data];

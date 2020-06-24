@@ -20,6 +20,16 @@ body {
   cursor: pointer;
   position: relative;
   zindex: 2;
+  top: -98px;
+  left: 52px;
+}
+
+#profileImg_delete_update {
+  cursor: pointer;
+  position: relative;
+  zindex: 2;
+  top: -98px;
+  left: 52px;
 }
 
 #profileImg_add {

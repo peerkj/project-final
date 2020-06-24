@@ -54,6 +54,8 @@ export default class DetailStore {
   //댓글모달
   @action
   handleComment = () => {
+    this.root.comment.comment_list = [];
+    this.root.comment.scroll = 0;
     this.comment_open = !this.comment_open;
   };
 

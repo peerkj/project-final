@@ -1,119 +1,139 @@
-import React, { useEffect } from "react";
-import useIntersect from "./useIntersect";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 import { inject, observer } from "mobx-react";
+import {
+  Button,
+  Dialog,
+  TextField,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@material-ui/core";
 
-import "./styles.css";
-
-const fakeFetch = (delay = 800) => new Promise((res) => setTimeout(res, delay));
-// const ListItem = ({ number }) => (
-//   <div className="ListItem">
-//     <span>{number}</span>
-//   </div>
-// );
-const R = ({
-  list,
-  state,
-  getList,
-  changeState,
-  addState,
-  history,
-  updateList,
-  setView,
-}) => {
-  //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
-  //   /* fake async fetch */
-
-  useEffect(() => {
-    updateList();
-  });
-  const ListItem = list.slice(0, state.itemCount).map((l, idx) => {
-    return (
-      <Link
-        key={l.rec_num}
-        className="ListItem"
-        to={`/detail?recipe=${l.rec_num}`}
-        onClick={() => {
-          setView(l.rec_num, idx);
-        }}
-      >
-        <div>
-          <img
-            width="35px"
-            src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
-            alt=""
-          />
-          {l.subject}
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          {l.writeday.substring(0, 10)}
-          <br />
-          {l.nickname}
-          &nbsp;&nbsp;&nbsp;&nbsp; 조회수{l.readcount}
-        </div>
-        <br />
-        <hr />
-        <div>
-          <img
-            width="100px"
-            src={`http://localhost:9000/acorn/image/recipe/${l.repre_photo}`}
-            alt=""
-          />
-        </div>
-        <br />
-        조아용{l.joayo}&nbsp;&nbsp;&nbsp;&nbsp; 스크랩수{l.scrap}
-        <br />
-      </Link>
-    );
-  });
-
-  const fetchItems = async () => {
-    changeState();
-    getList();
-    await fakeFetch();
-    addState();
+@inject((stores) => ({
+  getList: stores.comment.getList,
+  comment_list: stores.comment.comment_list,
+  modal_open: stores.comment.modal_open,
+  handleOpen: stores.comment.handleOpen,
+  imgBase64: stores.comment.imgBase64,
+  handleChangeImg: stores.comment.handleChangeImg,
+  content: stores.comment.content,
+  handleCommentChange: stores.comment.handleCommentChange,
+  handleSubmit: stores.comment.handleSubmit,
+}))
+@observer
+class comment extends Component {
+  componentDidMount = () => {
+    this.props.getList();
   };
-  /* initial fetch */
 
-  const [_, setRef] = useIntersect(async (entry, observer) => {
-    observer.unobserve(entry.target);
-    await fetchItems();
-    observer.observe(entry.target);
-  }, {});
+  render() {
+    const {
+      getList,
+      comment_list,
 
-  //if (state1.itemCount) return null;
+      modal_open,
+      handleOpen,
+      imgBase64,
+      handleChangeImg,
+      content,
+      handleCommentChange,
+      handleSubmit,
+    } = this.props;
+    const dropped = (e) => {
+      //e.containerElem.style.visibility = "hidden";
+      getList();
+    };
 
-  return (
-    <div className="App">
-      <button
-        style={{ position: "fixed", left: "250px", top: "600px" }}
-        onClick={() => {
-          window.scrollTo(0, 0);
-        }}
-      >
-        TOP
-      </button>
-      <button
-        style={{ position: "fixed", left: "300px", top: "600px" }}
-        onClick={() => {
-          history.push("/write");
-        }}
-      >
-        글쓰기
-      </button>
-      {ListItem}
-      <div ref={setRef} className="Loading">
-        {state.isLoading && "Loading..."}
+    const comment = comment_list.map((c, idx) => {
+      return (
+        <div style={{ border: "1px solid gray" }} key={idx}>
+          <b>{c.com_writeday}</b>
+          <br />
+          <b>{c.content}</b>
+        </div>
+      );
+    });
+
+    return (
+      <div>
+        <br />
+        <DropTarget targetKey="foo" onHit={dropped}>
+          <div
+            style={{
+              border: "1px solid gray",
+              width: "357px",
+            }}
+          >
+            <button onClick={handleOpen}>댓글쓰기</button>
+
+            {comment}
+          </div>
+        </DropTarget>
+        <DragDropContainer targetKey="foo">
+          <div
+            style={{
+              border: "1px solid gray",
+              width: "357px",
+              height: "50px",
+            }}
+          >
+            <b>pull up</b>
+          </div>
+        </DragDropContainer>
+
+        <div>
+          <Dialog
+            open={modal_open}
+            onClose={handleOpen}
+            aria-labelledby="form-dialog-title"
+            fullWidth
+          >
+            <DialogTitle id="form-dialog-title">댓글쓰기</DialogTitle>
+            <DialogContent>
+              <TextField
+                id="outlined-basic"
+                placeholder="댓글을 입력하세요"
+                variant="outlined"
+                value={content}
+                onChange={handleCommentChange}
+              />
+              <div style={{ marginTop: "15px" }}>
+                <label htmlFor="comphoto">
+                  {imgBase64 ? (
+                    <img src={imgBase64} alt="" />
+                  ) : (
+                    <img width="100px" src="img/add_icon2.png" alt="" />
+                  )}
+                </label>
+              </div>
+              <input
+                style={{ display: "none" }}
+                accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
+                id="comphoto"
+                multiple
+                type="file"
+                onChange={handleChangeImg}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onclick={() => {
+                  alert("잉");
+                }}
+                color="primary"
+              >
+                등록
+              </Button>
+              <Button onClick={handleOpen} color="primary">
+                취소
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default inject(({ recipe }) => ({
-  list: recipe.list,
-  getList: recipe.getList,
-  state: recipe.state,
-  changeState: recipe.changeState,
-  addState: recipe.addState,
-  updateList: recipe.updateList,
-  setView: recipe.setView,
-}))(observer(R));
+export default comment;
