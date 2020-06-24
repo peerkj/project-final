@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
+
+import Comment from "./comment";
+
 import "../css/detail.css";
 import Info from "@material-ui/icons/InfoOutlined";
 import { Close } from "@material-ui/icons";
@@ -333,7 +336,7 @@ class Detail extends Component {
               >
                 <Close />
               </IconButton>
-              댓글모달
+              <Comment />
             </Toolbar>
           </AppBar>
         </Dialog>
