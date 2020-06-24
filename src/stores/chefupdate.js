@@ -14,6 +14,12 @@ export default class loginStore {
     this.root = root;
   }
 
+  @action
+  handleOpen = (idx) => {
+    this.idx = idx;
+    this.password = "";
+    this.modal_open = !this.modal_open;
+  };
 
   @action
   handleEnter = (e, history) => {
@@ -25,12 +31,6 @@ export default class loginStore {
     if (e.key === "Enter") this.handlePassUpdate();
   };
 
-  @action
-  handleOpen = (idx) => {
-    this.idx = idx;
-    this.password = "";
-    this.modal_open = !this.modal_open;
-  };
   @action
   handleOpen2 = () => {
     this.new_password = "";

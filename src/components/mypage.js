@@ -5,7 +5,6 @@ import {
   TextField,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
@@ -28,12 +27,11 @@ import { Create, Lock, AccountCircle } from "@material-ui/icons";
   available_newpassword: stores.chefupdate.available_newpassword,
   available_pass_re: stores.chefupdate.available_pass_re,
   handlePassUpdate: stores.chefupdate.handlePassUpdate,
-  email: stores.withdraw.email,
-  imgBase64: stores.withdraw.imgBase64,
+  email: stores.cu.email,
+  imgBase64: stores.cu.menu_profile,
   handleEnter: stores.chefupdate.handleEnter,
   handleUpdate: stores.chefupdate.handleUpdate,
   handleEnter2: stores.chefupdate.handleEnter2,
-
 }))
 @observer
 class mypage extends Component {
@@ -43,10 +41,6 @@ class mypage extends Component {
       this.props.history.push("/login");
     }
   };
-
-
-
-
 
   render() {
     const {
@@ -86,8 +80,8 @@ class mypage extends Component {
                 }}
               />
             ) : (
-                <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
-              )}
+              <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
+            )}
           </div>
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
         </center>
@@ -161,9 +155,12 @@ class mypage extends Component {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => {
-                handleUpdate(history);
-              }} color="primary">
+              <Button
+                onClick={() => {
+                  handleUpdate(history);
+                }}
+                color="primary"
+              >
                 확인
               </Button>
               <Button onClick={handleOpen} color="primary">
@@ -211,8 +208,8 @@ class mypage extends Component {
                   new_password_re === ""
                     ? false
                     : !available_pass_re
-                      ? true
-                      : false
+                    ? true
+                    : false
                 }
                 helperText={
                   available_pass_re || new_password_re === ""

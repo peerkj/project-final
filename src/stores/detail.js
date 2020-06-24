@@ -12,9 +12,7 @@ export default class DetailStore {
   @observable checkscr = "";
 
   @observable comp_img = "";
-
   @observable comp_index = 0;
-
   @observable comp_pause = null;
 
   //공유모달
@@ -26,9 +24,21 @@ export default class DetailStore {
   //댓글모달
   @observable comment_open = false;
 
+  //step 상태
+  @observable step_state = 0;
+  @observable step_slide = 0;
   constructor(root) {
     this.root = root;
   }
+
+  //버튼 누르면 step 변경
+  @action
+  changeStep = (i) => {
+    //0 기본
+    //1 글만
+    //2 슬라이더
+    this.step_state = i;
+  };
 
   //공유모달
   @action
@@ -64,7 +74,7 @@ export default class DetailStore {
 
         this.ing_list = res.data.ingreList;
         this.step_list = res.data.orderList;
-        console.log(this.all.nickname);
+
         this.checkJoayo();
         this.checkScrap();
       })
@@ -96,6 +106,20 @@ export default class DetailStore {
     if (this.comp_index === 0)
       this.comp_img = this.comp_list[this.comp_list.length - 1];
     else this.comp_img = this.comp_list[this.comp_index--];
+  };
+
+  // >버튼
+  @action
+  stepR = () => {
+    if (this.step_slide === this.step_list.length - 1) this.step_slide = 0;
+    else this.step_slide++;
+  };
+
+  // <버튼
+  @action
+  stepL = () => {
+    if (this.step_slide === 0) this.step_slide = this.step_list.length - 1;
+    else this.step_slide--;
   };
 
   //일시정지

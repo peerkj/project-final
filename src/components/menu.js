@@ -11,8 +11,8 @@ import "../css/menu.css";
   handleLogout: stores.login.handleLogout,
   login_state: stores.info.login_state,
   profile_name: stores.info.profile_name,
-  menu_profile: stores.withdraw.menu_profile,
-  menu_nick: stores.withdraw.menu_nick,
+  menu_profile: stores.cu.menu_profile,
+  menu_nick: stores.cu.menu_nick,
 }))
 @observer
 class header extends Component {
@@ -47,35 +47,39 @@ class header extends Component {
                 <img
                   src={menu_profile}
                   alt=""
-                  style={{ height: "150px", marginTop: "30px", marginBottom: "20px" }}
+                  style={{
+                    height: "150px",
+                    marginTop: "30px",
+                    marginBottom: "20px",
+                  }}
                 />
               ) : (
-                  <img
-                    src="img/basic_user.png"
-                    alt=""
-                    style={{ width: "200px", marginLeft: "13px" }}
-                  />
-                )}
+                <img
+                  src="img/basic_user.png"
+                  alt=""
+                  style={{ width: "200px", marginLeft: "13px" }}
+                />
+              )}
             </div>
             {menu_nick ? (
               <span style={{ fontWeight: "400", fontSize: "12pt" }}>
                 {menu_nick} 님
               </span>
             ) : (
-                <span></span>
-              )}
+              <span></span>
+            )}
             <br />
             {login_state ? (
               <Link to="/mypage">MYPAGE</Link>
             ) : (
-                <Link to="/login">LOGIN</Link>
-              )}
+              <Link to="/login">LOGIN</Link>
+            )}
             &ensp;
             {login_state ? (
               <span onClick={handleLogout}>LOGOUT</span>
             ) : (
-                <Link to="/join">JOIN</Link>
-              )}
+              <Link to="/join">JOIN</Link>
+            )}
           </center>
           <br />
           <hr />
