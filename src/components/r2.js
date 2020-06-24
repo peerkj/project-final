@@ -73,11 +73,11 @@ const R = ({
           setView(l.rec_num, idx);
         }}
       >
-        <Card className={useStyles.root}>
+        <Card className={useStyles.root} style={{ marginTop: "10px" }}>
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={useStyles.avatar}>
-
+                {l.nickname}
               </Avatar>
             }
             action={
@@ -88,13 +88,6 @@ const R = ({
             title={l.subject}
             subheader={l.writeday.substring(0, 10)}
           />
-          <img
-            width="35px"
-            src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
-            alt=""
-          />
-
-
           <br />
           {l.nickname}
            조회수{l.readcount}
@@ -106,7 +99,6 @@ const R = ({
         조아용{l.joayo} 스크랩수{l.scrap}
         </Card>
       </Link>
-
     );
   });
 
