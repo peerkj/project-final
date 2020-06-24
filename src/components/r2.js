@@ -5,17 +5,10 @@ import { inject, observer } from "mobx-react";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 import {
-  Button,
-  Icon,
-  Card,
-  CardHeader,
-  CardContent,
-  CardActions,
-  Avatar,
-  IconButton,
+  Card, CardHeader, CardContent, CardActions, Avatar, IconButton,
   Typography, TextField, BottomNavigation, BottomNavigationAction, Menu, MenuItem
 } from '@material-ui/core';
-import { Search, Create, MoreVert, Restore, Bookmark, Pageview, FavoriteBorder, BookmarkBorder, ExpandLess } from '@material-ui/icons';
+import { ChatBubbleOutline, Search, Create, MoreVert, Restore, Bookmark, Pageview, FavoriteBorder, BookmarkBorder, ExpandLess } from '@material-ui/icons';
 import "../css/styles.css";
 
 const fakeFetch = (delay = 800) => new Promise((res) => setTimeout(res, delay));
@@ -137,17 +130,22 @@ const R = ({
               </div>
               <br />
               <center>
-                {l.subject}
+                <span style={{ fontSize: "12pt", fontWeight: "500", color: "#000000", marginLeft: "2px" }}>
+                  {l.subject}
+                </span>
               </center>
             </Typography>
           </CardContent>
           <CardActions disableSpacing style={{ float: "right" }}>
             <IconButton aria-label="share">
-              <FavoriteBorder color="disabled" fontSize="small" />&nbsp;
+              <FavoriteBorder color="disabled" fontSize="small" />
               <span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}>{l.joayo}</span>
 							&ensp;
-              <BookmarkBorder color="disabled" fontSize="small" />&nbsp;
-							<span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}>{l.scrap}</span>
+              <BookmarkBorder color="disabled" fontSize="small" />
+              <span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}>{l.scrap}</span>
+              &ensp;
+              <ChatBubbleOutline color="disabled" fontSize="small" />
+              <span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}></span>
 							&nbsp;
             </IconButton>
           </CardActions>
