@@ -74,62 +74,59 @@ class mypage extends Component {
                 src={imgBase64}
                 alt=""
                 style={{
+                  width: "150px",
                   height: "150px",
-                  marginTop: "30px",
+                  marginTop: "40px",
                   marginBottom: "20px",
                 }}
               />
             ) : (
-              <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
-            )}
+                <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
+              )}
           </div>
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
         </center>
-        <br />
-        <br />
-        <br />
-        <hr />
-        <br />
-        <br />
-        <ul style={{ marginLeft: "85px", padding: "10px" }}>
-          <li style={{ padding: "10px" }}>
-            <Create style={{ verticalAlign: "middle" }} />
-            <Button
-              color="#000000"
-              onClick={() => {
-                handleOpen(1);
-              }}
-              style={{ fontSize: "12pt" }}
-            >
-              회원정보 수정
+        <hr style={{ marginTop: "55px" }} />
+        <div style={{ marginTop: "25px" }}>
+          <ul style={{ marginLeft: "90px", padding: "10px" }}>
+            <li style={{ padding: "10px" }}>
+              <Create style={{ verticalAlign: "middle" }} />
+              <Button
+                color="#000000"
+                onClick={() => {
+                  handleOpen(1);
+                }}
+                style={{ fontSize: "12pt" }}
+              >
+                회원정보 수정
             </Button>
-          </li>
-          <li style={{ padding: "10px" }}>
-            <Lock style={{ verticalAlign: "middle" }} />
-            <Button
-              color="#000000"
-              onClick={() => {
-                handleOpen(2);
-              }}
-              style={{ fontSize: "12pt" }}
-            >
-              비밀번호 변경
+            </li>
+            <li style={{ padding: "10px" }}>
+              <Lock style={{ verticalAlign: "middle" }} />
+              <Button
+                color="#000000"
+                onClick={() => {
+                  handleOpen(2);
+                }}
+                style={{ fontSize: "12pt" }}
+              >
+                비밀번호 변경
             </Button>
-          </li>
-          <li style={{ padding: "10px" }}>
-            <AccountCircle style={{ verticalAlign: "middle" }} />
-            <Button
-              color="#000000"
-              onClick={() => {
-                handleOpen(3);
-              }}
-              style={{ fontSize: "12pt" }}
-            >
-              회원 탈퇴
+            </li>
+            <li style={{ padding: "10px" }}>
+              <AccountCircle style={{ verticalAlign: "middle" }} />
+              <Button
+                color="#000000"
+                onClick={() => {
+                  handleOpen(3);
+                }}
+                style={{ fontSize: "12pt" }}
+              >
+                회원 탈퇴
             </Button>
-          </li>
-        </ul>
-
+            </li>
+          </ul>
+        </div>
         <div>
           <Dialog
             open={modal_open}
@@ -208,8 +205,8 @@ class mypage extends Component {
                   new_password_re === ""
                     ? false
                     : !available_pass_re
-                    ? true
-                    : false
+                      ? true
+                      : false
                 }
                 helperText={
                   available_pass_re || new_password_re === ""

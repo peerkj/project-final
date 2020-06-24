@@ -9,9 +9,8 @@ body {
 .profileImg {
   width: 120px;
   height: 120px;
-  display: inline;
   position: relative;
-  zindex: 1;
+  z-index: 1;
   top: 30px;
   cursor: pointer;
 }
@@ -19,15 +18,7 @@ body {
 #profileImg_delete {
   cursor: pointer;
   position: relative;
-  zindex: 2;
-  top: -98px;
-  left: 52px;
-}
-
-#profileImg_delete_update {
-  cursor: pointer;
-  position: relative;
-  zindex: 2;
+  z-index: 2;
   top: -98px;
   left: 52px;
 }
@@ -35,7 +26,7 @@ body {
 #profileImg_add {
   cursor: pointer;
   position: relative;
-  zindex: 2;
+  z-index: 2;
   top: -80px;
   left: 38px;
 }
@@ -50,13 +41,13 @@ body {
 }
 
 #joinbtn {
-  font-family: "Noto Sans KR", sans-serif;
   font-weight: 400;
-  width: "120px";
+  width: 120px;
 }
 
-.all_title {
+.all_titles {
   position: absolute;
   left: 0;
-  margin-left: 9px;
+  font-weight: 300;
+  font-size: 10pt;
 }
