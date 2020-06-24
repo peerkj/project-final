@@ -25,7 +25,6 @@ export default () => (
     <Route exact path="/chefupdate" component={Chefupdate} />
     <Route exact path="/withdraw" component={Withdraw} />
     <Route exact path="/findid" component={FindId} />
-    <Route exact path="/findpass" component={FindPass} />
     <Route exact path="/write" component={Write} />
     <Route exact path="/detail" component={Detail} />
   </Switch>
