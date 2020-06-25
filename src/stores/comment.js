@@ -9,7 +9,6 @@ export default class CounterStore {
   @observable content = "";
   @observable commentp = null; //실제 서버로 보내는
   @observable imgBase64 = ""; //미리보기
-  @observable count = 0;
 
   @observable com_num = 0;
   @observable regroup = 0;
@@ -114,24 +113,10 @@ export default class CounterStore {
         this.modal_open = !this.modal_open;
         this.handleReset();
         this.getList();
+        this.root.detail.getComment();
       })
       .catch((err) => {
         console.log("댓글등록오류:" + err);
       });
-  };
-
-  @action
-  getComment = () => {
-    let url = "http://localhost:9000/acorn/comment/count";
-
-    axios({
-      method: "get",
-      url: url,
-      params: { rec_num: this.root.detail.rec_num },
-    })
-      .then((res) => {
-        this.count = res.data;
-      })
-      .catch((err) => {});
   };
 }

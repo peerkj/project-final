@@ -27,9 +27,17 @@ export default class DetailStore {
   //step 상태
   @observable step_state = 0;
   @observable step_slide = 0;
+
+  @observable c_count = 0;
+
   constructor(root) {
     this.root = root;
   }
+
+  @action
+  setRec_num = (num) => {
+    this.rec_num = num;
+  };
 
   //버튼 누르면 step 변경
   @action
@@ -62,6 +70,10 @@ export default class DetailStore {
     this.root.comment.comment_list = [];
     this.root.comment.scroll = 0;
     this.comment_open = !this.comment_open;
+    this.root.recipe.getComment(
+      this.root.recipe.view.num,
+      this.root.recipe.view.idx
+    );
   };
 
   //
@@ -210,6 +222,21 @@ export default class DetailStore {
     })
       .then((res) => {
         this.checkScrap();
+      })
+      .catch((err) => {});
+  };
+
+  @action
+  getComment = () => {
+    let url = "http://localhost:9000/acorn/comment/count";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { rec_num: this.rec_num },
+    })
+      .then((res) => {
+        this.c_count = res.data;
       })
       .catch((err) => {});
   };

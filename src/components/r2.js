@@ -5,6 +5,7 @@ import { inject, observer } from "mobx-react";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Comment from "./comment";
 
 import {
   Button,
@@ -66,6 +67,9 @@ const R = ({
   Joayo,
   userEmail,
   comment_count,
+  comment_open,
+  handleComment,
+  setRec_num,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -242,7 +246,15 @@ const R = ({
               {l.scrap}
             </span>
             &nbsp;
-            <ChatBubbleOutline color="disabled" fontSize="small" />
+            <ChatBubbleOutline
+              onClick={() => {
+                setRec_num(l.rec_num);
+                setView(l.rec_num, idx);
+                handleComment();
+              }}
+              color="disabled"
+              fontSize="small"
+            />
             &nbsp;
             <span
               style={{
@@ -388,6 +400,23 @@ const R = ({
         </Dialog>
       </div>
       {/* 공유모달 */}
+      {/* 댓글모달 */}
+      <Dialog open={comment_open} onClose={handleComment}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleComment}
+          aria-label="close"
+        >
+          <Close />
+        </IconButton>
+
+        <br />
+        <br />
+        <DialogContent>
+          <Comment />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
@@ -413,4 +442,8 @@ export default inject(({ recipe, detail, info }) => ({
   Scrap: recipe.Scrap,
   userEmail: info.userEmail,
   comment_count: recipe.comment_count,
+
+  comment_open: detail.comment_open,
+  handleComment: detail.handleComment,
+  setRec_num: detail.setRec_num,
 }))(observer(R));

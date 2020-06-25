@@ -54,6 +54,9 @@ import queryString from "query-string";
   step_slide: stores.detail.step_slide,
   stepR: stores.detail.stepR,
   stepL: stores.detail.stepL,
+
+  c_count: stores.detail.c_count,
+  getComment: stores.detail.getComment,
 }))
 @observer
 class Detail extends Component {
@@ -62,6 +65,7 @@ class Detail extends Component {
     window.scrollTo(0, 0);
     this.props.getRecipe(query.recipe);
     this.props.changeComp();
+    this.props.getComment();
   };
   render() {
     const {
@@ -98,6 +102,7 @@ class Detail extends Component {
       step_slide,
       stepR,
       stepL,
+      c_count,
     } = this.props;
 
     //주재료
@@ -229,7 +234,7 @@ class Detail extends Component {
                 </button>
               </div>
               <div>
-                <button onClick={handleComment}>댓글</button>
+                <button onClick={handleComment}>댓글 {c_count}</button>
               </div>
               <div>
                 <button onClick={Joayo}>
