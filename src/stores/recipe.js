@@ -47,6 +47,7 @@ export default class CounterStore {
   reset = () => {
     this.state = { itemCount: 0, isLoading: false };
     this.list = [];
+    this.scroll = 0;
   };
 
   @action
