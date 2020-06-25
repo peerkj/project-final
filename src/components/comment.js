@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { DragDropContainer, DropTarget } from "react-drag-drop-container";
+
 import { inject, observer } from "mobx-react";
 import {
   Button,
@@ -20,6 +20,7 @@ import {
   content: stores.comment.content,
   handleCommentChange: stores.comment.handleCommentChange,
   handleSubmit: stores.comment.handleSubmit,
+  setValue: stores.comment.setValue,
 }))
 @observer
 class comment extends Component {
@@ -29,7 +30,6 @@ class comment extends Component {
 
   render() {
     const {
-      getList,
       comment_list,
 
       modal_open,
@@ -39,25 +39,19 @@ class comment extends Component {
       content,
       handleCommentChange,
       handleSubmit,
+      setValue,
     } = this.props;
-    const dropped = (e) => {
-      //e.containerElem.style.visibility = "hidden";
-      let scroll = 0;
-      if (comment_list.length === 5) scroll = 1;
-      else {
-        scroll = comment_list.length / 5 + 1;
-      }
-      getList(scroll);
-    };
 
     const comment = comment_list.map((c, idx) => {
       return (
         <div style={{ border: "1px solid gray" }} key={idx}>
+          {c.relevel === 1 && <b>답글입니당</b>}
           <img
             width="40px"
             src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
             alt=""
           />
+          <br />
           <b>{c.timeDiffer}</b>
           <br />
           <b>{c.nickname}</b>
@@ -71,6 +65,15 @@ class comment extends Component {
               alt=""
             />
           )}
+          <br />
+          <button
+            onClick={() => {
+              setValue(c.com_num, c.regroup, c.restep, c.relevel);
+              handleOpen();
+            }}
+          >
+            답글
+          </button>
         </div>
       );
     });
@@ -78,34 +81,25 @@ class comment extends Component {
     return (
       <div>
         <br />
-        <DropTarget targetKey="foo" onHit={dropped}>
-          <div
-            style={{
-              border: "1px solid gray",
-              width: "357px",
-            }}
-          >
-            <button
-              style={{ position: "fixed", top: "600px", right: "30px" }}
-              onClick={handleOpen}
-            >
-              댓글쓰기
-            </button>
 
-            {comment}
-          </div>
-        </DropTarget>
-        <DragDropContainer targetKey="foo">
-          <div
-            style={{
-              border: "1px solid gray",
-              width: "357px",
-              height: "50px",
+        <div
+          style={{
+            border: "1px solid gray",
+            width: "357px",
+          }}
+        >
+          <button
+            style={{ position: "fixed", top: "600px", right: "30px" }}
+            onClick={() => {
+              setValue();
+              handleOpen();
             }}
           >
-            <b>pull up</b>
-          </div>
-        </DragDropContainer>
+            댓글쓰기
+          </button>
+
+          {comment}
+        </div>
 
         <div>
           <Dialog
@@ -126,9 +120,9 @@ class comment extends Component {
               <div style={{ marginTop: "15px" }}>
                 <label htmlFor="commentp">
                   {imgBase64 ? (
-                    <img src={imgBase64} alt="" />
+                    <img width="150px" height="150px" src={imgBase64} alt="" />
                   ) : (
-                    <img src="img/add_icon2.png" alt="" />
+                    <img width="150px" src="/img/add_icon2.png" alt="" />
                   )}
                 </label>
               </div>
@@ -141,7 +135,12 @@ class comment extends Component {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleSubmit} color="primary">
+              <Button
+                onClick={() => {
+                  handleSubmit();
+                }}
+                color="primary"
+              >
                 등록
               </Button>
               <Button onClick={handleOpen} color="primary">

@@ -56,7 +56,6 @@ export default class CounterStore {
       this.checkScrap(this.list[i].rec_num, i);
       this.getComment(this.list[i].rec_num, i);
     }
-    console.log(this.comment_count);
   };
   @action
   updateList = () => {
@@ -199,7 +198,6 @@ export default class CounterStore {
       params: { rec_num: num },
     })
       .then((res) => {
-        console.log("댓글수", res.data);
         this.comment_count[idx] = res.data;
       })
       .catch((err) => {});
