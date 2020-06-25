@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 import axios from "axios";
 
 export default class CounterStore {
@@ -10,13 +10,42 @@ export default class CounterStore {
   @observable check_j = [];
   @observable check_s = [];
   @observable comment_count = [];
+  @observable list_count = -1;
 
   //검색
   @observable search = null;
 
+  //삭제
+  @observable delete_open = false;
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
+  }
+
+
+  //삭제
+  @action
+  deleteOpen = (rec_num) => {
+    this.rec_num = rec_num;
+    this.delete_open = !this.delete_open;
+  };
+
+  @action
+  deleteRecipe = () => {
+    let url = "http://localhost:9000/acorn/recipe/delete";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { rec_num: this.rec_num },
+    })
+      .then((res) => {
+        this.delete_open = !this.delete_open;
+      })
+      .catch((err) => {
+        console.log("레시피삭제오류:" + err);
+      });
   }
 
   //검색
@@ -44,11 +73,27 @@ export default class CounterStore {
 
   @action
   reset = () => {
+    this.list_count = -1;
     this.state = { itemCount: 0, isLoading: false };
     this.list = [];
     this.scroll = 0;
-  };
 
+  };
+  @action
+  resetRecipe = () => {
+    this.list = [];
+    this.state = { itemCount: 0, isLoading: false };
+    this.view = { num: -1, idx: -1 };
+    this.scroll = 0;
+    this.anchorEl = [];
+    this.check_j = [];
+    this.check_s = [];
+    this.comment_count = [];
+    this.list_count = -1;
+    this.search = "";
+
+    console.log("초기화", this.search);
+  };
   @action
   setView = (num, idx) => {
     this.view.num = num;
@@ -66,9 +111,21 @@ export default class CounterStore {
     this.state.isLoading = false;
   };
 
+  @computed
+  get checkList() {
+
+    return this.list_count === this.list.length;
+
+  }
+
   @action
   setList = () => {
-    for (let i = 0; i < this.list.length; i++) {
+
+    let start = this.state.itemCount;
+
+
+    for (let i = start; i < this.list.length; i++) {
+      console.log(i);
       this.anchorEl[i] = null;
       this.updateCount(this.list[i].rec_num, i);
       this.checkJoayo(this.list[i].rec_num, i);
@@ -118,6 +175,9 @@ export default class CounterStore {
   @action
   getList = () => {
     let url = "http://localhost:9000/acorn/recipe/list";
+    if (this.search === "") this.search = null;
+
+    if (this.list.length === this.list_count) return;
 
     axios({
       method: "get",
@@ -129,13 +189,15 @@ export default class CounterStore {
     })
       .then((res) => {
         this.scroll++;
-        console.log(res.data);
+
         if (this.scroll === 1) {
-          this.list = res.data;
+          this.list = res.data.list;
         } else {
-          this.list = [...this.list, ...res.data];
+          this.list = [...this.list, ...res.data.list];
         }
         this.setList();
+        this.list_count = res.data.count;
+        console.log(res.data.list);
       })
       .catch((err) => {
         console.log("업로드오류:" + err);
@@ -158,7 +220,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -174,7 +236,7 @@ export default class CounterStore {
       .then((res) => {
         this.updateCheck(num, idx);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩체크
@@ -193,7 +255,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -209,7 +271,7 @@ export default class CounterStore {
       .then((res) => {
         this.updateCheck(num, idx);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   //댓글 count
   @action
@@ -224,6 +286,6 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }

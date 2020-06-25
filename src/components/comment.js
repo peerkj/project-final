@@ -103,7 +103,6 @@ class comment extends Component {
         <div
           style={{
             border: "1px solid gray",
-            width: "357px",
           }}
         >
           <button

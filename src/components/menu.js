@@ -13,6 +13,7 @@ import "../css/menu.css";
   profile_name: stores.info.profile_name,
   menu_profile: stores.cu.menu_profile,
   menu_nick: stores.cu.menu_nick,
+  resetRecipe: stores.recipe.resetRecipe,
 }))
 @observer
 class header extends Component {
@@ -26,18 +27,19 @@ class header extends Component {
       handleLogout,
       login_state,
       profile_name,
+      resetRecipe,
     } = this.props;
 
     return (
       <div>
         <div id="headgroup">
-          <Link to="/">
+          <a href="/">
             <img
               style={{ marginLeft: "107.5px", width: "140px" }}
               src="/img/logo1.png"
               alt=""
             />
-          </Link>
+          </a>
           <Hamburger toggled={hamto} toggle={change_ham} />
         </div>
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
@@ -54,44 +56,44 @@ class header extends Component {
                   }}
                 />
               ) : (
-                <img
-                  src="img/basic_user.png"
-                  alt=""
-                  style={{ width: "200px", marginLeft: "13px" }}
-                />
-              )}
+                  <img
+                    src="img/basic_user.png"
+                    alt=""
+                    style={{ width: "200px", marginLeft: "13px" }}
+                  />
+                )}
             </div>
             {menu_nick ? (
               <span style={{ fontWeight: "400", fontSize: "12pt" }}>
                 {menu_nick} 님
               </span>
             ) : (
-              <span></span>
-            )}
+                <span></span>
+              )}
             <br />
             {login_state ? (
-              <Link to="/mypage">MYPAGE</Link>
+              <Link to="/mypage">MYINFO</Link>
             ) : (
-              <Link to="/login">LOGIN</Link>
-            )}
+                <Link to="/login">LOGIN</Link>
+              )}
             &ensp;
             {login_state ? (
               <span onClick={handleLogout}>LOGOUT</span>
             ) : (
-              <Link to="/join">JOIN</Link>
-            )}
+                <Link to="/join">JOIN</Link>
+              )}
           </center>
           <br />
           <hr />
           <ul>
             <li>
-              <Link to="/">HOME</Link>
-            </li>
-            <li>
-              <Link to="/recipe">RECIPE</Link>
+              <Link to="/recipe" onClick={resetRecipe}>RECIPE</Link>
             </li>
             <li>
               <Link to="/counter">CHEF</Link>
+            </li>
+            <li>
+              <Link to="/mypage">MYPAGE</Link>
             </li>
           </ul>
         </div>
