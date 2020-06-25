@@ -42,10 +42,11 @@ export default class DetailStore {
 
   //공유모달
   @action
-  handleShare = (check) => {
+  handleShare = (v = 0) => {
     this.url = window.location.href;
-    if (check !== 0) {
-      this.url = this.url + "/detail?recipe=" + check;
+
+    if (v !== 0) {
+      this.url = this.url + "/detail?recipe=" + v;
     }
     this.modal_open = !this.modal_open;
   };
@@ -74,7 +75,6 @@ export default class DetailStore {
     })
       .then((res) => {
         this.all = res.data;
-        console.log(res.data);
         this.comp_list = this.all.comp_photo.split(",");
         this.comp_img = this.comp_list[0];
 
@@ -163,7 +163,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkjoa = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //좋아요
@@ -179,7 +179,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkJoayo();
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //스크랩체크
@@ -195,7 +195,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkscr = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //스크랩
@@ -211,6 +211,6 @@ export default class DetailStore {
       .then((res) => {
         this.checkScrap();
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 }
