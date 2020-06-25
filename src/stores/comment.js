@@ -16,6 +16,11 @@ export default class CounterStore {
   }
 
   @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleSubmit();
+  };
+
+  @action
   handleReset = () => {
     this.content = "";
     this.commentp = null;
@@ -64,6 +69,7 @@ export default class CounterStore {
   @action
   handleOpen = () => {
     this.modal_open = !this.modal_open;
+    this.handleReset();
   };
 
   @action

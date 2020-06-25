@@ -13,6 +13,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 
 import TextField from "@material-ui/core/TextField";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import "../css/home.css";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -117,20 +118,12 @@ const Home = ({
 
   return (
     <div>
-      <div
-        style={{
-          width: "200px",
-          overflow: "hidden",
-          position: "absolute",
-          left: "230px",
-          top: "480px",
-          cursor: "pointer",
-        }}
-      >
+      <div className="refribox">
         <b onClick={handleClickOpen}>나의냉장고</b>
         <img
           src="/img/refrigerator.png"
           style={{
+            float: "right",
             width: "100px",
           }}
           onClick={handleClickOpen}
