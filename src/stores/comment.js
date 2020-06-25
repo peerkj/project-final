@@ -16,6 +16,8 @@ export default class CounterStore {
   @observable restep = 0;
   @observable relevel = 0;
 
+  @observable delete_open = false;
+
   @action
   setValue = (com_num = 0, regroup = 0, restep = 0, relevel = 0) => {
     this.com_num = com_num;
@@ -74,6 +76,14 @@ export default class CounterStore {
     this.modal_open = !this.modal_open;
     this.handleReset();
   };
+
+
+  @action
+  deleteOpen = (com_num) => {
+    this.com_num = com_num;
+    this.delete_open = !this.delete_open;
+
+  }
 
   @action
   handleCommentChange = (e) => {
@@ -146,4 +156,20 @@ export default class CounterStore {
       })
       .catch((err) => { });
   };
+
+  @action
+  deleteComment = () => {
+    let url = "http://localhost:9000/acorn/comment/delete";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { com_num: this.com_num },
+    }).then((res) => {
+      this.getList();
+      this.delete_open = !this.delete_open;
+    }).catch((err) => {
+      console.log("댓글삭제오류:" + err);
+    })
+  }
 }

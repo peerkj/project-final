@@ -24,6 +24,11 @@ import { Close } from "@material-ui/icons";
   handleEnter: stores.comment.handleEnter,
   handleRemoveRe: stores.comment.handleRemoveRe,
   setValue: stores.comment.setValue,
+  userEmail: stores.info.userEmail,
+  deleteComment: stores.comment.deleteComment,
+
+  delete_open: stores.comment.delete_open,
+  deleteOpen: stores.comment.deleteOpen,
 }))
 @observer
 class comment extends Component {
@@ -45,6 +50,10 @@ class comment extends Component {
       handleEnter,
       handleRemoveRe,
       setValue,
+      userEmail,
+      deleteComment,
+      delete_open,
+      deleteOpen,
     } = this.props;
 
     const comment = comment_list.map((c, idx) => {
@@ -71,14 +80,18 @@ class comment extends Component {
             />
           )}
           <br />
-          <button
-            onClick={() => {
+          {c.email !== "알수없음" && (
+            <button onClick={() => {
               setValue(c.com_num, c.regroup, c.restep, c.relevel);
               handleOpen();
-            }}
-          >
-            답글
-          </button>
+            }}>답글</button>
+          )}
+
+          {c.email === userEmail && (
+            <button onClick={() => {
+              deleteOpen(c.com_num);
+            }}>삭제</button>
+          )}
         </div>
       );
     });
@@ -176,6 +189,32 @@ class comment extends Component {
                 등록
               </Button>
               <Button onClick={handleOpen} color="primary">
+                취소
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+        <div>
+          <Dialog
+            open={delete_open}
+            onClose={deleteOpen}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogContent>
+              삭제하시겠습니까?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  deleteComment();
+                }}
+                color="secondary"
+              >
+                확인
+              </Button>
+              <Button
+                onClick={deleteOpen}
+                color="primary">
                 취소
               </Button>
             </DialogActions>
