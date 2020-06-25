@@ -191,13 +191,15 @@ export default class CounterStore {
   //댓글 count
   @action
   getComment = (num, idx) => {
-    let url = "http://localhost:9000/acorn/comment/count?rec_num" + num;
+    let url = "http://localhost:9000/acorn/comment/count";
 
     axios({
       method: "get",
       url: url,
+      params: { rec_num: num },
     })
       .then((res) => {
+        console.log("댓글수", res.data);
         this.comment_count[idx] = res.data;
       })
       .catch((err) => {});

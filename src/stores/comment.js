@@ -9,7 +9,7 @@ export default class CounterStore {
   @observable content = "";
   @observable commentp = null; //실제 서버로 보내는
   @observable imgBase64 = ""; //미리보기
-
+  @observable count = 0;
   // **** 추가됨
   constructor(root) {
     this.root = root;
@@ -27,39 +27,22 @@ export default class CounterStore {
     this.imgBase64 = "";
   };
 
-  @action
-  updateList = () => {
-    let size = this.comment_list.length / 5;
-
-    for (let i = 0; i <= size; i++) {
-      setTimeout(() => {
-        this.getList(i);
-      }, 500);
-    }
-  };
-
   //리스트
   @action
-  getList = (scroll = 0) => {
+  getList = (i) => {
     let url = "http://localhost:9000/acorn/comment/list";
-    console.log(scroll);
+
     axios({
       method: "get",
       url: url,
 
       params: {
         rec_num: this.root.detail.rec_num,
-        scroll: scroll,
       },
     })
       .then((res) => {
         console.log("댓글", res.data);
-
-        if (scroll === 0) {
-          this.comment_list = res.data;
-        } else {
-          this.comment_list = [...this.comment_list, ...res.data];
-        }
+        this.comment_list = res.data;
       })
       .catch((err) => {
         console.log("업로드오류:" + err);
@@ -122,10 +105,25 @@ export default class CounterStore {
       .then((res) => {
         this.modal_open = !this.modal_open;
         this.handleReset();
-        this.updateList();
+        this.getList();
       })
       .catch((err) => {
         console.log("댓글등록오류:" + err);
       });
+  };
+
+  @action
+  getComment = () => {
+    let url = "http://localhost:9000/acorn/comment/count";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { rec_num: this.root.detail.rec_num },
+    })
+      .then((res) => {
+        this.count = res.data;
+      })
+      .catch((err) => {});
   };
 }

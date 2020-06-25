@@ -87,7 +87,12 @@ class comment extends Component {
               width: "357px",
             }}
           >
-            <button style={{ position: "fixed", top: "600px", right: "30px" }} onClick={handleOpen}>댓글쓰기</button>
+            <button
+              style={{ position: "fixed", top: "600px", right: "30px" }}
+              onClick={handleOpen}
+            >
+              댓글쓰기
+            </button>
 
             {comment}
           </div>
