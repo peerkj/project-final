@@ -70,6 +70,9 @@ const R = ({
   comment_open,
   handleComment,
   setRec_num,
+  onchangeSearch,
+  search,
+  handleEnter,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -302,6 +305,9 @@ const R = ({
             id="outlined-basic"
             variant="outlined"
             size="small"
+            onKeyDown={handleEnter}
+            value={search}
+            onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
 
@@ -446,4 +452,8 @@ export default inject(({ recipe, detail, info }) => ({
   comment_open: detail.comment_open,
   handleComment: detail.handleComment,
   setRec_num: detail.setRec_num,
+
+  onchangeSearch: recipe.onchangeSearch,
+  search: recipe.search,
+  handleEnter: recipe.handleEnter,
 }))(observer(R));

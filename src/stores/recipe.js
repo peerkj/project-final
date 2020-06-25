@@ -10,10 +10,29 @@ export default class CounterStore {
   @observable check_j = [];
   @observable check_s = [];
   @observable comment_count = [];
+
+  //검색
+  @observable search = "";
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
   }
+
+  //검색
+  @action
+  onchangeSearch = (e) => {
+    this.search = e.target.value;
+  };
+  @action
+  handleEnter = (e) => {
+    if (e.key === "Enter") {
+      //getList 초기화 후 얻기
+      this.reset();
+      this.getList(this.search);
+      this.addState();
+    }
+  };
 
   @action
   dothandleClick = (event, idx) => {
@@ -97,14 +116,19 @@ export default class CounterStore {
   };
   //리스트
   @action
-  getList = () => {
-    let url = "http://localhost:9000/acorn/recipe/list?scroll=" + this.scroll;
-    this.scroll++;
+  getList = (search = null) => {
+    let url = "http://localhost:9000/acorn/recipe/list";
+
     axios({
       method: "get",
       url: url,
+      params: {
+        scroll: this.scroll,
+        search: search,
+      },
     })
       .then((res) => {
+        this.scroll++;
         console.log(res.data);
         if (this.scroll === 1) {
           this.list = res.data;

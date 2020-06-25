@@ -38,15 +38,14 @@ export default class DragStore {
       this.refir_style = "refopen";
       this.handle_style = "open";
     }, 2000);
-
-  }
+  };
   //모달 close
   @action
   r_close = () => {
     this.refir = "";
     this.handle_style = "close";
     this.refir_style = "refclose";
-  }
+  };
   @action
   addPotFood = (idx) => {
     this.pot_food.push(this.mylist[idx].food);
@@ -90,7 +89,6 @@ export default class DragStore {
     setTimeout(() => {
       this.pot = "img/pot/potgif.gif";
     }, 350);
-
   };
 
   @action
