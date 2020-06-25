@@ -67,7 +67,7 @@ class comment extends Component {
           {c.image && (
             <img
               width="40px"
-              src={`http://localhost:9000/acorn/image/profile/${c.image}`}
+              src={`http://localhost:9000/acorn/image/comment/${c.image}`}
               alt=""
             />
           )}
@@ -85,7 +85,12 @@ class comment extends Component {
               width: "357px",
             }}
           >
-            <button onClick={handleOpen}>댓글쓰기</button>
+            <button
+              style={{ position: "fixed", top: "600px", right: "30px" }}
+              onClick={handleOpen}
+            >
+              댓글쓰기
+            </button>
 
             {comment}
           </div>
@@ -119,19 +124,18 @@ class comment extends Component {
                 onChange={handleCommentChange}
               />
               <div style={{ marginTop: "15px" }}>
-                <label htmlFor="comphoto">
+                <label htmlFor="commentp">
                   {imgBase64 ? (
                     <img src={imgBase64} alt="" />
                   ) : (
-                    <img width="100px" src="img/add_icon2.png" alt="" />
+                    <img src="img/add_icon2.png" alt="" />
                   )}
                 </label>
               </div>
               <input
                 style={{ display: "none" }}
                 accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
-                id="comphoto"
-                multiple
+                id="commentp"
                 type="file"
                 onChange={handleChangeImg}
               />

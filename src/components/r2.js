@@ -38,6 +38,7 @@ import {
   Favorite,
   BookmarkBorder,
   ExpandLess,
+  ChatBubbleOutline,
 } from "@material-ui/icons";
 import "../css/styles.css";
 
@@ -241,7 +242,7 @@ const R = ({
               {l.scrap}
             </span>
             &nbsp;
-            <Bookmark color="secondary" fontSize="small" />
+            <ChatBubbleOutline color="disabled" fontSize="small" />
             &nbsp;
             <span
               style={{
