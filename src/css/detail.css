@@ -1,12 +1,46 @@
+@font-face { font-family: 'InkLipquid'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'TmonMonsori'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff'); font-weight: normal; font-style: normal; }
+.detailThumbnail{
+    position: relative; 
+    padding-top: 75%; /* 4:3 ratio */ 
+    overflow: hidden;
+}
+
+.detailThumbnail .centered{
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    -webkit-transform: translate(50%,50%); 
+    -ms-transform: translate(50%,50%); 
+    transform: translate(50%,50%);
+}
+
+.detailThumbnailImg{
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    max-width: 100%; 
+    height: auto;
+    -webkit-transform: translate(-50%,-50%); 
+    -ms-transform: translate(-50%,-50%); 
+    transform: translate(-50%,-50%);
+}  
+.detailThumbnailImg.portrait{
+    width:100%;
+    height:auto;
+  }
+.detailThumbnailImg.landscape{
+    width:auto;
+    height: 100%;
+}
+
 .de_profile{
     width: 80px;
     height: 80px;
     border-radius: 80px;
-    border: 1px solid black;
-    background-color: yellow;
-    position: absolute;
-    left: 135px;
-    top: -40px;
+    margin-top: -45px;
 }
 
 .ptdGroup::after{
@@ -16,7 +50,7 @@
 }
 
 .ptdGroup{
-    padding: 0 55px;
+    padding: 0 59px;
 }
 
 .ptd{
@@ -26,24 +60,36 @@
     text-align: center;
 }
 
+.ptd .texts{
+    color:#bdbdbd;
+}
 .stepnum{
-    width: 30px;
-    height: 30px;
-    border:1px solid mediumblue;
-    border-radius: 30px;
+    width: 20px;
+    height: 20px;
+    border:1px solid #002060;
+    border-radius: 20px;
     text-align: center;
-    line-height: 30px;
+    line-height: 20px;
     font-weight: bold;
     color:white;
-    background-color: mediumblue;
-    margin: 10px;
+    background-color: #002060;
     float: left;
+    vertical-align: middle;
 }
 
+.stepnc{
+    width: 100%;
+    height: 40px;
+}
 .stepnc::after{
     content: "";
     display: block;
     clear: both;
+}
+
+.steptext{
+    vertical-align: middle;
+    margin-left: 8px;
 }
 
 .shareclosebtn{
@@ -51,3 +97,141 @@
     position: absolute;
     right: 10px;
 }
+
+#detail_subtext{
+    font-family: 'InkLipquid';
+    font-size: 16pt;
+}
+
+#detail_titletext{
+    font-family: 'TmonMonsori';
+    font-size: 20pt;
+}
+
+.ptd2Group{
+    width: 290px;
+}
+
+.ptd2Group::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.ptd2{
+    float: left;
+    width: 70px;
+}
+
+.detailLine{
+    height: 5px;
+    background-color: #e5e3e3;
+    border-style: none;
+    width:375px;
+    margin: 50px 0 50px -8px;
+}
+
+.detailMainIngre{
+    margin-left: 20px;
+}
+
+.detailMainIngre .sub{
+    float: right;
+    margin-right: 160px;
+}
+
+.detailSubIngre{
+    margin-left: 20px;
+}
+
+.detailSubIngre .sub{
+    float: right;
+    margin-right: 160px;
+}
+
+.detailMainTitle{
+    font-size: 10pt;
+    font-weight: 400;
+    margin-left: 10px;
+}
+
+.detailIngreTitleText{
+    font-family: 'InkLipquid';
+    color:#bdbdbd;
+    margin-left: 5px;
+    font-style: italic;
+}
+
+.detailStepCate{    
+    width: 130px;
+    border: 1px solid #d6d6d6;
+    border-radius: 5px;
+    height: 30px;
+    text-align: center;
+    padding: 10px 0 0 0 ;
+    float: right;
+    margin-top: -10px;
+}
+.detailStepCate::after{
+    content: "";
+    display: block;
+    clear: both;
+}
+.detailStepCate .category{
+    width: 40px;
+    display: inline-block;    
+}
+
+.stepImgWrapper{
+    position: relative; 
+    padding-top: 75%; /* 4:3 ratio */ 
+    overflow: hidden;
+    width: 359px;
+    margin-bottom: 40px;
+}
+
+.stepImgWrapper .centered{
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0; 
+    -webkit-transform: translate(50%,50%); 
+    -ms-transform: translate(50%,50%); 
+    transform: translate(50%,50%);
+  }
+
+  .stepImgWrapper img{
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    max-width: 100%; 
+    height: auto;
+    -webkit-transform: translate(-50%,-50%); 
+    -ms-transform: translate(-50%,-50%); 
+    transform: translate(-50%,-50%);
+  }
+  .stepImgWrapper img.portrait{
+    width:100%;
+    height:auto;
+  }
+  .stepImgWrapper img.landscape{
+    width:auto;
+    height: 100%;
+  }
+
+  .stepslider{
+    margin-bottom: 70px;
+  }
+
+  .stepsliderbtn{
+    margin-top: 270px;
+    text-align: center;
+  }
+
+  #tipBox{
+    width: 300px;
+    min-height: 50px;
+    margin-left: 30px;
+    font-size: 10pt;
+  }

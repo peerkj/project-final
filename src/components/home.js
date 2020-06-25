@@ -1,34 +1,11 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Button,
-  Dialog,
-  AppBar,
-  Toolbar,
-  Badge,
-  DialogContent,
-  DialogActions,
-  TextField,
-  DialogTitle,
-  Slide,
-  IconButton,
-  InputAdornment,
-  FormControl,
-  InputLabel,
-  Input,
-} from "@material-ui/core";
+import { Button, Dialog, AppBar, Toolbar, Badge, DialogContent, DialogActions, TextField, DialogTitle, Slide, IconButton, InputAdornment, FormControl, InputLabel, Input } from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
-import {
-  Close,
-  AddCircle,
-  ThumbUp,
-  RestaurantMenu,
-  DeleteOutline,
-  Search,
-} from "@material-ui/icons";
+import { Close, AddCircle, ThumbUp, RestaurantMenu, DeleteOutline, Search } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
-
 import "../css/home.css";
+
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -119,25 +96,19 @@ const Home = ({
         targetKey="foo"
         dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
       >
-        <img
-          src="/img/pot/dish.png"
-          alt=""
-          width="100px"
-          style={{ marginTop: "-15px" }}
-        ></img>
-        <span
-          style={{
-            position: "absolute",
-            top: "28px",
-            left: "32px",
-          }}
-        >
-          {my.refrig_name}
-        </span>
+        <img src="/img/pot/dish.png" alt="" width="100px"
+          style={{ marginTop: "-15px" }}></img>
+        <span style={{
+          position: "absolute", top: "28px", left: "32px"
+        }}>{my.refrig_name}</span>
         <Close
           id="profileImg_delete"
-          onClick={() => {
-            refri_delete(my.refrig_num);
+          onClick={
+            () => {
+              refri_delete(my.refrig_num);
+            }}
+          style={{
+            marginLeft: "-25px"
           }}
           style={{
             marginLeft: "-25px",
@@ -149,20 +120,15 @@ const Home = ({
   const pot_list = e_store.map((e) => {
     return (
       <div key={e.dragData.key} style={{}}>
-        <span style={{ fontSize: "10pt", fontWeight: "400" }}>
-          {e.dragData.food}
-        </span>
+        <span
+          style={{ fontSize: "10pt", fontWeight: "400" }}
+        >{e.dragData.food}</span>
         <Close
           id="profileImg_delete"
           onClick={() => {
             select_delete(e);
           }}
-          style={{
-            position: "relative",
-            top: "-1px",
-            left: "1px",
-            fontSize: "12pt",
-          }}
+          style={{ position: "relative", top: "-1px", left: "1px", fontSize: "12pt" }}
         />
       </div>
     );
@@ -208,7 +174,7 @@ const Home = ({
         fullScreen
         open={open}
         onClose={handleClose}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -270,7 +236,7 @@ const Home = ({
                 <br />
                 <img
                   style={{
-                    width: "150px",
+                    width: "150px"
                   }}
                   src={pot}
                   alt=""
@@ -366,11 +332,11 @@ const Home = ({
         <DialogActions>
           <Button onClick={handleAddFood} color="primary">
             추가
-          </Button>
+               </Button>
 
           <Button onClick={handleAddOpen} color="primary">
             취소
-          </Button>
+               </Button>
         </DialogActions>
       </Dialog>
     </div>

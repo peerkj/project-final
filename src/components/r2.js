@@ -188,7 +188,18 @@ const R = ({
                 </div>
               </div>
               <br />
-              <center>{l.subject}</center>
+              <center>
+                <span
+                  style={{
+                    fontSize: "12pt",
+                    fontWeight: "500",
+                    color: "#000000",
+                    marginLeft: "2px",
+                  }}
+                >
+                  {l.subject}
+                </span>
+              </center>
             </Typography>
           </CardContent>
         </Link>
@@ -211,12 +222,10 @@ const R = ({
                 }}
               />
             )}
-            &nbsp;
             <span
               style={{
                 fontWeight: "600",
                 fontSize: "12pt",
-                color: "#ff6d75",
               }}
             >
               {l.joayo}
@@ -239,17 +248,15 @@ const R = ({
                 }}
               />
             )}
-            &nbsp;
             <span
               style={{
                 fontWeight: "600",
                 fontSize: "12pt",
-                color: "#ff6d75",
               }}
             >
               {l.scrap}
             </span>
-            &nbsp;
+            &ensp;
             <ChatBubbleOutline
               onClick={() => {
                 setRec_num(l.rec_num);
@@ -259,12 +266,10 @@ const R = ({
               color="disabled"
               fontSize="small"
             />
-            &nbsp;
             <span
               style={{
                 fontWeight: "600",
                 fontSize: "12pt",
-                color: "#ff6d75",
               }}
             >
               {comment_count[idx]}
