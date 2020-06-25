@@ -54,6 +54,9 @@ import queryString from "query-string";
   step_slide: stores.detail.step_slide,
   stepR: stores.detail.stepR,
   stepL: stores.detail.stepL,
+
+  c_count: stores.detail.c_count,
+  getComment: stores.detail.getComment,
 }))
 @observer
 class Detail extends Component {
@@ -62,6 +65,7 @@ class Detail extends Component {
     window.scrollTo(0, 0);
     this.props.getRecipe(query.recipe);
     this.props.changeComp();
+    this.props.getComment();
   };
   render() {
     const {
@@ -98,6 +102,7 @@ class Detail extends Component {
       step_slide,
       stepR,
       stepL,
+      c_count,
     } = this.props;
 
     //주재료
@@ -183,6 +188,7 @@ class Detail extends Component {
           style={{ width: "100%", height: "300px", border: "1px solid black" }}
         >
           <img
+            width="200px"
             src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
             alt=""
           />
@@ -214,7 +220,13 @@ class Detail extends Component {
             </div>
             <div>
               <div>
-                <button onClick={handleShare}>공유</button>
+                <button
+                  onClick={() => {
+                    handleShare(0);
+                  }}
+                >
+                  공유
+                </button>
               </div>
               <div>
                 <button onClick={Scrap}>
@@ -222,7 +234,7 @@ class Detail extends Component {
                 </button>
               </div>
               <div>
-                <button onClick={handleComment}>댓글</button>
+                <button onClick={handleComment}>댓글 {c_count}</button>
               </div>
               <div>
                 <button onClick={Joayo}>
@@ -338,12 +350,11 @@ class Detail extends Component {
               </IconButton>
             </Toolbar>
           </AppBar>
-
-          <div>
-            <br />
-            <br />
+          <br />
+          <br />
+          <DialogContent>
             <Comment />
-          </div>
+          </DialogContent>
         </Dialog>
         {/* 댓글모달 */}
       </div>

@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Dialog, AppBar, Toolbar, Badge } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
+import {
+  Button,
+  Dialog,
+  AppBar,
+  Toolbar,
+  Badge,
+  DialogContent,
+  DialogActions,
+  TextField,
+  DialogTitle,
+  Slide,
+  IconButton,
+  InputAdornment,
+  FormControl,
+  InputLabel,
+  Input,
+} from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
-import { Close } from "@material-ui/icons";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
+import {
+  Close,
+  AddCircle,
+  ThumbUp,
+  RestaurantMenu,
+  DeleteOutline,
+  Search,
+} from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
-import { DialogContent } from "@material-ui/core";
 
-import DialogActions from "@material-ui/core/DialogActions";
-
-import TextField from "@material-ui/core/TextField";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import "../css/home.css";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -27,7 +43,14 @@ const useStyles = makeStyles((theme) => ({
     minWidth: "40px",
     borderRadius: "40px",
   },
+  margin: {
+    margin: theme.spacing(1),
+  },
 }));
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const Home = ({
   count,
@@ -43,7 +66,7 @@ const Home = ({
   addPotFood,
   pot_food,
   deleteList,
-
+  c,
   e_add,
   e_store,
   select_delete,
@@ -58,20 +81,28 @@ const Home = ({
   refri_delete,
   handleCook,
   handleRecipe,
+  refir,
+  handle_style,
+  r_open,
+  r_close,
+  refir_style,
+  binpot,
+  handleKeyPress,
+  //handleSearchRecipe
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     resetCount();
-    changePot();
+    r_open();
     setOpen(true);
     handleListFood();
   };
 
   const handleClose = () => {
     setOpen(false);
-    stopPot();
+    r_close();
   };
   const dropped = (e) => {
     e.containerElem.style.visibility = "hidden";
@@ -88,13 +119,28 @@ const Home = ({
         targetKey="foo"
         dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
       >
-        <img src="/img/orange.png" alt="" />
-        <br />
-        <b>{my.refrig_name}</b>
+        <img
+          src="/img/pot/dish.png"
+          alt=""
+          width="100px"
+          style={{ marginTop: "-15px" }}
+        ></img>
+        <span
+          style={{
+            position: "absolute",
+            top: "28px",
+            left: "32px",
+          }}
+        >
+          {my.refrig_name}
+        </span>
         <Close
           id="profileImg_delete"
           onClick={() => {
             refri_delete(my.refrig_num);
+          }}
+          style={{
+            marginLeft: "-25px",
           }}
         />
       </DragDropContainer>
@@ -102,77 +148,136 @@ const Home = ({
   });
   const pot_list = e_store.map((e) => {
     return (
-      <div key={e.dragData.key}>
-        <b>{e.dragData.food}</b>
+      <div key={e.dragData.key} style={{}}>
+        <span style={{ fontSize: "10pt", fontWeight: "400" }}>
+          {e.dragData.food}
+        </span>
         <Close
           id="profileImg_delete"
           onClick={() => {
             select_delete(e);
           }}
+          style={{
+            position: "relative",
+            top: "-1px",
+            left: "1px",
+            fontSize: "12pt",
+          }}
         />
-        <br />
       </div>
     );
   });
 
   return (
-    <div>
-      <div
+    <div width="375px">
+      <center>
+        <FormControl className={classes.margin} style={{ marginTop: "230px" }}>
+          {/* <InputLabel htmlFor="input-with-icon-adornment">재료 검색 시 예)#삼겹살</InputLabel> */}
+          <Input
+            id="input-with-icon-adornment"
+            startAdornment={
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            }
+            onKeyPress={handleKeyPress}
+          />
+        </FormControl>
+      </center>
+      <span
         style={{
-          width: "200px",
-          overflow: "hidden",
+          fontSize: "12pt",
+          fontWeight: "300",
           position: "absolute",
-          left: "230px",
-          top: "480px",
-          cursor: "pointer",
+          top: "600px",
+          left: "170px",
         }}
       >
-        <b onClick={handleClickOpen}>나의냉장고</b>
-        <img
-          src="/img/refrigerator.png"
-          style={{
-            width: "100px",
-          }}
-          onClick={handleClickOpen}
-          alt=""
-        />
-      </div>
+        나만의 냉장고
+      </span>
+      <img
+        src="/img/refrigerator.png"
+        style={{
+          float: "right",
+          width: "100px",
+        }}
+        onClick={handleClickOpen}
+        alt=""
+      />
       <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
-        style={{ backgroundImage: "url(/img/refrigerator.png)" }}
+        // TransitionComponent={Transition}
       >
-        <AppBar className={classes.appBar}>
+        <AppBar
+          className={classes.appBar}
+          style={{ height: "50px", backgroundColor: "#002060" }}
+        >
           <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
+            <IconButton edge="start" onClick={handleClose} aria-label="close">
+              <Close style={{ color: "#ffffff", marginTop: "-5px" }} />
             </IconButton>
           </Toolbar>
         </AppBar>
         <div>
           <br />
-          <br />
-          {list}
-
+          <div style={{ width: "375px" }}>
+            <center>
+              <div className={handle_style}>
+                <Button
+                  onClick={handleRecipe}
+                  size="small"
+                  startIcon={<ThumbUp />}
+                  variant="outlined"
+                >
+                  추천 레시피 보기
+                </Button>
+                <br />
+                <br />
+                <div onClick={handleAddOpen}>
+                  <AddCircle style={{ fontSize: "10pt" }} />
+                  <span>재료 추가</span>
+                </div>
+              </div>
+              <img
+                className={refir_style}
+                src={refir}
+                alt=""
+                width="530"
+                style={{ marginLeft: "-77px" }}
+              />
+              <div className={handle_style} width="330">
+                <img src="img/refview2.png" alt="" width="330" />
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "155px",
+                    left: "0px",
+                    width: "370px",
+                    height: "320px",
+                  }}
+                >
+                  {list}
+                </span>
+              </div>
+            </center>
+          </div>
           <DropTarget targetKey="foo" onHit={dropped}>
-            <img
-              style={{
-                width: "200px",
-                height: "200px",
-                position: "absolute",
-                left: "87px",
-                top: "420px",
-              }}
-              src={pot}
-              alt=""
-              onClick={clickPot}
-            />
+            <div className={handle_style}>
+              <center style={{ width: "375px" }}>
+                <span>재료를 드래그하여 냄비에 넣어 주세요.</span>
+                <br />
+                <img
+                  style={{
+                    width: "150px",
+                  }}
+                  src={pot}
+                  alt=""
+                  onClick={clickPot}
+                />
+              </center>
+            </div>
             <div
               style={{
                 position: "absolute",
@@ -184,33 +289,54 @@ const Home = ({
                 className={useStyles.badge}
                 badgeContent={count}
                 color="secondary"
+                style={{ top: "85px", left: "-10px" }}
               ></Badge>
             </div>
           </DropTarget>
-          <button type="button" onClick={handleAddOpen}>
-            추가
-          </button>
-          <button type="button" onClick={handleRecipe}>
-            추천레시피보기
-          </button>
         </div>
       </Dialog>
 
-      <Dialog open={openpot} onClose={clickPot}>
+      <Dialog
+        open={binpot}
+        onClose={clickPot}
+        style={{ position: "absolute", top: "35px", left: "7px" }}
+      >
         <DialogContent>
-          <img
-            src="/img/binpot.png"
-            alt=""
-            style={{ width: "280px", marginLeft: "-10px" }}
-          />
+          <Close onClick={clickPot} style={{ float: "right" }} />
           <br />
-          {pot_list}
-          <Button color="primary" variant="outlined" onClick={deleteList}>
-            냄비비우기
-          </Button>
-          <Button color="primary" variant="outlined" onClick={handleCook}>
-            요리하기
-          </Button>
+          <center>
+            <img src="img/pot/boiledpot.gif" alt="" width="250px" />
+            <br />
+            <div
+              style={{
+                width: "200px",
+                height: "180px",
+                border: "1px solid #c5c5c5",
+                borderRadius: "10px",
+                marginBottom: "10px",
+                padding: "1px",
+              }}
+            >
+              {pot_list}
+            </div>
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={deleteList}
+              startIcon={<DeleteOutline />}
+            >
+              비우기
+            </Button>
+            &ensp;
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<RestaurantMenu />}
+              onClick={handleCook}
+            >
+              요리하기
+            </Button>
+          </center>
           <br />
         </DialogContent>
       </Dialog>
@@ -220,7 +346,7 @@ const Home = ({
         onClose={handleAddOpen}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">냉장고 추가</DialogTitle>
+        <DialogTitle id="form-dialog-title">냉장고 재료 추가</DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"
@@ -278,4 +404,12 @@ export default inject(({ drag }) => ({
   refri_delete: drag.refri_delete,
   handleCook: drag.handleCook,
   handleRecipe: drag.handleRecipe,
+  r_open: drag.r_open,
+  r_close: drag.r_close,
+  handle_style: drag.handle_style,
+  refir: drag.refir,
+  refir_style: drag.refir_style,
+  binpot: drag.binpot,
+  handleKeyPress: drag.handleKeyPress,
+  //handleSearchRecipe: drag, handleSearchRecipe
 }))(observer(Home));

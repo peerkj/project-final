@@ -9,11 +9,7 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import {
-  Cancel,
-  AddCircle,
-  Close
-} from "@material-ui/icons";
+import { Cancel, AddCircle, Close } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import { inject, observer } from "mobx-react";
 
@@ -67,14 +63,12 @@ import { inject, observer } from "mobx-react";
 
   handleReset: stores.write.handleReset,
   login_state: stores.info.login_state,
-
-
 }))
-
 @observer
 class write extends Component {
   componentWillMount = () => {
     this.props.handleReset();
+    window.scrollTo(0, 0);
     if (!this.props.login_state) {
       this.props.history.push("/login");
     }
@@ -126,7 +120,6 @@ class write extends Component {
       handleRemoveRe,
       //
       insertRecipe,
-
     } = this.props;
 
     const useStyles = makeStyles((theme) => ({
@@ -266,8 +259,8 @@ class write extends Component {
               {i.imgBase64 ? (
                 <img className="cookImg" src={i.imgBase64} alt="" />
               ) : (
-                  <img className="cookImg" src="img/add_icon2.png" alt="" />
-                )}
+                <img className="cookImg" src="img/add_icon2.png" alt="" />
+              )}
             </label>
             {i.imgBase64 ? (
               <Close
@@ -278,8 +271,8 @@ class write extends Component {
                 style={{ position: "relative", left: "-21px", top: "-75px" }}
               />
             ) : (
-                ""
-              )}
+              ""
+            )}
             <Cancel
               onClick={() => {
                 handelDelete_step(idx);
@@ -297,7 +290,6 @@ class write extends Component {
               id={idx}
               type="file"
             />
-
           </DropTarget>
         </DragDropContainer>
       );
@@ -323,8 +315,8 @@ class write extends Component {
                 {i.imgBase64 ? (
                   <img className="finishImg" src={i.imgBase64} alt="" />
                 ) : (
-                    <img className="finishImg" src="img/add_icon2.png" alt="" />
-                  )}
+                  <img className="finishImg" src="img/add_icon2.png" alt="" />
+                )}
               </label>
             </div>
             <input
@@ -357,10 +349,18 @@ class write extends Component {
             <div style={{ width: "150px", float: "right", marginTop: "15px" }}>
               <label htmlFor="repre">
                 {represent.imgBase64 ? (
-                  <img className="writeThumbnail" src={represent.imgBase64} alt="" />
+                  <img
+                    className="writeThumbnail"
+                    src={represent.imgBase64}
+                    alt=""
+                  />
                 ) : (
-                    <img className="writeThumbnail" src="img/add_icon3.png" alt="" />
-                  )}
+                  <img
+                    className="writeThumbnail"
+                    src="img/add_icon3.png"
+                    alt=""
+                  />
+                )}
               </label>
               {represent.imgBase64 ? (
                 <Close
@@ -370,8 +370,8 @@ class write extends Component {
                   id="thumbnail_delete"
                 />
               ) : (
-                  ""
-                )}
+                ""
+              )}
             </div>
             <input
               onChange={handleChangeRe}
@@ -497,8 +497,13 @@ class write extends Component {
             <br />
             <center>
               <div id="add_ingredient" onClick={handelAddMain}>
-                <AddCircle size="small" style={{ color: "#002060", verticalAlign: "middle" }} />
-                <div className="subtext" style={{ verticalAlign: "middle" }}>재료 추가</div>
+                <AddCircle
+                  size="small"
+                  style={{ color: "#002060", verticalAlign: "middle" }}
+                />
+                <div className="subtext" style={{ verticalAlign: "middle" }}>
+                  재료 추가
+                </div>
               </div>
             </center>
             <hr id="mdline" />
@@ -510,8 +515,13 @@ class write extends Component {
               <br />
               <center>
                 <div id="add_ingredient" onClick={handelAddSub}>
-                  <AddCircle size="small" style={{ color: "#002060", verticalAlign: "middle" }} />
-                  <div className="subtext" style={{ verticalAlign: "middle" }}>재료 추가</div>
+                  <AddCircle
+                    size="small"
+                    style={{ color: "#002060", verticalAlign: "middle" }}
+                  />
+                  <div className="subtext" style={{ verticalAlign: "middle" }}>
+                    재료 추가
+                  </div>
                 </div>
               </center>
             </div>
@@ -519,12 +529,19 @@ class write extends Component {
           <hr className="line" />
           <div>
             <div className="all2nd_title">요리 순서</div>
-            <div style={{ color: "#c4c4c4" }}>Tip! 드래그로 순서를 바꿀 수 있습니다</div>
+            <div style={{ color: "#c4c4c4" }}>
+              Tip! 드래그로 순서를 바꿀 수 있습니다
+            </div>
             {step_list}
             <center>
               <div onClick={handelAddStep} style={{ marginTop: "10px" }}>
-                <AddCircle size="small" style={{ color: "#002060", verticalAlign: "middle" }} />
-                <div className="subtext" style={{ verticalAlign: "middle" }}>순서 추가</div>
+                <AddCircle
+                  size="small"
+                  style={{ color: "#002060", verticalAlign: "middle" }}
+                />
+                <div className="subtext" style={{ verticalAlign: "middle" }}>
+                  순서 추가
+                </div>
               </div>
             </center>
           </div>
@@ -532,7 +549,9 @@ class write extends Component {
           <div>
             <div className="all2nd_title">완성 사진</div>
             <div>여러장 첨부 가능</div>
-            <div style={{ color: "#c4c4c4" }}>Tip! 드래그로 순서를 바꿀 수 있습니다</div>
+            <div style={{ color: "#c4c4c4" }}>
+              Tip! 드래그로 순서를 바꿀 수 있습니다
+            </div>
             {done_list}
           </div>
           <hr className="line" />
@@ -549,31 +568,37 @@ class write extends Component {
           />
           <hr className="line" />
           <center>
-            <Button variant="outlined" size="medium"
+            <Button
+              variant="outlined"
+              size="medium"
               onClick={() => {
                 history.push("/recipe");
-              }}>
+              }}
+            >
               취소
             </Button>
             <Button
-              onClick={insertRecipe}
+              onClick={() => {
+                insertRecipe(history);
+              }}
               variant="outlined"
               size="medium"
               style={{
                 backgroundColor: "#002060",
                 color: "#ffffff",
-                marginLeft: "5px"
+                marginLeft: "5px",
               }}
             >
               글쓰기
-          </Button>
+            </Button>
           </center>
-          <br /><br /><br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     );
   }
 }
-
 
 export default write;
