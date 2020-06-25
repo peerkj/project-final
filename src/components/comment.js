@@ -59,12 +59,12 @@ class comment extends Component {
     const comment = comment_list.map((c, idx) => {
       return (
         <div style={{ border: "1px solid gray" }} key={idx}>
-          {c.relevel === 1 && <b>답글입니당</b>}
           <img
             width="40px"
             src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
             alt=""
           />
+          {c.relevel === 1 && <b>답글입니당</b>}
           <br />
           <b>{c.timeDiffer}</b>
           <br />
@@ -103,7 +103,6 @@ class comment extends Component {
         <div
           style={{
             border: "1px solid gray",
-            width: "357px",
           }}
         >
           <button

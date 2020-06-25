@@ -1,5 +1,6 @@
 @font-face { font-family: 'InkLipquid'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff') format('woff'); font-weight: normal; font-style: normal; }
 @font-face { font-family: 'TmonMonsori'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'Binggrae-Bold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff') format('woff'); font-weight: 200,300,400,500,600; font-style: normal; }
 .detailThumbnail{
     position: relative; 
     padding-top: 75%; /* 4:3 ratio */ 
@@ -234,4 +235,12 @@
     min-height: 50px;
     margin-left: 30px;
     font-size: 10pt;
+  }
+
+  .recipeSubject{
+    font-family: 'Binggrae-Bold';
+    font-size: 15pt;
+    font-weight: 600;
+    color: #000000;
+    margin-left: 2px;
   }

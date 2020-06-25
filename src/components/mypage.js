@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { inject, observer } from "mobx-react";
 import { Create, Lock, AccountCircle } from "@material-ui/icons";
+import "../css/profile.css";
 
 @inject((stores) => ({
   password: stores.chefupdate.password,
@@ -68,22 +69,22 @@ class mypage extends Component {
     return (
       <div>
         <center>
-          <div>
-            {imgBase64 ? (
-              <img
-                src={imgBase64}
-                alt=""
-                style={{
-                  width: "150px",
-                  height: "150px",
-                  marginTop: "40px",
-                  marginBottom: "20px",
-                }}
-              />
-            ) : (
-                <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
-              )}
+          <div className="profileCenterWrapper">
+            <div className="profileCenter">
+              <div className="centered">
+                {imgBase64 ? (
+                  <img
+                    src={imgBase64}
+                    alt=""
+                    className="profileCenterImg"
+                  />
+                ) : (
+                    <img src="img/basic_user.png" alt="" />
+                  )}
+              </div>
+            </div>
           </div>
+
           <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
         </center>
         <hr style={{ marginTop: "55px" }} />
@@ -152,6 +153,9 @@ class mypage extends Component {
               />
             </DialogContent>
             <DialogActions>
+              <Button onClick={handleOpen} color="primary">
+                취소
+              </Button>
               <Button
                 onClick={() => {
                   handleUpdate(history);
@@ -159,9 +163,6 @@ class mypage extends Component {
                 color="primary"
               >
                 확인
-              </Button>
-              <Button onClick={handleOpen} color="primary">
-                취소
               </Button>
             </DialogActions>
           </Dialog>
@@ -216,11 +217,11 @@ class mypage extends Component {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handlePassUpdate} color="primary">
-                확인
-              </Button>
               <Button onClick={handleOpen2} color="primary">
                 취소
+              </Button>
+              <Button onClick={handlePassUpdate} color="primary">
+                확인
               </Button>
             </DialogActions>
           </Dialog>

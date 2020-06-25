@@ -5,10 +5,10 @@ import Comment from "./comment";
 import { makeStyles } from "@material-ui/core/styles";
 import "../css/detail.css";
 import {
-  Share, Close, People, Timer, Star, ChatBubble,
-  Bookmark, ThumbUp, ViewList, ViewCarousel, Subject,
+  Share, Close, People, Timer, Star, ChatBubbleOutline,
+  Bookmark, FavoriteBorderSharp, FavoriteSharp, ViewList, ViewCarousel, Subject,
   KeyboardArrowRight, KeyboardArrowLeft, PlayArrow, Pause,
-  ExpandLess,
+  ExpandLess, BookmarkBorderSharp
 } from "@material-ui/icons";
 import {
   Button, Dialog, TextField, DialogContent, DialogTitle,
@@ -258,16 +258,16 @@ class Detail extends Component {
                   <Share /><br />
                   URL 복사
                 </div>
-                <div className="ptd2" onClick={Scrap}>
-                  <Bookmark /><br />
-                  {checkscr === 0 ? "스크랩하기" : "스크랩 취소"}
-                </div>
                 <div className="ptd2" onClick={Joayo}>
-                  <ThumbUp /><br />
+                  {checkjoa === 0 ? <FavoriteBorderSharp /> : <FavoriteSharp style={{ color: "#db555a" }} />}<br />
                   {checkjoa === 0 ? "좋아요" : "좋아요 취소"}
                 </div>
+                <div className="ptd2" onClick={Scrap}>
+                  {checkscr === 0 ? <BookmarkBorderSharp /> : <Bookmark style={{ color: "#db555a" }} />}<br />
+                  {checkscr === 0 ? "스크랩" : "스크랩 취소"}
+                </div>
                 <div className="ptd2" onClick={handleComment}>
-                  <ChatBubble /><br />
+                  <ChatBubbleOutline /><br />
                   댓글 {c_count}개
                 </div>
               </div>
@@ -339,7 +339,7 @@ class Detail extends Component {
             <br />
             <br />
             <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>
-              <img src="img/star.jpg" alt="" width="30px" style={{ verticalAlign: "middle" }} />
+              <img src="/img/star.jpg" alt="" width="30px" style={{ verticalAlign: "middle" }} />
               <span style={{ verticalAlign: "middle" }}>요리 Tip!</span>
             </p>
             <div id="tipBox">{all.tip}</div>
@@ -370,7 +370,7 @@ class Detail extends Component {
             style={{
               position: "fixed",
               left: "330px",
-              top: "755px",
+              top: "605px",
               width: "30px",
               height: "30px",
               border: "1px solid #575757",
@@ -385,9 +385,9 @@ class Detail extends Component {
         <div>
           <Dialog open={modal_open} onClose={handleShare}>
             <DialogTitle id="form-dialog-title">
-              URL 복사하기
+              <span style={{ fontSize: "12pt" }}>URL 복사하기</span>
               <IconButton edge="end" onClick={handleShare} aria-label="close">
-                <Close />
+                <Close style={{ marginLeft: "130px", marginTop: "-10px" }} />
               </IconButton>
             </DialogTitle>
 
@@ -400,9 +400,11 @@ class Detail extends Component {
                 size="small"
               />
               <CopyToClipboard text={url} onCopy={onCopy}>
-                <Button color="primary" variant="contained">
-                  복사하기
-                </Button>
+                <center>
+                  <Button style={{ margin: "20px 0" }} variant="outlined">
+                    복사
+                  </Button>
+                </center>
               </CopyToClipboard>
             </DialogContent>
           </Dialog>

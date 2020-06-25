@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Comment from "./comment";
+import "../css/detail.css";
 
 import {
   Button,
@@ -24,8 +25,7 @@ import {
   TextField,
   DialogContent,
   DialogTitle,
-  AppBar,
-  Toolbar,
+  CircularProgress,
 } from "@material-ui/core";
 import {
   Close,
@@ -102,6 +102,12 @@ const R = ({
     },
     avatar: {
       backgroundColor: red[500],
+    },
+    load: {
+      display: 'flex',
+      '& > * + *': {
+        marginLeft: theme.spacing(2),
+      },
     },
   }));
 
@@ -188,7 +194,7 @@ const R = ({
               </div>
               <br />
               <center>
-                <span style={{ fontSize: "12pt", fontWeight: "500", color: "#000000", marginLeft: "2px" }}>
+                <span className="recipeSubject">
                   {l.subject}
                 </span>
               </center>
@@ -207,7 +213,7 @@ const R = ({
               />
             ) : (
                 <Favorite
-                  color="secondary"
+                  style={{ color: "#db555a" }}
                   fontSize="small"
                   onClick={() => {
                     Joayo(l.rec_num, idx);
@@ -216,7 +222,7 @@ const R = ({
               )}
             <span
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "12pt",
               }}
             >
@@ -233,7 +239,7 @@ const R = ({
               />
             ) : (
                 <Bookmark
-                  color="secondary"
+                  style={{ color: "#db555a" }}
                   fontSize="small"
                   onClick={() => {
                     Scrap(l.rec_num, idx);
@@ -242,7 +248,7 @@ const R = ({
               )}
             <span
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "12pt",
               }}
             >
@@ -260,7 +266,7 @@ const R = ({
             />
             <span
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "12pt"
               }}
             >
@@ -333,7 +339,9 @@ const R = ({
       {/* 로딩 */}
       <center>
         <div ref={setRef} className="Loading">
-          {state.isLoading && "Loading..."}
+          <div className={useStyles.load}>
+            {state.isLoading && <CircularProgress style={{ color: "#bdbdbd" }} />}
+          </div>
         </div>
       </center>
 
@@ -377,13 +385,14 @@ const R = ({
           }}
         />
       </Link>
+
       {/* 공유모달 */}
       <div>
         <Dialog open={modal_open} onClose={handleShare}>
           <DialogTitle id="form-dialog-title">
-            URL 복사하기
+            <span style={{ fontSize: "12pt" }}>URL 복사하기</span>
             <IconButton edge="end" onClick={handleShare} aria-label="close">
-              <Close />
+              <Close style={{ marginLeft: "130px", marginTop: "-10px" }} />
             </IconButton>
           </DialogTitle>
 
@@ -396,14 +405,17 @@ const R = ({
               size="small"
             />
             <CopyToClipboard text={url} onCopy={onCopy}>
-              <Button color="primary" variant="contained">
-                복사하기
-              </Button>
+              <center>
+                <Button style={{ margin: "20px 0" }} variant="outlined">
+                  복사
+                </Button>
+              </center>
             </CopyToClipboard>
           </DialogContent>
         </Dialog>
       </div>
       {/* 공유모달 */}
+
       {/* 댓글모달 */}
       <Dialog open={comment_open} onClose={handleComment}>
         <IconButton
