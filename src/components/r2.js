@@ -339,8 +339,13 @@ const R = ({
       {ListItem}
 
       {/* 로딩 */}
+      <div style={{ height: "100px" }}></div>
       <center>
-        <div ref={setRef} className="Loading">
+        <div
+          style={{ backgroundColor: "black" }}
+          ref={setRef}
+          className="Loading"
+        >
           {state.isLoading && "Loading..."}
         </div>
       </center>

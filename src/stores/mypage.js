@@ -132,29 +132,24 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
-    let url = "http://localhost:9000/acorn/recipe/list";
-    if (this.search === "") this.search = null;
+    let url = "http://localhost:9000/acorn/mypage/recipe";
     axios({
       method: "get",
       url: url,
       params: {
         scroll: this.scroll,
-        search: this.search,
+        email: this.root.info.userEmail,
       },
     })
       .then((res) => {
         this.scroll++;
 
         if (this.scroll === 1) {
-          this.list = res.data.list;
+          this.list = res.data;
         } else {
-          this.list = [...this.list, ...res.data.list];
+          this.list = [...this.list, ...res.data];
         }
         this.setList();
-        this.list_count = res.data.count;
-        console.log(res.data.count);
-        console.log(this.list_count);
-        console.log(this.list.length);
       })
       .catch((err) => {
         console.log("업로드오류:" + err);

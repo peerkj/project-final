@@ -13,6 +13,7 @@ import "../css/menu.css";
   profile_name: stores.info.profile_name,
   menu_profile: stores.cu.menu_profile,
   menu_nick: stores.cu.menu_nick,
+  resetRecipe: stores.recipe.resetRecipe,
 }))
 @observer
 class header extends Component {
@@ -26,18 +27,19 @@ class header extends Component {
       handleLogout,
       login_state,
       profile_name,
+      resetRecipe,
     } = this.props;
 
     return (
       <div>
         <div id="headgroup">
-          <Link to="/">
+          <a href="/">
             <img
               style={{ marginLeft: "107.5px", width: "140px" }}
               src="/img/logo1.png"
               alt=""
             />
-          </Link>
+          </a>
           <Hamburger toggled={hamto} toggle={change_ham} />
         </div>
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
@@ -70,7 +72,7 @@ class header extends Component {
             )}
             <br />
             {login_state ? (
-              <Link to="/mypage">MYPAGE</Link>
+              <Link to="/myinfo">INFO</Link>
             ) : (
               <Link to="/login">LOGIN</Link>
             )}
@@ -88,7 +90,9 @@ class header extends Component {
               <Link to="/">HOME</Link>
             </li>
             <li>
-              <Link to="/recipe">RECIPE</Link>
+              <Link to="/recipe" onClick={resetRecipe}>
+                RECIPE
+              </Link>
             </li>
             <li>
               <Link to="/counter">CHEF</Link>

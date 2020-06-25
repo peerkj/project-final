@@ -5,14 +5,32 @@ import Comment from "./comment";
 import { makeStyles } from "@material-ui/core/styles";
 import "../css/detail.css";
 import {
-  Share, Close, People, Timer, Star, ChatBubble,
-  Bookmark, ThumbUp, ViewList, ViewCarousel, Subject,
-  KeyboardArrowRight, KeyboardArrowLeft, PlayArrow, Pause,
+  Share,
+  Close,
+  People,
+  Timer,
+  Star,
+  ChatBubble,
+  Bookmark,
+  ThumbUp,
+  ViewList,
+  ViewCarousel,
+  Subject,
+  KeyboardArrowRight,
+  KeyboardArrowLeft,
+  PlayArrow,
+  Pause,
   ExpandLess,
 } from "@material-ui/icons";
 import {
-  Button, Dialog, TextField, DialogContent, DialogTitle,
-  AppBar, Toolbar, IconButton,
+  Button,
+  Dialog,
+  TextField,
+  DialogContent,
+  DialogTitle,
+  AppBar,
+  Toolbar,
+  IconButton,
 } from "@material-ui/core";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import queryString from "query-string";
@@ -126,7 +144,7 @@ class Detail extends Component {
         <div key={idx} className="detailSubIngre">
           {i.sort === "부재료" ? i.ingre_name : ""}
           <span className="sub">{i.sort === "부재료" ? i.quantity : ""}</span>
-        </div >
+        </div>
       );
     });
 
@@ -169,7 +187,8 @@ class Detail extends Component {
             <div className="stepnc">
               <div className="stepnum">{step_slide + 1}</div>
               <span className="steptext">{step_list[step_slide].content}</span>
-              <br /><br />
+              <br />
+              <br />
               <div className="stepImgWrapper">
                 <div className="centered">
                   <img
@@ -182,7 +201,8 @@ class Detail extends Component {
             </div>
             <br />
             <div className="stepsliderbtn">
-              <KeyboardArrowLeft onClick={stepL} />&ensp;
+              <KeyboardArrowLeft onClick={stepL} />
+              &ensp;
               <KeyboardArrowRight onClick={stepR} />
             </div>
           </div>
@@ -194,9 +214,7 @@ class Detail extends Component {
       <div>
         {/* Default */}
         {/* 썸네일 */}
-        <div
-          style={{ width: "100%", height: "270px" }}
-        >
+        <div style={{ width: "100%", height: "270px" }}>
           <div className="detailThumbnail">
             <div className="centered">
               <img
@@ -226,48 +244,56 @@ class Detail extends Component {
               </p>
 
               {/* 요리 제목 */}
-              <p id="detail_titletext">
-                {all.subject}
-              </p>
+              <p id="detail_titletext">{all.subject}</p>
 
               {/* 요리 설명 */}
               <p>
                 <img src="/img/quote1.png" alt="" width="16px" />
-                <span id="detail_subtext">
-                  {all.summary}
-                </span>
+                <span id="detail_subtext">{all.summary}</span>
                 <img src="/img/quote2.png" alt="" width="16px" />
               </p>
               <br />
               <div className="ptdGroup">
                 <div className="ptd">
-                  <People color="disabled" /><br />
+                  <People color="disabled" />
+                  <br />
                   <span className="texts">{all.portion}</span>
                 </div>
                 <div className="ptd">
-                  <Timer color="disabled" /><br />
+                  <Timer color="disabled" />
+                  <br />
                   <span className="texts">{all.time}</span>
                 </div>
                 <div className="ptd">
-                  <Star color="disabled" /><br />
+                  <Star color="disabled" />
+                  <br />
                   <span className="texts">{all.difficult}</span>
                 </div>
               </div>
               <div className="ptd2Group">
-                <div className="ptd2" onClick={handleShare} >
-                  <Share /><br />
+                <div
+                  className="ptd2"
+                  onClick={() => {
+                    handleShare(0);
+                  }}
+                >
+                  <Share />
+                  <br />
                   URL 복사
                 </div>
                 <div className="ptd2" onClick={Scrap}>
-                  <Bookmark /><br />
+                  <Bookmark />
+                  <br />
                   {checkscr === 0 ? "스크랩하기" : "스크랩 취소"}
                 </div>
                 <div className="ptd2" onClick={Joayo}>
-                  <ThumbUp /><br />
+                  <ThumbUp />
+                  <br />
                   {checkjoa === 0 ? "좋아요" : "좋아요 취소"}
                 </div>
                 <div className="ptd2" onClick={handleComment}>
-                  <ChatBubble /><br />
+                  <ChatBubble />
+                  <br />
                   댓글 {c_count}개
                 </div>
               </div>
@@ -275,7 +301,10 @@ class Detail extends Component {
           </div>
           <hr className="detailLine" />
           <div style={{ width: "100%" }}>
-            <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>재료
+            <p
+              style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
+            >
+              재료
               <span class="detailIngreTitleText">Ingredients</span>
             </p>
             <p className="detailMainTitle">[주재료]</p>
@@ -284,41 +313,62 @@ class Detail extends Component {
             <p className="detailMainTitle">[부재료]</p>
             {sub}
             <hr className="detailLine" />
-            <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>조리 순서
+            <p
+              style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
+            >
+              조리 순서
               <span class="detailIngreTitleText">Steps</span>
             </p>
             <div className="detailStepCate">
-              <div className="category"
+              <div
+                className="category"
                 onClick={() => {
                   //기본 0
                   changeStep(0);
-                }}>
-                <ViewList /><br />
+                }}
+              >
+                <ViewList />
+                <br />
               </div>
-              <div className="category"
+              <div
+                className="category"
                 onClick={() => {
                   //슬라이더 2번
                   changeStep(2);
-                }}>
-                <ViewCarousel /><br />
+                }}
+              >
+                <ViewCarousel />
+                <br />
               </div>
-              <div className="category"
+              <div
+                className="category"
                 onClick={() => {
                   //글만 1번
                   changeStep(1);
-                }}>
-                <Subject /><br />
+                }}
+              >
+                <Subject />
+                <br />
               </div>
             </div>
-            <br /><br /><br />
+            <br />
+            <br />
+            <br />
             <div>
               {step_state === 0 ? step1 : step_state === 1 ? step2 : step3()}
             </div>
 
             <hr className="detailLine" />
             <div>
-              <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>완성 사진
-              <span class="detailIngreTitleText">Finish</span>
+              <p
+                style={{
+                  fontSize: "16pt",
+                  fontWeight: "500",
+                  marginLeft: "5px",
+                }}
+              >
+                완성 사진
+                <span class="detailIngreTitleText">Finish</span>
               </p>
 
               <div className="stepImgWrapper">
@@ -330,16 +380,26 @@ class Detail extends Component {
                 </div>
               </div>
               <div style={{ textAlign: "center" }}>
-                <KeyboardArrowLeft onClick={sliderL} />&ensp;
-                <Pause onClick={sliderP} />&ensp;
-                <PlayArrow onClick={changeComp} />&ensp;
+                <KeyboardArrowLeft onClick={sliderL} />
+                &ensp;
+                <Pause onClick={sliderP} />
+                &ensp;
+                <PlayArrow onClick={changeComp} />
+                &ensp;
                 <KeyboardArrowRight onClick={sliderR} />
               </div>
             </div>
             <br />
             <br />
-            <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>
-              <img src="img/star.jpg" alt="" width="30px" style={{ verticalAlign: "middle" }} />
+            <p
+              style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
+            >
+              <img
+                src="/img/star.jpg"
+                alt=""
+                width="30px"
+                style={{ verticalAlign: "middle" }}
+              />
               <span style={{ verticalAlign: "middle" }}>요리 Tip!</span>
             </p>
             <div id="tipBox">{all.tip}</div>
@@ -410,9 +470,15 @@ class Detail extends Component {
         {/* 공유모달 */}
 
         {/* 댓글모달 */}
-        <Dialog fullScreen open={comment_open} onClose={handleComment}
-        >
-          <AppBar style={{ height: "50px", width: "100%", backgroundColor: "#002060", marginLeft: "-84px" }}>
+        <Dialog fullScreen open={comment_open} onClose={handleComment}>
+          <AppBar
+            style={{
+              height: "50px",
+              width: "100%",
+              backgroundColor: "#002060",
+              marginLeft: "-84px",
+            }}
+          >
             <Toolbar>
               <IconButton
                 edge="start"
@@ -432,7 +498,7 @@ class Detail extends Component {
           </DialogContent>
         </Dialog>
         {/* 댓글모달 */}
-      </div >
+      </div>
     );
   }
 }
