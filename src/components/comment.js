@@ -42,15 +42,35 @@ class comment extends Component {
     } = this.props;
     const dropped = (e) => {
       //e.containerElem.style.visibility = "hidden";
-      getList();
+      let scroll = 0;
+      if (comment_list.length === 5) scroll = 1;
+      else {
+        scroll = comment_list.length / 5 + 1;
+      }
+      getList(scroll);
     };
 
     const comment = comment_list.map((c, idx) => {
       return (
         <div style={{ border: "1px solid gray" }} key={idx}>
-          <b>{c.com_writeday}</b>
+          <img
+            width="40px"
+            src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
+            alt=""
+          />
+          <b>{c.timeDiffer}</b>
+          <br />
+          <b>{c.nickname}</b>
           <br />
           <b>{c.content}</b>
+          <br />
+          {c.image && (
+            <img
+              width="40px"
+              src={`http://localhost:9000/acorn/image/profile/${c.image}`}
+              alt=""
+            />
+          )}
         </div>
       );
     });

@@ -42,7 +42,12 @@ export default class DetailStore {
 
   //공유모달
   @action
-  handleShare = () => {
+  handleShare = (v = 0) => {
+    this.url = window.location.href;
+
+    if (v !== 0) {
+      this.url = this.url + "/detail?recipe=" + v;
+    }
     this.modal_open = !this.modal_open;
   };
 
@@ -70,7 +75,6 @@ export default class DetailStore {
     })
       .then((res) => {
         this.all = res.data;
-        console.log(res.data);
         this.comp_list = this.all.comp_photo.split(",");
         this.comp_img = this.comp_list[0];
 

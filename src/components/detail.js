@@ -214,7 +214,13 @@ class Detail extends Component {
             </div>
             <div>
               <div>
-                <button onClick={handleShare}>공유</button>
+                <button
+                  onClick={() => {
+                    handleShare(0);
+                  }}
+                >
+                  공유
+                </button>
               </div>
               <div>
                 <button onClick={Scrap}>

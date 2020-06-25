@@ -3,7 +3,6 @@ import axios from "axios";
 
 export default class CounterStore {
   @observable comment_list = [];
-  @observable scroll = 0;
 
   //댓글쓰기
   @observable modal_open = false;
@@ -16,23 +15,42 @@ export default class CounterStore {
     this.root = root;
   }
 
+  @action
+  handleReset = () => {
+    this.content = "";
+    this.commentp = null;
+    this.imgBase64 = "";
+  };
+
+  @action
+  updateList = () => {
+    let size = this.comment_list.length / 5;
+
+    for (let i = 0; i <= size; i++) {
+      setTimeout(() => {
+        this.getList(i);
+      }, 500);
+    }
+  };
+
   //리스트
   @action
-  getList = () => {
+  getList = (scroll = 0) => {
     let url = "http://localhost:9000/acorn/comment/list";
-
+    console.log(scroll);
     axios({
       method: "get",
       url: url,
+
       params: {
         rec_num: this.root.detail.rec_num,
-        scroll: this.scroll,
+        scroll: scroll,
       },
     })
       .then((res) => {
         console.log("댓글", res.data);
-        this.scroll++;
-        if (this.scroll === 1) {
+
+        if (scroll === 0) {
           this.comment_list = res.data;
         } else {
           this.comment_list = [...this.comment_list, ...res.data];
@@ -58,7 +76,7 @@ export default class CounterStore {
   handleChangeImg = (e) => {
     let reader = new FileReader();
     let fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp)$/;
-    console.log("변경");
+
     if (!fileForm.test(e.target.value.toLowerCase()) && e.target.value !== "") {
       alert("이미지 파일만 업로드하세요!!!!!");
       e.target.value = "";
@@ -79,8 +97,6 @@ export default class CounterStore {
 
   @action
   handleSubmit = (com_num = 0, regroup = 0, restep = 0, relevel = 0) => {
-    console.log(this.root.info.userEmail);
-    console.log(this.root.detail.rec_num);
     let url = "http://localhost:9000/acorn/comment/regist";
     let submit = new FormData();
     submit.append("email", this.root.info.userEmail);
@@ -98,7 +114,9 @@ export default class CounterStore {
       data: submit,
     })
       .then((res) => {
-        console.log(res.data);
+        this.modal_open = !this.modal_open;
+        this.handleReset();
+        this.updateList();
       })
       .catch((err) => {
         console.log("댓글등록오류:" + err);

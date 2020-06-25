@@ -28,7 +28,7 @@ export default () => (
     <Route exact path="/withdraw" component={Withdraw} />
     <Route exact path="/findid" component={FindId} />
     <Route exact path="/write" component={Write} />
-    <Route exact path="/detail" component={Detail} />
+    <Route exact path="/recipe/detail" component={Detail} />
     <Route exact path="/comment" component={Comment} />
   </Switch>
 );
