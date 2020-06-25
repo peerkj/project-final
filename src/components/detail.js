@@ -1,20 +1,16 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
-
+import { makeStyles } from '@material-ui/core/styles';
 import Comment from "./comment";
-
 import "../css/detail.css";
-import Info from "@material-ui/icons/InfoOutlined";
-import { Share, Close, People, Timer, Star, ChatBubbleOutline, Bookmark, ThumbUp } from "@material-ui/icons";
 import {
-  Button,
-  Dialog,
-  TextField,
-  DialogContent,
-  DialogTitle,
-  AppBar,
-  Toolbar,
-  IconButton,
+  Share, Close, People, Timer, Star, ChatBubble,
+  Bookmark, ThumbUp, ViewList, ViewCarousel, Subject,
+  KeyboardArrowRight, KeyboardArrowLeft, PlayArrow, Pause
+} from "@material-ui/icons";
+import {
+  Button, Dialog, TextField, DialogContent, DialogTitle,
+  AppBar, Toolbar, IconButton,
 } from "@material-ui/core";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import queryString from "query-string";
@@ -103,10 +99,9 @@ class Detail extends Component {
     //주재료
     const main = ing_list.map((i, idx) => {
       return (
-        <div key={idx}>
-          {i.sort === "주재료" ? i.ingre_name : ""}
-          {i.sort === "주재료" ? <Info /> : ""}&nbsp;
-          {i.sort === "주재료" ? i.quantity : ""}
+        <div key={idx} className="detailMainIngre">
+          <span>{i.sort === "주재료" ? i.ingre_name : ""}</span>
+          <span className="sub">{i.sort === "주재료" ? i.quantity : ""}</span>
         </div>
       );
     });
@@ -114,11 +109,10 @@ class Detail extends Component {
     //부재료
     const sub = ing_list.map((i, idx) => {
       return (
-        <div key={idx}>
+        <div key={idx} className="detailSubIngre">
           {i.sort === "부재료" ? i.ingre_name : ""}
-          {i.sort === "부재료" ? <Info /> : ""}&nbsp;
-          {i.sort === "부재료" ? i.quantity : ""}
-        </div>
+          <span className="sub">{i.sort === "부재료" ? i.quantity : ""}</span>
+        </div >
       );
     });
 
@@ -128,15 +122,17 @@ class Detail extends Component {
         <div key={num}>
           <div className="stepnc">
             <div className="stepnum">{num + 1}</div>
-            <p style={{ float: "left" }}>
-              <b>{i.content}</b>
-            </p>
+            <span className="steptext">{i.content}</span>
             <br />
           </div>
-          <img
-            src={`http://localhost:9000/acorn/image/recipe/${i.photo}`}
-            alt=""
-          />
+          <div className="stepImgWrapper">
+            <div className="centered">
+              <img
+                src={`http://localhost:9000/acorn/image/recipe/${i.photo}`}
+                alt=""
+              />
+            </div>
+          </div>
         </div>
       );
     });
@@ -146,10 +142,7 @@ class Detail extends Component {
         <div key={num}>
           <div className="stepnc">
             <div className="stepnum">{num + 1}</div>
-            <p style={{ float: "left" }}>
-              <b>{i.content}</b>
-            </p>
-            <br />
+            <span className="steptext">{i.content}</span>
           </div>
         </div>
       );
@@ -158,20 +151,27 @@ class Detail extends Component {
     const step3 = () => {
       return (
         <div>
-          <div className="stepnc">
-            <div className="stepnum">{step_slide + 1}</div>
-            <p style={{ float: "left" }}>
-              <b>{step_list[step_slide].content}</b>
-            </p>
+          <div className="stepslider">
+            <div className="stepnc">
+              <div className="stepnum">{step_slide + 1}</div>
+              <span className="steptext">{step_list[step_slide].content}</span>
+              <br /><br />
+              <div className="stepImgWrapper">
+                <div className="centered">
+                  <img
+                    src={`http://localhost:9000/acorn/image/recipe/${step_list[step_slide].photo}`}
+                    alt=""
+                    width="359px"
+                  />
+                </div>
+              </div>
+            </div>
             <br />
-            <img
-              src={`http://localhost:9000/acorn/image/recipe/${step_list[step_slide].photo}`}
-              alt=""
-            />
+            <div className="stepsliderbtn">
+              <KeyboardArrowLeft onClick={stepL} />&ensp;
+              <KeyboardArrowRight onClick={stepR} />
+            </div>
           </div>
-          <br />
-          <button onClick={stepL}>&lt;</button>
-          <button onClick={stepR}>&gt;</button>
         </div>
       );
     };
@@ -199,7 +199,6 @@ class Detail extends Component {
             style={{
               position: "relative",
               width: "100%",
-              border: "1px solid black",
             }}
           >
             <center>
@@ -213,103 +212,122 @@ class Detail extends Component {
               </p>
 
               {/* 요리 제목 */}
-              <p style={{ fontWeight: "500", fontSize: "16pt" }}>
+              <p id="detail_titletext">
                 {all.subject}
               </p>
 
               {/* 요리 설명 */}
               <p>
                 <img src="/img/quote1.png" alt="" width="16px" />
-                <span style={{ fontWeight: "500", fontSize: "12pt" }}>
+                <span id="detail_subtext">
                   {all.summary}
                 </span>
                 <img src="/img/quote2.png" alt="" width="16px" />
               </p>
               <br />
               <div className="ptdGroup">
-                <div className="ptd"><People /><br />{all.portion}</div>
-                <div className="ptd"><Timer /><br />{all.time}</div>
-                <div className="ptd"><Star /><br />{all.difficult}</div>
+                <div className="ptd">
+                  <People color="disabled" /><br />
+                  <span className="texts">{all.portion}</span>
+                </div>
+                <div className="ptd">
+                  <Timer color="disabled" /><br />
+                  <span className="texts">{all.time}</span>
+                </div>
+                <div className="ptd">
+                  <Star color="disabled" /><br />
+                  <span className="texts">{all.difficult}</span>
+                </div>
               </div>
-              <div>
-                <div>
-                  <Share onClick={handleShare} /><br />
+              <div className="ptd2Group">
+                <div className="ptd2" onClick={handleShare} >
+                  <Share /><br />
                   URL 복사
                 </div>
-                <div>
-                  <Bookmark onClick={Scrap} /><br />
+                <div className="ptd2" onClick={Scrap}>
+                  <Bookmark /><br />
                   {checkscr === 0 ? "스크랩하기" : "스크랩 취소"}
                 </div>
-                <div>
-                  <ThumbUp onClick={Joayo} /><br />
+                <div className="ptd2" onClick={Joayo}>
+                  <ThumbUp /><br />
                   {checkjoa === 0 ? "좋아요" : "좋아요 취소"}
                 </div>
-                <div>
-                  <ChatBubbleOutline onClick={handleComment} /><br />
+                <div className="ptd2" onClick={handleComment}>
+                  <ChatBubble /><br />
                   댓글 0개
                 </div>
               </div>
             </center>
           </div>
-          <div style={{ width: "100%", border: "1px solid black" }}>
-            재료
-            <br />
-            <b>주재료</b>
-            <br />
+          <hr className="detailLine" />
+          <div style={{ width: "100%" }}>
+            <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>재료
+              <span class="detailIngreTitleText">Ingredients</span>
+            </p>
+            <p className="detailMainTitle">[주재료]</p>
             {main}
-            <hr />
             <br />
-            <b>부재료</b>
-            <br />
+            <p className="detailMainTitle">[부재료]</p>
             {sub}
-            <hr />
-            <b>조리순서</b>
-            <br />
-            <button
-              onClick={() => {
-                //기본 0
-                changeStep(0);
-              }}
-            >
-              기본
-            </button>
-            <button
-              onClick={() => {
-                //슬라이더 2번
-                changeStep(2);
-              }}
-            >
-              이미지슬라이더
-            </button>
-            <button
-              onClick={() => {
-                //글만 1번
-                changeStep(1);
-              }}
-            >
-              글만
-            </button>
-            {step_state === 0 ? step1 : step_state === 1 ? step2 : step3()}
-            <br />
-            <br />
-            <b>완성사진</b>
-            <br />
+            <hr className="detailLine" />
+            <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>조리 순서
+              <span class="detailIngreTitleText">Steps</span>
+            </p>
+            <div className="detailStepCate">
+              <div className="category"
+                onClick={() => {
+                  //기본 0
+                  changeStep(0);
+                }}>
+                <ViewList /><br />
+              </div>
+              <div className="category"
+                onClick={() => {
+                  //슬라이더 2번
+                  changeStep(2);
+                }}>
+                <ViewCarousel /><br />
+              </div>
+              <div className="category"
+                onClick={() => {
+                  //글만 1번
+                  changeStep(1);
+                }}>
+                <Subject /><br />
+              </div>
+            </div>
+            <br /><br /><br />
             <div>
-              <img
-                width="200px"
-                height="200px"
-                src={`http://localhost:9000/acorn/image/recipe/${comp_img}`}
-                alt=""
-              />
-              <br />
-              <button onClick={sliderL}>&lt;</button>
-              <button onClick={sliderP}>일시정지</button>
-              <button onClick={changeComp}>재생</button>
-              <button onClick={sliderR}>&gt;</button>
+              {step_state === 0 ? step1 : step_state === 1 ? step2 : step3()}
+            </div>
+
+            <hr className="detailLine" />
+            <div>
+              <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>완성 사진
+              <span class="detailIngreTitleText">Finish</span>
+              </p>
+
+              <div className="stepImgWrapper">
+                <div className="centered">
+                  <img
+                    src={`http://localhost:9000/acorn/image/recipe/${comp_img}`}
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div style={{ textAlign: "center" }}>
+                <KeyboardArrowLeft onClick={sliderL} />&ensp;
+                <Pause onClick={sliderP} />&ensp;
+                <PlayArrow onClick={changeComp} />&ensp;
+                <KeyboardArrowRight onClick={sliderR} />
+              </div>
             </div>
             <br />
             <br />
-            <b>요리 Tip!</b>
+            <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>
+              <img src="img/star.jpg" alt="" width="30px" />
+              요리 Tip!
+            </p>
             <br />
             {all.tip}
           </div>
@@ -366,7 +384,7 @@ class Detail extends Component {
           </div>
         </Dialog>
         {/* 댓글모달 */}
-      </div>
+      </div >
     );
   }
 }

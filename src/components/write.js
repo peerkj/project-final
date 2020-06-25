@@ -75,6 +75,7 @@ import { inject, observer } from "mobx-react";
 class write extends Component {
   componentWillMount = () => {
     this.props.handleReset();
+    window.scrollTo(0, 0);
     if (!this.props.login_state) {
       this.props.history.push("/login");
     }
