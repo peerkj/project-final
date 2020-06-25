@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@material-ui/core";
+import { Close } from "@material-ui/icons";
 
 @inject((stores) => ({
   getList: stores.comment.getList,
@@ -20,7 +21,14 @@ import {
   content: stores.comment.content,
   handleCommentChange: stores.comment.handleCommentChange,
   handleSubmit: stores.comment.handleSubmit,
+  handleEnter: stores.comment.handleEnter,
+  handleRemoveRe: stores.comment.handleRemoveRe,
   setValue: stores.comment.setValue,
+  userEmail: stores.info.userEmail,
+  deleteComment: stores.comment.deleteComment,
+
+  delete_open: stores.comment.delete_open,
+  deleteOpen: stores.comment.deleteOpen,
 }))
 @observer
 class comment extends Component {
@@ -39,7 +47,13 @@ class comment extends Component {
       content,
       handleCommentChange,
       handleSubmit,
+      handleEnter,
+      handleRemoveRe,
       setValue,
+      userEmail,
+      deleteComment,
+      delete_open,
+      deleteOpen,
     } = this.props;
 
     const comment = comment_list.map((c, idx) => {
@@ -66,14 +80,18 @@ class comment extends Component {
             />
           )}
           <br />
-          <button
-            onClick={() => {
+          {c.email !== "알수없음" && (
+            <button onClick={() => {
               setValue(c.com_num, c.regroup, c.restep, c.relevel);
               handleOpen();
-            }}
-          >
-            답글
-          </button>
+            }}>답글</button>
+          )}
+
+          {c.email === userEmail && (
+            <button onClick={() => {
+              deleteOpen(c.com_num);
+            }}>삭제</button>
+          )}
         </div>
       );
     });
@@ -116,15 +134,42 @@ class comment extends Component {
                 variant="outlined"
                 value={content}
                 onChange={handleCommentChange}
+                size="medium"
+                onKeyPress={handleEnter}
               />
               <div style={{ marginTop: "15px" }}>
                 <label htmlFor="commentp">
                   {imgBase64 ? (
-                    <img width="150px" height="150px" src={imgBase64} alt="" />
+                    <img
+                      width="200px"
+                      height="200px"
+                      src={imgBase64}
+                      alt=""
+                    />
                   ) : (
-                    <img width="150px" src="/img/add_icon2.png" alt="" />
-                  )}
+                      <img
+                        width="100px"
+                        src="/img/add_icon2.png"
+                        alt=""
+                      />
+                    )}
                 </label>
+                {imgBase64 ? (
+                  <Close
+                    style={{
+                      position: "relative",
+                      top: "-198px",
+                      marginLeft: "170px",
+                      zIndex: "2",
+                    }}
+                    onClick={() => {
+                      handleRemoveRe();
+                    }}
+                    id="commentthumb_delete"
+                  />
+                ) : (
+                    ""
+                  )}
               </div>
               <input
                 style={{ display: "none" }}
@@ -144,6 +189,32 @@ class comment extends Component {
                 등록
               </Button>
               <Button onClick={handleOpen} color="primary">
+                취소
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+        <div>
+          <Dialog
+            open={delete_open}
+            onClose={deleteOpen}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogContent>
+              삭제하시겠습니까?
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  deleteComment();
+                }}
+                color="secondary"
+              >
+                확인
+              </Button>
+              <Button
+                onClick={deleteOpen}
+                color="primary">
                 취소
               </Button>
             </DialogActions>

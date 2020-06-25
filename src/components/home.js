@@ -27,6 +27,7 @@ import {
   Search,
 } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
+
 import "../css/home.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -197,10 +198,8 @@ const Home = ({
       <img
         src="/img/refrigerator.png"
         style={{
-          width: "200px",
-          position: "absolute",
-          left: "210px",
-          top: "480px",
+          float: "right",
+          width: "100px",
         }}
         onClick={handleClickOpen}
         alt=""

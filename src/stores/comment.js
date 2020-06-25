@@ -15,6 +15,8 @@ export default class CounterStore {
   @observable restep = 0;
   @observable relevel = 0;
 
+  @observable delete_open = false;
+
   @action
   setValue = (com_num = 0, regroup = 0, restep = 0, relevel = 0) => {
     this.com_num = com_num;
@@ -29,10 +31,21 @@ export default class CounterStore {
   }
 
   @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleSubmit();
+  };
+
+  @action
   handleReset = () => {
     this.content = "";
     this.commentp = null;
     this.imgBase64 = "";
+  };
+
+  @action
+  handleRemoveRe = () => {
+    this.imgBase64 = "";
+    this.commentp = null;
   };
 
   //리스트
@@ -60,6 +73,13 @@ export default class CounterStore {
   @action
   handleOpen = () => {
     this.modal_open = !this.modal_open;
+    this.handleReset();
+  };
+
+  @action
+  deleteOpen = (com_num) => {
+    this.com_num = com_num;
+    this.delete_open = !this.delete_open;
   };
 
   @action
@@ -117,6 +137,24 @@ export default class CounterStore {
       })
       .catch((err) => {
         console.log("댓글등록오류:" + err);
+      });
+  };
+
+  @action
+  deleteComment = () => {
+    let url = "http://localhost:9000/acorn/comment/delete";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { com_num: this.com_num },
+    })
+      .then((res) => {
+        this.getList();
+        this.delete_open = !this.delete_open;
+      })
+      .catch((err) => {
+        console.log("댓글삭제오류:" + err);
       });
   };
 }
