@@ -268,7 +268,7 @@ class Detail extends Component {
                 </div>
                 <div className="ptd2" onClick={handleComment}>
                   <ChatBubble /><br />
-                  댓글 0개
+                  댓글 {c_count}개
                 </div>
               </div>
             </center>
