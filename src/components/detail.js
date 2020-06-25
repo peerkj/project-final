@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { Link } from "react-router-dom";
 import Comment from "./comment";
+import { makeStyles } from "@material-ui/core/styles";
 import "../css/detail.css";
 import {
   Share, Close, People, Timer, Star, ChatBubble,
@@ -97,6 +98,12 @@ class Detail extends Component {
       stepL,
       history,
     } = this.props;
+
+    const useStyles = makeStyles((theme) => ({
+      button: {
+        margin: theme.spacing(1),
+      },
+    }));
 
     //주재료
     const main = ing_list.map((i, idx) => {
@@ -331,7 +338,19 @@ class Detail extends Component {
               <span style={{ verticalAlign: "middle" }}>요리 Tip!</span>
             </p>
             <div id="tipBox">{all.tip}</div>
-            <hr className="detailLine" />
+            <center style={{ margin: "50px 0 80px" }}>
+              <Button
+                onClick={() => {
+                  history.push("/recipe");
+                }}
+                variant="outlined"
+                color="black"
+                component="span"
+                className={useStyles.button}
+              >
+                목록
+              </Button>
+            </center>
           </div>
         </div>
         {/* Default */}
