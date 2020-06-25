@@ -10,6 +10,20 @@ export default class CounterStore {
   @observable commentp = null; //실제 서버로 보내는
   @observable imgBase64 = ""; //미리보기
   @observable count = 0;
+
+  @observable com_num = 0;
+  @observable regroup = 0;
+  @observable restep = 0;
+  @observable relevel = 0;
+
+  @action
+  setValue = (com_num = 0, regroup = 0, restep = 0, relevel = 0) => {
+    this.com_num = com_num;
+    this.regroup = regroup;
+    this.restep = restep;
+    this.relevel = relevel;
+  };
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
@@ -91,17 +105,17 @@ export default class CounterStore {
   };
 
   @action
-  handleSubmit = (com_num = 0, regroup = 0, restep = 0, relevel = 0) => {
+  handleSubmit = () => {
     let url = "http://localhost:9000/acorn/comment/regist";
     let submit = new FormData();
     submit.append("email", this.root.info.userEmail);
     submit.append("content", this.content);
     submit.append("imagefile", this.commentp);
     submit.append("rec_num", this.root.detail.rec_num);
-    submit.append("com_num", com_num);
-    submit.append("regroup", regroup);
-    submit.append("restep", restep);
-    submit.append("relevel", relevel);
+    submit.append("com_num", this.com_num);
+    submit.append("regroup", this.regroup);
+    submit.append("restep", this.restep);
+    submit.append("relevel", this.relevel);
 
     axios({
       method: "post",

@@ -183,6 +183,7 @@ class Detail extends Component {
           style={{ width: "100%", height: "300px", border: "1px solid black" }}
         >
           <img
+            width="200px"
             src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
             alt=""
           />
@@ -344,12 +345,11 @@ class Detail extends Component {
               </IconButton>
             </Toolbar>
           </AppBar>
-
-          <div>
-            <br />
-            <br />
+          <br />
+          <br />
+          <DialogContent>
             <Comment />
-          </div>
+          </DialogContent>
         </Dialog>
         {/* 댓글모달 */}
       </div>
