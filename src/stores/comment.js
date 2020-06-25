@@ -27,6 +27,12 @@ export default class CounterStore {
     this.imgBase64 = "";
   };
 
+  @action
+  handleRemoveRe = () => {
+    this.imgBase64 = "";
+    this.commentp = null;
+  };
+
   //리스트
   @action
   getList = (i) => {
@@ -124,6 +130,6 @@ export default class CounterStore {
       .then((res) => {
         this.count = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }

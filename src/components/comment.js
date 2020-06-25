@@ -9,6 +9,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@material-ui/core";
+import { Close } from "@material-ui/icons";
 
 @inject((stores) => ({
   getList: stores.comment.getList,
@@ -21,6 +22,7 @@ import {
   handleCommentChange: stores.comment.handleCommentChange,
   handleSubmit: stores.comment.handleSubmit,
   handleEnter: stores.comment.handleEnter,
+  handleRemoveRe: stores.comment.handleRemoveRe,
 }))
 @observer
 class comment extends Component {
@@ -41,6 +43,7 @@ class comment extends Component {
       handleCommentChange,
       handleSubmit,
       handleEnter,
+      handleRemoveRe,
     } = this.props;
     const dropped = (e) => {
       //e.containerElem.style.visibility = "hidden";
@@ -144,6 +147,22 @@ class comment extends Component {
                       />
                     )}
                 </label>
+                {imgBase64 ? (
+                  <Close
+                    style={{
+                      position: "relative",
+                      top: "-198px",
+                      marginLeft: "170px",
+                      zIndex: "2",
+                    }}
+                    onClick={() => {
+                      handleRemoveRe();
+                    }}
+                    id="commentthumb_delete"
+                  />
+                ) : (
+                    ""
+                  )}
               </div>
               <input
                 style={{ display: "none" }}
