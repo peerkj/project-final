@@ -214,12 +214,10 @@ const R = ({
                   }}
                 />
               )}
-            &nbsp;
             <span
               style={{
                 fontWeight: "600",
                 fontSize: "12pt",
-                color: "#ff6d75",
               }}
             >
               {l.joayo}
@@ -242,17 +240,15 @@ const R = ({
                   }}
                 />
               )}
-            &nbsp;
             <span
               style={{
                 fontWeight: "600",
                 fontSize: "12pt",
-                color: "#ff6d75",
               }}
             >
               {l.scrap}
             </span>
-            &nbsp;
+            &ensp;
             <ChatBubbleOutline
               onClick={() => {
                 setRec_num(l.rec_num);
@@ -262,12 +258,10 @@ const R = ({
               color="disabled"
               fontSize="small"
             />
-            &nbsp;
             <span
               style={{
                 fontWeight: "600",
-                fontSize: "12pt",
-                color: "#ff6d75",
+                fontSize: "12pt"
               }}
             >
               {comment_count[idx]}

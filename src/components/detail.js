@@ -8,7 +8,7 @@ import {
   Share, Close, People, Timer, Star, ChatBubble,
   Bookmark, ThumbUp, ViewList, ViewCarousel, Subject,
   KeyboardArrowRight, KeyboardArrowLeft, PlayArrow, Pause,
-  ExpandLess, KeyboardBackspace
+  ExpandLess,
 } from "@material-ui/icons";
 import {
   Button, Dialog, TextField, DialogContent, DialogTitle,
@@ -410,14 +410,16 @@ class Detail extends Component {
         {/* 공유모달 */}
 
         {/* 댓글모달 */}
-        <Dialog fullScreen open={comment_open} onClose={handleComment}>
-          <AppBar>
+        <Dialog fullScreen open={comment_open} onClose={handleComment}
+        >
+          <AppBar style={{ height: "50px", width: "100%", backgroundColor: "#002060", marginLeft: "-84px" }}>
             <Toolbar>
               <IconButton
                 edge="start"
                 color="inherit"
                 onClick={handleComment}
                 aria-label="close"
+                style={{ marginTop: "-5px" }}
               >
                 <Close />
               </IconButton>
