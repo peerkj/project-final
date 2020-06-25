@@ -243,7 +243,7 @@ export default class WriteStore {
 
   //글쓰기
   @action
-  insertRecipe = () => {
+  insertRecipe = (history) => {
     let url = "http://localhost:9000/acorn/recipe/regist";
     let submit = new FormData();
     submit.append("repre_photofile", this.represent.repre_photofile); //대표사진(썸네일)
@@ -363,7 +363,9 @@ export default class WriteStore {
         url: url,
         data: submit,
       })
-        .then((res) => {})
+        .then((res) => {
+          history.push(`/detail?recipe=${res.data}`);
+        })
         .catch((err) => {
           console.log("레시피 업로드 오류:" + err);
         });

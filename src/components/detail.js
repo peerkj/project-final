@@ -52,6 +52,9 @@ import queryString from "query-string";
   step_slide: stores.detail.step_slide,
   stepR: stores.detail.stepR,
   stepL: stores.detail.stepL,
+
+  c_count: stores.detail.c_count,
+  getComment: stores.detail.getComment,
 }))
 @observer
 class Detail extends Component {
@@ -60,6 +63,7 @@ class Detail extends Component {
     window.scrollTo(0, 0);
     this.props.getRecipe(query.recipe);
     this.props.changeComp();
+    this.props.getComment();
   };
   render() {
     const {
@@ -97,6 +101,7 @@ class Detail extends Component {
       stepR,
       stepL,
       history,
+      c_count,
     } = this.props;
 
     const useStyles = makeStyles((theme) => ({
@@ -418,12 +423,11 @@ class Detail extends Component {
               </IconButton>
             </Toolbar>
           </AppBar>
-
-          <div>
-            <br />
-            <br />
+          <br />
+          <br />
+          <DialogContent>
             <Comment />
-          </div>
+          </DialogContent>
         </Dialog>
         {/* 댓글모달 */}
       </div >

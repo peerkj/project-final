@@ -6,10 +6,48 @@ export default class CounterStore {
   @observable state = { itemCount: 0, isLoading: false };
   @observable view = { num: -1, idx: -1 };
   @observable scroll = 0;
+  @observable anchorEl = [];
+  @observable check_j = [];
+  @observable check_s = [];
+  @observable comment_count = [];
+
+  //검색
+  @observable search = null;
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
   }
+
+  //검색
+  @action
+  onchangeSearch = (e) => {
+    this.search = e.target.value;
+  };
+  @action
+  handleEnter = (e) => {
+    if (e.key === "Enter") {
+      //getList 초기화 후 얻기
+      if (this.search === "") this.search = null;
+      this.reset();
+    }
+  };
+
+  @action
+  dothandleClick = (event, idx) => {
+    this.anchorEl[idx] = event.currentTarget;
+  };
+  @action
+  dothandleClose = (idx) => {
+    this.anchorEl[idx] = null;
+  };
+
+  @action
+  reset = () => {
+    this.state = { itemCount: 0, isLoading: false };
+    this.list = [];
+    this.scroll = 0;
+  };
 
   @action
   setView = (num, idx) => {
@@ -31,14 +69,28 @@ export default class CounterStore {
   @action
   setList = () => {
     for (let i = 0; i < this.list.length; i++) {
+      this.anchorEl[i] = null;
       this.updateCount(this.list[i].rec_num, i);
+      this.checkJoayo(this.list[i].rec_num, i);
+      this.checkScrap(this.list[i].rec_num, i);
+      this.getComment(this.list[i].rec_num, i);
     }
   };
   @action
   updateList = () => {
-    if (this.view.num > -1) this.updateCount(this.view.num, this.view.idx);
+    if (this.view.num > -1) {
+      this.updateCount(this.view.num, this.view.idx);
+      this.checkJoayo(this.view.num, this.view.idx);
+      this.checkScrap(this.view.num, this.view.idx);
+    }
   };
   //정보 얻기
+  @action
+  updateCheck = (num, idx) => {
+    this.updateCount(num, idx);
+    this.checkJoayo(num, idx);
+    this.checkScrap(num, idx);
+  };
 
   //카운트 업데이트
   @action
@@ -65,15 +117,18 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
-    let scroll = 0;
-    if (this.list.length > 0) scroll = 1;
-    let url = "http://localhost:9000/acorn/recipe/list?scroll=" + scroll;
+    let url = "http://localhost:9000/acorn/recipe/list";
 
     axios({
       method: "get",
       url: url,
+      params: {
+        scroll: this.scroll,
+        search: this.search,
+      },
     })
       .then((res) => {
+        this.scroll++;
         console.log(res.data);
         if (this.scroll === 1) {
           this.list = res.data;
@@ -85,5 +140,90 @@ export default class CounterStore {
       .catch((err) => {
         console.log("업로드오류:" + err);
       });
+  };
+
+  //좋아요체크
+  @action
+  checkJoayo = (num, idx) => {
+    let url = "http://localhost:9000/acorn/connect/joayocheck";
+
+    axios({
+      method: "get",
+      url: url,
+      params: {
+        email: this.root.info.userEmail,
+        rec_num: num,
+      },
+    })
+      .then((res) => {
+        this.check_j[idx] = res.data;
+      })
+      .catch((err) => {});
+  };
+
+  //좋아요
+  @action
+  Joayo = (num, idx) => {
+    let url = "http://localhost:9000/acorn/connect/joayo";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { email: this.root.info.userEmail, rec_num: num },
+    })
+      .then((res) => {
+        this.updateCheck(num, idx);
+      })
+      .catch((err) => {});
+  };
+
+  //스크랩체크
+  @action
+  checkScrap = (num, idx) => {
+    let url = "http://localhost:9000/acorn/connect/scrapcheck";
+
+    axios({
+      method: "get",
+      url: url,
+      params: {
+        email: this.root.info.userEmail,
+        rec_num: num,
+      },
+    })
+      .then((res) => {
+        this.check_s[idx] = res.data;
+      })
+      .catch((err) => {});
+  };
+
+  //스크랩
+  @action
+  Scrap = (num, idx) => {
+    let url = "http://localhost:9000/acorn/connect/scrap";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { email: this.root.info.userEmail, rec_num: num },
+    })
+      .then((res) => {
+        this.updateCheck(num, idx);
+      })
+      .catch((err) => {});
+  };
+  //댓글 count
+  @action
+  getComment = (num, idx) => {
+    let url = "http://localhost:9000/acorn/comment/count";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { rec_num: num },
+    })
+      .then((res) => {
+        this.comment_count[idx] = res.data;
+      })
+      .catch((err) => {});
   };
 }

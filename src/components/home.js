@@ -110,6 +110,9 @@ const Home = ({
           style={{
             marginLeft: "-25px"
           }}
+          style={{
+            marginLeft: "-25px",
+          }}
         />
       </DragDropContainer>
     );
@@ -147,20 +150,22 @@ const Home = ({
           />
         </FormControl>
       </center>
-      <span style={{
-        fontSize: "12pt",
-        fontWeight: "300",
-        position: "absolute",
-        top: "600px",
-        left: "170px"
-      }}>나만의 냉장고</span>
+      <span
+        style={{
+          fontSize: "12pt",
+          fontWeight: "300",
+          position: "absolute",
+          top: "600px",
+          left: "170px",
+        }}
+      >
+        나만의 냉장고
+      </span>
       <img
         src="/img/refrigerator.png"
         style={{
-          width: "200px",
-          position: "absolute",
-          left: "210px",
-          top: "480px",
+          float: "right",
+          width: "100px",
         }}
         onClick={handleClickOpen}
         alt=""
@@ -171,13 +176,12 @@ const Home = ({
         onClose={handleClose}
       // TransitionComponent={Transition}
       >
-        <AppBar className={classes.appBar} style={{ height: "50px", backgroundColor: "#002060" }}>
-          <Toolbar >
-            <IconButton
-              edge="start"
-              onClick={handleClose}
-              aria-label="close"
-            >
+        <AppBar
+          className={classes.appBar}
+          style={{ height: "50px", backgroundColor: "#002060" }}
+        >
+          <Toolbar>
+            <IconButton edge="start" onClick={handleClose} aria-label="close">
               <Close style={{ color: "#ffffff", marginTop: "-5px" }} />
             </IconButton>
           </Toolbar>
@@ -194,24 +198,34 @@ const Home = ({
                   variant="outlined"
                 >
                   추천 레시피 보기
-                        </Button>
-                <br /><br />
+                </Button>
+                <br />
+                <br />
                 <div onClick={handleAddOpen}>
                   <AddCircle style={{ fontSize: "10pt" }} />
                   <span>재료 추가</span>
                 </div>
               </div>
-              <img className={refir_style} src={refir} alt="" width="530"
-                style={{ marginLeft: "-77px" }} />
+              <img
+                className={refir_style}
+                src={refir}
+                alt=""
+                width="530"
+                style={{ marginLeft: "-77px" }}
+              />
               <div className={handle_style} width="330">
                 <img src="img/refview2.png" alt="" width="330" />
-                <span style={{
-                  position: "absolute",
-                  top: "155px",
-                  left: "0px",
-                  width: "370px",
-                  height: "320px"
-                }}>{list}</span>
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "155px",
+                    left: "0px",
+                    width: "370px",
+                    height: "320px",
+                  }}
+                >
+                  {list}
+                </span>
               </div>
             </center>
           </div>
@@ -245,32 +259,32 @@ const Home = ({
               ></Badge>
             </div>
           </DropTarget>
-
         </div>
       </Dialog>
 
-      <Dialog open={binpot} onClose={clickPot}
-        style={{ position: "absolute", top: "35px", left: "7px" }}>
+      <Dialog
+        open={binpot}
+        onClose={clickPot}
+        style={{ position: "absolute", top: "35px", left: "7px" }}
+      >
         <DialogContent>
-          <Close
-            onClick={clickPot}
-            style={{ float: "right" }} />
+          <Close onClick={clickPot} style={{ float: "right" }} />
           <br />
           <center>
-            <img
-              src="img/pot/boiledpot.gif"
-              alt=""
-              width="250px"
-            />
+            <img src="img/pot/boiledpot.gif" alt="" width="250px" />
             <br />
-            <div style={{
-              width: "200px",
-              height: "180px",
-              border: "1px solid #c5c5c5",
-              borderRadius: "10px",
-              marginBottom: "10px",
-              padding: "1px"
-            }}>{pot_list}</div>
+            <div
+              style={{
+                width: "200px",
+                height: "180px",
+                border: "1px solid #c5c5c5",
+                borderRadius: "10px",
+                marginBottom: "10px",
+                padding: "1px",
+              }}
+            >
+              {pot_list}
+            </div>
             <Button
               size="small"
               variant="outlined"
@@ -278,15 +292,16 @@ const Home = ({
               startIcon={<DeleteOutline />}
             >
               비우기
-                  </Button>
-                  &ensp;
-                  <Button
+            </Button>
+            &ensp;
+            <Button
               size="small"
               variant="outlined"
               startIcon={<RestaurantMenu />}
-              onClick={handleCook}>
+              onClick={handleCook}
+            >
               요리하기
-                  </Button>
+            </Button>
           </center>
           <br />
         </DialogContent>
@@ -363,5 +378,4 @@ export default inject(({ drag }) => ({
   binpot: drag.binpot,
   handleKeyPress: drag.handleKeyPress,
   //handleSearchRecipe: drag, handleSearchRecipe
-
 }))(observer(Home));

@@ -4,19 +4,47 @@ import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import Comment from "./comment";
+
 import {
-  Card, CardHeader, CardContent, CardActions, Avatar, IconButton,
-  Typography, TextField, BottomNavigation, BottomNavigationAction, Menu, MenuItem
-} from '@material-ui/core';
-import { ChatBubbleOutline, Search, Create, MoreVert, Restore, Bookmark, Pageview, FavoriteBorder, BookmarkBorder, ExpandLess } from '@material-ui/icons';
+  Button,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Avatar,
+  IconButton,
+  Typography,
+  BottomNavigation,
+  BottomNavigationAction,
+  Menu,
+  MenuItem,
+  Dialog,
+  TextField,
+  DialogContent,
+  DialogTitle,
+  AppBar,
+  Toolbar,
+} from "@material-ui/core";
+import {
+  Close,
+  Search,
+  Create,
+  MoreVert,
+  Restore,
+  Bookmark,
+  Pageview,
+  FavoriteBorder,
+  Favorite,
+  BookmarkBorder,
+  ExpandLess,
+  ChatBubbleOutline,
+} from "@material-ui/icons";
 import "../css/styles.css";
 
 const fakeFetch = (delay = 800) => new Promise((res) => setTimeout(res, delay));
-// const ListItem = ({ number }) => (
-//   <div className="ListItem">
-//     <span>{number}</span>
-//   </div>
-// );
+
 const R = ({
   list,
   state,
@@ -26,13 +54,32 @@ const R = ({
   history,
   updateList,
   setView,
+  modal_open,
+  url,
+  onCopy,
+  handleShare,
+  anchorEl,
+  dothandleClick,
+  dothandleClose,
+  check_j,
+  check_s,
+  Scrap,
+  Joayo,
+  userEmail,
+  comment_count,
+  comment_open,
+  handleComment,
+  setRec_num,
+  onchangeSearch,
+  search,
+  handleEnter,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
 
   useEffect(() => {
     updateList();
-  });
+  }, []);
 
   //리스트 박스 디자인 관련
   const useStyles = makeStyles((theme) => ({
@@ -58,17 +105,6 @@ const R = ({
     },
   }));
 
-  //리스트 점 3개
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const dothandleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const dothandleClose = () => {
-    setAnchorEl(null);
-  };
-
   //리스트 박스
   const ListItem = list.slice(0, state.itemCount).map((l, idx) => {
     return (
@@ -89,18 +125,32 @@ const R = ({
               <MoreVert
                 aria-controls="simple-menu"
                 aria-haspopup="true"
-                onClick={dothandleClick}
+                onClick={(e) => {
+                  dothandleClick(e, idx);
+                }}
               />
               <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
+                id={`simple-menu-${idx}`}
+                anchorEl={anchorEl[idx]}
                 keepMounted
-                open={Boolean(anchorEl)}
-                onClose={dothandleClose}
+                open={Boolean(anchorEl[idx])}
+                onClose={() => {
+                  dothandleClose(idx);
+                }}
               >
-                <MenuItem onClick={dothandleClose}>공유</MenuItem>
-                <MenuItem onClick={dothandleClose}>수정</MenuItem>
-                <MenuItem onClick={dothandleClose}>삭제</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleShare(l.rec_num);
+                  }}
+                >
+                  공유
+                </MenuItem>
+                {l.email === userEmail && (
+                  <MenuItem onClick={dothandleClose}>수정</MenuItem>
+                )}
+                {l.email === userEmail && (
+                  <MenuItem onClick={dothandleClose}>삭제</MenuItem>
+                )}
               </Menu>
             </IconButton>
           }
@@ -110,7 +160,7 @@ const R = ({
         <Link
           key={l.rec_num}
           className="ListItem"
-          to={`/detail?recipe=${l.rec_num}`}
+          to={`/recipe/detail?recipe=${l.rec_num}`}
           onClick={() => {
             setView(l.rec_num, idx);
           }}
@@ -144,21 +194,88 @@ const R = ({
               </center>
             </Typography>
           </CardContent>
-          <CardActions disableSpacing style={{ float: "right" }}>
-            <IconButton aria-label="share">
-              <FavoriteBorder color="disabled" fontSize="small" />
-              <span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}>{l.joayo}</span>
-							&ensp;
-              <BookmarkBorder color="disabled" fontSize="small" />
-              <span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}>{l.scrap}</span>
-              &ensp;
-              <ChatBubbleOutline color="disabled" fontSize="small" />
-              <span style={{ fontWeight: "600", fontSize: "12pt", color: "#ff6d75" }}></span>
-							&nbsp;
-            </IconButton>
-          </CardActions>
         </Link>
-      </Card >
+        <CardActions disableSpacing style={{ float: "right" }}>
+          <IconButton aria-label="share">
+            {check_j[idx] === 0 ? (
+              <FavoriteBorder
+                color="disabled"
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            ) : (
+                <Favorite
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
+            &nbsp;
+            <span
+              style={{
+                fontWeight: "600",
+                fontSize: "12pt",
+                color: "#ff6d75",
+              }}
+            >
+              {l.joayo}
+            </span>
+            &ensp;
+            {check_s[idx] === 0 ? (
+              <BookmarkBorder
+                color="disabled"
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            ) : (
+                <Bookmark
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
+            &nbsp;
+            <span
+              style={{
+                fontWeight: "600",
+                fontSize: "12pt",
+                color: "#ff6d75",
+              }}
+            >
+              {l.scrap}
+            </span>
+            &nbsp;
+            <ChatBubbleOutline
+              onClick={() => {
+                setRec_num(l.rec_num);
+                setView(l.rec_num, idx);
+                handleComment();
+              }}
+              color="disabled"
+              fontSize="small"
+            />
+            &nbsp;
+            <span
+              style={{
+                fontWeight: "600",
+                fontSize: "12pt",
+                color: "#ff6d75",
+              }}
+            >
+              {comment_count[idx]}
+            </span>
+            &nbsp;
+          </IconButton>
+        </CardActions>
+      </Card>
     );
   });
 
@@ -192,6 +309,9 @@ const R = ({
             id="outlined-basic"
             variant="outlined"
             size="small"
+            onKeyDown={handleEnter}
+            value={search}
+            onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
 
@@ -200,7 +320,7 @@ const R = ({
             <BottomNavigation
               // value={value}
               // onChange={(event, newValue) => {
-              // 	setValue(newValue);
+              //    setValue(newValue);
               // }}
               showLabels
               style={{ width: "150px" }}
@@ -263,11 +383,55 @@ const R = ({
           }}
         />
       </Link>
+      {/* 공유모달 */}
+      <div>
+        <Dialog open={modal_open} onClose={handleShare}>
+          <DialogTitle id="form-dialog-title">
+            URL 복사하기
+            <IconButton edge="end" onClick={handleShare} aria-label="close">
+              <Close />
+            </IconButton>
+          </DialogTitle>
+
+          <DialogContent>
+            <TextField
+              value={url}
+              readOnly
+              fullWidth
+              variant="filled"
+              size="small"
+            />
+            <CopyToClipboard text={url} onCopy={onCopy}>
+              <Button color="primary" variant="contained">
+                복사하기
+              </Button>
+            </CopyToClipboard>
+          </DialogContent>
+        </Dialog>
+      </div>
+      {/* 공유모달 */}
+      {/* 댓글모달 */}
+      <Dialog open={comment_open} onClose={handleComment}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleComment}
+          aria-label="close"
+        >
+          <Close />
+        </IconButton>
+
+        <br />
+        <br />
+        <DialogContent>
+          <Comment />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
 
-export default inject(({ recipe }) => ({
+export default inject(({ recipe, detail, info }) => ({
   list: recipe.list,
   getList: recipe.getList,
   state: recipe.state,
@@ -275,4 +439,25 @@ export default inject(({ recipe }) => ({
   addState: recipe.addState,
   updateList: recipe.updateList,
   setView: recipe.setView,
+  modal_open: detail.modal_open,
+  url: detail.url,
+  onCopy: detail.onCopy,
+  handleShare: detail.handleShare,
+  anchorEl: recipe.anchorEl,
+  dothandleClick: recipe.dothandleClick,
+  dothandleClose: recipe.dothandleClose,
+  check_j: recipe.check_j,
+  check_s: recipe.check_s,
+  Joayo: recipe.Joayo,
+  Scrap: recipe.Scrap,
+  userEmail: info.userEmail,
+  comment_count: recipe.comment_count,
+
+  comment_open: detail.comment_open,
+  handleComment: detail.handleComment,
+  setRec_num: detail.setRec_num,
+
+  onchangeSearch: recipe.onchangeSearch,
+  search: recipe.search,
+  handleEnter: recipe.handleEnter,
 }))(observer(R));

@@ -13,3 +13,19 @@
 .refopen{
     display: none;
 }
+
+.refribox{
+    width: 140px;
+    overflow: hidden;
+    position: absolute;
+    left: 230px;
+    top: 480px;
+    cursor: pointer;
+    float: left;
+}
+
+.refribox::after{
+    content:"";
+    display: block;
+    clear: both;
+}
