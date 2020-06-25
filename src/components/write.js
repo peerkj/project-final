@@ -556,7 +556,9 @@ class write extends Component {
               취소
             </Button>
             <Button
-              onClick={insertRecipe}
+              onClick={() => {
+                insertRecipe(history);
+              }}
               variant="outlined"
               size="medium"
               style={{

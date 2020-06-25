@@ -42,7 +42,11 @@ export default class DetailStore {
 
   //공유모달
   @action
-  handleShare = () => {
+  handleShare = (check) => {
+    this.url = window.location.href;
+    if (check !== 0) {
+      this.url = this.url + "/detail?recipe=" + check;
+    }
     this.modal_open = !this.modal_open;
   };
 
@@ -159,7 +163,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkjoa = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -175,7 +179,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkJoayo();
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩체크
@@ -191,7 +195,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkscr = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -207,6 +211,6 @@ export default class DetailStore {
       .then((res) => {
         this.checkScrap();
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }

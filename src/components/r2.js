@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
   Button,
   Icon,
@@ -14,13 +15,19 @@ import {
   Avatar,
   IconButton,
   Typography,
-  TextField,
   BottomNavigation,
   BottomNavigationAction,
   Menu,
   MenuItem,
+  Dialog,
+  TextField,
+  DialogContent,
+  DialogTitle,
+  AppBar,
+  Toolbar,
 } from "@material-ui/core";
 import {
+  Close,
   Search,
   Create,
   MoreVert,
@@ -48,6 +55,10 @@ const R = ({
   history,
   updateList,
   setView,
+  modal_open,
+  url,
+  onCopy,
+  handleShare,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -114,25 +125,27 @@ const R = ({
                 onClick={dothandleClick}
               />
               <Menu
-                id="simple-menu"
+                id={`simple-menu-${idx}`}
                 anchorEl={anchorEl}
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={dothandleClose}
               >
-                <MenuItem onClick={dothandleClose}>공유</MenuItem>
+                <MenuItem onClick={() => {
+                  handleShare(l.rec_num);
+                }}>공유</MenuItem>
                 <MenuItem onClick={dothandleClose}>수정</MenuItem>
                 <MenuItem onClick={dothandleClose}>삭제</MenuItem>
               </Menu>
             </IconButton>
           }
           title={l.nickname}
-          subheader={l.timeDiffer.substring(0, 10)}
+          subheader={l.timeDiffer}
         />
         <Link
           key={l.rec_num}
           className="ListItem"
-          to={`/detail?recipe=${l.rec_num}`}
+          to={`/recipe/detail?recipe=${l.rec_num}`}
           onClick={() => {
             setView(l.rec_num, idx);
           }}
@@ -296,11 +309,39 @@ const R = ({
           }}
         />
       </Link>
+      {/* 공유모달 */}
+      <div>
+        <Dialog open={modal_open} onClose={handleShare}>
+          <DialogTitle id="form-dialog-title">
+            URL 복사하기
+              <IconButton edge="end" onClick={handleShare} aria-label="close">
+              <Close />
+            </IconButton>
+          </DialogTitle>
+
+          <DialogContent>
+            <TextField
+              value={url}
+              readOnly
+              fullWidth
+              variant="filled"
+              size="small"
+            />
+            <CopyToClipboard text={url} onCopy={onCopy}>
+              <Button color="primary" variant="contained">
+                복사하기
+                </Button>
+            </CopyToClipboard>
+          </DialogContent>
+        </Dialog>
+      </div>
+      {/* 공유모달 */}
+
     </div>
   );
 };
 
-export default inject(({ recipe }) => ({
+export default inject(({ recipe, detail }) => ({
   list: recipe.list,
   getList: recipe.getList,
   state: recipe.state,
@@ -308,4 +349,8 @@ export default inject(({ recipe }) => ({
   addState: recipe.addState,
   updateList: recipe.updateList,
   setView: recipe.setView,
+  modal_open: detail.modal_open,
+  url: detail.url,
+  onCopy: detail.onCopy,
+  handleShare: detail.handleShare,
 }))(observer(R));

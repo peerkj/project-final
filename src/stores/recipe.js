@@ -10,6 +10,11 @@ export default class CounterStore {
   constructor(root) {
     this.root = root;
   }
+  @action
+  reset = () => {
+    this.state = { itemCount: 0, isLoading: false };
+    this.list = [];
+  };
 
   @action
   setView = (num, idx) => {
@@ -65,10 +70,8 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
-    let scroll = 0;
-    if (this.list.length > 0) scroll = 1;
-    let url = "http://localhost:9000/acorn/recipe/list?scroll=" + scroll;
-
+    let url = "http://localhost:9000/acorn/recipe/list?scroll=" + this.scroll;
+    this.scroll++;
     axios({
       method: "get",
       url: url,
