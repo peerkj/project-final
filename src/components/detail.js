@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
-import { makeStyles } from '@material-ui/core/styles';
+import { Link } from "react-router-dom";
 import Comment from "./comment";
 import "../css/detail.css";
 import {
   Share, Close, People, Timer, Star, ChatBubble,
   Bookmark, ThumbUp, ViewList, ViewCarousel, Subject,
-  KeyboardArrowRight, KeyboardArrowLeft, PlayArrow, Pause
+  KeyboardArrowRight, KeyboardArrowLeft, PlayArrow, Pause,
+  ExpandLess, KeyboardBackspace
 } from "@material-ui/icons";
 import {
   Button, Dialog, TextField, DialogContent, DialogTitle,
@@ -94,6 +95,7 @@ class Detail extends Component {
       step_slide,
       stepR,
       stepL,
+      history,
     } = this.props;
 
     //주재료
@@ -325,14 +327,35 @@ class Detail extends Component {
             <br />
             <br />
             <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}>
-              <img src="img/star.jpg" alt="" width="30px" />
-              요리 Tip!
+              <img src="img/star.jpg" alt="" width="30px" style={{ verticalAlign: "middle" }} />
+              <span style={{ verticalAlign: "middle" }}>요리 Tip!</span>
             </p>
-            <br />
-            {all.tip}
+            <div id="tipBox">{all.tip}</div>
+            <hr className="detailLine" />
           </div>
         </div>
         {/* Default */}
+
+        {/* 위로가기 */}
+        <Link
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
+          <ExpandLess
+            style={{
+              position: "fixed",
+              left: "330px",
+              top: "755px",
+              width: "30px",
+              height: "30px",
+              border: "1px solid #575757",
+              backgroundColor: "#ffffff",
+              opacity: "0.8",
+              color: "#000000",
+            }}
+          />
+        </Link>
 
         {/* 공유모달 */}
         <div>
