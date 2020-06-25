@@ -43,7 +43,7 @@ import {
 } from "@material-ui/icons";
 import "../css/styles.css";
 
-const fakeFetch = (delay = 800) => new Promise((res) => setTimeout(res, delay));
+const fakeFetch = (delay = 750) => new Promise((res) => setTimeout(res, delay));
 
 const R = ({
   list,
@@ -73,6 +73,7 @@ const R = ({
   onchangeSearch,
   search,
   handleEnter,
+  list_count,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -202,14 +203,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  color="secondary"
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                color="secondary"
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             &nbsp;
             <span
               style={{
@@ -230,14 +231,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  color="secondary"
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                color="secondary"
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             &nbsp;
             <span
               style={{
@@ -456,4 +457,5 @@ export default inject(({ recipe, detail, info }) => ({
   onchangeSearch: recipe.onchangeSearch,
   search: recipe.search,
   handleEnter: recipe.handleEnter,
+  list_count: recipe.list_count,
 }))(observer(R));

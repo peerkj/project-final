@@ -10,7 +10,7 @@ export default class CounterStore {
   @observable check_j = [];
   @observable check_s = [];
   @observable comment_count = [];
-
+  @observable list_count = -1;
   //검색
   @observable search = null;
 
@@ -129,13 +129,17 @@ export default class CounterStore {
     })
       .then((res) => {
         this.scroll++;
-        console.log(res.data);
+
         if (this.scroll === 1) {
-          this.list = res.data;
+          this.list = res.data.list;
         } else {
-          this.list = [...this.list, ...res.data];
+          this.list = [...this.list, ...res.data.list];
         }
         this.setList();
+        this.list_count = res.data.count;
+        console.log(res.data.count);
+        console.log(this.list_count);
+        console.log(this.list.length);
       })
       .catch((err) => {
         console.log("업로드오류:" + err);
