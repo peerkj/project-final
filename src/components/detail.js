@@ -195,6 +195,7 @@ class Detail extends Component {
                     src={`http://localhost:9000/acorn/image/recipe/${step_list[step_slide].photo}`}
                     alt=""
                     width="359px"
+                    height="250px"
                   />
                 </div>
               </div>

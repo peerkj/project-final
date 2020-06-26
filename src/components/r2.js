@@ -26,6 +26,8 @@ import {
   DialogTitle,
   AppBar,
   Toolbar,
+  DialogActions,
+  CircularProgress,
 } from "@material-ui/core";
 import {
   Close,
@@ -43,7 +45,8 @@ import {
 } from "@material-ui/icons";
 import "../css/styles.css";
 
-const fakeFetch = (delay = 500) => new Promise((res) => setTimeout(res, delay));
+const fakeFetch = (delay = 1500) =>
+  new Promise((res) => setTimeout(res, delay));
 
 const R = ({
   list,
@@ -73,7 +76,12 @@ const R = ({
   onchangeSearch,
   search,
   handleEnter,
+  delete_open,
+  deleteOpen,
+  deleteRecipe,
+  checkList,
   list_count,
+  resetRecipe,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -103,6 +111,12 @@ const R = ({
     },
     avatar: {
       backgroundColor: red[500],
+    },
+    load: {
+      display: "flex",
+      "& > * + *": {
+        marginLeft: theme.spacing(2),
+      },
     },
   }));
 
@@ -154,7 +168,13 @@ const R = ({
                   <MenuItem onClick={dothandleClose}>수정</MenuItem>
                 )}
                 {l.email === userEmail && (
-                  <MenuItem onClick={dothandleClose}>삭제</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      deleteOpen(l.rec_num);
+                    }}
+                  >
+                    삭제
+                  </MenuItem>
                 )}
               </Menu>
             </IconButton>
@@ -320,6 +340,7 @@ const R = ({
             onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
+          <b onClick={resetRecipe}>새로고침</b>
 
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
@@ -343,15 +364,22 @@ const R = ({
       {ListItem}
 
       {/* 로딩 */}
-      <div style={{ height: "100px" }}></div>
+
       <center>
-        <div
-          style={{ backgroundColor: "black" }}
-          ref={setRef}
-          className="Loading"
-        >
-          {state.isLoading && "Loading..."}
-        </div>
+        {!checkList && (
+          <div ref={setRef} className="Loading">
+            <div className={useStyles.load}>
+              {state.isLoading && (
+                <CircularProgress style={{ color: "#bdbdbd" }} />
+              )}
+            </div>
+          </div>
+        )}
+        {list_count === 0 && (
+          <div style={{ marginTop: "130px", color: "navy", fontSize: "18px" }}>
+            <b>검색 결과가 없습니다</b>
+          </div>
+        )}
       </center>
 
       {/* 위로 가기, 글쓰기 버튼 */}
@@ -438,6 +466,28 @@ const R = ({
           <Comment />
         </DialogContent>
       </Dialog>
+      <div>
+        <Dialog
+          open={delete_open}
+          onClose={deleteOpen}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogContent>삭제하시겠습니까?</DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                deleteRecipe();
+              }}
+              color="secondary"
+            >
+              확인
+            </Button>
+            <Button onClick={deleteOpen} color="primary">
+              취소
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 };
@@ -471,5 +521,12 @@ export default inject(({ recipe, detail, info }) => ({
   onchangeSearch: recipe.onchangeSearch,
   search: recipe.search,
   handleEnter: recipe.handleEnter,
+
+  delete_open: recipe.delete_open,
+  deleteOpen: recipe.deleteOpen,
+  deleteRecipe: recipe.deleteRecipe,
+
+  checkList: recipe.checkList,
   list_count: recipe.list_count,
+  resetRecipe: recipe.resetRecipe,
 }))(observer(R));
