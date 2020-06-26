@@ -289,8 +289,8 @@ class Detail extends Component {
                   {checkjoa === 0 ? (
                     <FavoriteBorderSharp />
                   ) : (
-                    <FavoriteSharp style={{ color: "#db555a" }} />
-                  )}
+                      <FavoriteSharp style={{ color: "#db555a" }} />
+                    )}
                   <br />
                   {checkjoa === 0 ? "좋아요" : "좋아요 취소"}
                 </div>
@@ -298,8 +298,8 @@ class Detail extends Component {
                   {checkscr === 0 ? (
                     <BookmarkBorderSharp />
                   ) : (
-                    <Bookmark style={{ color: "#db555a" }} />
-                  )}
+                      <Bookmark style={{ color: "#db555a" }} />
+                    )}
                   <br />
                   {checkscr === 0 ? "스크랩" : "스크랩 취소"}
                 </div>
@@ -418,14 +418,14 @@ class Detail extends Component {
             <center style={{ margin: "50px 0 80px" }}>
               <Button
                 onClick={() => {
-                  history.push("/recipe");
+                  history.goBack();
                 }}
                 variant="outlined"
                 color="black"
                 component="span"
                 className={useStyles.button}
               >
-                목록
+                뒤로
               </Button>
             </center>
           </div>
@@ -435,7 +435,7 @@ class Detail extends Component {
         {/* 위로가기 */}
         <Link
           onClick={() => {
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
           }}
         >
           <ExpandLess

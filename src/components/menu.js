@@ -54,8 +54,8 @@ class header extends Component {
                       className="mypageCenterImg"
                     />
                   ) : (
-                    <img src="img/basic_user.png" alt="" />
-                  )}
+                      <img src="img/basic_user.png" alt="" />
+                    )}
                 </div>
               </div>
             </div>
@@ -64,26 +64,27 @@ class header extends Component {
                 {menu_nick} 님
               </span>
             ) : (
-              <span></span>
-            )}
+                <span></span>
+              )}
             <br />
             {login_state ? (
-              <Link to="/myinfo">MYINFO</Link>
+              <Link to="/myinfo">
+                <span className="menuTextColor">MYINFO</span></Link>
             ) : (
-              <Link to="/login">
-                <span className="menuTextColor">LOGIN</span>
-              </Link>
-            )}
+                <Link to="/login">
+                  <span className="menuTextColor">LOGIN</span>
+                </Link>
+              )}
             &ensp;
             {login_state ? (
               <span onClick={handleLogout} className="menuTextColor">
                 LOGOUT
               </span>
             ) : (
-              <Link to="/join">
-                <span className="menuTextColor">JOIN</span>
-              </Link>
-            )}
+                <Link to="/join">
+                  <span className="menuTextColor">JOIN</span>
+                </Link>
+              )}
           </center>
           <br />
           <br />

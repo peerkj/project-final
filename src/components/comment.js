@@ -8,7 +8,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  emphasize,
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import "../css/profile.css";
@@ -73,14 +72,14 @@ class comment extends Component {
           key={idx}
         >
           <div style={{ display: "inline", verticalAlign: "middle" }}>
-            {c.relevel === 1 && (
-              <img
-                src="/img/comment.png"
-                alt=""
-                width="25px"
+
+            {c.restep === 2 && <span>&emsp;&nbsp;</span>}
+            {c.restep === 3 && <span>&emsp;&emsp;&ensp;</span>}
+            {c.relevel === 1 &&
+              <img src="/img/comment.png" alt="" width="25px"
                 style={{ verticalAlign: "middle", marginRight: "8px" }}
               />
-            )}
+            }
             <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
               <img
                 width="40px"
@@ -179,8 +178,8 @@ class comment extends Component {
                       style={{ maxWidth: "240px", maxHeight: "200px" }}
                     />
                   ) : (
-                    <img src="/img/add_icon2.png" alt="" width="240px" />
-                  )}
+                      <img src="/img/add_icon2.png" alt="" width="240px" />
+                    )}
                 </label>
                 {imgBase64 ? (
                   <Close
@@ -196,8 +195,8 @@ class comment extends Component {
                     id="commentthumb_delete"
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </div>
               <input
                 style={{ display: "none" }}
