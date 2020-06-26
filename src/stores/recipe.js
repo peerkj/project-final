@@ -12,7 +12,7 @@ export default class CounterStore {
   @observable comment_count = [];
   @observable list_count = -1;
   //검색
-  @observable search = null;
+  @observable search = "";
 
   // **** 추가됨
   constructor(root) {
@@ -47,6 +47,9 @@ export default class CounterStore {
     this.state = { itemCount: 0, isLoading: false };
     this.list = [];
     this.scroll = 0;
+    this.check_j = [];
+    this.check_s = [];
+    this.list_count = -1;
   };
   @action
   resetRecipe = () => {
