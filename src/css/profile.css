@@ -38,3 +38,46 @@
     width: auto; 
     height: 100%; 
 }
+
+/* 댓글창 */
+.commentCenterWrapper{
+  width: 100px;
+  float: right;
+  margin-top: -10px;
+  margin-right: 5px;
+}
+.commentCenter{
+  position: relative; 
+  padding-top: 75%; /* 4:3 ratio */ 
+  overflow: hidden;
+}
+.commentCenter .centered{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  -webkit-transform: translate(50%,50%); 
+  -ms-transform: translate(50%,50%); 
+  transform: translate(50%,50%);
+}
+.commentCenter .centered img{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  max-width: 100%;
+  height: auto;
+  -webkit-transform: translate(-50%,-50%); 
+  -ms-transform: translate(-50%,-50%); 
+  transform: translate(-50%,-50%);
+}
+
+.commentCenter .centered img.portrait { 
+  width: 100%; 
+  height: auto; 
+}
+
+.commentCenter .centered img.landscape { 
+  width: auto; 
+  height: 100%; 
+}
