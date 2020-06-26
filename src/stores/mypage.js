@@ -21,7 +21,7 @@ export default class CounterStore {
   }
 
   @action
-  setNickname = (nick) => {
+  setNickname = (nick, history) => {
     this.nick = nick;
 
     let url = "http://localhost:9000/acorn/chef/mypage";
@@ -36,7 +36,12 @@ export default class CounterStore {
     })
       .then((res) => {
         console.log(res.data);
-        this.mypage = res.data;
+        if (res.data === "") {
+          alert("사용자가 없습니다");
+          history.push("/");
+        } else {
+          this.mypage = res.data;
+        }
       })
       .catch((err) => {
         console.log("업로드 오류:" + err);
@@ -241,7 +246,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -257,7 +262,7 @@ export default class CounterStore {
       .then((res) => {
         this.updateCheck(num, idx);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   @computed
@@ -281,7 +286,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -297,7 +302,7 @@ export default class CounterStore {
       .then((res) => {
         this.updateCheck(num, idx);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   //댓글 count
   @action
@@ -312,6 +317,6 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }
