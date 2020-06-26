@@ -170,7 +170,7 @@ export default class CU {
         .then((res) => {
           this.root.info.getInfo();
 
-          history.replace("/mypage");
+          history.replace("/myinfo");
         })
         .catch((err) => {
           console.log("업로드 오류:" + err);

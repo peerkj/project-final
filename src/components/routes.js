@@ -7,13 +7,14 @@ import Home from "./home";
 import Join from "./join";
 import FindId from "./findid";
 import FindPass from "./findpass";
-import Mypage from "./mypage";
+import Myinfo from "./myinfo";
 import Chefupdate from "./chefupdate2";
 import Withdraw from "./withdraw";
 import Recipe from "./r2";
 import Write from "./write";
 import Detail from "./detail";
 import Comment from "./comment";
+import Mypage from "./mypage";
 
 export default () => (
   <Switch>
@@ -23,12 +24,13 @@ export default () => (
     <Route exact path="/login" component={Login} />
     <Route exact path="/findid" component={FindId} />
     <Route exact path="/findpass" component={FindPass} />
-    <Route exact path="/mypage" component={Mypage} />
+    <Route exact path="/myinfo" component={Myinfo} />
     <Route exact path="/chefupdate" component={Chefupdate} />
     <Route exact path="/withdraw" component={Withdraw} />
     <Route exact path="/findid" component={FindId} />
     <Route exact path="/write" component={Write} />
     <Route exact path="/recipe/detail" component={Detail} />
     <Route exact path="/comment" component={Comment} />
+    <Route exact path="/mypage" component={Mypage} />
   </Switch>
 );

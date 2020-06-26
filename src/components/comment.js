@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import {
   Button,
@@ -30,6 +30,8 @@ import "../css/profile.css";
 
   delete_open: stores.comment.delete_open,
   deleteOpen: stores.comment.deleteOpen,
+  err: stores.comment.err,
+  modalReset: stores.detail.modalReset,
 }))
 @observer
 class comment extends Component {
@@ -55,11 +57,20 @@ class comment extends Component {
       deleteComment,
       delete_open,
       deleteOpen,
+      err,
+      modalReset,
     } = this.props;
 
     const comment = comment_list.map((c, idx) => {
       return (
-        <div style={{ borderTop: "1px solid #e5e5e5", paddingTop: "10px", paddingBottom: "20px" }} key={idx}>
+        <div
+          style={{
+            borderTop: "1px solid #e5e5e5",
+            paddingTop: "10px",
+            paddingBottom: "20px",
+          }}
+          key={idx}
+        >
           <div style={{ display: "inline", verticalAlign: "middle" }}>
 
             {c.restep === 2 && <span>&emsp;&nbsp;</span>}
@@ -67,24 +78,38 @@ class comment extends Component {
             {c.relevel === 1 &&
               <img src="/img/comment.png" alt="" width="25px"
                 style={{ verticalAlign: "middle", marginRight: "8px" }}
-              />}
-            <img
-              width="40px"
-              height="40px"
-              style={{ borderRadius: "40px", verticalAlign: "middle" }}
-              src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
-              alt=""
-            />
+              />
+            )}
+            <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
+              <img
+                width="40px"
+                height="40px"
+                style={{ borderRadius: "40px", verticalAlign: "middle" }}
+                src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
+                alt=""
+              />
+            </Link>
           </div>
-          <div style={{ display: "inline", height: "40px", verticalAlign: "middle" }}>
+          <div
+            style={{
+              display: "inline",
+              height: "40px",
+              verticalAlign: "middle",
+            }}
+          >
             &emsp;
-            <b>{c.nickname}</b>
+            <b>
+              <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
+                {c.nickname}
+              </Link>
+            </b>
             &emsp;
             <span>{c.timeDiffer}</span>
             {c.email === userEmail && (
-              <Close onClick={() => {
-                deleteOpen(c.com_num);
-              }}
+              <Close
+                onClick={() => {
+                  deleteOpen(c.com_num);
+                }}
                 style={{ float: "right", color: "#585858" }}
               />
             )}
@@ -99,32 +124,33 @@ class comment extends Component {
                   <img
                     src={`http://localhost:9000/acorn/image/comment/${c.image}`}
                     alt=""
-                    style={{ float: "right", }}
+                    style={{ float: "right" }}
                   />
                 )}
               </div>
             </div>
           </div>
-          <br /><br />
+          <br />
+          <br />
           {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>}
           {c.email !== "알수없음" && (
-            <span onClick={() => {
-              setValue(c.com_num, c.regroup, c.restep, c.relevel);
-              handleOpen();
-            }}
-            >&emsp;&emsp;&emsp;&ensp;&ensp;답글</span>
-          )
-          }
-        </div >
+            <span
+              onClick={() => {
+                setValue(c.com_num, c.regroup, c.restep, c.relevel);
+                handleOpen();
+              }}
+            >
+              &emsp;&emsp;&emsp;&ensp;&ensp;답글
+            </span>
+          )}
+        </div>
       );
     });
 
     return (
       <div>
-        <div>
-          {comment}
-        </div>
-
+        <div>{comment}</div>
+        {err && <b>등록된 댓글이 없습니다</b>}
         <div>
           <Dialog
             open={modal_open}
@@ -152,11 +178,7 @@ class comment extends Component {
                       style={{ maxWidth: "240px", maxHeight: "200px" }}
                     />
                   ) : (
-                      <img
-                        src="/img/add_icon2.png"
-                        alt=""
-                        width="240px"
-                      />
+                      <img src="/img/add_icon2.png" alt="" width="240px" />
                     )}
                 </label>
                 {imgBase64 ? (
@@ -185,8 +207,10 @@ class comment extends Component {
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleOpen}
-                style={{ color: "#8a8989", fontWeight: "400" }}>
+              <Button
+                onClick={handleOpen}
+                style={{ color: "#8a8989", fontWeight: "400" }}
+              >
                 취소
               </Button>
               <Button
@@ -206,13 +230,12 @@ class comment extends Component {
             onClose={deleteOpen}
             aria-labelledby="form-dialog-title"
           >
-            <DialogContent>
-              삭제하시겠습니까?
-            </DialogContent>
+            <DialogContent>삭제하시겠습니까?</DialogContent>
             <DialogActions>
               <Button
                 onClick={deleteOpen}
-                style={{ color: "#8a8989", fontWeight: "400" }}>
+                style={{ color: "#8a8989", fontWeight: "400" }}
+              >
                 취소
               </Button>
               <Button
@@ -226,7 +249,7 @@ class comment extends Component {
             </DialogActions>
           </Dialog>
         </div>
-      </div >
+      </div>
     );
   }
 }

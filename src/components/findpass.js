@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { TextField, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { Lock } from '@material-ui/icons';
+import { Lock } from "@material-ui/icons";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
 @inject((stores) => ({
   //input list
@@ -65,26 +64,31 @@ class findid extends Component {
 
     return (
       <div>
-        <div id="divjoin"
+        <div
+          id="divjoin"
           style={{
             width: "290px",
             height: "500px",
             margin: "0 auto",
-          }}>
+          }}
+        >
           <div style={{ marginTop: "130px" }}>
             <center>
               <Lock style={{ verticalAlign: "middle" }} />
-              <span style={{
-                fontSize: "medium",
-                fontWeight: "400",
-                verticalAlign: "middle",
-              }}>
-                비밀번호 찾기</span>
+              <span
+                style={{
+                  fontSize: "medium",
+                  fontWeight: "400",
+                  verticalAlign: "middle",
+                }}
+              >
+                비밀번호 찾기
+              </span>
             </center>
           </div>
           <div style={{ marginTop: "50px", marginLeft: "55px" }}>
             이름
-          <br />
+            <br />
             <TextField
               id="standard-basic"
               value={name}
@@ -95,7 +99,8 @@ class findid extends Component {
               }
               style={{ width: "200px" }}
             />
-            <br /><br />
+            <br />
+            <br />
             <span>이메일</span>
             <br />
             <TextField
@@ -128,11 +133,15 @@ class findid extends Component {
             <Button
               onClick={handleSubmit}
               variant="contained"
-              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "35px" }}
+              style={{
+                backgroundColor: "#002060",
+                color: "#ffffff",
+                marginLeft: "35px",
+              }}
               component="span"
             >
               비밀번호 찾기
-          </Button>
+            </Button>
           </div>
           <br />
           <b>{result}</b>

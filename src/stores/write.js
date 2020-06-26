@@ -364,7 +364,7 @@ export default class WriteStore {
         data: submit,
       })
         .then((res) => {
-          history.push(`/detail?recipe=${res.data}`);
+          history.push(`/recipe/detail?recipe=${res.data}`);
         })
         .catch((err) => {
           console.log("레시피 업로드 오류:" + err);
