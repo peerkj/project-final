@@ -22,6 +22,10 @@ export default class CounterStore {
 
   @action
   setNickname = (nick) => {
+    this.mypage = {};
+    this.resetRecipe();
+    console.log("초기화");
+
     this.nick = nick;
 
     let url = "http://localhost:9000/acorn/chef/mypage";

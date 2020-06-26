@@ -80,6 +80,7 @@ const R = ({
   checkList,
   location,
   setNickname,
+  mypage,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -132,7 +133,7 @@ const R = ({
               <img
                 width="40px"
                 src={`http://localhost:9000/acorn/image/profile/${
-                  sw === 0 ? profile_name : l.profile
+                  sw === 0 ? mypage.profile : l.profile
                 }`}
                 alt=""
               />
@@ -173,7 +174,7 @@ const R = ({
               </Menu>
             </IconButton>
           }
-          title={sw === 0 ? nickname : l.nickname}
+          title={sw === 0 ? mypage.nickname : l.nickname}
           subheader={l.timeDiffer}
         />
         <Link
@@ -502,4 +503,5 @@ export default inject(({ mypage, detail, info }) => ({
   checkList: mypage.checkList,
 
   setNickname: mypage.setNickname,
+  mypage: mypage.mypage,
 }))(observer(R));

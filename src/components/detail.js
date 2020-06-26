@@ -241,7 +241,7 @@ class Detail extends Component {
                 alt=""
               />
               <p style={{ fontWeight: "500", fontSize: "10pt" }}>
-                {all.nickname}
+                <Link to={`/mypage?nick=${all.nickname}`}>{all.nickname}</Link>
               </p>
 
               {/* 요리 제목 */}

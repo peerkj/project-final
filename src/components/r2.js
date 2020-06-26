@@ -131,11 +131,13 @@ const R = ({
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={useStyles.avatar}>
-              <img
-                width="40px"
-                src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
-                alt=""
-              />
+              <Link to={`/mypage?nick=${l.nickname}`}>
+                <img
+                  width="40px"
+                  src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
+                  alt=""
+                />
+              </Link>
             </Avatar>
           }
           action={
@@ -179,7 +181,7 @@ const R = ({
               </Menu>
             </IconButton>
           }
-          title={l.nickname}
+          title={<Link to={`/mypage?nick=${l.nickname}`}>{l.nickname}</Link>}
           subheader={l.timeDiffer}
         />
         <Link
