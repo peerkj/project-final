@@ -32,6 +32,7 @@ import "../css/profile.css";
   delete_open: stores.comment.delete_open,
   deleteOpen: stores.comment.deleteOpen,
   err: stores.comment.err,
+  modalReset: stores.detail.modalReset,
 }))
 @observer
 class comment extends Component {
@@ -58,6 +59,7 @@ class comment extends Component {
       delete_open,
       deleteOpen,
       err,
+      modalReset,
     } = this.props;
 
     const comment = comment_list.map((c, idx) => {
@@ -79,7 +81,7 @@ class comment extends Component {
                 style={{ verticalAlign: "middle", marginRight: "8px" }}
               />
             )}
-            <Link to={`/mypage?nick=${c.nickname}`}>
+            <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
               <img
                 width="40px"
                 height="40px"
@@ -98,7 +100,9 @@ class comment extends Component {
           >
             &emsp;
             <b>
-              <Link to={`/mypage?nick=${c.nickname}`}>{c.nickname}</Link>
+              <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
+                {c.nickname}
+              </Link>
             </b>
             &emsp;
             <span>{c.timeDiffer}</span>
