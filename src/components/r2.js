@@ -27,6 +27,7 @@ import {
   AppBar,
   Toolbar,
   DialogActions,
+  CircularProgress,
 } from "@material-ui/core";
 import {
   Close,
@@ -44,7 +45,8 @@ import {
 } from "@material-ui/icons";
 import "../css/styles.css";
 
-const fakeFetch = (delay = 500) => new Promise((res) => setTimeout(res, delay));
+const fakeFetch = (delay = 1500) =>
+  new Promise((res) => setTimeout(res, delay));
 
 const R = ({
   list,
@@ -109,6 +111,12 @@ const R = ({
     },
     avatar: {
       backgroundColor: red[500],
+    },
+    load: {
+      display: "flex",
+      "& > * + *": {
+        marginLeft: theme.spacing(2),
+      },
     },
   }));
 
@@ -356,11 +364,15 @@ const R = ({
       {ListItem}
 
       {/* 로딩 */}
-      <div style={{ height: "100px" }}></div>
+
       <center>
         {!checkList && (
           <div ref={setRef} className="Loading">
-            {state.isLoading && "Loading..."}
+            <div className={useStyles.load}>
+              {state.isLoading && (
+                <CircularProgress style={{ color: "#bdbdbd" }} />
+              )}
+            </div>
           </div>
         )}
         {list_count === 0 && (

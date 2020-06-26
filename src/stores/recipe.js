@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 import axios from "axios";
 
 export default class CounterStore {
@@ -89,6 +89,7 @@ export default class CounterStore {
       this.checkJoayo(this.list[i].rec_num, i);
       this.checkScrap(this.list[i].rec_num, i);
       this.getComment(this.list[i].rec_num, i);
+      console.log(size, "~", this.list.length);
     }
   };
   @action
@@ -161,6 +162,10 @@ export default class CounterStore {
       });
   };
 
+  @computed
+  get checkList() {
+    return this.list_count === this.list.length;
+  }
   //좋아요체크
   @action
   checkJoayo = (num, idx) => {
