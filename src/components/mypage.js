@@ -88,7 +88,8 @@ const R = ({
   useEffect(() => {
     let query = queryString.parse(location.search);
 
-    setNickname(query.nick);
+    setNickname(query.nick, history);
+
 
     updateList();
   }, []);
@@ -233,14 +234,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Favorite
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Joayo(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Favorite
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "600",
@@ -259,14 +260,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Bookmark
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Scrap(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Bookmark
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "600",
@@ -316,15 +317,34 @@ const R = ({
         {/* 검색창 */}
         <center style={{ marginTop: "20px" }}>
           <TextField
+            disabled
             id="outlined-basic"
             variant="outlined"
             size="small"
-            onKeyDown={handleEnter}
-            value="마이페이지"
-            onChange={onchangeSearch}
+            label={mypage.nickname}
             style={{ verticalAlign: "middle" }}
           />
+          {/* 회원정보출력 */}
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+            }}
+          >
+            <div style={{ marginTop: "70px" }}>
 
+              <center>
+                <img
+                  className="de_profile"
+                  src={`http://localhost:9000/acorn/image/profile/${mypage.profile}`}
+                  alt=""
+                />
+                <p style={{ fontWeight: "500", fontSize: "10pt" }}>
+                  {mypage.nickname}
+                </p>
+              </center>
+            </div>
+          </div>
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
             <BottomNavigation

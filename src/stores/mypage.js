@@ -21,11 +21,7 @@ export default class CounterStore {
   }
 
   @action
-  setNickname = (nick) => {
-    this.mypage = {};
-    this.resetRecipe();
-    console.log("초기화");
-
+  setNickname = (nick, history) => {
     this.nick = nick;
 
     let url = "http://localhost:9000/acorn/chef/mypage";
@@ -40,7 +36,12 @@ export default class CounterStore {
     })
       .then((res) => {
         console.log(res.data);
-        this.mypage = res.data;
+        if (res.data === "") {
+          alert("사용자가 없습니다");
+          history.push("/");
+        } else {
+          this.mypage = res.data;
+        }
       })
       .catch((err) => {
         console.log("업로드 오류:" + err);

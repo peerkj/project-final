@@ -239,14 +239,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Favorite
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Joayo(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Favorite
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "600",
@@ -265,14 +265,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Bookmark
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Scrap(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Bookmark
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "600",
