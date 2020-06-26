@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Comment from "./comment";
+import "../css/detail.css";
 
 import {
   Button,
@@ -42,6 +43,7 @@ import {
   BookmarkBorder,
   ExpandLess,
   ChatBubbleOutline,
+  Refresh,
 } from "@material-ui/icons";
 import "../css/styles.css";
 
@@ -214,14 +216,7 @@ const R = ({
               </div>
               <br />
               <center>
-                <span
-                  style={{
-                    fontSize: "12pt",
-                    fontWeight: "500",
-                    color: "#000000",
-                    marginLeft: "2px",
-                  }}
-                >
+                <span className="recipeSubject">
                   {l.subject}
                 </span>
               </center>
@@ -240,7 +235,7 @@ const R = ({
               />
             ) : (
                 <Favorite
-                  color="secondary"
+                  style={{ color: "#db555a" }}
                   fontSize="small"
                   onClick={() => {
                     Joayo(l.rec_num, idx);
@@ -249,7 +244,7 @@ const R = ({
               )}
             <span
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "12pt",
               }}
             >
@@ -266,7 +261,7 @@ const R = ({
               />
             ) : (
                 <Bookmark
-                  color="secondary"
+                  style={{ color: "#db555a" }}
                   fontSize="small"
                   onClick={() => {
                     Scrap(l.rec_num, idx);
@@ -275,7 +270,7 @@ const R = ({
               )}
             <span
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "12pt",
               }}
             >
@@ -293,8 +288,8 @@ const R = ({
             />
             <span
               style={{
-                fontWeight: "600",
-                fontSize: "12pt",
+                fontWeight: "500",
+                fontSize: "12pt"
               }}
             >
               {comment_count[idx]}
@@ -333,6 +328,7 @@ const R = ({
             fontSize="large"
             style={{ verticalAlign: "middle" }}
           />
+          &nbsp;
           <TextField
             id="outlined-basic"
             variant="outlined"
@@ -342,7 +338,10 @@ const R = ({
             onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
-          <b onClick={resetRecipe}>새로고침</b>
+          &nbsp;
+          <Refresh
+            onClick={resetRecipe}
+            style={{ verticalAlign: "middle" }} />
 
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
@@ -428,9 +427,9 @@ const R = ({
       <div>
         <Dialog open={modal_open} onClose={handleShare}>
           <DialogTitle id="form-dialog-title">
-            URL 복사하기
+            <span style={{ fontSize: "12pt" }}>URL 복사하기</span>
             <IconButton edge="end" onClick={handleShare} aria-label="close">
-              <Close />
+              <Close style={{ marginLeft: "130px", marginTop: "-10px" }} />
             </IconButton>
           </DialogTitle>
 
@@ -443,9 +442,11 @@ const R = ({
               size="small"
             />
             <CopyToClipboard text={url} onCopy={onCopy}>
-              <Button color="primary" variant="contained">
-                복사하기
-              </Button>
+              <center>
+                <Button style={{ margin: "20px 0" }} variant="outlined">
+                  복사
+                </Button>
+              </center>
             </CopyToClipboard>
           </DialogContent>
         </Dialog>
