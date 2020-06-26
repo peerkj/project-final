@@ -351,14 +351,14 @@ class Detail extends Component {
             <center style={{ margin: "50px 0 80px" }}>
               <Button
                 onClick={() => {
-                  history.push("/recipe");
+                  history.goBack();
                 }}
                 variant="outlined"
                 color="black"
                 component="span"
                 className={useStyles.button}
               >
-                목록
+                뒤로
               </Button>
             </center>
           </div>
@@ -368,7 +368,7 @@ class Detail extends Component {
         {/* 위로가기 */}
         <Link
           onClick={() => {
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
           }}
         >
           <ExpandLess

@@ -348,7 +348,7 @@ const R = ({
       {/* 위로 가기, 글쓰기 버튼 */}
       <Link
         onClick={() => {
-          window.scrollTo(0, 0);
+          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         }}
       >
         <ExpandLess

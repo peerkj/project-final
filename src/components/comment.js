@@ -8,7 +8,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  emphasize,
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
 import "../css/profile.css";
@@ -62,6 +61,9 @@ class comment extends Component {
       return (
         <div style={{ borderTop: "1px solid #e5e5e5", paddingTop: "10px", paddingBottom: "20px" }} key={idx}>
           <div style={{ display: "inline", verticalAlign: "middle" }}>
+
+            {c.restep === 2 && <span>&emsp;&nbsp;</span>}
+            {c.restep === 3 && <span>&emsp;&emsp;&ensp;</span>}
             {c.relevel === 1 &&
               <img src="/img/comment.png" alt="" width="25px"
                 style={{ verticalAlign: "middle", marginRight: "8px" }}
