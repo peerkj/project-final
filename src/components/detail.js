@@ -10,9 +10,10 @@ import {
   People,
   Timer,
   Star,
-  ChatBubble,
+  ChatBubbleOutline,
   Bookmark,
-  ThumbUp,
+  FavoriteBorderSharp,
+  FavoriteSharp,
   ViewList,
   ViewCarousel,
   Subject,
@@ -21,6 +22,8 @@ import {
   PlayArrow,
   Pause,
   ExpandLess,
+  BookmarkBorderSharp,
+  BorderColor,
 } from "@material-ui/icons";
 import {
   Button,
@@ -63,6 +66,8 @@ import queryString from "query-string";
 
   checkscr: stores.detail.checkscr,
   Scrap: stores.detail.Scrap,
+  setValue: stores.comment.setValue,
+  handleOpen: stores.comment.handleOpen,
 
   //step 모드
   changeStep: stores.detail.changeStep,
@@ -106,6 +111,8 @@ class Detail extends Component {
       //댓글모달
       comment_open,
       handleComment,
+      setValue,
+      handleOpen,
 
       checkjoa,
       Joayo,
@@ -195,7 +202,6 @@ class Detail extends Component {
                     src={`http://localhost:9000/acorn/image/recipe/${step_list[step_slide].photo}`}
                     alt=""
                     width="359px"
-                    height="250px"
                   />
                 </div>
               </div>
@@ -218,11 +224,13 @@ class Detail extends Component {
         <div style={{ width: "100%", height: "270px" }}>
           <div className="detailThumbnail">
             <div className="centered">
-              <img
-                className="detailThumbnailImg"
-                src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
-                alt=""
-              />
+              <Link to={`/mypage?nick=${all.nickname}`}>
+                <img
+                  className="detailThumbnailImg"
+                  src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
+                  alt=""
+                />
+              </Link>
             </div>
           </div>
         </div>
@@ -272,28 +280,31 @@ class Detail extends Component {
                 </div>
               </div>
               <div className="ptd2Group">
-                <div
-                  className="ptd2"
-                  onClick={() => {
-                    handleShare(0);
-                  }}
-                >
+                <div className="ptd2" onClick={handleShare}>
                   <Share />
                   <br />
                   URL 복사
                 </div>
-                <div className="ptd2" onClick={Scrap}>
-                  <Bookmark />
-                  <br />
-                  {checkscr === 0 ? "스크랩하기" : "스크랩 취소"}
-                </div>
                 <div className="ptd2" onClick={Joayo}>
-                  <ThumbUp />
+                  {checkjoa === 0 ? (
+                    <FavoriteBorderSharp />
+                  ) : (
+                    <FavoriteSharp style={{ color: "#db555a" }} />
+                  )}
                   <br />
                   {checkjoa === 0 ? "좋아요" : "좋아요 취소"}
                 </div>
+                <div className="ptd2" onClick={Scrap}>
+                  {checkscr === 0 ? (
+                    <BookmarkBorderSharp />
+                  ) : (
+                    <Bookmark style={{ color: "#db555a" }} />
+                  )}
+                  <br />
+                  {checkscr === 0 ? "스크랩" : "스크랩 취소"}
+                </div>
                 <div className="ptd2" onClick={handleComment}>
-                  <ChatBubble />
+                  <ChatBubbleOutline />
                   <br />
                   댓글 {c_count}개
                 </div>
@@ -431,7 +442,7 @@ class Detail extends Component {
             style={{
               position: "fixed",
               left: "330px",
-              top: "755px",
+              top: "605px",
               width: "30px",
               height: "30px",
               border: "1px solid #575757",
@@ -446,9 +457,9 @@ class Detail extends Component {
         <div>
           <Dialog open={modal_open} onClose={handleShare}>
             <DialogTitle id="form-dialog-title">
-              URL 복사하기
+              <span style={{ fontSize: "12pt" }}>URL 복사하기</span>
               <IconButton edge="end" onClick={handleShare} aria-label="close">
-                <Close />
+                <Close style={{ marginLeft: "130px", marginTop: "-10px" }} />
               </IconButton>
             </DialogTitle>
 
@@ -461,9 +472,11 @@ class Detail extends Component {
                 size="small"
               />
               <CopyToClipboard text={url} onCopy={onCopy}>
-                <Button color="primary" variant="contained">
-                  복사하기
-                </Button>
+                <center>
+                  <Button style={{ margin: "20px 0" }} variant="outlined">
+                    복사
+                  </Button>
+                </center>
               </CopyToClipboard>
             </DialogContent>
           </Dialog>
@@ -484,11 +497,17 @@ class Detail extends Component {
               <IconButton
                 edge="start"
                 color="inherit"
-                onClick={handleComment}
                 aria-label="close"
                 style={{ marginTop: "-5px" }}
               >
-                <Close />
+                <Close onClick={handleComment} />
+                <BorderColor
+                  onClick={() => {
+                    setValue();
+                    handleOpen();
+                  }}
+                  style={{ marginLeft: "295px" }}
+                />
               </IconButton>
             </Toolbar>
           </AppBar>

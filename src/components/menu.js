@@ -44,24 +44,20 @@ class header extends Component {
         </div>
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
           <center>
-            <div>
-              {profile_name ? (
-                <img
-                  src={menu_profile}
-                  alt=""
-                  style={{
-                    height: "150px",
-                    marginTop: "30px",
-                    marginBottom: "20px",
-                  }}
-                />
-              ) : (
-                <img
-                  src="img/basic_user.png"
-                  alt=""
-                  style={{ width: "200px", marginLeft: "13px" }}
-                />
-              )}
+            <div className="mypageCenterWrapper">
+              <div className="mypageCenter">
+                <div className="centered">
+                  {profile_name ? (
+                    <img
+                      src={menu_profile}
+                      alt=""
+                      className="mypageCenterImg"
+                    />
+                  ) : (
+                    <img src="img/basic_user.png" alt="" />
+                  )}
+                </div>
+              </div>
             </div>
             {menu_nick ? (
               <span style={{ fontWeight: "400", fontSize: "12pt" }}>
@@ -72,19 +68,26 @@ class header extends Component {
             )}
             <br />
             {login_state ? (
-              <Link to="/mypage">MYINFO</Link>
+              <Link to="/myinfo">MYINFO</Link>
             ) : (
-              <Link to="/login">LOGIN</Link>
+              <Link to="/login">
+                <span className="menuTextColor">LOGIN</span>
+              </Link>
             )}
             &ensp;
             {login_state ? (
-              <span onClick={handleLogout}>LOGOUT</span>
+              <span onClick={handleLogout} className="menuTextColor">
+                LOGOUT
+              </span>
             ) : (
-              <Link to="/join">JOIN</Link>
+              <Link to="/join">
+                <span className="menuTextColor">JOIN</span>
+              </Link>
             )}
           </center>
           <br />
-          <hr />
+          <br />
+          <hr id="menuline" />
           <ul>
             <li>
               <Link to="/recipe" onClick={resetRecipe}>
