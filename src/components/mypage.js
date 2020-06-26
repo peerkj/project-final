@@ -43,8 +43,6 @@ import {
 } from "@material-ui/icons";
 import "../css/styles.css";
 
-const fakeFetch = (delay = 750) => new Promise((res) => setTimeout(res, delay));
-
 const R = ({
   list,
   state,
@@ -74,6 +72,13 @@ const R = ({
   search,
   handleEnter,
   list_count,
+  nickname,
+  profile_name,
+  sw,
+  setSw,
+  getList_scrap,
+  fakeFetch,
+  fetchItems,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -115,7 +120,7 @@ const R = ({
             <Avatar aria-label="recipe" className={useStyles.avatar}>
               <img
                 width="40px"
-                src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
+                src={`http://localhost:9000/acorn/image/profile/${profile_name}`}
                 alt=""
               />
             </Avatar>
@@ -155,7 +160,7 @@ const R = ({
               </Menu>
             </IconButton>
           }
-          title={l.nickname}
+          title={nickname}
           subheader={l.timeDiffer}
         />
         <Link
@@ -281,12 +286,6 @@ const R = ({
     );
   });
 
-  const fetchItems = async () => {
-    changeState();
-    getList();
-    await fakeFetch();
-    addState();
-  };
   /* initial fetch */
 
   const [_, setRef] = useIntersect(async (entry, observer) => {
@@ -322,8 +321,20 @@ const R = ({
               showLabels
               style={{ width: "150px" }}
             >
-              <BottomNavigationAction label="내가쓴글" icon={<Restore />} />
-              <BottomNavigationAction label="스크랩" icon={<Bookmark />} />
+              <BottomNavigationAction
+                onClick={() => {
+                  setSw(0);
+                }}
+                label="내가쓴글"
+                icon={<Restore />}
+              />
+              <BottomNavigationAction
+                onClick={() => {
+                  setSw(1);
+                }}
+                label="스크랩"
+                icon={<Bookmark />}
+              />
             </BottomNavigation>
           </div>
         </center>
@@ -432,34 +443,42 @@ const R = ({
   );
 };
 
-export default inject(({ recipe, detail, info }) => ({
-  list: recipe.list,
-  getList: recipe.getList,
-  state: recipe.state,
-  changeState: recipe.changeState,
-  addState: recipe.addState,
-  updateList: recipe.updateList,
-  setView: recipe.setView,
+export default inject(({ mypage, detail, info }) => ({
+  list: mypage.list,
+  getList: mypage.getList,
+  state: mypage.state,
+  changeState: mypage.changeState,
+  addState: mypage.addState,
+  updateList: mypage.updateList,
+  setView: mypage.setView,
   modal_open: detail.modal_open,
   url: detail.url,
   onCopy: detail.onCopy,
   handleShare: detail.handleShare,
-  anchorEl: recipe.anchorEl,
-  dothandleClick: recipe.dothandleClick,
-  dothandleClose: recipe.dothandleClose,
-  check_j: recipe.check_j,
-  check_s: recipe.check_s,
-  Joayo: recipe.Joayo,
-  Scrap: recipe.Scrap,
+  anchorEl: mypage.anchorEl,
+  dothandleClick: mypage.dothandleClick,
+  dothandleClose: mypage.dothandleClose,
+  check_j: mypage.check_j,
+  check_s: mypage.check_s,
+  Joayo: mypage.Joayo,
+  Scrap: mypage.Scrap,
   userEmail: info.userEmail,
-  comment_count: recipe.comment_count,
+  nickname: info.nickname,
+  profile_name: info.profile_name,
+
+  comment_count: mypage.comment_count,
 
   comment_open: detail.comment_open,
   handleComment: detail.handleComment,
   setRec_num: detail.setRec_num,
 
-  onchangeSearch: recipe.onchangeSearch,
-  search: recipe.search,
-  handleEnter: recipe.handleEnter,
-  list_count: recipe.list_count,
+  onchangeSearch: mypage.onchangeSearch,
+  search: mypage.search,
+  handleEnter: mypage.handleEnter,
+  list_count: mypage.list_count,
+  sw: mypage.sw,
+  setSw: mypage.setSw,
+  getList_scrap: mypage.getList_scrap,
+  fetchItems: mypage.fetchItems,
+  fakeFetch: mypage.fakeFetch,
 }))(observer(R));

@@ -1,5 +1,6 @@
 import { observable, action } from "mobx";
 import axios from "axios";
+import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 
 export default class CounterStore {
   @observable list = [];
@@ -12,25 +13,35 @@ export default class CounterStore {
   @observable comment_count = [];
   @observable list_count = -1;
   //검색
-  @observable search = null;
+
+  @observable sw = 0;
 
   // **** 추가됨
   constructor(root) {
     this.root = root;
   }
 
-  //검색
   @action
-  onchangeSearch = (e) => {
-    this.search = e.target.value;
-  };
+  fakeFetch = (delay = 750) => new Promise((res) => setTimeout(res, delay));
+
   @action
-  handleEnter = (e) => {
-    if (e.key === "Enter") {
-      //getList 초기화 후 얻기
-      if (this.search === "") this.search = null;
-      this.reset();
+  fetchItems = async () => {
+    this.changeState();
+    if (this.sw === 0) {
+      this.getList();
+    } else {
+      this.getList_scrap();
     }
+    await this.fakeFetch();
+    this.addState();
+  };
+
+  @action
+  setSw = (e) => {
+    // 0->내글 / 1->스크랩
+    console.log("스크랩", e);
+    this.sw = e;
+    this.resetRecipe();
   };
 
   @action
@@ -47,6 +58,8 @@ export default class CounterStore {
     this.state = { itemCount: 0, isLoading: false };
     this.list = [];
     this.scroll = 0;
+    this.check_j = [];
+    this.check_s = [];
   };
   @action
   resetRecipe = () => {
@@ -59,9 +72,6 @@ export default class CounterStore {
     this.check_s = [];
     this.comment_count = [];
     this.list_count = -1;
-    this.search = "";
-
-    console.log("초기화", this.search);
   };
 
   @action
@@ -83,7 +93,9 @@ export default class CounterStore {
 
   @action
   setList = () => {
-    for (let i = 0; i < this.list.length; i++) {
+    let size = this.list.length - 3;
+    if (size < 0) size = 0;
+    for (let i = size; i < this.list.length; i++) {
       this.anchorEl[i] = null;
       this.updateCount(this.list[i].rec_num, i);
       this.checkJoayo(this.list[i].rec_num, i);
@@ -91,6 +103,7 @@ export default class CounterStore {
       this.getComment(this.list[i].rec_num, i);
     }
   };
+
   @action
   updateList = () => {
     if (this.view.num > -1) {
@@ -132,6 +145,7 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
+    if (this.list.length === this.list_count) return;
     let url = "http://localhost:9000/acorn/mypage/recipe";
     axios({
       method: "get",
@@ -143,13 +157,43 @@ export default class CounterStore {
     })
       .then((res) => {
         this.scroll++;
-
+        console.log(res.data);
         if (this.scroll === 1) {
-          this.list = res.data;
+          this.list = res.data.list;
         } else {
-          this.list = [...this.list, ...res.data];
+          this.list = [...this.list, ...res.data.list];
         }
         this.setList();
+        this.list_count = res.data.count;
+      })
+      .catch((err) => {
+        console.log("업로드오류:" + err);
+      });
+  };
+
+  @action
+  getList_scrap = () => {
+    console.log("스크랩");
+    if (this.list.length === this.list_count) return;
+    let url = "http://localhost:9000/acorn/mypage/scrap";
+    axios({
+      method: "get",
+      url: url,
+      params: {
+        scroll: this.scroll,
+        email: this.root.info.userEmail,
+      },
+    })
+      .then((res) => {
+        this.scroll++;
+        console.log(res.data);
+        if (this.scroll === 1) {
+          this.list = res.data.list;
+        } else {
+          this.list = [...this.list, ...res.data.list];
+        }
+        this.setList();
+        this.list_count = res.data.count;
       })
       .catch((err) => {
         console.log("업로드오류:" + err);

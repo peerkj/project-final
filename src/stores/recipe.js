@@ -60,8 +60,6 @@ export default class CounterStore {
     this.comment_count = [];
     this.list_count = -1;
     this.search = "";
-
-    console.log("초기화", this.search);
   };
 
   @action
@@ -83,7 +81,9 @@ export default class CounterStore {
 
   @action
   setList = () => {
-    for (let i = 0; i < this.list.length; i++) {
+    let size = this.list.length - 3;
+    if (size < 0) size = 0;
+    for (let i = size; i < this.list.length; i++) {
       this.anchorEl[i] = null;
       this.updateCount(this.list[i].rec_num, i);
       this.checkJoayo(this.list[i].rec_num, i);
@@ -134,6 +134,8 @@ export default class CounterStore {
   getList = () => {
     let url = "http://localhost:9000/acorn/recipe/list";
     if (this.search === "") this.search = null;
+    if (this.list.length === this.list_count) return;
+
     axios({
       method: "get",
       url: url,
@@ -152,9 +154,7 @@ export default class CounterStore {
         }
         this.setList();
         this.list_count = res.data.count;
-        console.log(res.data.count);
-        console.log(this.list_count);
-        console.log(this.list.length);
+        console.log("리스트 길이", this.list.length);
       })
       .catch((err) => {
         console.log("업로드오류:" + err);

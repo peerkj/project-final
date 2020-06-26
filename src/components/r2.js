@@ -43,7 +43,7 @@ import {
 } from "@material-ui/icons";
 import "../css/styles.css";
 
-const fakeFetch = (delay = 750) => new Promise((res) => setTimeout(res, delay));
+const fakeFetch = (delay = 500) => new Promise((res) => setTimeout(res, delay));
 
 const R = ({
   list,
@@ -107,9 +107,13 @@ const R = ({
   }));
 
   //리스트 박스
-  const ListItem = list.slice(0, state.itemCount).map((l, idx) => {
+  const ListItem = list.map((l, idx) => {
     return (
-      <Card className={useStyles.root} style={{ marginTop: "10px" }}>
+      <Card
+        key={l.rec_num}
+        className={useStyles.root}
+        style={{ marginTop: "10px" }}
+      >
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={useStyles.avatar}>
@@ -159,7 +163,6 @@ const R = ({
           subheader={l.timeDiffer}
         />
         <Link
-          key={l.rec_num}
           className="ListItem"
           to={`/recipe/detail?recipe=${l.rec_num}`}
           onClick={() => {
@@ -285,6 +288,7 @@ const R = ({
     changeState();
     getList();
     await fakeFetch();
+
     addState();
   };
   /* initial fetch */
