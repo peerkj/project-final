@@ -224,13 +224,11 @@ class Detail extends Component {
         <div style={{ width: "100%", height: "270px" }}>
           <div className="detailThumbnail">
             <div className="centered">
-              <Link to={`/mypage?nick=${all.nickname}`}>
-                <img
-                  className="detailThumbnailImg"
-                  src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
-                  alt=""
-                />
-              </Link>
+              <img
+                className="detailThumbnailImg"
+                src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -243,11 +241,13 @@ class Detail extends Component {
             }}
           >
             <center>
-              <img
-                className="de_profile"
-                src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
-                alt=""
-              />
+              <Link to={`/mypage?nick=${all.nickname}`}>
+                <img
+                  className="de_profile"
+                  src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
+                  alt=""
+                />
+              </Link>
               <p style={{ fontWeight: "500", fontSize: "10pt" }}>
                 <Link to={`/mypage?nick=${all.nickname}`}>{all.nickname}</Link>
               </p>
