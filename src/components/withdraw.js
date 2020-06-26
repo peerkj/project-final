@@ -27,24 +27,28 @@ class withdraw extends Component {
   };
 
   render() {
-    const { handleChange, handleWithdraw } = this.props;
+    const { handleChange } = this.props;
     return (
       <div>
-        <div style={{
-          width: "240px",
-          marginTop: "80px",
-          marginLeft: "30px",
-          border: "1px solid #e5e3e3",
-          borderRadius: "20px",
-          padding: "30px"
-        }}>
+        <div
+          style={{
+            width: "240px",
+            marginTop: "80px",
+            marginLeft: "30px",
+            border: "1px solid #e5e3e3",
+            borderRadius: "20px",
+            padding: "30px",
+          }}
+        >
           <center>
             <span
               style={{
                 fontSize: "14pt",
                 fontWeight: "500",
               }}
-            >탈퇴 사유를 선택하세요</span>
+            >
+              탈퇴 사유를 선택하세요
+            </span>
           </center>
           <br />
           <br />
@@ -79,8 +83,15 @@ class withdraw extends Component {
                 />
               </RadioGroup>
               <center>
-                <Button onClick={this.onClick} variant="contained"
-                  style={{ backgroundColor: "#002060", color: "#ffffff", marginTop: "40px" }}>
+                <Button
+                  onClick={this.onClick}
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#002060",
+                    color: "#ffffff",
+                    marginTop: "40px",
+                  }}
+                >
                   탈퇴하기
                 </Button>
               </center>

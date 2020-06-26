@@ -14,6 +14,7 @@ import DetailStore from "./detail";
 import RecipeStore from "./recipe";
 import CU from "./cu";
 import Comment from "./comment";
+import Mypage from "./mypage";
 class RootStore {
   constructor() {
     this.counter = new CounterStore(this);
@@ -31,6 +32,7 @@ class RootStore {
     this.recipe = new RecipeStore(this);
     this.cu = new CU(this);
     this.comment = new Comment(this);
+    this.mypage = new Mypage(this);
   }
 }
 

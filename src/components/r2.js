@@ -26,7 +26,6 @@ import {
   DialogTitle,
   AppBar,
   Toolbar,
-  DialogActions,
 } from "@material-ui/core";
 import {
   Close,
@@ -44,7 +43,7 @@ import {
 } from "@material-ui/icons";
 import "../css/styles.css";
 
-const fakeFetch = (delay = 800) => new Promise((res) => setTimeout(res, delay));
+const fakeFetch = (delay = 500) => new Promise((res) => setTimeout(res, delay));
 
 const R = ({
   list,
@@ -74,12 +73,7 @@ const R = ({
   onchangeSearch,
   search,
   handleEnter,
-  delete_open,
-  deleteOpen,
-  deleteRecipe,
-  checkList,
   list_count,
-  resetRecipe,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -113,9 +107,13 @@ const R = ({
   }));
 
   //리스트 박스
-  const ListItem = list.slice(0, state.itemCount).map((l, idx) => {
+  const ListItem = list.map((l, idx) => {
     return (
-      <Card className={useStyles.root} style={{ marginTop: "10px" }}>
+      <Card
+        key={l.rec_num}
+        className={useStyles.root}
+        style={{ marginTop: "10px" }}
+      >
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={useStyles.avatar}>
@@ -156,9 +154,7 @@ const R = ({
                   <MenuItem onClick={dothandleClose}>수정</MenuItem>
                 )}
                 {l.email === userEmail && (
-                  <MenuItem onClick={() => {
-                    deleteOpen(l.rec_num)
-                  }}>삭제</MenuItem>
+                  <MenuItem onClick={dothandleClose}>삭제</MenuItem>
                 )}
               </Menu>
             </IconButton>
@@ -167,7 +163,6 @@ const R = ({
           subheader={l.timeDiffer}
         />
         <Link
-          key={l.rec_num}
           className="ListItem"
           to={`/recipe/detail?recipe=${l.rec_num}`}
           onClick={() => {
@@ -197,7 +192,14 @@ const R = ({
               </div>
               <br />
               <center>
-                <span style={{ fontSize: "12pt", fontWeight: "500", color: "#000000", marginLeft: "2px" }}>
+                <span
+                  style={{
+                    fontSize: "12pt",
+                    fontWeight: "500",
+                    color: "#000000",
+                    marginLeft: "2px",
+                  }}
+                >
                   {l.subject}
                 </span>
               </center>
@@ -215,14 +217,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  color="secondary"
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                color="secondary"
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "600",
@@ -241,14 +243,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  color="secondary"
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                color="secondary"
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "600",
@@ -270,7 +272,7 @@ const R = ({
             <span
               style={{
                 fontWeight: "600",
-                fontSize: "12pt"
+                fontSize: "12pt",
               }}
             >
               {comment_count[idx]}
@@ -286,6 +288,7 @@ const R = ({
     changeState();
     getList();
     await fakeFetch();
+
     addState();
   };
   /* initial fetch */
@@ -317,7 +320,6 @@ const R = ({
             onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
-          <b onClick={resetRecipe}>새로고침</b>
 
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
@@ -341,17 +343,15 @@ const R = ({
       {ListItem}
 
       {/* 로딩 */}
+      <div style={{ height: "100px" }}></div>
       <center>
-        {!checkList &&
-          <div ref={setRef} className="Loading">
-            {state.isLoading && "Loading..."}
-          </div>
-        }
-        {list_count === 0 &&
-          <div style={{ marginTop: "130px", color: "navy", fontSize: "18px" }}>
-            <b>검색 결과가 없습니다</b>
-          </div>
-        }
+        <div
+          style={{ backgroundColor: "black" }}
+          ref={setRef}
+          className="Loading"
+        >
+          {state.isLoading && "Loading..."}
+        </div>
       </center>
 
       {/* 위로 가기, 글쓰기 버튼 */}
@@ -438,32 +438,6 @@ const R = ({
           <Comment />
         </DialogContent>
       </Dialog>
-      <div>
-        <Dialog
-          open={delete_open}
-          onClose={deleteOpen}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogContent>
-            삭제하시겠습니까?
-            </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                deleteRecipe();
-              }}
-              color="secondary"
-            >
-              확인
-              </Button>
-            <Button
-              onClick={deleteOpen}
-              color="primary">
-              취소
-              </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
     </div>
   );
 };
@@ -497,13 +471,5 @@ export default inject(({ recipe, detail, info }) => ({
   onchangeSearch: recipe.onchangeSearch,
   search: recipe.search,
   handleEnter: recipe.handleEnter,
-
-  delete_open: recipe.delete_open,
-  deleteOpen: recipe.deleteOpen,
-  deleteRecipe: recipe.deleteRecipe,
-
-  checkList: recipe.checkList,
   list_count: recipe.list_count,
-  resetRecipe: recipe.resetRecipe,
-
 }))(observer(R));

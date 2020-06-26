@@ -81,16 +81,24 @@ class comment extends Component {
           )}
           <br />
           {c.email !== "알수없음" && (
-            <button onClick={() => {
-              setValue(c.com_num, c.regroup, c.restep, c.relevel);
-              handleOpen();
-            }}>답글</button>
+            <button
+              onClick={() => {
+                setValue(c.com_num, c.regroup, c.restep, c.relevel);
+                handleOpen();
+              }}
+            >
+              답글
+            </button>
           )}
 
           {c.email === userEmail && (
-            <button onClick={() => {
-              deleteOpen(c.com_num);
-            }}>삭제</button>
+            <button
+              onClick={() => {
+                deleteOpen(c.com_num);
+              }}
+            >
+              삭제
+            </button>
           )}
         </div>
       );
@@ -139,19 +147,10 @@ class comment extends Component {
               <div style={{ marginTop: "15px" }}>
                 <label htmlFor="commentp">
                   {imgBase64 ? (
-                    <img
-                      width="200px"
-                      height="200px"
-                      src={imgBase64}
-                      alt=""
-                    />
+                    <img width="200px" height="200px" src={imgBase64} alt="" />
                   ) : (
-                      <img
-                        width="100px"
-                        src="/img/add_icon2.png"
-                        alt=""
-                      />
-                    )}
+                    <img width="100px" src="/img/add_icon2.png" alt="" />
+                  )}
                 </label>
                 {imgBase64 ? (
                   <Close
@@ -167,8 +166,8 @@ class comment extends Component {
                     id="commentthumb_delete"
                   />
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </div>
               <input
                 style={{ display: "none" }}
@@ -199,9 +198,7 @@ class comment extends Component {
             onClose={deleteOpen}
             aria-labelledby="form-dialog-title"
           >
-            <DialogContent>
-              삭제하시겠습니까?
-            </DialogContent>
+            <DialogContent>삭제하시겠습니까?</DialogContent>
             <DialogActions>
               <Button
                 onClick={() => {
@@ -211,9 +208,7 @@ class comment extends Component {
               >
                 확인
               </Button>
-              <Button
-                onClick={deleteOpen}
-                color="primary">
+              <Button onClick={deleteOpen} color="primary">
                 취소
               </Button>
             </DialogActions>
