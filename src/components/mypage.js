@@ -24,17 +24,14 @@ import {
   TextField,
   DialogContent,
   DialogTitle,
-  AppBar,
-  Toolbar,
+  CircularProgress,
 } from "@material-ui/core";
 import {
   Close,
-  Search,
   Create,
   MoreVert,
   Restore,
   Bookmark,
-  Pageview,
   FavoriteBorder,
   Favorite,
   BookmarkBorder,
@@ -79,6 +76,7 @@ const R = ({
   getList_scrap,
   fakeFetch,
   fetchItems,
+  checkList,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -109,10 +107,16 @@ const R = ({
     avatar: {
       backgroundColor: red[500],
     },
+    load: {
+      display: "flex",
+      "& > * + *": {
+        marginLeft: theme.spacing(2),
+      },
+    },
   }));
 
   //리스트 박스
-  const ListItem = list.slice(0, state.itemCount).map((l, idx) => {
+  const ListItem = list.map((l, idx) => {
     return (
       <Card className={useStyles.root} style={{ marginTop: "10px" }}>
         <CardHeader
@@ -343,16 +347,21 @@ const R = ({
       {/* 리스트*/}
       {ListItem}
 
-      {/* 로딩 */}
-      <div style={{ height: "100px" }}></div>
       <center>
-        <div
-          style={{ backgroundColor: "black" }}
-          ref={setRef}
-          className="Loading"
-        >
-          {state.isLoading && "Loading..."}
-        </div>
+        {!checkList && (
+          <div ref={setRef} className="Loading">
+            <div className={useStyles.load}>
+              {state.isLoading && (
+                <CircularProgress style={{ color: "#bdbdbd" }} />
+              )}
+            </div>
+          </div>
+        )}
+        {list_count === 0 && (
+          <div style={{ marginTop: "130px", color: "navy", fontSize: "18px" }}>
+            <b>글이 없습니다</b>
+          </div>
+        )}
       </center>
 
       {/* 위로 가기, 글쓰기 버튼 */}
@@ -481,4 +490,5 @@ export default inject(({ mypage, detail, info }) => ({
   getList_scrap: mypage.getList_scrap,
   fetchItems: mypage.fetchItems,
   fakeFetch: mypage.fakeFetch,
+  checkList: mypage.checkList,
 }))(observer(R));

@@ -1,6 +1,5 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 import axios from "axios";
-import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 
 export default class CounterStore {
   @observable list = [];
@@ -22,7 +21,7 @@ export default class CounterStore {
   }
 
   @action
-  fakeFetch = (delay = 750) => new Promise((res) => setTimeout(res, delay));
+  fakeFetch = (delay = 1000) => new Promise((res) => setTimeout(res, delay));
 
   @action
   fetchItems = async () => {
@@ -60,6 +59,7 @@ export default class CounterStore {
     this.scroll = 0;
     this.check_j = [];
     this.check_s = [];
+    this.list_count = -1;
   };
   @action
   resetRecipe = () => {
@@ -173,7 +173,6 @@ export default class CounterStore {
 
   @action
   getList_scrap = () => {
-    console.log("스크랩");
     if (this.list.length === this.list_count) return;
     let url = "http://localhost:9000/acorn/mypage/scrap";
     axios({
@@ -234,6 +233,11 @@ export default class CounterStore {
       })
       .catch((err) => {});
   };
+
+  @computed
+  get checkList() {
+    return this.list_count === this.list.length;
+  }
 
   //스크랩체크
   @action
