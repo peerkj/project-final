@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
 import axios from "axios";
 
 export default class CounterStore {
@@ -107,10 +107,18 @@ export default class CounterStore {
     this.checkScrap(num, idx);
   };
 
+
+  @computed
+  get checkList() {
+
+    return this.list_count === this.list.length;
+
+  }
   //카운트 업데이트
   @action
   updateCount = (rec_num, idx) => {
     let url = "http://localhost:9000/acorn/recipe/count?rec_num=" + rec_num;
+
     //유효성 검사
     axios({
       method: "get",
@@ -177,7 +185,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -193,7 +201,7 @@ export default class CounterStore {
       .then((res) => {
         this.updateCheck(num, idx);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩체크
@@ -212,7 +220,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -228,7 +236,7 @@ export default class CounterStore {
       .then((res) => {
         this.updateCheck(num, idx);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   //댓글 count
   @action
@@ -243,6 +251,6 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }

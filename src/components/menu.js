@@ -56,39 +56,36 @@ class header extends Component {
                   }}
                 />
               ) : (
-                <img
-                  src="img/basic_user.png"
-                  alt=""
-                  style={{ width: "200px", marginLeft: "13px" }}
-                />
-              )}
+                  <img
+                    src="img/basic_user.png"
+                    alt=""
+                    style={{ width: "200px", marginLeft: "13px" }}
+                  />
+                )}
             </div>
             {menu_nick ? (
               <span style={{ fontWeight: "400", fontSize: "12pt" }}>
                 {menu_nick} 님
               </span>
             ) : (
-              <span></span>
-            )}
+                <span></span>
+              )}
             <br />
             {login_state ? (
               <Link to="/myinfo">INFO</Link>
             ) : (
-              <Link to="/login">LOGIN</Link>
-            )}
+                <Link to="/login">LOGIN</Link>
+              )}
             &ensp;
             {login_state ? (
               <span onClick={handleLogout}>LOGOUT</span>
             ) : (
-              <Link to="/join">JOIN</Link>
-            )}
+                <Link to="/join">JOIN</Link>
+              )}
           </center>
           <br />
           <hr />
           <ul>
-            <li>
-              <Link to="/">HOME</Link>
-            </li>
             <li>
               <Link to="/recipe" onClick={resetRecipe}>
                 RECIPE
@@ -96,6 +93,9 @@ class header extends Component {
             </li>
             <li>
               <Link to="/counter">CHEF</Link>
+            </li>
+            <li>
+              <Link to="/mypage">MYPAGE</Link>
             </li>
           </ul>
         </div>
