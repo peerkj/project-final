@@ -79,7 +79,7 @@ class comment extends Component {
               <img src="/img/comment.png" alt="" width="25px"
                 style={{ verticalAlign: "middle", marginRight: "8px" }}
               />
-            )}
+            }
             <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
               <img
                 width="40px"
