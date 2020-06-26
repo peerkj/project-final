@@ -17,6 +17,8 @@ export default class CounterStore {
 
   @observable delete_open = false;
 
+  @observable err = false;
+
   @action
   setValue = (com_num = 0, regroup = 0, restep = 0, relevel = 0) => {
     this.com_num = com_num;
@@ -69,12 +71,20 @@ export default class CounterStore {
       },
     })
       .then((res) => {
-        console.log("댓글", res.data);
+        console.log(res.data);
         this.comment_list = res.data;
+        if (this.comment_list.length === 0) this.err = true;
+        else this.err = false;
       })
       .catch((err) => {
         console.log("업로드오류:" + err);
       });
+  };
+
+  @action
+  modalReset = () => {
+    this.comment_open = !this.comment_open;
+    window.scrollTo(0, 0);
   };
 
   @action

@@ -75,7 +75,12 @@ export default class DetailStore {
       this.root.recipe.view.idx
     );
   };
-
+  @action
+  modalReset = () => {
+    this.comment_open = false;
+    this.root.mypage.resetRecipe();
+    window.scrollTo(0, 0);
+  };
   //
   @action
   getRecipe = (rec_num) => {

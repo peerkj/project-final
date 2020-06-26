@@ -133,7 +133,9 @@ const R = ({
             <Avatar aria-label="recipe" className={useStyles.avatar}>
               <img
                 width="40px"
-                src={`http://localhost:9000/acorn/image/profile/${profile_name}`}
+                src={`http://localhost:9000/acorn/image/profile/${
+                  sw === 0 ? mypage.profile : l.profile
+                }`}
                 alt=""
               />
             </Avatar>
@@ -173,7 +175,7 @@ const R = ({
               </Menu>
             </IconButton>
           }
-          title={nickname}
+          title={sw === 0 ? mypage.nickname : l.nickname}
           subheader={l.timeDiffer}
         />
         <Link
