@@ -1,233 +1,507 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
+import useIntersect from "./useIntersect";
+import { Link } from "react-router-dom";
+import { inject, observer } from "mobx-react";
+import { makeStyles } from "@material-ui/core/styles";
+import { red } from "@material-ui/core/colors";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import Comment from "./comment";
+import queryString from "query-string";
+
 import {
   Button,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Avatar,
+  IconButton,
+  Typography,
+  BottomNavigation,
+  BottomNavigationAction,
+  Menu,
+  MenuItem,
   Dialog,
   TextField,
-  DialogActions,
   DialogContent,
   DialogTitle,
+  CircularProgress,
 } from "@material-ui/core";
-import { inject, observer } from "mobx-react";
-import { Create, Lock, AccountCircle } from "@material-ui/icons";
+import {
+  Close,
+  Create,
+  MoreVert,
+  Restore,
+  Bookmark,
+  FavoriteBorder,
+  Favorite,
+  BookmarkBorder,
+  ExpandLess,
+  ChatBubbleOutline,
+} from "@material-ui/icons";
+import "../css/styles.css";
 
-@inject((stores) => ({
-  password: stores.chefupdate.password,
-  modal_open: stores.chefupdate.modal_open,
-  handleOpen: stores.chefupdate.handleOpen,
-  handlePassChange: stores.chefupdate.handlePassChange,
-  handleReset: stores.chefupdate.handleReset,
-  login_state: stores.info.login_state,
-  error: stores.chefupdate.error,
-  pass_open: stores.chefupdate.pass_open,
-  handleOpen2: stores.chefupdate.handleOpen2,
-  new_password: stores.chefupdate.new_password,
-  new_password_re: stores.chefupdate.new_password_re,
-  handleNewPassChange: stores.chefupdate.handleNewPassChange,
-  handleNewPassReChange: stores.chefupdate.handleNewPassReChange,
-  available_newpassword: stores.chefupdate.available_newpassword,
-  available_pass_re: stores.chefupdate.available_pass_re,
-  handlePassUpdate: stores.chefupdate.handlePassUpdate,
-  email: stores.cu.email,
-  imgBase64: stores.cu.menu_profile,
-  handleEnter: stores.chefupdate.handleEnter,
-  handleUpdate: stores.chefupdate.handleUpdate,
-  handleEnter2: stores.chefupdate.handleEnter2,
-}))
-@observer
-class mypage extends Component {
-  componentWillMount = () => {
-    this.props.handleReset();
-    if (!this.props.login_state) {
-      this.props.history.push("/login");
-    }
-  };
+const R = ({
+  list,
+  state,
+  getList,
+  changeState,
+  addState,
+  history,
+  updateList,
+  setView,
+  modal_open,
+  url,
+  onCopy,
+  handleShare,
+  anchorEl,
+  dothandleClick,
+  dothandleClose,
+  check_j,
+  check_s,
+  Scrap,
+  Joayo,
+  userEmail,
+  comment_count,
+  comment_open,
+  handleComment,
+  setRec_num,
+  onchangeSearch,
+  search,
+  handleEnter,
+  list_count,
+  nickname,
+  profile_name,
+  sw,
+  setSw,
+  getList_scrap,
+  fakeFetch,
+  fetchItems,
+  checkList,
+  location,
+  setNickname,
+  mypage,
+}) => {
+  //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
+  //   /* fake async fetch */
 
-  render() {
-    const {
-      password,
-      modal_open,
-      handleOpen,
-      handlePassChange,
-      handleNewPassChange,
-      handleNewPassReChange,
-      available_newpassword,
-      available_pass_re,
-      handleOpen2,
-      handlePassUpdate,
-      imgBase64,
-      error,
-      pass_open,
-      new_password,
-      new_password_re,
-      email,
-      handleEnter,
-      handleUpdate,
-      history,
-      handleEnter2,
-    } = this.props;
+  useEffect(() => {
+    let query = queryString.parse(location.search);
+
+    setNickname(query.nick);
+
+    updateList();
+  }, []);
+
+  //리스트 박스 디자인 관련
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      maxWidth: 345,
+    },
+    media: {
+      height: 0,
+      paddingTop: "56.25%", // 16:9
+    },
+    expand: {
+      transform: "rotate(0deg)",
+      marginLeft: "auto",
+      transition: theme.transitions.create("transform", {
+        duration: theme.transitions.duration.shortest,
+      }),
+    },
+    expandOpen: {
+      transform: "rotate(180deg)",
+    },
+    avatar: {
+      backgroundColor: red[500],
+    },
+    load: {
+      display: "flex",
+      "& > * + *": {
+        marginLeft: theme.spacing(2),
+      },
+    },
+  }));
+
+  //리스트 박스
+  const ListItem = list.map((l, idx) => {
     return (
-      <div>
-        <center>
-          <div>
-            {imgBase64 ? (
+      <Card className={useStyles.root} style={{ marginTop: "10px" }}>
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={useStyles.avatar}>
               <img
-                src={imgBase64}
+                width="40px"
+                src={`http://localhost:9000/acorn/image/profile/${
+                  sw === 0 ? mypage.profile : l.profile
+                }`}
                 alt=""
+              />
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              {/* 점 3개 */}
+              <MoreVert
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={(e) => {
+                  dothandleClick(e, idx);
+                }}
+              />
+              <Menu
+                id={`simple-menu-${idx}`}
+                anchorEl={anchorEl[idx]}
+                keepMounted
+                open={Boolean(anchorEl[idx])}
+                onClose={() => {
+                  dothandleClose(idx);
+                }}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleShare(l.rec_num);
+                  }}
+                >
+                  공유
+                </MenuItem>
+                {l.email === userEmail && (
+                  <MenuItem onClick={dothandleClose}>수정</MenuItem>
+                )}
+                {l.email === userEmail && (
+                  <MenuItem onClick={dothandleClose}>삭제</MenuItem>
+                )}
+              </Menu>
+            </IconButton>
+          }
+          title={sw === 0 ? mypage.nickname : l.nickname}
+          subheader={l.timeDiffer}
+        />
+        <Link
+          key={l.rec_num}
+          className="ListItem"
+          to={`/recipe/detail?recipe=${l.rec_num}`}
+          onClick={() => {
+            setView(l.rec_num, idx);
+          }}
+        >
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <span
                 style={{
-                  width: "150px",
-                  height: "150px",
-                  marginTop: "40px",
-                  marginBottom: "20px",
+                  fontWeight: "400",
+                  fontSize: "10pt",
+                  float: "right",
+                  marginTop: "-30px",
+                }}
+              >
+                조회 {l.readcount}
+              </span>
+              <div className="r2listThumbnail">
+                <div className="centered">
+                  <img
+                    className="r2listImg"
+                    src={`http://localhost:9000/acorn/image/recipe/${l.repre_photo}`}
+                    alt=""
+                  />
+                </div>
+              </div>
+              <br />
+              <center>
+                <span
+                  style={{
+                    fontSize: "12pt",
+                    fontWeight: "500",
+                    color: "#000000",
+                    marginLeft: "2px",
+                  }}
+                >
+                  {l.subject}
+                </span>
+              </center>
+            </Typography>
+          </CardContent>
+        </Link>
+        <CardActions disableSpacing style={{ float: "right" }}>
+          <IconButton aria-label="share">
+            {check_j[idx] === 0 ? (
+              <FavoriteBorder
+                color="disabled"
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
                 }}
               />
             ) : (
-                <img src="img/basic_user.png" alt="" style={{ width: "200px" }} />
-              )}
-          </div>
-          <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
-        </center>
-        <hr style={{ marginTop: "55px" }} />
-        <div style={{ marginTop: "25px" }}>
-          <ul style={{ marginLeft: "90px", padding: "10px" }}>
-            <li style={{ padding: "10px" }}>
-              <Create style={{ verticalAlign: "middle" }} />
-              <Button
-                color="#000000"
+              <Favorite
+                color="secondary"
+                fontSize="small"
                 onClick={() => {
-                  handleOpen(1);
+                  Joayo(l.rec_num, idx);
                 }}
-                style={{ fontSize: "12pt" }}
-              >
-                회원정보 수정
-            </Button>
-            </li>
-            <li style={{ padding: "10px" }}>
-              <Lock style={{ verticalAlign: "middle" }} />
-              <Button
-                color="#000000"
-                onClick={() => {
-                  handleOpen(2);
-                }}
-                style={{ fontSize: "12pt" }}
-              >
-                비밀번호 변경
-            </Button>
-            </li>
-            <li style={{ padding: "10px" }}>
-              <AccountCircle style={{ verticalAlign: "middle" }} />
-              <Button
-                color="#000000"
-                onClick={() => {
-                  handleOpen(3);
-                }}
-                style={{ fontSize: "12pt" }}
-              >
-                회원 탈퇴
-            </Button>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <Dialog
-            open={modal_open}
-            onClose={handleOpen}
-            aria-labelledby="form-dialog-title"
-          >
-            <DialogTitle id="form-dialog-title">비밀번호 확인</DialogTitle>
-            <DialogContent>
-              <TextField
-                autoFocus
-                onKeyPress={(e) => {
-                  handleEnter(e, history);
-                }}
-                onChange={handlePassChange}
-                value={password}
-                margin="dense"
-                label="비밀번호 입력"
-                type="password"
-                fullWidth
-                id="name"
-                helperText={error}
-                error={error !== ""}
               />
-            </DialogContent>
-            <DialogActions>
-              <Button
+            )}
+            <span
+              style={{
+                fontWeight: "600",
+                fontSize: "12pt",
+              }}
+            >
+              {l.joayo}
+            </span>
+            &ensp;
+            {check_s[idx] === 0 ? (
+              <BookmarkBorder
+                color="disabled"
+                fontSize="small"
                 onClick={() => {
-                  handleUpdate(history);
+                  Scrap(l.rec_num, idx);
                 }}
-                color="primary"
-              >
-                확인
-              </Button>
-              <Button onClick={handleOpen} color="primary">
-                취소
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-        <div>
-          <Dialog
-            open={pass_open}
-            onClose={handleOpen2}
-            aria-labelledby="form-dialog-title"
-          >
-            <DialogTitle id="form-dialog-title">비밀번호 변경</DialogTitle>
-            <DialogContent>
-              <TextField
-                autoFocus
-                onChange={handleNewPassChange}
-                value={new_password}
-                margin="dense"
-                id="name"
-                label="새로운 비밀번호 입력"
-                type="password"
-                fullWidth
-                error={!(new_password === "") ^ available_newpassword}
-                helperText={
-                  available_newpassword || new_password === ""
-                    ? ""
-                    : "8~10자 영문,숫자 조합"
-                }
               />
-            </DialogContent>
-            <DialogContent>
-              <TextField
-                onKeyPress={handleEnter2}
-                onChange={handleNewPassReChange}
-                value={new_password_re}
-                margin="dense"
-                id="name"
-                label="비밀번호 확인"
-                type="password"
-                fullWidth
-                error={
-                  new_password_re === ""
-                    ? false
-                    : !available_pass_re
-                      ? true
-                      : false
-                }
-                helperText={
-                  available_pass_re || new_password_re === ""
-                    ? ""
-                    : "비밀번호가 일치하지 않습니다"
-                }
+            ) : (
+              <Bookmark
+                color="secondary"
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
               />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handlePassUpdate} color="primary">
-                확인
-              </Button>
-              <Button onClick={handleOpen2} color="primary">
-                취소
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </div>
-      </div>
+            )}
+            <span
+              style={{
+                fontWeight: "600",
+                fontSize: "12pt",
+              }}
+            >
+              {l.scrap}
+            </span>
+            &ensp;
+            <ChatBubbleOutline
+              onClick={() => {
+                setRec_num(l.rec_num);
+                setView(l.rec_num, idx);
+                handleComment();
+              }}
+              color="disabled"
+              fontSize="small"
+            />
+            <span
+              style={{
+                fontWeight: "600",
+                fontSize: "12pt",
+              }}
+            >
+              {comment_count[idx]}
+            </span>
+            &nbsp;
+          </IconButton>
+        </CardActions>
+      </Card>
     );
-  }
-}
+  });
 
-export default mypage;
+  /* initial fetch */
+
+  const [_, setRef] = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    await fetchItems();
+    observer.observe(entry.target);
+  }, {});
+
+  //if (state1.itemCount) return null;
+
+  return (
+    <div className="RecipeApp">
+      <div style={{ marginBottom: "15px" }}>
+        {/* 검색창 */}
+        <center style={{ marginTop: "20px" }}>
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            size="small"
+            onKeyDown={handleEnter}
+            value="마이페이지"
+            onChange={onchangeSearch}
+            style={{ verticalAlign: "middle" }}
+          />
+
+          {/* 리스트 분류,정렬 */}
+          <div style={{ marginTop: "10px" }}>
+            <BottomNavigation
+              // value={value}
+              // onChange={(event, newValue) => {
+              //    setValue(newValue);
+              // }}
+              showLabels
+              style={{ width: "150px" }}
+            >
+              <BottomNavigationAction
+                onClick={() => {
+                  setSw(0);
+                }}
+                label="내가쓴글"
+                icon={<Restore />}
+              />
+              <BottomNavigationAction
+                onClick={() => {
+                  setSw(1);
+                }}
+                label="스크랩"
+                icon={<Bookmark />}
+              />
+            </BottomNavigation>
+          </div>
+        </center>
+      </div>
+
+      {/* 리스트*/}
+      {ListItem}
+
+      <center>
+        {!checkList && (
+          <div ref={setRef} className="Loading">
+            <div className={useStyles.load}>
+              {state.isLoading && (
+                <CircularProgress style={{ color: "#bdbdbd" }} />
+              )}
+            </div>
+          </div>
+        )}
+        {list_count === 0 && (
+          <div style={{ marginTop: "130px", color: "navy", fontSize: "18px" }}>
+            <b>글이 없습니다</b>
+          </div>
+        )}
+      </center>
+
+      {/* 위로 가기, 글쓰기 버튼 */}
+      <Link
+        onClick={() => {
+          window.scrollTo(0, 0);
+        }}
+      >
+        <ExpandLess
+          style={{
+            position: "fixed",
+            left: "290px",
+            top: "610px",
+            width: "30px",
+            height: "30px",
+            border: "1px solid #575757",
+            backgroundColor: "#ffffff",
+            opacity: "0.8",
+            color: "#000000",
+          }}
+        />
+      </Link>
+      <Link
+        onClick={() => {
+          history.push("/write");
+        }}
+      >
+        <Create
+          style={{
+            position: "fixed",
+            left: "330px",
+            top: "610px",
+            width: "30px",
+            height: "30px",
+            border: "1px solid #575757",
+            backgroundColor: "#ffffff",
+            opacity: "0.8",
+            color: "#000000",
+            fontSize: "10pt",
+          }}
+        />
+      </Link>
+      {/* 공유모달 */}
+      <div>
+        <Dialog open={modal_open} onClose={handleShare}>
+          <DialogTitle id="form-dialog-title">
+            URL 복사하기
+            <IconButton edge="end" onClick={handleShare} aria-label="close">
+              <Close />
+            </IconButton>
+          </DialogTitle>
+
+          <DialogContent>
+            <TextField
+              value={url}
+              readOnly
+              fullWidth
+              variant="filled"
+              size="small"
+            />
+            <CopyToClipboard text={url} onCopy={onCopy}>
+              <Button color="primary" variant="contained">
+                복사하기
+              </Button>
+            </CopyToClipboard>
+          </DialogContent>
+        </Dialog>
+      </div>
+      {/* 공유모달 */}
+      {/* 댓글모달 */}
+      <Dialog open={comment_open} onClose={handleComment}>
+        <IconButton
+          edge="start"
+          color="inherit"
+          onClick={handleComment}
+          aria-label="close"
+        >
+          <Close />
+        </IconButton>
+
+        <br />
+        <br />
+        <DialogContent>
+          <Comment />
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default inject(({ mypage, detail, info }) => ({
+  list: mypage.list,
+  getList: mypage.getList,
+  state: mypage.state,
+  changeState: mypage.changeState,
+  addState: mypage.addState,
+  updateList: mypage.updateList,
+  setView: mypage.setView,
+  modal_open: detail.modal_open,
+  url: detail.url,
+  onCopy: detail.onCopy,
+  handleShare: detail.handleShare,
+  anchorEl: mypage.anchorEl,
+  dothandleClick: mypage.dothandleClick,
+  dothandleClose: mypage.dothandleClose,
+  check_j: mypage.check_j,
+  check_s: mypage.check_s,
+  Joayo: mypage.Joayo,
+  Scrap: mypage.Scrap,
+  userEmail: info.userEmail,
+  nickname: info.nickname,
+  profile_name: info.profile_name,
+
+  comment_count: mypage.comment_count,
+
+  comment_open: detail.comment_open,
+  handleComment: detail.handleComment,
+  setRec_num: detail.setRec_num,
+
+  onchangeSearch: mypage.onchangeSearch,
+  search: mypage.search,
+  handleEnter: mypage.handleEnter,
+  list_count: mypage.list_count,
+  sw: mypage.sw,
+  setSw: mypage.setSw,
+  getList_scrap: mypage.getList_scrap,
+  fetchItems: mypage.fetchItems,
+  fakeFetch: mypage.fakeFetch,
+  checkList: mypage.checkList,
+
+  setNickname: mypage.setNickname,
+  mypage: mypage.mypage,
+}))(observer(R));
