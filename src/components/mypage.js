@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Comment from "./comment";
+import queryString from "query-string";
 
 import {
   Button,
@@ -77,11 +78,17 @@ const R = ({
   fakeFetch,
   fetchItems,
   checkList,
+  location,
+  setNickname,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
 
   useEffect(() => {
+    let query = queryString.parse(location.search);
+
+    setNickname(query.nick);
+
     updateList();
   }, []);
 
@@ -491,4 +498,6 @@ export default inject(({ mypage, detail, info }) => ({
   fetchItems: mypage.fetchItems,
   fakeFetch: mypage.fakeFetch,
   checkList: mypage.checkList,
+
+  setNickname: mypage.setNickname,
 }))(observer(R));

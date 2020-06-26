@@ -11,14 +11,37 @@ export default class CounterStore {
   @observable check_s = [];
   @observable comment_count = [];
   @observable list_count = -1;
-  //검색
-
   @observable sw = 0;
+  @observable mypage = {};
 
+  @observable nick = "";
   // **** 추가됨
   constructor(root) {
     this.root = root;
   }
+
+  @action
+  setNickname = (nick) => {
+    this.nick = nick;
+
+    let url = "http://localhost:9000/acorn/chef/mypage";
+    //유효성 검사
+    axios({
+      method: "get",
+      url: url,
+      params: {
+        nick: nick,
+      },
+      //headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((res) => {
+        console.log(res.data);
+        this.mypage = res.data;
+      })
+      .catch((err) => {
+        console.log("업로드 오류:" + err);
+      });
+  };
 
   @action
   fakeFetch = (delay = 1000) => new Promise((res) => setTimeout(res, delay));
@@ -60,6 +83,7 @@ export default class CounterStore {
     this.check_j = [];
     this.check_s = [];
     this.list_count = -1;
+    this.sw = 0;
   };
   @action
   resetRecipe = () => {
@@ -145,6 +169,7 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
+    console.log("리스트");
     if (this.list.length === this.list_count) return;
     let url = "http://localhost:9000/acorn/mypage/recipe";
     axios({
@@ -152,7 +177,7 @@ export default class CounterStore {
       url: url,
       params: {
         scroll: this.scroll,
-        email: this.root.info.userEmail,
+        email: this.mypage.email,
       },
     })
       .then((res) => {
@@ -173,6 +198,7 @@ export default class CounterStore {
 
   @action
   getList_scrap = () => {
+    console.log("스크랩리스트");
     if (this.list.length === this.list_count) return;
     let url = "http://localhost:9000/acorn/mypage/scrap";
     axios({
@@ -180,7 +206,7 @@ export default class CounterStore {
       url: url,
       params: {
         scroll: this.scroll,
-        email: this.root.info.userEmail,
+        email: this.mypage.email,
       },
     })
       .then((res) => {
@@ -208,7 +234,7 @@ export default class CounterStore {
       method: "get",
       url: url,
       params: {
-        email: this.root.info.userEmail,
+        email: this.mypage.email,
         rec_num: num,
       },
     })
@@ -226,7 +252,7 @@ export default class CounterStore {
     axios({
       method: "get",
       url: url,
-      params: { email: this.root.info.userEmail, rec_num: num },
+      params: { email: this.mypage.email, rec_num: num },
     })
       .then((res) => {
         this.updateCheck(num, idx);
@@ -248,7 +274,7 @@ export default class CounterStore {
       method: "get",
       url: url,
       params: {
-        email: this.root.info.userEmail,
+        email: this.mypage.email,
         rec_num: num,
       },
     })
@@ -266,7 +292,7 @@ export default class CounterStore {
     axios({
       method: "get",
       url: url,
-      params: { email: this.root.info.userEmail, rec_num: num },
+      params: { email: this.mypage.email, rec_num: num },
     })
       .then((res) => {
         this.updateCheck(num, idx);
