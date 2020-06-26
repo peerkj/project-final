@@ -72,7 +72,7 @@ class header extends Component {
             )}
             <br />
             {login_state ? (
-              <Link to="/myinfo">INFO</Link>
+              <Link to="/mypage">MYINFO</Link>
             ) : (
               <Link to="/login">LOGIN</Link>
             )}
@@ -87,15 +87,15 @@ class header extends Component {
           <hr />
           <ul>
             <li>
-              <Link to="/">HOME</Link>
-            </li>
-            <li>
               <Link to="/recipe" onClick={resetRecipe}>
                 RECIPE
               </Link>
             </li>
             <li>
               <Link to="/counter">CHEF</Link>
+            </li>
+            <li>
+              <Link to="/mypage">MYPAGE</Link>
             </li>
           </ul>
         </div>
