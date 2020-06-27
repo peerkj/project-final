@@ -78,6 +78,8 @@ import queryString from "query-string";
 
   c_count: stores.detail.c_count,
   getComment: stores.detail.getComment,
+
+  login_state: stores.info.login_state,
 }))
 @observer
 class Detail extends Component {
@@ -127,6 +129,7 @@ class Detail extends Component {
       stepL,
       history,
       c_count,
+      login_state,
     } = this.props;
 
     const useStyles = makeStyles((theme) => ({
@@ -280,28 +283,33 @@ class Detail extends Component {
                 </div>
               </div>
               <div className="ptd2Group">
-                <div className="ptd2" onClick={handleShare}>
+                <div
+                  className="ptd2"
+                  onClick={() => {
+                    handleShare(all.rec_num);
+                  }}
+                >
                   <Share />
                   <br />
                   URL 복사
                 </div>
                 <div className="ptd2" onClick={Joayo}>
-                  {checkjoa === 0 ? (
+                  {checkjoa === 0 || !login_state ? (
                     <FavoriteBorderSharp />
                   ) : (
-                      <FavoriteSharp style={{ color: "#db555a" }} />
-                    )}
+                    <FavoriteSharp style={{ color: "#db555a" }} />
+                  )}
                   <br />
-                  {checkjoa === 0 ? "좋아요" : "좋아요 취소"}
+                  {checkjoa === 0 || !login_state ? "좋아요" : "좋아요 취소"}
                 </div>
                 <div className="ptd2" onClick={Scrap}>
-                  {checkscr === 0 ? (
+                  {checkscr === 0 || !login_state ? (
                     <BookmarkBorderSharp />
                   ) : (
-                      <Bookmark style={{ color: "#db555a" }} />
-                    )}
+                    <Bookmark style={{ color: "#db555a" }} />
+                  )}
                   <br />
-                  {checkscr === 0 ? "스크랩" : "스크랩 취소"}
+                  {checkscr === 0 || !login_state ? "스크랩" : "스크랩 취소"}
                 </div>
                 <div className="ptd2" onClick={handleComment}>
                   <ChatBubbleOutline />
@@ -435,7 +443,7 @@ class Detail extends Component {
         {/* 위로가기 */}
         <Link
           onClick={() => {
-            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           }}
         >
           <ExpandLess
@@ -503,8 +511,10 @@ class Detail extends Component {
                 <Close onClick={handleComment} />
                 <BorderColor
                   onClick={() => {
-                    setValue();
-                    handleOpen();
+                    if (login_state) {
+                      setValue();
+                      handleOpen();
+                    }
                   }}
                   style={{ marginLeft: "295px" }}
                 />

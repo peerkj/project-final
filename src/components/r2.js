@@ -25,8 +25,6 @@ import {
   TextField,
   DialogContent,
   DialogTitle,
-  AppBar,
-  Toolbar,
   DialogActions,
   CircularProgress,
 } from "@material-ui/core";
@@ -84,6 +82,9 @@ const R = ({
   checkList,
   list_count,
   resetRecipe,
+  setFood_cate,
+  setSort,
+  login_state,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -216,16 +217,14 @@ const R = ({
               </div>
               <br />
               <center>
-                <span className="recipeSubject">
-                  {l.subject}
-                </span>
+                <span className="recipeSubject">{l.subject}</span>
               </center>
             </Typography>
           </CardContent>
         </Link>
         <CardActions disableSpacing style={{ float: "right" }}>
           <IconButton aria-label="share">
-            {check_j[idx] === 0 ? (
+            {check_j[idx] === 0 || !login_state ? (
               <FavoriteBorder
                 color="disabled"
                 fontSize="small"
@@ -234,14 +233,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -251,7 +250,7 @@ const R = ({
               {l.joayo}
             </span>
             &ensp;
-            {check_s[idx] === 0 ? (
+            {check_s[idx] === 0 || !login_state ? (
               <BookmarkBorder
                 color="disabled"
                 fontSize="small"
@@ -260,14 +259,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -289,7 +288,7 @@ const R = ({
             <span
               style={{
                 fontWeight: "500",
-                fontSize: "12pt"
+                fontSize: "12pt",
               }}
             >
               {comment_count[idx]}
@@ -339,10 +338,29 @@ const R = ({
             style={{ verticalAlign: "middle" }}
           />
           &nbsp;
-          <Refresh
-            onClick={resetRecipe}
-            style={{ verticalAlign: "middle" }} />
-
+          <Refresh onClick={resetRecipe} style={{ verticalAlign: "middle" }} />
+          <br />
+          <button
+            onClick={() => {
+              setFood_cate("디저트");
+            }}
+          >
+            디저트
+          </button>
+          <button
+            onClick={() => {
+              setFood_cate("국/탕/찌개");
+            }}
+          >
+            국/탕/찌개
+          </button>
+          <button
+            onClick={() => {
+              setFood_cate("튀김/부침");
+            }}
+          >
+            튀김/부침
+          </button>
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
             <BottomNavigation
@@ -353,9 +371,27 @@ const R = ({
               showLabels
               style={{ width: "150px" }}
             >
-              <BottomNavigationAction label="최신순" icon={<Restore />} />
-              <BottomNavigationAction label="스크랩순" icon={<Bookmark />} />
-              <BottomNavigationAction label="조회순" icon={<Pageview />} />
+              <BottomNavigationAction
+                onClick={() => {
+                  setSort("");
+                }}
+                label="최신순"
+                icon={<Restore />}
+              />
+              <BottomNavigationAction
+                onClick={() => {
+                  setSort("scrap");
+                }}
+                label="스크랩순"
+                icon={<Bookmark />}
+              />
+              <BottomNavigationAction
+                onClick={() => {
+                  setSort("readcount");
+                }}
+                label="조회순"
+                icon={<Pageview />}
+              />
             </BottomNavigation>
           </div>
         </center>
@@ -386,7 +422,7 @@ const R = ({
       {/* 위로 가기, 글쓰기 버튼 */}
       <Link
         onClick={() => {
-          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         }}
       >
         <ExpandLess
@@ -532,4 +568,7 @@ export default inject(({ recipe, detail, info }) => ({
   checkList: recipe.checkList,
   list_count: recipe.list_count,
   resetRecipe: recipe.resetRecipe,
+  setFood_cate: recipe.setFood_cate,
+  setSort: recipe.setSort,
+  login_state: info.login_state,
 }))(observer(R));

@@ -52,10 +52,10 @@ export default class DetailStore {
   @action
   handleShare = (v = 0) => {
     this.url = window.location.href;
+    let u = this.url.split(":");
+    console.log(u[0] + ":" + u[1] + ":3000/recipe/detail?recipe=" + v);
+    this.url = u[0] + ":" + u[1] + ":3000/recipe/detail?recipe=" + v;
 
-    if (v !== 0) {
-      this.url = this.url + "/detail?recipe=" + v;
-    }
     this.modal_open = !this.modal_open;
   };
 
@@ -98,8 +98,10 @@ export default class DetailStore {
         this.ing_list = res.data.ingreList;
         this.step_list = res.data.orderList;
 
-        this.checkJoayo();
-        this.checkScrap();
+        if (this.root.info.login_state) {
+          this.checkJoayo();
+          this.checkScrap();
+        }
       })
       .catch((err) => {
         console.log("업로드오류:" + err);
@@ -187,16 +189,17 @@ export default class DetailStore {
   @action
   Joayo = () => {
     let url = "http://localhost:9000/acorn/connect/joayo";
-
-    axios({
-      method: "get",
-      url: url,
-      params: { email: this.root.info.userEmail, rec_num: this.rec_num },
-    })
-      .then((res) => {
-        this.checkJoayo();
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { email: this.root.info.userEmail, rec_num: this.rec_num },
       })
-      .catch((err) => {});
+        .then((res) => {
+          this.checkJoayo();
+        })
+        .catch((err) => {});
+    }
   };
 
   //스크랩체크
@@ -219,16 +222,17 @@ export default class DetailStore {
   @action
   Scrap = () => {
     let url = "http://localhost:9000/acorn/connect/scrap";
-
-    axios({
-      method: "get",
-      url: url,
-      params: { email: this.root.info.userEmail, rec_num: this.rec_num },
-    })
-      .then((res) => {
-        this.checkScrap();
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { email: this.root.info.userEmail, rec_num: this.rec_num },
       })
-      .catch((err) => {});
+        .then((res) => {
+          this.checkScrap();
+        })
+        .catch((err) => {});
+    }
   };
 
   @action

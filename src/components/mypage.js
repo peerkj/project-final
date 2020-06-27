@@ -81,6 +81,7 @@ const R = ({
   location,
   setNickname,
   mypage,
+  login_state,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -89,7 +90,6 @@ const R = ({
     let query = queryString.parse(location.search);
 
     setNickname(query.nick, history);
-
 
     updateList();
   }, []);
@@ -225,7 +225,7 @@ const R = ({
         </Link>
         <CardActions disableSpacing style={{ float: "right" }}>
           <IconButton aria-label="share">
-            {check_j[idx] === 0 ? (
+            {check_j[idx] === 0 || !login_state ? (
               <FavoriteBorder
                 color="disabled"
                 fontSize="small"
@@ -234,14 +234,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  color="secondary"
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                color="secondary"
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "600",
@@ -251,7 +251,7 @@ const R = ({
               {l.joayo}
             </span>
             &ensp;
-            {check_s[idx] === 0 ? (
+            {check_s[idx] === 0 || !login_state ? (
               <BookmarkBorder
                 color="disabled"
                 fontSize="small"
@@ -260,14 +260,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  color="secondary"
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                color="secondary"
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "600",
@@ -332,7 +332,6 @@ const R = ({
             }}
           >
             <div style={{ marginTop: "70px" }}>
-
               <center>
                 <img
                   className="de_profile"
@@ -524,4 +523,5 @@ export default inject(({ mypage, detail, info }) => ({
 
   setNickname: mypage.setNickname,
   mypage: mypage.mypage,
+  login_state: info.login_state,
 }))(observer(R));

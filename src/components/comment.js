@@ -32,6 +32,7 @@ import "../css/profile.css";
   deleteOpen: stores.comment.deleteOpen,
   err: stores.comment.err,
   modalReset: stores.detail.modalReset,
+  login_state: stores.info.login_state,
 }))
 @observer
 class comment extends Component {
@@ -59,6 +60,7 @@ class comment extends Component {
       deleteOpen,
       err,
       modalReset,
+      login_state,
     } = this.props;
 
     const comment = comment_list.map((c, idx) => {
@@ -72,14 +74,16 @@ class comment extends Component {
           key={idx}
         >
           <div style={{ display: "inline", verticalAlign: "middle" }}>
-
             {c.restep === 2 && <span>&emsp;&nbsp;</span>}
             {c.restep === 3 && <span>&emsp;&emsp;&ensp;</span>}
-            {c.relevel === 1 &&
-              <img src="/img/comment.png" alt="" width="25px"
+            {c.relevel === 1 && (
+              <img
+                src="/img/comment.png"
+                alt=""
+                width="25px"
                 style={{ verticalAlign: "middle", marginRight: "8px" }}
               />
-            }
+            )}
             <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
               <img
                 width="40px"
@@ -136,8 +140,10 @@ class comment extends Component {
           {c.email !== "알수없음" && (
             <span
               onClick={() => {
-                setValue(c.com_num, c.regroup, c.restep, c.relevel);
-                handleOpen();
+                if (login_state) {
+                  setValue(c.com_num, c.regroup, c.restep, c.relevel);
+                  handleOpen();
+                }
               }}
             >
               &emsp;&emsp;&emsp;&ensp;&ensp;답글
@@ -178,8 +184,8 @@ class comment extends Component {
                       style={{ maxWidth: "240px", maxHeight: "200px" }}
                     />
                   ) : (
-                      <img src="/img/add_icon2.png" alt="" width="240px" />
-                    )}
+                    <img src="/img/add_icon2.png" alt="" width="240px" />
+                  )}
                 </label>
                 {imgBase64 ? (
                   <Close
@@ -195,8 +201,8 @@ class comment extends Component {
                     id="commentthumb_delete"
                   />
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </div>
               <input
                 style={{ display: "none" }}
