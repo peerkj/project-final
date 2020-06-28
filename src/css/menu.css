@@ -20,19 +20,6 @@
   overflow: hidden;
 }
 
-#flyoutMenu h2 {
-  margin-top: 100px;
-}
-#flyoutMenu h2 a {
-  color: #333;
-  margin-left: 15px;
-  text-decoration: none;
-  margin-left: 180px;
-}
-
-#flyoutMenu h2 a:hover {
-  color: blue;
-}
 .hamburger-react {
   z-index: 100;
   float: right;
@@ -43,12 +30,70 @@
   display: block;
   clear: both;
 }
-
-ul li {
+#flyoutMenu ul{
+  padding: 20px 0 0 140px;
+}
+#flyoutMenu ul li {
   list-style: none;
   font-size: 20pt;
+  color:#000000;
+  padding: 5px;
 }
 
-ul li a {
+#flyoutMenu ul li a {
   text-decoration: none;
+  color:#000000;
+}
+
+.menuTextColor{
+  color:#000000;
+}
+
+#menuline{
+  border:1px solid #f0f0f0;
+}
+
+ul li{
+  list-style: none;
+}
+
+.mypageCenterWrapper{
+  width:140px;
+  margin:20px 0;
+}
+
+.mypageCenter{
+  position: relative; 
+  padding-top: 100%; /* 1:1 ratio */ 
+  overflow: hidden;
+}
+.mypageCenter .centered{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  -webkit-transform: translate(50%,50%); 
+  -ms-transform: translate(50%,50%); 
+  transform: translate(50%,50%);
+}
+.mypageCenterImg{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  max-width: 100%;
+  height: auto;
+  -webkit-transform: translate(-50%,-50%); 
+  -ms-transform: translate(-50%,-50%); 
+  transform: translate(-50%,-50%);
+}
+
+.mypageCenterImg.portrait { 
+  width: 100%; 
+  height: auto; 
+}
+
+.mypageCenterImg.landscape { 
+  width: auto; 
+  height: 100%; 
 }

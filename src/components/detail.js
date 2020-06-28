@@ -10,9 +10,10 @@ import {
   People,
   Timer,
   Star,
-  ChatBubble,
+  ChatBubbleOutline,
   Bookmark,
-  ThumbUp,
+  FavoriteBorderSharp,
+  FavoriteSharp,
   ViewList,
   ViewCarousel,
   Subject,
@@ -21,6 +22,8 @@ import {
   PlayArrow,
   Pause,
   ExpandLess,
+  BookmarkBorderSharp,
+  BorderColor,
 } from "@material-ui/icons";
 import {
   Button,
@@ -63,6 +66,8 @@ import queryString from "query-string";
 
   checkscr: stores.detail.checkscr,
   Scrap: stores.detail.Scrap,
+  setValue: stores.comment.setValue,
+  handleOpen: stores.comment.handleOpen,
 
   //step 모드
   changeStep: stores.detail.changeStep,
@@ -73,6 +78,8 @@ import queryString from "query-string";
 
   c_count: stores.detail.c_count,
   getComment: stores.detail.getComment,
+
+  login_state: stores.info.login_state,
 }))
 @observer
 class Detail extends Component {
@@ -106,6 +113,8 @@ class Detail extends Component {
       //댓글모달
       comment_open,
       handleComment,
+      setValue,
+      handleOpen,
 
       checkjoa,
       Joayo,
@@ -120,6 +129,7 @@ class Detail extends Component {
       stepL,
       history,
       c_count,
+      login_state,
     } = this.props;
 
     const useStyles = makeStyles((theme) => ({
@@ -195,7 +205,6 @@ class Detail extends Component {
                     src={`http://localhost:9000/acorn/image/recipe/${step_list[step_slide].photo}`}
                     alt=""
                     width="359px"
-                    height="250px"
                   />
                 </div>
               </div>
@@ -235,11 +244,13 @@ class Detail extends Component {
             }}
           >
             <center>
-              <img
-                className="de_profile"
-                src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
-                alt=""
-              />
+              <Link to={`/mypage?nick=${all.nickname}`}>
+                <img
+                  className="de_profile"
+                  src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
+                  alt=""
+                />
+              </Link>
               <p style={{ fontWeight: "500", fontSize: "10pt" }}>
                 <Link to={`/mypage?nick=${all.nickname}`}>{all.nickname}</Link>
               </p>
@@ -275,25 +286,33 @@ class Detail extends Component {
                 <div
                   className="ptd2"
                   onClick={() => {
-                    handleShare(0);
+                    handleShare(all.rec_num);
                   }}
                 >
                   <Share />
                   <br />
                   URL 복사
                 </div>
-                <div className="ptd2" onClick={Scrap}>
-                  <Bookmark />
-                  <br />
-                  {checkscr === 0 ? "스크랩하기" : "스크랩 취소"}
-                </div>
                 <div className="ptd2" onClick={Joayo}>
-                  <ThumbUp />
+                  {checkjoa === 0 || !login_state ? (
+                    <FavoriteBorderSharp />
+                  ) : (
+                    <FavoriteSharp style={{ color: "#db555a" }} />
+                  )}
                   <br />
-                  {checkjoa === 0 ? "좋아요" : "좋아요 취소"}
+                  {checkjoa === 0 || !login_state ? "좋아요" : "좋아요 취소"}
+                </div>
+                <div className="ptd2" onClick={Scrap}>
+                  {checkscr === 0 || !login_state ? (
+                    <BookmarkBorderSharp />
+                  ) : (
+                    <Bookmark style={{ color: "#db555a" }} />
+                  )}
+                  <br />
+                  {checkscr === 0 || !login_state ? "스크랩" : "스크랩 취소"}
                 </div>
                 <div className="ptd2" onClick={handleComment}>
-                  <ChatBubble />
+                  <ChatBubbleOutline />
                   <br />
                   댓글 {c_count}개
                 </div>
@@ -407,14 +426,14 @@ class Detail extends Component {
             <center style={{ margin: "50px 0 80px" }}>
               <Button
                 onClick={() => {
-                  history.push("/recipe");
+                  history.goBack();
                 }}
                 variant="outlined"
                 color="black"
                 component="span"
                 className={useStyles.button}
               >
-                목록
+                뒤로
               </Button>
             </center>
           </div>
@@ -424,14 +443,14 @@ class Detail extends Component {
         {/* 위로가기 */}
         <Link
           onClick={() => {
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           }}
         >
           <ExpandLess
             style={{
               position: "fixed",
               left: "330px",
-              top: "755px",
+              top: "605px",
               width: "30px",
               height: "30px",
               border: "1px solid #575757",
@@ -446,9 +465,9 @@ class Detail extends Component {
         <div>
           <Dialog open={modal_open} onClose={handleShare}>
             <DialogTitle id="form-dialog-title">
-              URL 복사하기
+              <span style={{ fontSize: "12pt" }}>URL 복사하기</span>
               <IconButton edge="end" onClick={handleShare} aria-label="close">
-                <Close />
+                <Close style={{ marginLeft: "130px", marginTop: "-10px" }} />
               </IconButton>
             </DialogTitle>
 
@@ -461,9 +480,11 @@ class Detail extends Component {
                 size="small"
               />
               <CopyToClipboard text={url} onCopy={onCopy}>
-                <Button color="primary" variant="contained">
-                  복사하기
-                </Button>
+                <center>
+                  <Button style={{ margin: "20px 0" }} variant="outlined">
+                    복사
+                  </Button>
+                </center>
               </CopyToClipboard>
             </DialogContent>
           </Dialog>
@@ -484,11 +505,19 @@ class Detail extends Component {
               <IconButton
                 edge="start"
                 color="inherit"
-                onClick={handleComment}
                 aria-label="close"
                 style={{ marginTop: "-5px" }}
               >
-                <Close />
+                <Close onClick={handleComment} />
+                <BorderColor
+                  onClick={() => {
+                    if (login_state) {
+                      setValue();
+                      handleOpen();
+                    }
+                  }}
+                  style={{ marginLeft: "295px" }}
+                />
               </IconButton>
             </Toolbar>
           </AppBar>

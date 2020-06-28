@@ -13,6 +13,8 @@ export default class CounterStore {
   @observable list_count = -1;
   //검색
   @observable search = "";
+  @observable food_cate = "";
+  @observable sort = "";
 
   // **** 추가됨
   constructor(root) {
@@ -25,12 +27,27 @@ export default class CounterStore {
     this.search = e.target.value;
   };
   @action
-  handleEnter = (e) => {
+  handleEnter = (e, history = null) => {
     if (e.key === "Enter") {
       //getList 초기화 후 얻기
+      this.food_cate = "";
+      this.sort = "";
       if (this.search === "") this.search = null;
+      if (history !== null) history.push("/recipe");
       this.reset();
     }
+  };
+
+  @action
+  setFood_cate = (food) => {
+    this.food_cate = food;
+    this.reset();
+  };
+
+  @action
+  setSort = (sort) => {
+    this.sort = sort;
+    this.reset();
   };
 
   @action
@@ -63,6 +80,8 @@ export default class CounterStore {
     this.comment_count = [];
     this.list_count = -1;
     this.search = "";
+    this.food_cate = "";
+    this.sort = "";
   };
 
   @action
@@ -89,10 +108,11 @@ export default class CounterStore {
     for (let i = size; i < this.list.length; i++) {
       this.anchorEl[i] = null;
       this.updateCount(this.list[i].rec_num, i);
-      this.checkJoayo(this.list[i].rec_num, i);
-      this.checkScrap(this.list[i].rec_num, i);
+      if (this.root.info.login_state) {
+        this.checkJoayo(this.list[i].rec_num, i);
+        this.checkScrap(this.list[i].rec_num, i);
+      }
       this.getComment(this.list[i].rec_num, i);
-      console.log(size, "~", this.list.length);
     }
   };
   @action
@@ -111,10 +131,15 @@ export default class CounterStore {
     this.checkScrap(num, idx);
   };
 
+  @computed
+  get checkList() {
+    return this.list_count === this.list.length;
+  }
   //카운트 업데이트
   @action
   updateCount = (rec_num, idx) => {
     let url = "http://localhost:9000/acorn/recipe/count?rec_num=" + rec_num;
+
     //유효성 검사
     axios({
       method: "get",
@@ -138,6 +163,8 @@ export default class CounterStore {
   getList = () => {
     let url = "http://localhost:9000/acorn/recipe/list";
     if (this.search === "") this.search = null;
+    if (this.food_cate === "") this.food_cate = null;
+    if (this.sort === "") this.sort = null;
     if (this.list.length === this.list_count) return;
 
     axios({
@@ -146,6 +173,8 @@ export default class CounterStore {
       params: {
         scroll: this.scroll,
         search: this.search,
+        food_cate: this.food_cate,
+        sort: this.sort,
       },
     })
       .then((res) => {
@@ -158,17 +187,12 @@ export default class CounterStore {
         }
         this.setList();
         this.list_count = res.data.count;
-        console.log("리스트 길이", this.list.length);
       })
       .catch((err) => {
         console.log("업로드오류:" + err);
       });
   };
 
-  @computed
-  get checkList() {
-    return this.list_count === this.list.length;
-  }
   //좋아요체크
   @action
   checkJoayo = (num, idx) => {
@@ -192,16 +216,17 @@ export default class CounterStore {
   @action
   Joayo = (num, idx) => {
     let url = "http://localhost:9000/acorn/connect/joayo";
-
-    axios({
-      method: "get",
-      url: url,
-      params: { email: this.root.info.userEmail, rec_num: num },
-    })
-      .then((res) => {
-        this.updateCheck(num, idx);
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { email: this.root.info.userEmail, rec_num: num },
       })
-      .catch((err) => {});
+        .then((res) => {
+          this.updateCheck(num, idx);
+        })
+        .catch((err) => {});
+    }
   };
 
   //스크랩체크
@@ -227,16 +252,17 @@ export default class CounterStore {
   @action
   Scrap = (num, idx) => {
     let url = "http://localhost:9000/acorn/connect/scrap";
-
-    axios({
-      method: "get",
-      url: url,
-      params: { email: this.root.info.userEmail, rec_num: num },
-    })
-      .then((res) => {
-        this.updateCheck(num, idx);
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { email: this.root.info.userEmail, rec_num: num },
       })
-      .catch((err) => {});
+        .then((res) => {
+          this.updateCheck(num, idx);
+        })
+        .catch((err) => {});
+    }
   };
   //댓글 count
   @action

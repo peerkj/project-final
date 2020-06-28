@@ -21,11 +21,7 @@ export default class CounterStore {
   }
 
   @action
-  setNickname = (nick) => {
-    this.mypage = {};
-    this.resetRecipe();
-    console.log("초기화");
-
+  setNickname = (nick, history) => {
     this.nick = nick;
 
     let url = "http://localhost:9000/acorn/chef/mypage";
@@ -40,7 +36,12 @@ export default class CounterStore {
     })
       .then((res) => {
         console.log(res.data);
-        this.mypage = res.data;
+        if (res.data === "") {
+          alert("사용자가 없습니다");
+          history.push("/");
+        } else {
+          this.mypage = res.data;
+        }
       })
       .catch((err) => {
         console.log("업로드 오류:" + err);
@@ -126,8 +127,10 @@ export default class CounterStore {
     for (let i = size; i < this.list.length; i++) {
       this.anchorEl[i] = null;
       this.updateCount(this.list[i].rec_num, i);
-      this.checkJoayo(this.list[i].rec_num, i);
-      this.checkScrap(this.list[i].rec_num, i);
+      if (this.root.info.login_state) {
+        this.checkJoayo(this.list[i].rec_num, i);
+        this.checkScrap(this.list[i].rec_num, i);
+      }
       this.getComment(this.list[i].rec_num, i);
     }
   };
@@ -252,16 +255,17 @@ export default class CounterStore {
   @action
   Joayo = (num, idx) => {
     let url = "http://localhost:9000/acorn/connect/joayo";
-
-    axios({
-      method: "get",
-      url: url,
-      params: { email: this.mypage.email, rec_num: num },
-    })
-      .then((res) => {
-        this.updateCheck(num, idx);
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { email: this.mypage.email, rec_num: num },
       })
-      .catch((err) => {});
+        .then((res) => {
+          this.updateCheck(num, idx);
+        })
+        .catch((err) => {});
+    }
   };
 
   @computed
@@ -292,16 +296,17 @@ export default class CounterStore {
   @action
   Scrap = (num, idx) => {
     let url = "http://localhost:9000/acorn/connect/scrap";
-
-    axios({
-      method: "get",
-      url: url,
-      params: { email: this.mypage.email, rec_num: num },
-    })
-      .then((res) => {
-        this.updateCheck(num, idx);
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { email: this.mypage.email, rec_num: num },
       })
-      .catch((err) => {});
+        .then((res) => {
+          this.updateCheck(num, idx);
+        })
+        .catch((err) => {});
+    }
   };
   //댓글 count
   @action

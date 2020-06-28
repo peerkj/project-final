@@ -81,6 +81,7 @@ const R = ({
   location,
   setNickname,
   mypage,
+  login_state,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -88,7 +89,7 @@ const R = ({
   useEffect(() => {
     let query = queryString.parse(location.search);
 
-    setNickname(query.nick);
+    setNickname(query.nick, history);
 
     updateList();
   }, []);
@@ -224,7 +225,7 @@ const R = ({
         </Link>
         <CardActions disableSpacing style={{ float: "right" }}>
           <IconButton aria-label="share">
-            {check_j[idx] === 0 ? (
+            {check_j[idx] === 0 || !login_state ? (
               <FavoriteBorder
                 color="disabled"
                 fontSize="small"
@@ -250,7 +251,7 @@ const R = ({
               {l.joayo}
             </span>
             &ensp;
-            {check_s[idx] === 0 ? (
+            {check_s[idx] === 0 || !login_state ? (
               <BookmarkBorder
                 color="disabled"
                 fontSize="small"
@@ -316,15 +317,33 @@ const R = ({
         {/* 검색창 */}
         <center style={{ marginTop: "20px" }}>
           <TextField
+            disabled
             id="outlined-basic"
             variant="outlined"
             size="small"
-            onKeyDown={handleEnter}
-            value="마이페이지"
-            onChange={onchangeSearch}
+            label={mypage.nickname}
             style={{ verticalAlign: "middle" }}
           />
-
+          {/* 회원정보출력 */}
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+            }}
+          >
+            <div style={{ marginTop: "70px" }}>
+              <center>
+                <img
+                  className="de_profile"
+                  src={`http://localhost:9000/acorn/image/profile/${mypage.profile}`}
+                  alt=""
+                />
+                <p style={{ fontWeight: "500", fontSize: "10pt" }}>
+                  {mypage.nickname}
+                </p>
+              </center>
+            </div>
+          </div>
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
             <BottomNavigation
@@ -504,4 +523,5 @@ export default inject(({ mypage, detail, info }) => ({
 
   setNickname: mypage.setNickname,
   mypage: mypage.mypage,
+  login_state: info.login_state,
 }))(observer(R));

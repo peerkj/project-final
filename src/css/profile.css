@@ -1,0 +1,83 @@
+.profileCenterWrapper{
+  width:160px;
+  margin:20px 0;
+}
+
+.profileCenter{
+  position: relative; 
+  padding-top: 100%; /* 1:1 ratio */ 
+  overflow: hidden;
+}
+.profileCenter .centered{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  -webkit-transform: translate(50%,50%); 
+  -ms-transform: translate(50%,50%); 
+  transform: translate(50%,50%);
+}
+.profileCenterImg{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  max-width: 100%;
+  height: auto;
+  -webkit-transform: translate(-50%,-50%); 
+  -ms-transform: translate(-50%,-50%); 
+  transform: translate(-50%,-50%);
+}
+
+.profileCenterImg.portrait { 
+  width: 100%; 
+  height: auto; 
+}
+
+.profileCenterImg.landscape { 
+  width: auto; 
+  height: 100%; 
+}
+
+/* 댓글창 */
+.commentCenterWrapper{
+width: 100px;
+float: right;
+margin-top: -10px;
+margin-right: 5px;
+}
+.commentCenter{
+position: relative; 
+padding-top: 75%; /* 4:3 ratio */ 
+overflow: hidden;
+}
+.commentCenter .centered{
+position: absolute; 
+top: 0; 
+left: 0; 
+right: 0; 
+bottom: 0; 
+-webkit-transform: translate(50%,50%); 
+-ms-transform: translate(50%,50%); 
+transform: translate(50%,50%);
+}
+.commentCenter .centered img{
+position: absolute; 
+top: 0; 
+left: 0; 
+max-width: 100%;
+height: auto;
+-webkit-transform: translate(-50%,-50%); 
+-ms-transform: translate(-50%,-50%); 
+transform: translate(-50%,-50%);
+}
+
+.commentCenter .centered img.portrait { 
+width: 100%; 
+height: auto; 
+}
+
+.commentCenter .centered img.landscape { 
+width: auto; 
+height: 100%; 
+}

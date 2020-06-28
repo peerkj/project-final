@@ -103,6 +103,8 @@ export default class DragStore {
   @action
   resetCount = () => {
     this.count = 0;
+    //pout 비우기
+    this.e_store = [];
   };
 
   @computed

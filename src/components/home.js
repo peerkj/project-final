@@ -1,11 +1,33 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Dialog, AppBar, Toolbar, Badge, DialogContent, DialogActions, TextField, DialogTitle, Slide, IconButton, InputAdornment, FormControl, InputLabel, Input } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  AppBar,
+  Toolbar,
+  Badge,
+  DialogContent,
+  DialogActions,
+  TextField,
+  DialogTitle,
+  Slide,
+  IconButton,
+  InputAdornment,
+  FormControl,
+  InputLabel,
+  Input,
+} from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
-import { Close, AddCircle, ThumbUp, RestaurantMenu, DeleteOutline, Search } from "@material-ui/icons";
+import {
+  Close,
+  AddCircle,
+  ThumbUp,
+  RestaurantMenu,
+  DeleteOutline,
+  Search,
+} from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import "../css/home.css";
-
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -25,10 +47,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 const Home = ({
   count,
   addCount,
@@ -41,7 +59,7 @@ const Home = ({
   stopPot,
   mylist,
   addPotFood,
-  pot_food,
+
   deleteList,
   c,
   e_add,
@@ -65,6 +83,11 @@ const Home = ({
   refir_style,
   binpot,
   handleKeyPress,
+  onchangeSearch_home,
+  search_home,
+  handleEnter_home,
+  history,
+  login_state,
   //handleSearchRecipe
 }) => {
   const classes = useStyles();
@@ -96,19 +119,28 @@ const Home = ({
         targetKey="foo"
         dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
       >
-        <img src="/img/pot/dish.png" alt="" width="100px"
-          style={{ marginTop: "-15px" }}></img>
-        <span style={{
-          position: "absolute", top: "28px", left: "32px"
-        }}>{my.refrig_name}</span>
+        <img
+          src="/img/pot/dish.png"
+          alt=""
+          width="100px"
+          style={{ marginTop: "-15px" }}
+        ></img>
+        <span
+          style={{
+            position: "absolute",
+            top: "28px",
+            left: "32px",
+          }}
+        >
+          {my.refrig_name}
+        </span>
         <Close
           id="profileImg_delete"
-          onClick={
-            () => {
-              refri_delete(my.refrig_num);
-            }}
+          onClick={() => {
+            refri_delete(my.refrig_num);
+          }}
           style={{
-            marginLeft: "-25px"
+            marginLeft: "-25px",
           }}
           style={{
             marginLeft: "-25px",
@@ -120,15 +152,20 @@ const Home = ({
   const pot_list = e_store.map((e) => {
     return (
       <div key={e.dragData.key} style={{}}>
-        <span
-          style={{ fontSize: "10pt", fontWeight: "400" }}
-        >{e.dragData.food}</span>
+        <span style={{ fontSize: "10pt", fontWeight: "400" }}>
+          {e.dragData.food}
+        </span>
         <Close
           id="profileImg_delete"
           onClick={() => {
             select_delete(e);
           }}
-          style={{ position: "relative", top: "-1px", left: "1px", fontSize: "12pt" }}
+          style={{
+            position: "relative",
+            top: "-1px",
+            left: "1px",
+            fontSize: "12pt",
+          }}
         />
       </div>
     );
@@ -140,13 +177,17 @@ const Home = ({
         <FormControl className={classes.margin} style={{ marginTop: "230px" }}>
           {/* <InputLabel htmlFor="input-with-icon-adornment">재료 검색 시 예)#삼겹살</InputLabel> */}
           <Input
+            onKeyDown={(e) => {
+              handleEnter_home(e, history);
+            }}
+            value={search_home}
+            onChange={onchangeSearch_home}
             id="input-with-icon-adornment"
             startAdornment={
               <InputAdornment position="start">
                 <Search />
               </InputAdornment>
             }
-            onKeyPress={handleKeyPress}
           />
         </FormControl>
       </center>
@@ -167,14 +208,20 @@ const Home = ({
           float: "right",
           width: "100px",
         }}
-        onClick={handleClickOpen}
+        onClick={() => {
+          if (login_state) handleClickOpen();
+          else {
+            alert("로그인 후 이용하세요");
+            history.push("/login");
+          }
+        }}
         alt=""
       />
       <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
-      // TransitionComponent={Transition}
+        // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -236,7 +283,7 @@ const Home = ({
                 <br />
                 <img
                   style={{
-                    width: "150px"
+                    width: "150px",
                   }}
                   src={pot}
                   alt=""
@@ -332,17 +379,17 @@ const Home = ({
         <DialogActions>
           <Button onClick={handleAddFood} color="primary">
             추가
-               </Button>
+          </Button>
 
           <Button onClick={handleAddOpen} color="primary">
             취소
-               </Button>
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 };
-export default inject(({ drag }) => ({
+export default inject(({ drag, recipe, info }) => ({
   count: drag.count,
   resetCount: drag.resetCount,
   addCount: drag.addCount,
@@ -354,7 +401,6 @@ export default inject(({ drag }) => ({
   stopPot: drag.stopPot,
   mylist: drag.mylist,
   addPotFood: drag.addPotFood,
-  pot_food: drag.pot_food,
   deleteList: drag.deleteList,
   e_add: drag.e_add,
   select_delete: drag.select_delete,
@@ -378,4 +424,9 @@ export default inject(({ drag }) => ({
   binpot: drag.binpot,
   handleKeyPress: drag.handleKeyPress,
   //handleSearchRecipe: drag, handleSearchRecipe
+  onchangeSearch_home: recipe.onchangeSearch,
+  search_home: recipe.search,
+  handleEnter_home: recipe.handleEnter,
+
+  login_state: info.login_state,
 }))(observer(Home));

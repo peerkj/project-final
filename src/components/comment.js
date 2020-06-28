@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
+import "../css/profile.css";
 
 @inject((stores) => ({
   getList: stores.comment.getList,
@@ -29,6 +30,9 @@ import { Close } from "@material-ui/icons";
 
   delete_open: stores.comment.delete_open,
   deleteOpen: stores.comment.deleteOpen,
+  err: stores.comment.err,
+  modalReset: stores.detail.modalReset,
+  login_state: stores.info.login_state,
 }))
 @observer
 class comment extends Component {
@@ -54,51 +58,96 @@ class comment extends Component {
       deleteComment,
       delete_open,
       deleteOpen,
+      err,
+      modalReset,
+      login_state,
     } = this.props;
 
     const comment = comment_list.map((c, idx) => {
       return (
-        <div style={{ border: "1px solid gray" }} key={idx}>
-          {c.relevel === 1 && <b>답글입니당</b>}
-          <img
-            width="40px"
-            src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
-            alt=""
-          />
+        <div
+          style={{
+            borderTop: "1px solid #e5e5e5",
+            paddingTop: "10px",
+            paddingBottom: "20px",
+          }}
+          key={idx}
+        >
+          <div style={{ display: "inline", verticalAlign: "middle" }}>
+            {c.restep === 2 && <span>&emsp;&nbsp;</span>}
+            {c.restep === 3 && <span>&emsp;&emsp;&ensp;</span>}
+            {c.relevel === 1 && (
+              <img
+                src="/img/comment.png"
+                alt=""
+                width="25px"
+                style={{ verticalAlign: "middle", marginRight: "8px" }}
+              />
+            )}
+            <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
+              <img
+                width="40px"
+                height="40px"
+                style={{ borderRadius: "40px", verticalAlign: "middle" }}
+                src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
+                alt=""
+              />
+            </Link>
+          </div>
+          <div
+            style={{
+              display: "inline",
+              height: "40px",
+              verticalAlign: "middle",
+            }}
+          >
+            &emsp;
+            <b>
+              <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
+                {c.nickname}
+              </Link>
+            </b>
+            &emsp;
+            <span>{c.timeDiffer}</span>
+            {c.email === userEmail && (
+              <Close
+                onClick={() => {
+                  deleteOpen(c.com_num);
+                }}
+                style={{ float: "right", color: "#585858" }}
+              />
+            )}
+          </div>
           <br />
-          <b>{c.timeDiffer}</b>
+          {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>}
+          <span>&emsp;&emsp;&emsp;&ensp;&ensp;{c.content}</span>
+          <div className="commentCenterWrapper">
+            <div className="commentCenter">
+              <div className="centered">
+                {c.image && (
+                  <img
+                    src={`http://localhost:9000/acorn/image/comment/${c.image}`}
+                    alt=""
+                    style={{ float: "right" }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
           <br />
-          <b>{c.nickname}</b>
           <br />
-          <b>{c.content}</b>
-          <br />
-          {c.image && (
-            <img
-              width="40px"
-              src={`http://localhost:9000/acorn/image/comment/${c.image}`}
-              alt=""
-            />
-          )}
-          <br />
+          {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>}
           {c.email !== "알수없음" && (
-            <button
+            <span
               onClick={() => {
-                setValue(c.com_num, c.regroup, c.restep, c.relevel);
-                handleOpen();
+                if (login_state) {
+                  setValue(c.com_num, c.regroup, c.restep, c.relevel);
+                  handleOpen();
+                }
               }}
             >
-              답글
-            </button>
-          )}
-
-          {c.email === userEmail && (
-            <button
-              onClick={() => {
-                deleteOpen(c.com_num);
-              }}
-            >
-              삭제
-            </button>
+              &emsp;&emsp;&emsp;&ensp;&ensp;답글
+            </span>
           )}
         </div>
       );
@@ -106,26 +155,8 @@ class comment extends Component {
 
     return (
       <div>
-        <br />
-
-        <div
-          style={{
-            border: "1px solid gray",
-          }}
-        >
-          <button
-            style={{ position: "fixed", top: "600px", right: "30px" }}
-            onClick={() => {
-              setValue();
-              handleOpen();
-            }}
-          >
-            댓글쓰기
-          </button>
-
-          {comment}
-        </div>
-
+        <div>{comment}</div>
+        {err && <b>등록된 댓글이 없습니다</b>}
         <div>
           <Dialog
             open={modal_open}
@@ -133,7 +164,7 @@ class comment extends Component {
             aria-labelledby="form-dialog-title"
             fullWidth
           >
-            <DialogTitle id="form-dialog-title">댓글쓰기</DialogTitle>
+            <DialogTitle id="form-dialog-title">댓글 쓰기</DialogTitle>
             <DialogContent>
               <TextField
                 id="outlined-basic"
@@ -144,12 +175,16 @@ class comment extends Component {
                 size="medium"
                 onKeyPress={handleEnter}
               />
-              <div style={{ marginTop: "15px" }}>
+              <div style={{ marginTop: "20px" }}>
                 <label htmlFor="commentp">
                   {imgBase64 ? (
-                    <img width="200px" height="200px" src={imgBase64} alt="" />
+                    <img
+                      src={imgBase64}
+                      alt=""
+                      style={{ maxWidth: "240px", maxHeight: "200px" }}
+                    />
                   ) : (
-                    <img width="100px" src="/img/add_icon2.png" alt="" />
+                    <img src="/img/add_icon2.png" alt="" width="240px" />
                   )}
                 </label>
                 {imgBase64 ? (
@@ -157,7 +192,7 @@ class comment extends Component {
                     style={{
                       position: "relative",
                       top: "-198px",
-                      marginLeft: "170px",
+                      marginLeft: "220px",
                       zIndex: "2",
                     }}
                     onClick={() => {
@@ -179,15 +214,18 @@ class comment extends Component {
             </DialogContent>
             <DialogActions>
               <Button
+                onClick={handleOpen}
+                style={{ color: "#8a8989", fontWeight: "400" }}
+              >
+                취소
+              </Button>
+              <Button
                 onClick={() => {
                   handleSubmit();
                 }}
-                color="primary"
+                style={{ color: "#002060" }}
               >
                 등록
-              </Button>
-              <Button onClick={handleOpen} color="primary">
-                취소
               </Button>
             </DialogActions>
           </Dialog>
@@ -201,15 +239,18 @@ class comment extends Component {
             <DialogContent>삭제하시겠습니까?</DialogContent>
             <DialogActions>
               <Button
+                onClick={deleteOpen}
+                style={{ color: "#8a8989", fontWeight: "400" }}
+              >
+                취소
+              </Button>
+              <Button
                 onClick={() => {
                   deleteComment();
                 }}
-                color="secondary"
+                style={{ color: "#002060" }}
               >
                 확인
-              </Button>
-              <Button onClick={deleteOpen} color="primary">
-                취소
               </Button>
             </DialogActions>
           </Dialog>
