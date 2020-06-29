@@ -85,6 +85,7 @@ const R = ({
   checkn,
   checkNews,
   onNews,
+  offNews,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -344,9 +345,12 @@ const R = ({
                 <p style={{ fontWeight: "500", fontSize: "10pt" }}>
                   {mypage.nickname}
                 </p>
-                <button onClick={checkn}>
-                  {checkn === 0 || !login_state ? "소식받기" : "소식받기 취소"}
-                </button>
+                <div>
+                  {checkn === 0 && <button onClick={onNews}>소식받기</button>}
+                  {checkn === 1 && (
+                    <button onClick={offNews}>소식받기취소</button>
+                  )}
+                </div>
               </center>
             </div>
           </div>
@@ -534,4 +538,5 @@ export default inject(({ mypage, detail, info }) => ({
   checkn: mypage.checkn,
   checkNews: mypage.checkNews,
   onNews: mypage.onNews,
+  offNews: mypage.offNews,
 }))(observer(R));

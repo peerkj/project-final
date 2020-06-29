@@ -45,6 +45,7 @@ export default class CounterStore {
           history.push("/");
         } else {
           this.mypage = res.data;
+          this.checkNews();
         }
       })
       .catch((err) => {
@@ -120,13 +121,13 @@ export default class CounterStore {
   //카운트 증가
   @action
   addState = () => {
-    this.state.itemCount += 3;
+    this.state.itemCount += 5;
     this.state.isLoading = false;
   };
 
   @action
   setList = () => {
-    let size = this.list.length - 3;
+    let size = this.list.length - 5;
     if (size < 0) size = 0;
     for (let i = size; i < this.list.length; i++) {
       this.anchorEl[i] = null;
@@ -332,7 +333,7 @@ export default class CounterStore {
   @action
   checkNews = () => {
     let url = "http://localhost:9000/acorn/connect/newscheck";
-    console.log(this.mypage.email, this.root.info.userEmail);
+
     axios({
       method: "get",
       url: url,
@@ -342,7 +343,8 @@ export default class CounterStore {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        this.checkn = res.data;
+        console.log(this.checkn);
       })
       .catch((err) => {
         console.log("소식받기체크오류:" + err);
@@ -362,11 +364,31 @@ export default class CounterStore {
           receiver: this.root.info.userEmail,
         },
       })
-        .then((res) => {
-          //this.checkNews();
-        })
+        .then((res) => {})
         .catch((err) => {
           console.log("소식받기오류:" + err);
+        });
+    }
+  };
+
+  @action
+  offNews = () => {
+    let url = "http://localhost:9000/acorn/connect/offnews";
+
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: {
+          provider: this.mypage.email,
+          receiver: this.root.info.userEmail,
+        },
+      })
+        .then((res) => {
+          this.checkNews();
+        })
+        .catch((err) => {
+          console.log("소식받기취소오류:" + err);
         });
     }
   };

@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+
 import {
   Button,
   Dialog,
@@ -14,6 +16,11 @@ import {
   InputAdornment,
   FormControl,
   Input,
+  Typography,
+  CardContent,
+  CardHeader,
+  Avatar,
+  Card,
 } from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 import {
@@ -26,8 +33,15 @@ import {
 } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import "../css/home.css";
+import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 345,
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
   appBar: {
     position: "relative",
   },
@@ -90,6 +104,13 @@ const Home = ({
   openRecipe,
   //추천 레시피 리스트
   recipe_list,
+  stepR,
+  stepL,
+  recipe_index,
+  ing_list,
+  sw,
+  main_ing,
+  sub_ing,
   //handleSearchRecipe
 }) => {
   const classes = useStyles();
@@ -166,6 +187,50 @@ const Home = ({
             fontSize: "12pt",
           }}
         />
+      </div>
+    );
+  });
+
+  // //주재료
+  const main = main_ing[recipe_index].map((i, idx) => {
+    return (
+      <div key={idx} className="detailMainIngre">
+        <span>
+          {i.check === 1 ? (
+            <span style={{ color: "pink" }}>{i.ingre_name}</span>
+          ) : (
+            i.ingre_name
+          )}
+        </span>
+        <span className="sub">
+          {i.check === 1 ? (
+            <span style={{ color: "pink" }}>{i.quantity}</span>
+          ) : (
+            i.quantity
+          )}
+        </span>
+      </div>
+    );
+  });
+
+  //부재료
+  const sub = sub_ing[recipe_index].map((i, idx) => {
+    return (
+      <div key={idx} className="detailMainIngre">
+        <span>
+          {i.check === 1 ? (
+            <span style={{ color: "pink" }}>{i.ingre_name}</span>
+          ) : (
+            i.ingre_name
+          )}
+        </span>
+        <span className="sub">
+          {i.check === 1 ? (
+            <span style={{ color: "pink" }}>{i.quantity}</span>
+          ) : (
+            i.quantity
+          )}
+        </span>
       </div>
     );
   });
@@ -405,9 +470,71 @@ const Home = ({
         </AppBar>
         <div>
           <br />
-          <div style={{ width: "375px" }}>
-            <center></center>
+          <b>{recipe_list.length}개의 결과</b>
+          <Card className={useStyles.root} style={{ marginTop: "10px" }}>
+            <CardHeader
+              avatar={
+                <Avatar aria-label="recipe" className={useStyles.avatar}>
+                  <Link
+                    to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}
+                  >
+                    <img
+                      width="40px"
+                      src={`http://localhost:9000/acorn/image/profile/${recipe_list[recipe_index].profile}`}
+                      alt=""
+                    />
+                  </Link>
+                </Avatar>
+              }
+              title={
+                <Link to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}>
+                  {recipe_list[recipe_index].nickname}
+                </Link>
+              }
+              subheader={recipe_list[recipe_index].timeDiffer}
+            />
+            <Link
+              className="ListItem"
+              to={`/recipe/detail?recipe=${recipe_list[recipe_index].rec_num}`}
+            >
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <div className="r2listThumbnail">
+                    <div className="centered">
+                      <img
+                        className="r2listImg"
+                        src={`http://localhost:9000/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <center>
+                    <span className="recipeSubject">
+                      {recipe_list[recipe_index].subject}
+                    </span>
+                  </center>
+                </Typography>
+              </CardContent>
+            </Link>
+          </Card>
+          <hr className="detailLine" />
+          <div style={{ width: "100%" }}>
+            <p
+              style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
+            >
+              재료
+              <span class="detailIngreTitleText">Ingredients</span>
+            </p>
+            <p className="detailMainTitle">[주재료]</p>
+            {main}
+            <br />
+            <p className="detailMainTitle">[부재료]</p>
+            {sub}
+            <hr className="detailLine" />
           </div>
+          <b onClick={stepL}>왼쪽</b>
+          <b onClick={stepR}>오른쪽</b>
         </div>
       </Dialog>
     </div>
@@ -456,4 +583,11 @@ export default inject(({ drag, recipe, info }) => ({
   openRecipe: drag.openRecipe,
   open_recipe: drag.open_recipe,
   recipe_list: drag.recipe_list,
+  stepR: drag.stepR,
+  stepL: drag.stepL,
+  recipe_index: drag.recipe_index,
+  ing_list: drag.ing_list,
+  sw: drag.sw,
+  main_ing: drag.main_ing,
+  sub_ing: drag.sub_ing,
 }))(observer(Home));
