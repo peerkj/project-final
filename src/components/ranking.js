@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import "../css/ranking.css";
-import { People, Favorite, Bookmark, Restaurant } from '@material-ui/icons';
+import { People, Favorite, Bookmark, Restaurant, DoubleArrow } from '@material-ui/icons';
 
 // **** 최하단에 잇던 observer 가 이렇게 위로 올라옵니다.
 @inject((stores) => ({
@@ -29,7 +29,7 @@ class Counter extends Component {
 
 		const ChefList = chef.map((c, idx) => {
 			return (
-				<div style={{ borderTop: "1px solid #cfcfcf", padding: "10px" }}>
+				<div style={{ borderBottom: "1px solid #cfcfcf", padding: "10px" }}>
 					<div style={{ display: "inline" }}>
 						{/* 순위 */}
 						<span style={{
@@ -51,7 +51,7 @@ class Counter extends Component {
 					&ensp;
 					<div style={{ display: "inline" }}>
 						{/* 닉네임 */}
-						<div style={{ display: "inline-block" }}>
+						<div style={{ display: "inline-block", top: "-10px", position: "relative" }}>
 							<span style={{ color: "#002060", fontWeight: "600", fontSize: "14pt" }}>{c.nickname}</span>
 							{/* 소식받기버튼 */}
 							{/* {check_n[idx] === 0 && (
@@ -67,7 +67,7 @@ class Counter extends Component {
 						</div>
 
 						{/* 아이콘 */}
-						<div style={{ position: "relative", top: "-25px", left: "100px" }}>
+						<div style={{ position: "relative", top: "-30px", left: "100px" }}>
 							<span className="rankIcon">
 								<Restaurant fontSize="small" className="rankIconImg" />
 								<span className="rankIconText">{c.recipecount}</span>
@@ -91,8 +91,9 @@ class Counter extends Component {
 		})
 		return (
 			<div>
-				<span>셰프 랭킹</span>
-				{ChefList}
+				<DoubleArrow style={{ verticalAlign: "middle", margin: "10px 0 10px 20px" }} />
+				<span className="rankingTitle">Chef Ranking</span>
+				<div style={{ marginTop: "20px" }}>{ChefList}</div>
 			</div>
 		);
 	}
