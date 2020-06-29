@@ -15,6 +15,10 @@ export default class CounterStore {
   @observable mypage = {};
 
   @observable nick = "";
+
+  //소식받기
+  @observable checkn = "";
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
@@ -248,7 +252,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -264,7 +268,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -289,7 +293,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -305,7 +309,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   //댓글 count
@@ -321,6 +325,41 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
+
+  //소식받기체크
+  @action
+  checkNews = () => {
+    let url = "http://localhost:9000/acorn/connect/newscheck";
+
+    axios({
+      method: "get",
+      url: url,
+      params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
+    }).then((res) => {
+
+    }).catch((err) => {
+      console.log("소식받기체크오류:" + err);
+    })
+  }
+
+  @action
+  onNews = () => {
+    let url = "http://localhost:9000/acorn/connect/onnews";
+
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
+      }).then((res) => {
+        this.checkNews();
+      }).catch((err) => {
+        console.log("소식받기오류:" + err);
+      })
+    }
+  }
+
+
 }
