@@ -347,10 +347,10 @@ const R = ({
                   {mypage.nickname}
                 </p>
                 <div>
-                  {checkn === 0 && (
+                  {checkn === 0 && mypage.email !== userEmail && (
                     <button onClick={onNews}>소식받기</button>
                   )}
-                  {checkn === 1 && (
+                  {checkn === 1 && mypage.email !== userEmail && (
                     <button onClick={offNews}>소식받기취소</button>
                   )}
 
