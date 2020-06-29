@@ -337,13 +337,12 @@ const R = ({
             </div>
             <div className="mypageUnfollowbtn">Unfollow</div>
             <div>
-              {checkn === 0 && (
-                <button onClick={onNews}>Follow</button>
+              {checkn === 0 && mypage.email !== userEmail && (
+                <button onClick={onNews}>소식받기</button>
               )}
-              {checkn === 1 && (
+              {checkn === 1 && mypage.email !== userEmail && (
                 <button onClick={offNews}>소식받기취소</button>
               )}
-
             </div>
           </div>
         </center>
