@@ -84,14 +84,14 @@ const R = ({
   checkList,
   list_count,
   resetRecipe,
+  setFood_cate,
+  setSort,
+  login_state,
 
   cate_list,
   cate_index,
   cateR,
   cateL,
-  setFood_cate,
-  setSort,
-  login_state,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -134,12 +134,16 @@ const R = ({
   const FoodList = cate_list[cate_index].map((f, i) => {
     return (
       <div>
-
-        <b>{f}</b>
-
+        <b
+          onClick={() => {
+            setFood_cate(f);
+          }}
+        >
+          {f}
+        </b>
       </div>
-    )
-  })
+    );
+  });
   //리스트 박스
   const ListItem = list.map((l, idx) => {
     return (
@@ -250,14 +254,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -276,14 +280,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -354,30 +358,6 @@ const R = ({
             onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
-          &nbsp;
-          <Refresh onClick={resetRecipe} style={{ verticalAlign: "middle" }} />
-          <br />
-          <button
-            onClick={() => {
-              setFood_cate("디저트");
-            }}
-          >
-            디저트
-          </button>
-          <button
-            onClick={() => {
-              setFood_cate("국/탕/찌개");
-            }}
-          >
-            국/탕/찌개
-          </button>
-          <button
-            onClick={() => {
-              setFood_cate("튀김/부침");
-            }}
-          >
-            튀김/부침
-          </button>
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
             <BottomNavigation
@@ -591,12 +571,12 @@ export default inject(({ recipe, detail, info }) => ({
   checkList: recipe.checkList,
   list_count: recipe.list_count,
   resetRecipe: recipe.resetRecipe,
+  setFood_cate: recipe.setFood_cate,
+  setSort: recipe.setSort,
+  login_state: info.login_state,
 
   cate_list: recipe.cate_list,
   cate_index: recipe.cate_index,
   cateR: recipe.cateR,
   cateL: recipe.cateL,
-  setFood_cate: recipe.setFood_cate,
-  setSort: recipe.setSort,
-  login_state: info.login_state,
 }))(observer(R));

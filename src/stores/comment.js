@@ -34,10 +34,9 @@ export default class CounterStore {
 
   @action
   modalReset = () => {
-
     this.comment_open = !this.comment_open;
     window.scrollTo(0, 0);
-  }
+  };
 
   @action
   handleEnter = (e, history) => {
