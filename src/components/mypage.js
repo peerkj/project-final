@@ -82,6 +82,9 @@ const R = ({
   setNickname,
   mypage,
   login_state,
+  checkn,
+  checkNews,
+  onNews,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -135,7 +138,7 @@ const R = ({
                 width="40px"
                 src={`http://localhost:9000/acorn/image/profile/${
                   sw === 0 ? mypage.profile : l.profile
-                }`}
+                  }`}
                 alt=""
               />
             </Avatar>
@@ -234,14 +237,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Favorite
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Joayo(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Favorite
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "600",
@@ -260,14 +263,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Bookmark
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Scrap(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Bookmark
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "600",
@@ -341,6 +344,9 @@ const R = ({
                 <p style={{ fontWeight: "500", fontSize: "10pt" }}>
                   {mypage.nickname}
                 </p>
+                <button onClick={checkNews}>
+                  {checkn === 0 || !login_state ? "소식받기" : "소식받기 취소"}
+                </button>
               </center>
             </div>
           </div>
@@ -524,4 +530,8 @@ export default inject(({ mypage, detail, info }) => ({
   setNickname: mypage.setNickname,
   mypage: mypage.mypage,
   login_state: info.login_state,
+
+  checkn: mypage.checkn,
+  checkNews: mypage.checkNews,
+  onNews: mypage.onNews,
 }))(observer(R));
