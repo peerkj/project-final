@@ -96,7 +96,7 @@ class header extends Component {
               </Link>
             </li>
             <li>
-              <Link to="/counter">CHEF</Link>
+              <Link to="/ranking">CHEF</Link>
             </li>
             <li>
               <Link to={`/mypage?nick=${menu_nick}`}>MYPAGE</Link>
