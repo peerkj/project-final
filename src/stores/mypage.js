@@ -333,22 +333,18 @@ export default class CounterStore {
   @action
   checkNews = () => {
     let url = "http://localhost:9000/acorn/connect/newscheck";
-    console.log(this.mypage.email, this.root.info.userEmail);
+
     axios({
       method: "get",
       url: url,
-      params: {
-        provider: this.mypage.email,
-        receiver: this.root.info.userEmail,
-      },
+      params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
+    }).then((res) => {
+      this.checkn = res.data;
+      console.log(this.checkn);
+    }).catch((err) => {
+      console.log("소식받기체크오류:" + err);
     })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log("소식받기체크오류:" + err);
-      });
-  };
+  }
 
   //소식받기
   @action
@@ -359,17 +355,12 @@ export default class CounterStore {
       axios({
         method: "get",
         url: url,
-        params: {
-          provider: this.mypage.email,
-          receiver: this.root.info.userEmail,
-        },
+        params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
+      }).then((res) => {
+        this.checkNews();
+      }).catch((err) => {
+        console.log("소식받기오류:" + err);
       })
-        .then((res) => {
-          //this.checkNews();
-        })
-        .catch((err) => {
-          console.log("소식받기오류:" + err);
-        });
     }
   }
 

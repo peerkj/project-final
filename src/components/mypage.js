@@ -330,20 +330,12 @@ const R = ({
               </div>
             </div>
             {/* 팔로우 */}
-            <div className="mypageFollowbtn">
-              {checkn === 0 && (
-                <span onClick={onNews}>Follow</span>
-              )}
-            </div>
-            <div className="mypageUnfollowbtn">Unfollow</div>
-            <div>
-              {checkn === 0 && mypage.email !== userEmail && (
-                <button onClick={onNews}>소식받기</button>
-              )}
-              {checkn === 1 && mypage.email !== userEmail && (
-                <button onClick={offNews}>소식받기취소</button>
-              )}
-            </div>
+            {checkn === 0 && mypage.email !== userEmail && (
+              <div className="mypageFollowbtn" onClick={onNews}>Follow</div>
+            )}
+            {checkn === 1 && mypage.email !== userEmail && (
+              <div className="mypageUnfollowbtn" onClick={offNews}>Unfollow</div>
+            )}
           </div>
         </center>
 
