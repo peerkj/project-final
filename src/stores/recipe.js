@@ -16,10 +16,33 @@ export default class CounterStore {
   @observable food_cate = "";
   @observable sort = "";
 
+  //분류
+  @observable cate_list = [['All', '구이', '국/탕/찌개', '디저트'], ['면', '무침', '밥/죽/떡', '볶음'], ['양념/소스', '조림/찜', '튀김/부침', '기타']];
+  @observable cate_index = 0;
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
   }
+
+  //분류
+  @action
+  cateR = () => {
+    if (this.cate_index >= 2) {
+      this.cate_index = 0;
+    } else {
+      this.cate_index++;
+
+    }
+  };
+  @action
+  cateL = () => {
+    if (this.cate_index === 0) {
+      this.cate_index = 2;
+    } else {
+      this.cate_index--;
+    }
+  };
 
   //검색
   @action
@@ -37,6 +60,8 @@ export default class CounterStore {
       this.reset();
     }
   };
+
+
 
   @action
   setFood_cate = (food) => {
