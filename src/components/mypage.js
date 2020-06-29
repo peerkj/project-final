@@ -81,6 +81,9 @@ const R = ({
   setNickname,
   mypage,
   login_state,
+  checkn,
+  checkNews,
+  onNews,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -327,6 +330,9 @@ const R = ({
             {/* 팔로우 */}
             <div className="mypageFollowbtn">Follow</div>
             <div className="mypageUnfollowbtn">Unfollow</div>
+            <button onClick={checkn}>
+              {checkn === 0 || !login_state ? "소식받기" : "소식받기 취소"}
+            </button>
           </div>
         </center>
 
@@ -504,4 +510,8 @@ export default inject(({ mypage, detail, info }) => ({
   setNickname: mypage.setNickname,
   mypage: mypage.mypage,
   login_state: info.login_state,
+
+  checkn: mypage.checkn,
+  checkNews: mypage.checkNews,
+  onNews: mypage.onNews,
 }))(observer(R));

@@ -15,6 +15,10 @@ export default class CounterStore {
   @observable mypage = {};
 
   @observable nick = "";
+
+  //소식받기
+  @observable checkn = "";
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
@@ -322,5 +326,48 @@ export default class CounterStore {
         this.comment_count[idx] = res.data;
       })
       .catch((err) => {});
+  };
+
+  //소식받기체크
+  @action
+  checkNews = () => {
+    let url = "http://localhost:9000/acorn/connect/newscheck";
+    console.log(this.mypage.email, this.root.info.userEmail);
+    axios({
+      method: "get",
+      url: url,
+      params: {
+        provider: this.mypage.email,
+        receiver: this.root.info.userEmail,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("소식받기체크오류:" + err);
+      });
+  };
+
+  @action
+  onNews = () => {
+    let url = "http://localhost:9000/acorn/connect/onnews";
+
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: {
+          provider: this.mypage.email,
+          receiver: this.root.info.userEmail,
+        },
+      })
+        .then((res) => {
+          //this.checkNews();
+        })
+        .catch((err) => {
+          console.log("소식받기오류:" + err);
+        });
+    }
   };
 }

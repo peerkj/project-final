@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -10,11 +10,9 @@ import {
   DialogActions,
   TextField,
   DialogTitle,
-  Slide,
   IconButton,
   InputAdornment,
   FormControl,
-  InputLabel,
   Input,
 } from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
@@ -88,6 +86,10 @@ const Home = ({
   handleEnter_home,
   history,
   login_state,
+  open_recipe,
+  openRecipe,
+  //추천 레시피 리스트
+  recipe_list,
   //handleSearchRecipe
 }) => {
   const classes = useStyles();
@@ -138,9 +140,6 @@ const Home = ({
           id="profileImg_delete"
           onClick={() => {
             refri_delete(my.refrig_num);
-          }}
-          style={{
-            marginLeft: "-25px",
           }}
           style={{
             marginLeft: "-25px",
@@ -378,6 +377,31 @@ const Home = ({
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/*추천 레시피 리스트 */}
+      <Dialog
+        fullScreen
+        open={open_recipe}
+        onClose={openRecipe}
+        // TransitionComponent={Transition}
+      >
+        <AppBar
+          className={classes.appBar}
+          style={{ height: "50px", backgroundColor: "#002060" }}
+        >
+          <Toolbar>
+            <IconButton edge="start" onClick={openRecipe} aria-label="close">
+              <Close style={{ color: "#ffffff", marginTop: "-5px" }} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <div>
+          <br />
+          <div style={{ width: "375px" }}>
+            <center></center>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 };
@@ -421,4 +445,7 @@ export default inject(({ drag, recipe, info }) => ({
   handleEnter_home: recipe.handleEnter,
 
   login_state: info.login_state,
+  openRecipe: drag.openRecipe,
+  open_recipe: drag.open_recipe,
+  recipe_list: drag.recipe_list,
 }))(observer(Home));
