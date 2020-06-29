@@ -134,7 +134,13 @@ const R = ({
   const FoodList = cate_list[cate_index].map((f, i) => {
     return (
       <div>
-        <b>{f}</b>
+        <b
+          onClick={() => {
+            setFood_cate(f);
+          }}
+        >
+          {f}
+        </b>
       </div>
     );
   });
