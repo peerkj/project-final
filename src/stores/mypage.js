@@ -45,6 +45,7 @@ export default class CounterStore {
           history.push("/");
         } else {
           this.mypage = res.data;
+          this.checkNews();
         }
       })
       .catch((err) => {
@@ -338,12 +339,14 @@ export default class CounterStore {
       url: url,
       params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
     }).then((res) => {
-
+      this.checkn = res.data;
+      console.log(this.checkn);
     }).catch((err) => {
       console.log("소식받기체크오류:" + err);
     })
   }
 
+  //소식받기
   @action
   onNews = () => {
     let url = "http://localhost:9000/acorn/connect/onnews";
@@ -357,6 +360,24 @@ export default class CounterStore {
         this.checkNews();
       }).catch((err) => {
         console.log("소식받기오류:" + err);
+      })
+    }
+  }
+
+  //소식받기취소
+  @action
+  offNews = () => {
+    let url = "http://localhost:9000/acorn/connect/offnews";
+
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
+      }).then((res) => {
+        this.checkNews();
+      }).catch((err) => {
+        console.log("소식받기취소오류:" + err);
       })
     }
   }
