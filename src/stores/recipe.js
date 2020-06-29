@@ -17,7 +17,7 @@ export default class CounterStore {
   @observable sort = "";
 
   //분류
-  @observable cate_list = [['All', '구이', '국/탕/찌개', '디저트'], ['면', '무침', '밥/죽/떡', '볶음'], ['양념/소스', '조림/찜', '튀김/부침', '기타']];
+  @observable cate_list = [['All', '밥/죽/떡', '면', '국/탕/찌개'], ['튀김/부침', '무침', '볶음', '구이'], ['조림/찜', '양념/소스', '디저트', '기타']];
   @observable cate_index = 0;
 
   // **** 추가됨
@@ -187,9 +187,10 @@ export default class CounterStore {
   @action
   getList = () => {
     let url = "http://localhost:9000/acorn/recipe/list";
+    let sort = this.sort;
     if (this.search === "") this.search = null;
     if (this.food_cate === "") this.food_cate = null;
-    if (this.sort === "") this.sort = null;
+    if (sort === "") sort = null;
     if (this.list.length === this.list_count) return;
 
     axios({
@@ -199,7 +200,7 @@ export default class CounterStore {
         scroll: this.scroll,
         search: this.search,
         food_cate: this.food_cate,
-        sort: this.sort,
+        sort: sort,
       },
     })
       .then((res) => {
@@ -234,7 +235,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -250,7 +251,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -270,7 +271,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -286,7 +287,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   //댓글 count
@@ -302,6 +303,6 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }

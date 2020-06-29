@@ -44,14 +44,14 @@ class header extends Component {
         </div>
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
           <center>
-            <div className="mypageCenterWrapper">
-              <div className="mypageCenter">
+            <div className="menuProfileWrapper">
+              <div className="menuProfileCenter">
                 <div className="centered">
                   {profile_name ? (
                     <img
                       src={menu_profile}
                       alt=""
-                      className="mypageCenterImg"
+                      className="menuProfileCenterImg"
                     />
                   ) : (
                       <img src="img/basic_user.png" alt="" />
@@ -60,7 +60,7 @@ class header extends Component {
               </div>
             </div>
             {menu_nick ? (
-              <span style={{ fontWeight: "400", fontSize: "12pt" }}>
+              <span style={{ fontWeight: "400", fontSize: "15pt", color: "#ffffff" }}>
                 {menu_nick} 님
               </span>
             ) : (

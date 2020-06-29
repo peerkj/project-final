@@ -7,6 +7,7 @@ import { red } from "@material-ui/core/colors";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Comment from "./comment";
 import queryString from "query-string";
+import "../css/mypage.css";
 
 import {
   Button,
@@ -17,8 +18,6 @@ import {
   Avatar,
   IconButton,
   Typography,
-  BottomNavigation,
-  BottomNavigationAction,
   Menu,
   MenuItem,
   Dialog,
@@ -29,15 +28,15 @@ import {
 } from "@material-ui/core";
 import {
   Close,
-  Create,
   MoreVert,
-  Restore,
   Bookmark,
   FavoriteBorder,
   Favorite,
   BookmarkBorder,
   ExpandLess,
   ChatBubbleOutline,
+  ListAlt,
+  Cloud,
 } from "@material-ui/icons";
 import "../css/styles.css";
 
@@ -135,7 +134,7 @@ const R = ({
                 width="40px"
                 src={`http://localhost:9000/acorn/image/profile/${
                   sw === 0 ? mypage.profile : l.profile
-                }`}
+                  }`}
                 alt=""
               />
             </Avatar>
@@ -209,14 +208,7 @@ const R = ({
               </div>
               <br />
               <center>
-                <span
-                  style={{
-                    fontSize: "12pt",
-                    fontWeight: "500",
-                    color: "#000000",
-                    marginLeft: "2px",
-                  }}
-                >
+                <span className="recipeSubject">
                   {l.subject}
                 </span>
               </center>
@@ -234,17 +226,17 @@ const R = ({
                 }}
               />
             ) : (
-              <Favorite
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Joayo(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Favorite
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "12pt",
               }}
             >
@@ -260,17 +252,17 @@ const R = ({
                 }}
               />
             ) : (
-              <Bookmark
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Scrap(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Bookmark
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "12pt",
               }}
             >
@@ -288,7 +280,7 @@ const R = ({
             />
             <span
               style={{
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "12pt",
               }}
             >
@@ -314,61 +306,66 @@ const R = ({
   return (
     <div className="RecipeApp">
       <div style={{ marginBottom: "15px" }}>
-        {/* 검색창 */}
         <center style={{ marginTop: "20px" }}>
-          <TextField
-            disabled
-            id="outlined-basic"
-            variant="outlined"
-            size="small"
-            label={mypage.nickname}
-            style={{ verticalAlign: "middle" }}
-          />
-          {/* 회원정보출력 */}
-          <div
-            style={{
-              position: "relative",
-              width: "100%",
-            }}
-          >
-            <div style={{ marginTop: "70px" }}>
-              <center>
-                <img
-                  className="de_profile"
-                  src={`http://localhost:9000/acorn/image/profile/${mypage.profile}`}
-                  alt=""
-                />
-                <p style={{ fontWeight: "500", fontSize: "10pt" }}>
-                  {mypage.nickname}
-                </p>
-              </center>
+          <div className="mypageProfileBox">
+            {/* 닉네임 출력 */}
+            <span className="mypageTitle">
+              {mypage.nickname}
+            </span>
+            <br />
+            {/* 프로필 사진 */}
+            <div className="mypageCenterWrapper">
+              <div className="mypageCenter">
+                <div className="centered">
+                  <img
+                    src={`http://localhost:9000/acorn/image/profile/${mypage.profile}`}
+                    alt=""
+                  />
+                </div>
+              </div>
             </div>
+            {/* 팔로우 */}
+            <div className="mypageFollowbtn">Follow</div>
+            <div className="mypageUnfollowbtn">Unfollow</div>
           </div>
-          {/* 리스트 분류,정렬 */}
-          <div style={{ marginTop: "10px" }}>
-            <BottomNavigation
-              // value={value}
-              // onChange={(event, newValue) => {
-              //    setValue(newValue);
-              // }}
-              showLabels
-              style={{ width: "150px" }}
+        </center>
+
+        {/* 리스트 분류,정렬 */}
+        <center>
+          <div className="chefpageStepCate">
+            <div
+              className="category"
+              onClick={() => {
+                //내가쓴글
+                setSw(0);
+              }}
             >
-              <BottomNavigationAction
-                onClick={() => {
-                  setSw(0);
-                }}
-                label="내가쓴글"
-                icon={<Restore />}
-              />
-              <BottomNavigationAction
-                onClick={() => {
-                  setSw(1);
-                }}
-                label="스크랩"
-                icon={<Bookmark />}
-              />
-            </BottomNavigation>
+              {sw === 0 ? (
+                <ListAlt fontSize="small" style={{ color: "#002060" }} />
+              ) : (
+                  <ListAlt fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
+              <br />
+              <span className="cate_text">
+                {mypage.nickname}님의 레시피</span>
+              <br />
+            </div>
+            <div
+              className="category"
+              onClick={() => {
+                //스크랩
+                setSw(1);
+              }}
+            >
+              {sw === 1 ? (
+                <Bookmark fontSize="small" style={{ color: "#002060" }} />
+              ) : (
+                  <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
+              <br />
+              <span className="cate_text">스크랩</span>
+              <br />
+            </div>
           </div>
         </center>
       </div>
@@ -387,8 +384,8 @@ const R = ({
           </div>
         )}
         {list_count === 0 && (
-          <div style={{ marginTop: "130px", color: "navy", fontSize: "18px" }}>
-            <b>글이 없습니다</b>
+          <div style={{ marginTop: "130px", fontSize: "20px", fontWeight: "500" }}>
+            <span>글이 없습니다</span>
           </div>
         )}
       </center>
@@ -396,29 +393,10 @@ const R = ({
       {/* 위로 가기, 글쓰기 버튼 */}
       <Link
         onClick={() => {
-          window.scrollTo(0, 0);
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
         }}
       >
         <ExpandLess
-          style={{
-            position: "fixed",
-            left: "290px",
-            top: "610px",
-            width: "30px",
-            height: "30px",
-            border: "1px solid #575757",
-            backgroundColor: "#ffffff",
-            opacity: "0.8",
-            color: "#000000",
-          }}
-        />
-      </Link>
-      <Link
-        onClick={() => {
-          history.push("/write");
-        }}
-      >
-        <Create
           style={{
             position: "fixed",
             left: "330px",
@@ -429,17 +407,17 @@ const R = ({
             backgroundColor: "#ffffff",
             opacity: "0.8",
             color: "#000000",
-            fontSize: "10pt",
           }}
         />
       </Link>
+
       {/* 공유모달 */}
       <div>
         <Dialog open={modal_open} onClose={handleShare}>
           <DialogTitle id="form-dialog-title">
-            URL 복사하기
+            <span style={{ fontSize: "12pt" }}>URL 복사하기</span>
             <IconButton edge="end" onClick={handleShare} aria-label="close">
-              <Close />
+              <Close style={{ marginLeft: "130px", marginTop: "-10px" }} />
             </IconButton>
           </DialogTitle>
 
@@ -452,9 +430,11 @@ const R = ({
               size="small"
             />
             <CopyToClipboard text={url} onCopy={onCopy}>
-              <Button color="primary" variant="contained">
-                복사하기
-              </Button>
+              <center>
+                <Button style={{ margin: "20px 0" }} variant="outlined">
+                  복사
+                </Button>
+              </center>
             </CopyToClipboard>
           </DialogContent>
         </Dialog>

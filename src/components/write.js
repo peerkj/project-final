@@ -346,6 +346,7 @@ class write extends Component {
       <div>
         <div id="writebody">
           <div>
+            <br />
             {/* 대표 사진 */}
             <div style={{ width: "150px", float: "right", marginTop: "15px" }}>
               <label htmlFor="repre">
