@@ -330,11 +330,15 @@ const R = ({
               </div>
             </div>
             {/* 팔로우 */}
-            <div className="mypageFollowbtn">Follow</div>
+            <div className="mypageFollowbtn">
+              {checkn === 0 && (
+                <span onClick={onNews}>Follow</span>
+              )}
+            </div>
             <div className="mypageUnfollowbtn">Unfollow</div>
             <div>
               {checkn === 0 && (
-                <button onClick={onNews}>소식받기</button>
+                <button onClick={onNews}>Follow</button>
               )}
               {checkn === 1 && (
                 <button onClick={offNews}>소식받기취소</button>
@@ -398,7 +402,7 @@ const R = ({
           </div>
         )}
         {list_count === 0 && (
-          <div style={{ marginTop: "130px", fontSize: "20px", fontWeight: "500" }}>
+          <div style={{ marginTop: "70px", fontSize: "20px", fontWeight: "500" }}>
             <span>글이 없습니다</span>
           </div>
         )}
