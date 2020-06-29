@@ -16,10 +16,18 @@ export default class DragStore {
   @observable refir_style = "refclose";
   @observable binpot = false;
   @observable error = "";
+  @observable recipe_list = [];
+  //추천레시피 리스트
+  @observable open_recipe = false;
 
   constructor(root) {
     this.root = root;
   }
+
+  @action
+  openRecipe = () => {
+    this.open_recipe = !this.open_recipe;
+  };
 
   @action
   handleKeyPress = (e) => {
@@ -219,6 +227,8 @@ export default class DragStore {
       })
         .then((res) => {
           console.log(res.data);
+          this.openRecipe();
+          this.recipe_list = res.data;
         })
         .catch((err) => {
           console.log("요리하기오류:" + err);
@@ -242,7 +252,9 @@ export default class DragStore {
         data: recipe,
       })
         .then((res) => {
-          console.dir(res.data);
+          console.log(res.data);
+          this.openRecipe();
+          this.recipe_list = res.data;
         })
         .catch((err) => {
           console.log("레시피불러오기오류:" + err);

@@ -41,7 +41,6 @@ import {
   BookmarkBorder,
   ExpandLess,
   ChatBubbleOutline,
-  Refresh,
   KeyboardArrowLeft,
   KeyboardArrowRight,
 } from "@material-ui/icons";
