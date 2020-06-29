@@ -45,6 +45,7 @@ export default class CounterStore {
           history.push("/");
         } else {
           this.mypage = res.data;
+          this.checkNews();
         }
       })
       .catch((err) => {
@@ -252,7 +253,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -268,7 +269,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -293,7 +294,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -309,7 +310,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   //댓글 count
@@ -325,7 +326,7 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //소식받기체크
@@ -349,6 +350,7 @@ export default class CounterStore {
       });
   };
 
+  //소식받기
   @action
   onNews = () => {
     let url = "http://localhost:9000/acorn/connect/onnews";
@@ -369,5 +371,25 @@ export default class CounterStore {
           console.log("소식받기오류:" + err);
         });
     }
-  };
+  }
+
+  //소식받기취소
+  @action
+  offNews = () => {
+    let url = "http://localhost:9000/acorn/connect/offnews";
+
+    if (this.root.info.login_state) {
+      axios({
+        method: "get",
+        url: url,
+        params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
+      }).then((res) => {
+        this.checkNews();
+      }).catch((err) => {
+        console.log("소식받기취소오류:" + err);
+      })
+    }
+  }
+
+
 }

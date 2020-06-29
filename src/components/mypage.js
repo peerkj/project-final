@@ -84,6 +84,7 @@ const R = ({
   checkn,
   checkNews,
   onNews,
+  offNews,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -92,6 +93,7 @@ const R = ({
     let query = queryString.parse(location.search);
 
     setNickname(query.nick, history);
+
 
     updateList();
   }, []);
@@ -330,9 +332,15 @@ const R = ({
             {/* 팔로우 */}
             <div className="mypageFollowbtn">Follow</div>
             <div className="mypageUnfollowbtn">Unfollow</div>
-            <button onClick={checkn}>
-              {checkn === 0 || !login_state ? "소식받기" : "소식받기 취소"}
-            </button>
+            <div>
+              {checkn === 0 && (
+                <button onClick={onNews}>소식받기</button>
+              )}
+              {checkn === 1 && (
+                <button onClick={offNews}>소식받기취소</button>
+              )}
+
+            </div>
           </div>
         </center>
 
@@ -463,7 +471,7 @@ const R = ({
           <Comment />
         </DialogContent>
       </Dialog>
-    </div>
+    </div >
   );
 };
 
@@ -514,4 +522,5 @@ export default inject(({ mypage, detail, info }) => ({
   checkn: mypage.checkn,
   checkNews: mypage.checkNews,
   onNews: mypage.onNews,
+  offNews: mypage.offNews,
 }))(observer(R));
