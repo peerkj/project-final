@@ -16,10 +16,36 @@ export default class CounterStore {
   @observable food_cate = "";
   @observable sort = "";
 
+  //분류
+  @observable cate_list = [
+    ["All", "구이", "국/탕/찌개", "디저트"],
+    ["면", "무침", "밥/죽/떡", "볶음"],
+    ["양념/소스", "조림/찜", "튀김/부침", "기타"],
+  ];
+  @observable cate_index = 0;
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
   }
+
+  //분류
+  @action
+  cateR = () => {
+    if (this.cate_index >= 2) {
+      this.cate_index = 0;
+    } else {
+      this.cate_index++;
+    }
+  };
+  @action
+  cateL = () => {
+    if (this.cate_index === 0) {
+      this.cate_index = 2;
+    } else {
+      this.cate_index--;
+    }
+  };
 
   //검색
   @action
@@ -41,7 +67,8 @@ export default class CounterStore {
   @action
   setFood_cate = (food) => {
     this.food_cate = food;
-    this.reset();
+    if (food !== "All") this.reset();
+    else this.resetRecipe();
   };
 
   @action
@@ -97,13 +124,13 @@ export default class CounterStore {
   //카운트 증가
   @action
   addState = () => {
-    this.state.itemCount += 3;
+    this.state.itemCount += 5;
     this.state.isLoading = false;
   };
 
   @action
   setList = () => {
-    let size = this.list.length - 3;
+    let size = this.list.length - 5;
     if (size < 0) size = 0;
     for (let i = size; i < this.list.length; i++) {
       this.anchorEl[i] = null;
@@ -187,6 +214,7 @@ export default class CounterStore {
         }
         this.setList();
         this.list_count = res.data.count;
+        console.log(this.list_count);
       })
       .catch((err) => {
         console.log("업로드오류:" + err);

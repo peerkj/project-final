@@ -42,6 +42,8 @@ import {
   ExpandLess,
   ChatBubbleOutline,
   Refresh,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
 } from "@material-ui/icons";
 import "../css/styles.css";
 
@@ -85,6 +87,11 @@ const R = ({
   setFood_cate,
   setSort,
   login_state,
+
+  cate_list,
+  cate_index,
+  cateR,
+  cateL,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -123,6 +130,20 @@ const R = ({
     },
   }));
 
+  //
+  const FoodList = cate_list[cate_index].map((f, i) => {
+    return (
+      <div>
+        <b
+          onClick={() => {
+            setFood_cate(f);
+          }}
+        >
+          {f}
+        </b>
+      </div>
+    );
+  });
   //리스트 박스
   const ListItem = list.map((l, idx) => {
     return (
@@ -337,30 +358,6 @@ const R = ({
             onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
-          &nbsp;
-          <Refresh onClick={resetRecipe} style={{ verticalAlign: "middle" }} />
-          <br />
-          <button
-            onClick={() => {
-              setFood_cate("디저트");
-            }}
-          >
-            디저트
-          </button>
-          <button
-            onClick={() => {
-              setFood_cate("국/탕/찌개");
-            }}
-          >
-            국/탕/찌개
-          </button>
-          <button
-            onClick={() => {
-              setFood_cate("튀김/부침");
-            }}
-          >
-            튀김/부침
-          </button>
           {/* 리스트 분류,정렬 */}
           <div style={{ marginTop: "10px" }}>
             <BottomNavigation
@@ -396,6 +393,12 @@ const R = ({
           </div>
         </center>
       </div>
+
+      <center>
+        <KeyboardArrowLeft onClick={cateL} />
+        {FoodList}
+        <KeyboardArrowRight onClick={cateR} />
+      </center>
 
       {/* 리스트*/}
       {ListItem}
@@ -571,4 +574,9 @@ export default inject(({ recipe, detail, info }) => ({
   setFood_cate: recipe.setFood_cate,
   setSort: recipe.setSort,
   login_state: info.login_state,
+
+  cate_list: recipe.cate_list,
+  cate_index: recipe.cate_index,
+  cateR: recipe.cateR,
+  cateL: recipe.cateL,
 }))(observer(R));

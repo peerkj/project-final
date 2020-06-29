@@ -82,6 +82,10 @@ const R = ({
   setNickname,
   mypage,
   login_state,
+  checkn,
+  checkNews,
+  onNews,
+  offNews,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -90,6 +94,7 @@ const R = ({
     let query = queryString.parse(location.search);
 
     setNickname(query.nick, history);
+
 
     updateList();
   }, []);
@@ -135,7 +140,7 @@ const R = ({
                 width="40px"
                 src={`http://localhost:9000/acorn/image/profile/${
                   sw === 0 ? mypage.profile : l.profile
-                }`}
+                  }`}
                 alt=""
               />
             </Avatar>
@@ -234,14 +239,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Favorite
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Joayo(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Favorite
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "600",
@@ -260,14 +265,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Bookmark
-                color="secondary"
-                fontSize="small"
-                onClick={() => {
-                  Scrap(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Bookmark
+                  color="secondary"
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "600",
@@ -341,6 +346,18 @@ const R = ({
                 <p style={{ fontWeight: "500", fontSize: "10pt" }}>
                   {mypage.nickname}
                 </p>
+                <div>
+                  {checkn === 0 && mypage.email !== userEmail && (
+                    <button onClick={onNews}>소식받기</button>
+                  )}
+                  {checkn === 1 && mypage.email !== userEmail && (
+                    <button onClick={offNews}>소식받기취소</button>
+                  )}
+
+                </div>
+                {/* <button onClick={checkNews}>
+                  {checkn === 0 || !login_state ? "소식받기" : "소식받기 취소"}
+                </button> */}
               </center>
             </div>
           </div>
@@ -477,7 +494,7 @@ const R = ({
           <Comment />
         </DialogContent>
       </Dialog>
-    </div>
+    </div >
   );
 };
 
@@ -524,4 +541,9 @@ export default inject(({ mypage, detail, info }) => ({
   setNickname: mypage.setNickname,
   mypage: mypage.mypage,
   login_state: info.login_state,
+
+  checkn: mypage.checkn,
+  checkNews: mypage.checkNews,
+  onNews: mypage.onNews,
+  offNews: mypage.offNews,
 }))(observer(R));

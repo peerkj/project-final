@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 import "../css/write.css";
+import { Link } from "react-router-dom";
 import {
   TextField,
   makeStyles,
@@ -9,7 +10,7 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import { Cancel, AddCircle, Close } from "@material-ui/icons";
+import { Cancel, AddCircle, Close, ExpandLess, ExpandMore } from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import { inject, observer } from "mobx-react";
 
@@ -259,8 +260,8 @@ class write extends Component {
               {i.imgBase64 ? (
                 <img className="cookImg" src={i.imgBase64} alt="" />
               ) : (
-                <img className="cookImg" src="img/add_icon2.png" alt="" />
-              )}
+                  <img className="cookImg" src="img/add_icon2.png" alt="" />
+                )}
             </label>
             {i.imgBase64 ? (
               <Close
@@ -271,8 +272,8 @@ class write extends Component {
                 style={{ position: "relative", left: "-21px", top: "-75px" }}
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
             <Cancel
               onClick={() => {
                 handelDelete_step(idx);
@@ -315,8 +316,8 @@ class write extends Component {
                 {i.imgBase64 ? (
                   <img className="finishImg" src={i.imgBase64} alt="" />
                 ) : (
-                  <img className="finishImg" src="img/add_icon2.png" alt="" />
-                )}
+                    <img className="finishImg" src="img/add_icon2.png" alt="" />
+                  )}
               </label>
             </div>
             <input
@@ -355,12 +356,12 @@ class write extends Component {
                     alt=""
                   />
                 ) : (
-                  <img
-                    className="writeThumbnail"
-                    src="img/add_icon3.png"
-                    alt=""
-                  />
-                )}
+                    <img
+                      className="writeThumbnail"
+                      src="img/add_icon3.png"
+                      alt=""
+                    />
+                  )}
               </label>
               {represent.imgBase64 ? (
                 <Close
@@ -370,8 +371,8 @@ class write extends Component {
                   id="thumbnail_delete"
                 />
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </div>
             <input
               onChange={handleChangeRe}
@@ -597,6 +598,46 @@ class write extends Component {
           <br />
           <br />
         </div>
+
+        {/* 위로가기 */}
+        <Link
+          onClick={() => {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+          }}
+        >
+          <ExpandLess
+            style={{
+              position: "fixed",
+              left: "330px",
+              top: "570px",
+              width: "30px",
+              height: "30px",
+              border: "1px solid #575757",
+              backgroundColor: "#ffffff",
+              opacity: "0.8",
+              color: "#000000",
+            }}
+          />
+        </Link>
+        <Link
+          onClick={() => {
+            window.scrollTo({ top: 5000, left: 0, behavior: 'smooth' });
+          }}
+        >
+          <ExpandMore
+            style={{
+              position: "fixed",
+              left: "330px",
+              top: "605px",
+              width: "30px",
+              height: "30px",
+              border: "1px solid #575757",
+              backgroundColor: "#ffffff",
+              opacity: "0.8",
+              color: "#000000",
+            }}
+          />
+        </Link>
       </div>
     );
   }

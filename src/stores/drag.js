@@ -203,7 +203,7 @@ export default class DragStore {
   };
 
   @action
-  handleRecipe = () => {
+  handleCook = () => {
     let url = "http://localhost:9000/acorn/refri/search";
     let food = new FormData();
     if (this.e_store.length === 0) {
