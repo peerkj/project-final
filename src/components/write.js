@@ -408,7 +408,6 @@ class write extends Component {
             <br />
             <div className="all_title">카테고리</div>
             <FormControl className={useStyles.formControl}>
-              <InputLabel id="demo-simple-select-label"></InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
