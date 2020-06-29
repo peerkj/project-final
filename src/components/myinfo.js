@@ -69,27 +69,29 @@ class myinfo extends Component {
     return (
       <div>
         <center>
-          <div className="profileCenterWrapper">
-            <div className="profileCenter">
-              <div className="centered">
-                {imgBase64 ? (
-                  <img
-                    src={imgBase64}
-                    alt=""
-                    className="profileCenterImg"
-                  />
-                ) : (
-                    <img src="img/basic_user.png" alt="" />
-                  )}
+          <br />
+          <div className="myinfoEmailbox">
+            <div className="profileCenterWrapper">
+              <div className="profileCenter">
+                <div className="centered">
+                  {imgBase64 ? (
+                    <img
+                      src={imgBase64}
+                      alt=""
+                      className="profileCenterImg"
+                    />
+                  ) : (
+                      <img src="img/basic_user.png" alt="" />
+                    )}
+                </div>
               </div>
             </div>
+            <br />
+            <span className="myinfoEmail">{email}</span>
           </div>
-
-          <span style={{ fontSize: "12pt", fontWeight: "300" }}>{email}</span>
         </center>
-        <hr style={{ marginTop: "55px" }} />
-        <div style={{ marginTop: "25px" }}>
-          <ul style={{ marginLeft: "90px", padding: "10px" }}>
+        <div>
+          <ul style={{ marginLeft: "90px", padding: "5px 10px" }}>
             <li style={{ padding: "10px" }}>
               <Create style={{ verticalAlign: "middle" }} />
               <Button

@@ -238,8 +238,7 @@ const Home = ({
   return (
     <div width="375px">
       <center>
-        <FormControl className={classes.margin} style={{ marginTop: "230px" }}>
-          {/* <InputLabel htmlFor="input-with-icon-adornment">재료 검색 시 예)#삼겹살</InputLabel> */}
+        <FormControl className={classes.margin} style={{ marginTop: "70px" }}>
           <Input
             onKeyDown={(e) => {
               handleEnter_home(e, history);
@@ -252,40 +251,33 @@ const Home = ({
                 <Search />
               </InputAdornment>
             }
+            placeholder="#재료"
           />
         </FormControl>
+        <br />
+        <img
+          src="/img/refrigerator.png"
+          style={{
+            width: "180px",
+            marginTop: "70px"
+          }}
+          onClick={() => {
+            if (login_state) handleClickOpen();
+            else {
+              alert("로그인 후 이용하세요");
+              history.push("/login");
+            }
+          }}
+          alt=""
+        />
+        <br />
+        <span className="homeText">나만의 냉장고</span>
       </center>
-      <span
-        style={{
-          fontSize: "12pt",
-          fontWeight: "300",
-          position: "absolute",
-          top: "600px",
-          left: "170px",
-        }}
-      >
-        나만의 냉장고
-      </span>
-      <img
-        src="/img/refrigerator.png"
-        style={{
-          float: "right",
-          width: "100px",
-        }}
-        onClick={() => {
-          if (login_state) handleClickOpen();
-          else {
-            alert("로그인 후 이용하세요");
-            history.push("/login");
-          }
-        }}
-        alt=""
-      />
       <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}

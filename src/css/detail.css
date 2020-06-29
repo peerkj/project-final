@@ -138,7 +138,7 @@
 
 .detailMainIngre .sub{
     float: right;
-    margin-right: 160px;
+    margin-right: 140px;
 }
 
 .detailSubIngre{
@@ -147,7 +147,7 @@
 
 .detailSubIngre .sub{
     float: right;
-    margin-right: 160px;
+    margin-right: 140px;
 }
 
 .detailMainTitle{
@@ -244,3 +244,26 @@
     color: #000000;
     margin-left: 2px;
   }
+
+  .recipeStepCate{
+    width: 150px;
+    border: 1px solid #ececec;
+    border-radius: 5px;
+    padding: 5px 0 ;
+    float: right;
+  }
+
+  .recipeStepCate::after{
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  .recipeStepCate .category{
+    width: 50px;
+    display: inline-block;    
+}
+
+.cate_text{
+    font-size: 8pt;
+}
