@@ -17,8 +17,6 @@ import {
   Avatar,
   IconButton,
   Typography,
-  BottomNavigation,
-  BottomNavigationAction,
   Menu,
   MenuItem,
   Dialog,
@@ -92,6 +90,8 @@ const R = ({
   cate_index,
   cateR,
   cateL,
+
+  updateform,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -183,13 +183,15 @@ const R = ({
               >
                 <MenuItem
                   onClick={() => {
-                    handleShare(l.rec_num);
+                    handleShare(l.rec_num, history);
                   }}
                 >
                   공유
                 </MenuItem>
                 {l.email === userEmail && (
-                  <MenuItem onClick={dothandleClose}>수정</MenuItem>
+                  <MenuItem onClick={() => {
+                    updateform(l.rec_num);
+                  }}>수정</MenuItem>
                 )}
                 {l.email === userEmail && (
                   <MenuItem
@@ -203,7 +205,7 @@ const R = ({
               </Menu>
             </IconButton>
           }
-          title={<Link to={`/mypage?nick=${l.nickname}`}>{l.nickname}</Link>}
+          title={<Link to={`/mypage?nick=${l.nickname}`} style={{ color: "#000000" }}>{l.nickname}</Link>}
           subheader={l.timeDiffer}
         />
         <Link
@@ -604,5 +606,6 @@ export default inject(({ recipe, detail, info }) => ({
   cate_index: recipe.cate_index,
   cateR: recipe.cateR,
   cateL: recipe.cateL,
-  sort: recipe.sort
+  sort: recipe.sort,
+  updateform: recipe.updateform,
 }))(observer(R));

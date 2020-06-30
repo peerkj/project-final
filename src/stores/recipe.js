@@ -87,6 +87,20 @@ export default class CounterStore {
   };
 
   @action
+  updateform = (rec_num, history) => {
+    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + rec_num;
+
+    axios({
+      method: "get",
+      url: url,
+    }).then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
+      console.log("수정폼오류:" + err);
+    })
+  }
+
+  @action
   reset = () => {
     this.state = { itemCount: 0, isLoading: false };
     this.list = [];

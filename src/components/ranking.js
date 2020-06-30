@@ -11,6 +11,9 @@ import { People, Favorite, Bookmark, Restaurant, DoubleArrow } from '@material-u
 	checkNews: stores.ranking.checkNews,
 	onNews: stores.ranking.onNews,
 	offNews: stores.ranking.offNews,
+	// login_state: stores.info.login_state,
+	// userEmail : stores.info.userEmail,
+	updateCheck: stores.ranking.updateCheck,
 
 }))
 @observer
@@ -25,6 +28,7 @@ class Counter extends Component {
 			checkNews,
 			onNews,
 			offNews,
+			userEmail,
 		} = this.props;
 
 		const ChefList = chef.map((c, idx) => {
@@ -54,16 +58,28 @@ class Counter extends Component {
 						<div style={{ display: "inline-block", top: "-10px", position: "relative" }}>
 							<span style={{ color: "#002060", fontWeight: "600", fontSize: "14pt" }}>{c.nickname}</span>
 							{/* 소식받기버튼 */}
-							{/* {check_n[idx] === 0 && (
-							<span onClick={() => {
-								onNews(c.email, idx);
-							}}>Follow</span>
-						)}
-						{check_n[idx] === 1 && (
-							<span onClick={() => {
-								offNews(c.email, idx);
-							}}>Unfollow</span>
-						)} */}
+
+							{check_n[idx] === 0 && c.email !== userEmail ? (
+								<button
+									onClick={() => {
+										onNews(c.email, idx);
+									}}
+								>
+									소식받기
+								</button>
+							) : check_n[idx] === 1 && c.email !== userEmail ? (
+								<button
+									onClick={() => {
+										offNews(c.email, idx);
+									}}
+								>
+									소식끊기
+								</button>
+							) : (
+										""
+									)}
+
+							<span style={{}}>{c.score}</span>
 						</div>
 
 						{/* 아이콘 */}

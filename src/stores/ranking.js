@@ -28,12 +28,16 @@ export default class RankingStore {
         })
     };
 
+    @action
+    updateCheck = (email, i) => {
+        this.checkNews(email, i);
+    }
+
     //소식받기체크
     @action
     checkNews = (email, i) => {
         let url = "http://localhost:9000/acorn/connect/newscheck";
 
-        console.log(email, this.root.info.userEmail);
         axios({
             method: "get",
             url: url,
@@ -57,7 +61,7 @@ export default class RankingStore {
                 url: url,
                 params: { provider: email, receiver: this.root.info.userEmail },
             }).then((res) => {
-                this.checkNews(email, i);
+                this.updateCheck(email, i);
             }).catch((err) => {
                 console.log("소식받기오류:" + err);
             })
@@ -75,7 +79,7 @@ export default class RankingStore {
                 url: url,
                 params: { provider: email, receiver: this.root.info.userEmail },
             }).then((res) => {
-                this.checkNews(email, i);
+                this.updateCheck(email, i);
             }).catch((err) => {
                 console.log("소식받기취소오류:" + err);
             })
