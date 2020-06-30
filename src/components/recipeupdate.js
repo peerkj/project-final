@@ -39,7 +39,6 @@ const fakeFetch = (delay = 1500) =>
 
   //대표사진
   handleChangeRe: stores.recipeupdate.handleChangeRe,
-  handleRemoveRe: stores.recipeupdate.handleRemoveRe,
 
   //주,부 재료 추가
   handelAddMain: stores.recipeupdate.handelAddMain,
@@ -72,7 +71,7 @@ const fakeFetch = (delay = 1500) =>
   handleChangeDone: stores.recipeupdate.handleChangeDone,
 
   //
-  insertRecipe: stores.write.insertRecipe,
+  insertRecipe: stores.recipeupdate.insertRecipe,
 
   login_state: stores.info.login_state,
 }))
@@ -125,7 +124,7 @@ class write extends Component {
       onChangeStep,
 
       handleChangeRe,
-      handleRemoveRe,
+
       //
       insertRecipe,
     } = this.props;
@@ -263,7 +262,7 @@ class write extends Component {
                 onChangeStep(e, idx);
               }}
             />
-            <label htmlFor={idx}>
+            <label htmlFor={`${idx}_step`}>
               {i.photo ? (
                 <img className="cookImg" src={i.photo} alt="" />
               ) : (
@@ -295,7 +294,7 @@ class write extends Component {
               }}
               style={{ display: "none" }}
               accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
-              id={idx}
+              id={`${idx}_step`}
               type="file"
             />
           </DropTarget>
@@ -378,16 +377,6 @@ class write extends Component {
                   />
                 )}
               </label>
-              {recipe.repre_photo ? (
-                <Close
-                  onClick={() => {
-                    handleRemoveRe();
-                  }}
-                  id="thumbnail_delete"
-                />
-              ) : (
-                ""
-              )}
             </div>
             <input
               onChange={handleChangeRe}
