@@ -68,9 +68,8 @@
   }
 .rankingTitle{
 	font-family: 'InkLipquid';
-	font-size: 20pt;
+	font-size: 24pt;
 	font-style: italic;
-	margin: 10px 0;
 	vertical-align: middle;
 }
 
@@ -83,6 +82,7 @@
 	margin-left: 5px;
 	padding: 3px 13px;
 	border-radius: 7px;
+	vertical-align: middle;
 }
 
 #rankingUnfollowbtn{
@@ -94,12 +94,14 @@
 	margin-left: 5px;
 	padding: 3px 7px;
 	border-radius: 7px;
+	vertical-align: middle;
 }
 
 #rankingScore{
 	font-size: 10pt;
 	font-weight: 400;
-	margin-left: 65px;
+	margin-left: 93px;
 	top:15px;
 	position: relative;
+	font-style: italic;
 }

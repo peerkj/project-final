@@ -66,13 +66,9 @@ class findid extends Component {
 
     return (
       <div>
-        <div id="divjoin"
-          style={{
-            width: "290px",
-            margin: "0 auto",
-          }}>
-          <div style={{ marginTop: "120px" }}>
-            <center>
+        <div>
+          <center>
+            <div style={{ marginTop: "120px" }}>
               <Email style={{ verticalAlign: "middle" }} />
               <span style={{
                 fontSize: "medium",
@@ -80,58 +76,56 @@ class findid extends Component {
                 verticalAlign: "middle",
               }}>
                 이메일 찾기</span>
-            </center>
-          </div>
-          <div style={{ marginTop: "50px", marginLeft: "50px" }}>
-            <span>이름</span>
-            < br />
-            <TextField
-              id="standard-basic"
-              value={name}
-              onChange={handleNameChange}
-              error={!(name === "") ^ available_name}
-              helperText={
-                available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
-              }
-              style={{ width: "200px" }}
-            />
-            <br /><br />
-            <span>전화번호</span>
+            </div>
+            <div style={{ marginTop: "50px" }}>
+              <span style={{ marginLeft: "-175px" }}>이름</span>
+              <br />
+              <TextField
+                id="standard-basic"
+                value={name}
+                onChange={handleNameChange}
+                error={!(name === "") ^ available_name}
+                helperText={
+                  available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
+                }
+                style={{ width: "200px" }}
+              />
+              <br /><br /><br />
+              <span style={{ marginLeft: "-155px" }}>전화번호</span>
+              <br />
+              <TextField
+                id="standard-basic"
+                value={hp}
+                onChange={handleHpChange}
+                error={!(hp === "010") ^ available_hp}
+                helperText={!available_hp && "하이픈(-) 없이 입력"}
+                style={{ width: "200px" }}
+              />
+              <br />
+              <br />
+            </div>
+            <span
+              style={{
+                fontWeight: "400",
+                color: "red",
+                fontSize: "medium",
+              }}
+            >
+              {error === "" ? "" : error}
+            </span>
             <br />
-            <TextField
-              id="standard-basic"
-              value={hp}
-              onChange={handleHpChange}
-              error={!(hp === "010") ^ available_hp}
-              helperText={!available_hp && "하이픈(-) 없이 입력"}
-              style={{ width: "200px" }}
-            />
-            <br />
-            <br />
-
-            <center>
-              <span
-                style={{
-                  fontWeight: "400",
-                  color: "red",
-                  fontSize: "medium",
-                }}
-              >
-                {error === "" ? <br /> : error}
-              </span>
-            </center>
             <br />
             <Button
               onClick={handleSubmit}
               variant="contained"
-              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "45px" }}
+              style={{ backgroundColor: "#002060", color: "#ffffff" }}
               component="span"
             >
               이메일 찾기
           </Button>
-            <br />
-            <br />
-          </div>
+          </center>
+          <br />
+          <br />
           <div>
             <Dialog
               open={modal_open}

@@ -33,14 +33,18 @@ class header extends Component {
     return (
       <div>
         <div id="headgroup">
-          <a href="/">
-            <img
-              style={{ marginLeft: "107.5px", width: "140px" }}
-              src="/img/logo1.png"
-              alt=""
-            />
-          </a>
-          <Hamburger toggled={hamto} toggle={change_ham} />
+          <center>
+            <a href="/">
+              <img
+                style={{ width: "140px", marginLeft: "55px" }}
+                src="/img/logo1.png"
+                alt=""
+              />
+            </a>
+            <div style={{ float: "right" }}>
+              <Hamburger toggled={hamto} toggle={change_ham} />
+            </div>
+          </center>
         </div>
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
           <center>

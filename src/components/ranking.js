@@ -44,9 +44,8 @@ class Counter extends Component {
 						<span style={{
 							padding: "5px 10px",
 							verticalAlign: "middle",
-							color: "#002060",
 							fontWeight: "600",
-							fontSize: "13pt"
+							fontSize: "16pt"
 						}}>{idx + 1}</span>
 						{/* 프로필사진 */}
 						<div className="rankingCenterWrapper">
@@ -61,7 +60,14 @@ class Counter extends Component {
 					<div style={{ display: "inline" }}>
 						{/* 닉네임 */}
 						<div style={{ display: "inline-block", top: "-10px", position: "relative" }}>
-							<span style={{ color: "#002060", fontWeight: "600", fontSize: "14pt" }}>{c.nickname}</span>
+							<span
+								style={{
+									fontWeight: "600",
+									fontSize: "14pt",
+									verticalAlign: "middle"
+								}}>
+								{c.nickname}
+							</span>
 							{/* 소식받기버튼 */}
 
 							{check_n[idx] === 0 && c.email !== userEmail ? (
@@ -86,11 +92,11 @@ class Counter extends Component {
 										""
 									)}
 
-							<span id="rankingScore">Score:{c.score}</span>
+							<span id="rankingScore">{c.score}</span>
 						</div>
 
 						{/* 아이콘 */}
-						<div style={{ position: "relative", top: "-25px", left: "100px" }}>
+						<div style={{ position: "relative", top: "-25px", left: "103px", width: "200px" }}>
 							<span className="rankIcon">
 								<Restaurant fontSize="small" className="rankIconImg" />
 								<span className="rankIconText">{c.recipecount}</span>
@@ -114,8 +120,24 @@ class Counter extends Component {
 		})
 		return (
 			<div>
-				<DoubleArrow style={{ verticalAlign: "middle", margin: "10px 0 10px 20px" }} />
-				<span className="rankingTitle">Chef Ranking</span>
+				<div style={{ margin: "30px 0 0 20px" }}>
+					<DoubleArrow style={{ verticalAlign: "middle" }} fontSize="large" />
+					<span className="rankingTitle">Chef Ranking</span>
+				</div>
+				<div style={{
+					marginTop: "25px",
+					fontWeight: "600",
+					fontSize: "11pt",
+					borderBottom: "1px solid #cfcfcf",
+					width: "360px",
+					padding: "0 0 10px 0"
+				}}>
+					<span style={{ marginLeft: "12px" }}>순위</span>
+					<div style={{ float: "right", marginRight: "5px" }}>
+						<img src="/img/star.png" alt="" width="25px" style={{ verticalAlign: "middle" }} />
+						<span style={{ verticalAlign: "middle" }}>셰프 점수</span>
+					</div>
+				</div>
 				<div style={{ marginTop: "20px" }}>{ChefList}</div>
 			</div>
 		);
