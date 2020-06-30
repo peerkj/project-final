@@ -81,7 +81,7 @@ class myinfo extends Component {
                       className="profileCenterImg"
                     />
                   ) : (
-                      <img src="img/basic_user.png" alt="" />
+                      <img src="img/basic_user.png" alt="" className="profileCenterImg" />
                     )}
                 </div>
               </div>

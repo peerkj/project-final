@@ -54,48 +54,37 @@ class header extends Component {
                       className="menuProfileCenterImg"
                     />
                   ) : (
-                    <img
-                      src="/img/basic_user.png"
-                      className="menuProfileCenterImg"
-                      alt=""
-                    />
-                  )}
+                      <img src="/img/basic_user2.png" alt="" className="menuProfileCenterImg" />
+                    )}
                 </div>
               </div>
             </div>
             {menu_nick ? (
-              <span
-                style={{
-                  fontWeight: "400",
-                  fontSize: "15pt",
-                  color: "#ffffff",
-                }}
-              >
+              <span style={{ fontWeight: "400", fontSize: "15pt", color: "#ffffff" }}>
                 {menu_nick} 님
               </span>
             ) : (
-              <span></span>
-            )}
+                <span></span>
+              )}
             <br />
             {login_state ? (
               <Link to="/myinfo">
-                <span className="menuTextColor">MYINFO</span>
-              </Link>
+                <span className="menuTextColor">MYINFO</span></Link>
             ) : (
-              <Link to="/login">
-                <span className="menuTextColor">LOGIN</span>
-              </Link>
-            )}
+                <Link to="/login">
+                  <span className="menuTextColor">LOGIN</span>
+                </Link>
+              )}
             &ensp;
             {login_state ? (
               <span onClick={handleLogout} className="menuTextColor">
                 LOGOUT
               </span>
             ) : (
-              <Link to="/join">
-                <span className="menuTextColor">JOIN</span>
-              </Link>
-            )}
+                <Link to="/join">
+                  <span className="menuTextColor">JOIN</span>
+                </Link>
+              )}
           </center>
           <br />
           <br />

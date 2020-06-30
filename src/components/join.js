@@ -103,34 +103,31 @@ class join extends Component {
       <div>
         <div id="joinbody">
           <center>
-            <div
-              style={{
-                width: "150px",
-                height: "150px",
-              }}
-            >
-              <center>
-                <label htmlFor="contained-button-file">
-                  {imgBase64 ? (
-                    <img className="profileImg" src={imgBase64} alt="" />
-                  ) : (
-                      <img
-                        className="profileImg"
-                        src="img/basic_user.png"
-                        alt=""
-                      />
-                    )}
-                </label>
-              </center>
-
-              {imgBase64 ? (
-                <Close onClick={handleRemove} id="profileImg_delete" />
-              ) : (
+            <div className="chefupdateCenterWrapper">
+              <div className="chefupdateCenter">
+                <div className="centered">
                   <label htmlFor="contained-button-file">
-                    <Add id="profileImg_add" />
+                    {imgBase64 ? (
+                      <img className="profileImg" src={imgBase64} alt="" />
+                    ) : (
+                        <img
+                          className="profileImg"
+                          src="/img/basic_user.png"
+                          alt=""
+                        />
+                      )}
                   </label>
-                )}
+                </div>
+              </div>
             </div>
+
+            {imgBase64 ? (
+              <Close onClick={handleRemove} id="profileImg_delete" />
+            ) : (
+                <label htmlFor="contained-button-file">
+                  <Add id="profileImg_add" />
+                </label>
+              )}
             <input
               style={{ display: "none" }}
               accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
