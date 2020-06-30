@@ -60,7 +60,7 @@ export default class DragStore {
     setTimeout(() => {
       this.refir_style = "refopen";
       this.handle_style = "open";
-    }, 0);
+    }, 2000);
   };
   //모달 close
   @action
