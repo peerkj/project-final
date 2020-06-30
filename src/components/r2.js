@@ -41,7 +41,6 @@ import {
   BookmarkBorder,
   ExpandLess,
   ChatBubbleOutline,
-  Refresh,
   KeyboardArrowLeft,
   KeyboardArrowRight,
 } from "@material-ui/icons";
@@ -86,12 +85,15 @@ const R = ({
   resetRecipe,
   setFood_cate,
   setSort,
+  sort,
   login_state,
 
   cate_list,
   cate_index,
   cateR,
   cateL,
+
+  updateform,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -130,20 +132,21 @@ const R = ({
     },
   }));
 
-  //
+  //카테고리 검색
   const FoodList = cate_list[cate_index].map((f, i) => {
     return (
-      <div>
-        <b
-          onClick={() => {
-            setFood_cate(f);
-          }}
-        >
-          {f}
-        </b>
-      </div>
+      <img
+        src={`/img/foodcate/food_${cate_index}_${i}.png`}
+        width="70px"
+        alt=""
+        style={{ verticalAlign: "middle" }}
+        onClick={() => {
+          setFood_cate(f);
+        }}
+      />
     );
   });
+
   //리스트 박스
   const ListItem = list.map((l, idx) => {
     return (
@@ -185,13 +188,19 @@ const R = ({
               >
                 <MenuItem
                   onClick={() => {
-                    handleShare(l.rec_num);
+                    handleShare(l.rec_num, history);
                   }}
                 >
                   공유
                 </MenuItem>
                 {l.email === userEmail && (
-                  <MenuItem onClick={dothandleClose}>수정</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      updateform(l.rec_num, history);
+                    }}
+                  >
+                    수정
+                  </MenuItem>
                 )}
                 {l.email === userEmail && (
                   <MenuItem
@@ -358,47 +367,81 @@ const R = ({
             onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
+          <center style={{ marginTop: "30px" }}>
+            <KeyboardArrowLeft
+              onClick={cateL}
+              fontSize="large"
+              style={{ verticalAlign: "middle" }}
+            />
+            {FoodList}
+            <KeyboardArrowRight
+              onClick={cateR}
+              fontSize="large"
+              style={{ verticalAlign: "middle" }}
+            />
+          </center>
+          <br />
           {/* 리스트 분류,정렬 */}
-          <div style={{ marginTop: "10px" }}>
-            <BottomNavigation
-              // value={value}
-              // onChange={(event, newValue) => {
-              //    setValue(newValue);
-              // }}
-              showLabels
-              style={{ width: "150px" }}
+          <div className="recipeStepCate">
+            <div
+              className="category"
+              onClick={() => {
+                //최신순
+                setSort("");
+              }}
             >
-              <BottomNavigationAction
-                onClick={() => {
-                  setSort("");
-                }}
-                label="최신순"
-                icon={<Restore />}
-              />
-              <BottomNavigationAction
-                onClick={() => {
-                  setSort("scrap");
-                }}
-                label="스크랩순"
-                icon={<Bookmark />}
-              />
-              <BottomNavigationAction
-                onClick={() => {
-                  setSort("readcount");
-                }}
-                label="조회순"
-                icon={<Pageview />}
-              />
-            </BottomNavigation>
+              {sort === "" ? (
+                <Restore fontSize="small" style={{ color: "#002060" }} />
+              ) : (
+                <Restore fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
+              <br />
+              <span className="cate_text" style={{ color: "#000000" }}>
+                최신순
+              </span>
+              <br />
+            </div>
+            <div
+              className="category"
+              onClick={() => {
+                //스크랩순
+                setSort("scrap");
+              }}
+            >
+              {sort === "scrap" ? (
+                <Bookmark fontSize="small" style={{ color: "#002060" }} />
+              ) : (
+                <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
+              <br />
+              <span className="cate_text" style={{ color: "#000000" }}>
+                스크랩순
+              </span>
+              <br />
+            </div>
+            <div
+              className="category"
+              onClick={() => {
+                //조회순
+                setSort("readcount");
+              }}
+            >
+              {sort === "readcount" ? (
+                <Pageview fontSize="small" style={{ color: "#002060" }} />
+              ) : (
+                <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
+              <br />
+              <span className="cate_text" style={{ color: "#000000" }}>
+                조회순
+              </span>
+              <br />
+            </div>
           </div>
         </center>
       </div>
-
-      <center>
-        <KeyboardArrowLeft onClick={cateL} />
-        {FoodList}
-        <KeyboardArrowRight onClick={cateR} />
-      </center>
+      <br />
+      <br />
 
       {/* 리스트*/}
       {ListItem}
@@ -416,32 +459,20 @@ const R = ({
           </div>
         )}
         {list_count === 0 && (
-          <div style={{ marginTop: "130px", color: "navy", fontSize: "18px" }}>
-            <b>검색 결과가 없습니다</b>
+          <div
+            style={{
+              marginTop: "130px",
+              fontSize: "20px",
+              fontWeight: "500",
+              width: "175px",
+            }}
+          >
+            <span>검색 결과가 없습니다</span>
           </div>
         )}
       </center>
 
       {/* 위로 가기, 글쓰기 버튼 */}
-      <Link
-        onClick={() => {
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        }}
-      >
-        <ExpandLess
-          style={{
-            position: "fixed",
-            left: "290px",
-            top: "610px",
-            width: "30px",
-            height: "30px",
-            border: "1px solid #575757",
-            backgroundColor: "#ffffff",
-            opacity: "0.8",
-            color: "#000000",
-          }}
-        />
-      </Link>
       <Link
         onClick={() => {
           history.push("/write");
@@ -450,7 +481,7 @@ const R = ({
         <Create
           style={{
             position: "fixed",
-            left: "330px",
+            left: "290px",
             top: "610px",
             width: "30px",
             height: "30px",
@@ -462,6 +493,26 @@ const R = ({
           }}
         />
       </Link>
+      <Link
+        onClick={() => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }}
+      >
+        <ExpandLess
+          style={{
+            position: "fixed",
+            left: "330px",
+            top: "610px",
+            width: "30px",
+            height: "30px",
+            border: "1px solid #575757",
+            backgroundColor: "#ffffff",
+            opacity: "0.8",
+            color: "#000000",
+          }}
+        />
+      </Link>
+
       {/* 공유모달 */}
       <div>
         <Dialog open={modal_open} onClose={handleShare}>
@@ -491,6 +542,7 @@ const R = ({
         </Dialog>
       </div>
       {/* 공유모달 */}
+
       {/* 댓글모달 */}
       <Dialog open={comment_open} onClose={handleComment}>
         <IconButton
@@ -516,16 +568,16 @@ const R = ({
         >
           <DialogContent>삭제하시겠습니까?</DialogContent>
           <DialogActions>
+            <Button onClick={deleteOpen} color="primary">
+              취소
+            </Button>
             <Button
               onClick={() => {
                 deleteRecipe();
               }}
-              color="secondary"
+              style={{ color: "#002060" }}
             >
               확인
-            </Button>
-            <Button onClick={deleteOpen} color="primary">
-              취소
             </Button>
           </DialogActions>
         </Dialog>
@@ -579,4 +631,7 @@ export default inject(({ recipe, detail, info }) => ({
   cate_index: recipe.cate_index,
   cateR: recipe.cateR,
   cateL: recipe.cateL,
+  sort: recipe.sort,
+
+  updateform: recipe.updateform,
 }))(observer(R));

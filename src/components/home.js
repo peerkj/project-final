@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+
 import {
   Button,
   Dialog,
@@ -10,12 +12,15 @@ import {
   DialogActions,
   TextField,
   DialogTitle,
-  Slide,
   IconButton,
   InputAdornment,
   FormControl,
-  InputLabel,
   Input,
+  Typography,
+  CardContent,
+  CardHeader,
+  Avatar,
+  Card,
 } from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 import {
@@ -28,8 +33,15 @@ import {
 } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import "../css/home.css";
+import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 345,
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
   appBar: {
     position: "relative",
   },
@@ -88,6 +100,17 @@ const Home = ({
   handleEnter_home,
   history,
   login_state,
+  open_recipe,
+  openRecipe,
+  //추천 레시피 리스트
+  recipe_list,
+  stepR,
+  stepL,
+  recipe_index,
+  ing_list,
+  sw,
+  main_ing,
+  sub_ing,
   //handleSearchRecipe
 }) => {
   const classes = useStyles();
@@ -142,9 +165,6 @@ const Home = ({
           style={{
             marginLeft: "-25px",
           }}
-          style={{
-            marginLeft: "-25px",
-          }}
         />
       </DragDropContainer>
     );
@@ -171,11 +191,54 @@ const Home = ({
     );
   });
 
+  // //주재료
+  const main = main_ing[recipe_index].map((i, idx) => {
+    return (
+      <div key={idx} className="detailMainIngre">
+        <span>
+          {i.check === 1 ? (
+            <span style={{ color: "pink" }}>{i.ingre_name}</span>
+          ) : (
+            i.ingre_name
+          )}
+        </span>
+        <span className="sub">
+          {i.check === 1 ? (
+            <span style={{ color: "pink" }}>{i.quantity}</span>
+          ) : (
+            i.quantity
+          )}
+        </span>
+      </div>
+    );
+  });
+
+  //부재료
+  const sub = sub_ing[recipe_index].map((i, idx) => {
+    return (
+      <div key={idx} className="detailMainIngre">
+        <span>
+          {i.check === 1 ? (
+            <span style={{ color: "pink" }}>{i.ingre_name}</span>
+          ) : (
+            i.ingre_name
+          )}
+        </span>
+        <span className="sub">
+          {i.check === 1 ? (
+            <span style={{ color: "pink" }}>{i.quantity}</span>
+          ) : (
+            i.quantity
+          )}
+        </span>
+      </div>
+    );
+  });
+
   return (
     <div width="375px">
       <center>
-        <FormControl className={classes.margin} style={{ marginTop: "230px" }}>
-          {/* <InputLabel htmlFor="input-with-icon-adornment">재료 검색 시 예)#삼겹살</InputLabel> */}
+        <FormControl className={classes.margin} style={{ marginTop: "70px" }}>
           <Input
             onKeyDown={(e) => {
               handleEnter_home(e, history);
@@ -188,40 +251,33 @@ const Home = ({
                 <Search />
               </InputAdornment>
             }
+            placeholder="#재료"
           />
         </FormControl>
+        <br />
+        <img
+          src="/img/refrigerator.png"
+          style={{
+            width: "180px",
+            marginTop: "70px"
+          }}
+          onClick={() => {
+            if (login_state) handleClickOpen();
+            else {
+              alert("로그인 후 이용하세요");
+              history.push("/login");
+            }
+          }}
+          alt=""
+        />
+        <br />
+        <span className="homeText">나만의 냉장고</span>
       </center>
-      <span
-        style={{
-          fontSize: "12pt",
-          fontWeight: "300",
-          position: "absolute",
-          top: "600px",
-          left: "170px",
-        }}
-      >
-        나만의 냉장고
-      </span>
-      <img
-        src="/img/refrigerator.png"
-        style={{
-          float: "right",
-          width: "100px",
-        }}
-        onClick={() => {
-          if (login_state) handleClickOpen();
-          else {
-            alert("로그인 후 이용하세요");
-            history.push("/login");
-          }
-        }}
-        alt=""
-      />
       <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -386,6 +442,93 @@ const Home = ({
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/*추천 레시피 리스트 */}
+      <Dialog
+        fullScreen
+        open={open_recipe}
+        onClose={openRecipe}
+        // TransitionComponent={Transition}
+      >
+        <AppBar
+          className={classes.appBar}
+          style={{ height: "50px", backgroundColor: "#002060" }}
+        >
+          <Toolbar>
+            <IconButton edge="start" onClick={openRecipe} aria-label="close">
+              <Close style={{ color: "#ffffff", marginTop: "-5px" }} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <div>
+          <br />
+          <b>{recipe_list.length}개의 결과</b>
+          <Card className={useStyles.root} style={{ marginTop: "10px" }}>
+            <CardHeader
+              avatar={
+                <Avatar aria-label="recipe" className={useStyles.avatar}>
+                  <Link
+                    to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}
+                  >
+                    <img
+                      width="40px"
+                      src={`http://localhost:9000/acorn/image/profile/${recipe_list[recipe_index].profile}`}
+                      alt=""
+                    />
+                  </Link>
+                </Avatar>
+              }
+              title={
+                <Link to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}>
+                  {recipe_list[recipe_index].nickname}
+                </Link>
+              }
+              subheader={recipe_list[recipe_index].timeDiffer}
+            />
+            <Link
+              className="ListItem"
+              to={`/recipe/detail?recipe=${recipe_list[recipe_index].rec_num}`}
+            >
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <div className="r2listThumbnail">
+                    <div className="centered">
+                      <img
+                        className="r2listImg"
+                        src={`http://localhost:9000/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <br />
+                  <center>
+                    <span className="recipeSubject">
+                      {recipe_list[recipe_index].subject}
+                    </span>
+                  </center>
+                </Typography>
+              </CardContent>
+            </Link>
+          </Card>
+          <hr className="detailLine" />
+          <div style={{ width: "100%" }}>
+            <p
+              style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
+            >
+              재료
+              <span class="detailIngreTitleText">Ingredients</span>
+            </p>
+            <p className="detailMainTitle">[주재료]</p>
+            {main}
+            <br />
+            <p className="detailMainTitle">[부재료]</p>
+            {sub}
+            <hr className="detailLine" />
+          </div>
+          <b onClick={stepL}>왼쪽</b>
+          <b onClick={stepR}>오른쪽</b>
+        </div>
+      </Dialog>
     </div>
   );
 };
@@ -429,4 +572,14 @@ export default inject(({ drag, recipe, info }) => ({
   handleEnter_home: recipe.handleEnter,
 
   login_state: info.login_state,
+  openRecipe: drag.openRecipe,
+  open_recipe: drag.open_recipe,
+  recipe_list: drag.recipe_list,
+  stepR: drag.stepR,
+  stepL: drag.stepL,
+  recipe_index: drag.recipe_index,
+  ing_list: drag.ing_list,
+  sw: drag.sw,
+  main_ing: drag.main_ing,
+  sub_ing: drag.sub_ing,
 }))(observer(Home));

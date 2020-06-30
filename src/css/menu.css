@@ -1,7 +1,7 @@
 #flyoutMenu {
   width: 100vw;
   height: 100vh;
-  background-color: #b3bed6;
+  background-color: #001744;
   position: fixed;
   top: 0;
   left: 0;
@@ -23,6 +23,7 @@
 .hamburger-react {
   z-index: 100;
   float: right;
+  color: #001744;
 }
 
 #headgroup::after {
@@ -31,7 +32,7 @@
   clear: both;
 }
 #flyoutMenu ul{
-  padding: 20px 0 0 140px;
+  padding: 20px 0 0 135px;
 }
 #flyoutMenu ul li {
   list-style: none;
@@ -42,11 +43,11 @@
 
 #flyoutMenu ul li a {
   text-decoration: none;
-  color:#000000;
+  color:#ffffff;
 }
 
 .menuTextColor{
-  color:#000000;
+  color:#ffffff;
 }
 
 #menuline{
@@ -57,17 +58,19 @@ ul li{
   list-style: none;
 }
 
-.mypageCenterWrapper{
-  width:140px;
-  margin:20px 0;
+.menuProfileWrapper{
+  width: 140px;
+  height: 140px;
+  margin: 20px 0 20px 10px;
 }
 
-.mypageCenter{
+.menuProfileCenter{
   position: relative; 
   padding-top: 100%; /* 1:1 ratio */ 
   overflow: hidden;
+  border-radius: 140px;
 }
-.mypageCenter .centered{
+.menuProfileCenter .centered{
   position: absolute; 
   top: 0; 
   left: 0; 
@@ -77,7 +80,7 @@ ul li{
   -ms-transform: translate(50%,50%); 
   transform: translate(50%,50%);
 }
-.mypageCenterImg{
+.menuProfileCenterImg{
   position: absolute; 
   top: 0; 
   left: 0; 
@@ -88,12 +91,12 @@ ul li{
   transform: translate(-50%,-50%);
 }
 
-.mypageCenterImg.portrait { 
+.menuProfileCenterImg.portrait { 
   width: 100%; 
   height: auto; 
 }
 
-.mypageCenterImg.landscape { 
+.menuProfileCenterImg.landscape { 
   width: auto; 
   height: 100%; 
 }

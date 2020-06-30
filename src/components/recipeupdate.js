@@ -10,77 +10,83 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import { Cancel, AddCircle, Close, ExpandLess, ExpandMore } from "@material-ui/icons";
+import {
+  Cancel,
+  AddCircle,
+  Close,
+  ExpandLess,
+  ExpandMore,
+} from "@material-ui/icons";
 import Button from "@material-ui/core/Button";
 import { inject, observer } from "mobx-react";
 
+const fakeFetch = (delay = 1500) =>
+  new Promise((res) => setTimeout(res, delay));
+
 @inject((stores) => ({
-  subject: stores.write.subject,
-  summary: stores.write.summary,
-  tip: stores.write.tip,
-  handleSubjectChange: stores.write.handleSubjectChange,
-  handleSummaryChange: stores.write.handleSummaryChange,
-  handleFoodcateChange: stores.write.handleFoodcateChange,
-  handlePortionChange: stores.write.handlePortionChange,
-  handleTimeChange: stores.write.handleTimeChange,
-  handleDiffChange: stores.write.handleDiffChange,
-  handleTipChange: stores.write.handleTipChange,
+  //input
+  recipe: stores.recipeupdate.recipe,
+  //리스트 얻기
+  updateform: stores.recipeupdate.updateform,
+
+  handleSubjectChange: stores.recipeupdate.handleSubjectChange,
+  handleSummaryChange: stores.recipeupdate.handleSummaryChange,
+  handleFoodcateChange: stores.recipeupdate.handleFoodcateChange,
+  handlePortionChange: stores.recipeupdate.handlePortionChange,
+  handleTimeChange: stores.recipeupdate.handleTimeChange,
+  handleDiffChange: stores.recipeupdate.handleDiffChange,
+  handleTipChange: stores.recipeupdate.handleTipChange,
+
+  //대표사진
+  handleChangeRe: stores.recipeupdate.handleChangeRe,
+
   //주,부 재료 추가
-  handelAddMain: stores.write.handelAddMain,
-  main_ingre: stores.write.main_ingre,
-  handleChange_main_i: stores.write.handleChange_main_i,
-  handleChange_main_q: stores.write.handleChange_main_q,
-  handelDelete_ingre: stores.write.handelDelete_ingre,
-  handelAddSub: stores.write.handelAddSub,
-  sub_ingre: stores.write.sub_ingre,
-  handleChange_sub_i: stores.write.handleChange_sub_i,
-  handleChange_sub_q: stores.write.handleChange_sub_q,
-  handelDelete_ingre_sub: stores.write.handelDelete_ingre_sub,
+  handelAddMain: stores.recipeupdate.handelAddMain,
+  handelAddSub: stores.recipeupdate.handelAddSub,
+  main_ingre: stores.recipeupdate.main_ingre,
+  sub_ingre: stores.recipeupdate.sub_ingre,
 
-  //
+  handleChange_main_i: stores.recipeupdate.handleChange_main_i,
+  handleChange_main_q: stores.recipeupdate.handleChange_main_q,
+  handelDelete_ingre: stores.recipeupdate.handelDelete_ingre,
 
-  handleChangeImg: stores.write.handleChangeImg,
-  handleRemove: stores.write.handleRemove,
-  step: stores.write.step,
-  handelAddStep: stores.write.handelAddStep,
-  handelDelete_step: stores.write.handelDelete_step,
-  changeStep: stores.write.changeStep,
-  onChangeStep: stores.write.onChangeStep,
+  handleChange_sub_i: stores.recipeupdate.handleChange_sub_i,
+  handleChange_sub_q: stores.recipeupdate.handleChange_sub_q,
+  handelDelete_ingre_sub: stores.recipeupdate.handelDelete_ingre_sub,
+
+  //step
+  handelAddStep: stores.recipeupdate.handelAddStep,
+  step: stores.recipeupdate.step,
+  handleRemove: stores.recipeupdate.handleRemove,
+  handleChangeImg: stores.recipeupdate.handleChangeImg,
+  handelDelete_step: stores.recipeupdate.handelDelete_step,
+  changeStep: stores.recipeupdate.changeStep,
+  onChangeStep: stores.recipeupdate.onChangeStep,
 
   //완성 사진
-  done: stores.write.done,
-  changeDone: stores.write.changeDone,
-  handelAddDone: stores.write.handelAddDone,
-  handelDelete_done: stores.write.handelDelete_done,
-  handleChangeDone: stores.write.handleChangeDone,
-  handleRemoveDone: stores.write.handleRemoveDone,
+  done: stores.recipeupdate.done,
+  changeDone: stores.recipeupdate.changeDone,
+  handelAddDone: stores.recipeupdate.handelAddDone,
+  handelDelete_done: stores.recipeupdate.handelDelete_done,
+  handleChangeDone: stores.recipeupdate.handleChangeDone,
 
   //
-  represent: stores.write.represent,
-  handleChangeRe: stores.write.handleChangeRe,
-  handleRemoveRe: stores.write.handleRemoveRe,
-  //
-  insertRecipe: stores.write.insertRecipe,
+  insertRecipe: stores.recipeupdate.insertRecipe,
 
-  handleReset: stores.write.handleReset,
   login_state: stores.info.login_state,
 }))
 @observer
 class write extends Component {
-  componentWillMount = () => {
-    this.props.handleReset();
-    window.scrollTo(0, 0);
-    if (!this.props.login_state) {
-      this.props.history.push("/login");
-    }
+  componentDidMount = async () => {
+    await this.props.updateform();
   };
 
   render() {
     const {
+      recipe,
+
       history,
-      subject,
-      summary,
-      tip,
+
       handleSubjectChange,
       handleSummaryChange,
       handleFoodcateChange,
@@ -90,18 +96,20 @@ class write extends Component {
       handleTipChange,
       done,
       changeDone,
-      handelAddDone,
       handelDelete_done,
       handleChangeDone,
-      handleRemoveDone,
-      //
-      handelAddMain,
+
+      //재료선택
       main_ingre,
+      sub_ingre,
+
+      handelAddMain,
+      handelAddSub,
+
       handleChange_main_i,
       handleChange_main_q,
       handelDelete_ingre,
-      handelAddSub,
-      sub_ingre,
+
       handleChange_sub_i,
       handleChange_sub_q,
       handelDelete_ingre_sub,
@@ -115,10 +123,8 @@ class write extends Component {
       changeStep,
       onChangeStep,
 
-      //
-      represent,
       handleChangeRe,
-      handleRemoveRe,
+
       //
       insertRecipe,
     } = this.props;
@@ -256,14 +262,14 @@ class write extends Component {
                 onChangeStep(e, idx);
               }}
             />
-            <label htmlFor={idx}>
-              {i.imgBase64 ? (
-                <img className="cookImg" src={i.imgBase64} alt="" />
+            <label htmlFor={`${idx}_step`}>
+              {i.photo ? (
+                <img className="cookImg" src={i.photo} alt="" />
               ) : (
-                  <img className="cookImg" src="img/add_icon2.png" alt="" />
-                )}
+                <img className="cookImg" src="img/add_icon2.png" alt="" />
+              )}
             </label>
-            {i.imgBase64 ? (
+            {i.photo ? (
               <Close
                 onClick={() => {
                   handleRemove(idx);
@@ -272,8 +278,8 @@ class write extends Component {
                 style={{ position: "relative", left: "-21px", top: "-75px" }}
               />
             ) : (
-                ""
-              )}
+              ""
+            )}
             <Cancel
               onClick={() => {
                 handelDelete_step(idx);
@@ -288,7 +294,7 @@ class write extends Component {
               }}
               style={{ display: "none" }}
               accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
-              id={idx}
+              id={`${idx}_step`}
               type="file"
             />
           </DropTarget>
@@ -313,11 +319,19 @@ class write extends Component {
           >
             <div className="finishImg">
               <label htmlFor={idx + "done"}>
-                {i.imgBase64 ? (
-                  <img className="finishImg" src={i.imgBase64} alt="" />
+                {i.comp_photo ? (
+                  <img
+                    className="finishImg"
+                    src={
+                      i.comp_photoList === null
+                        ? `http://localhost:9000/acorn/image/recipe/${i.comp_photo}`
+                        : i.comp_photo
+                    }
+                    alt=""
+                  />
                 ) : (
-                    <img className="finishImg" src="img/add_icon2.png" alt="" />
-                  )}
+                  <img className="finishImg" src="img/add_icon2.png" alt="" />
+                )}
               </label>
             </div>
             <input
@@ -346,34 +360,23 @@ class write extends Component {
       <div>
         <div id="writebody">
           <div>
-            <br />
             {/* 대표 사진 */}
             <div style={{ width: "150px", float: "right", marginTop: "15px" }}>
               <label htmlFor="repre">
-                {represent.imgBase64 ? (
+                {recipe.repre_photo ? (
                   <img
                     className="writeThumbnail"
-                    src={represent.imgBase64}
+                    src={recipe.repre_photo}
                     alt=""
                   />
                 ) : (
-                    <img
-                      className="writeThumbnail"
-                      src="img/add_icon3.png"
-                      alt=""
-                    />
-                  )}
-              </label>
-              {represent.imgBase64 ? (
-                <Close
-                  onClick={() => {
-                    handleRemoveRe();
-                  }}
-                  id="thumbnail_delete"
-                />
-              ) : (
-                  ""
+                  <img
+                    className="writeThumbnail"
+                    src="img/add_icon3.png"
+                    alt=""
+                  />
                 )}
+              </label>
             </div>
             <input
               onChange={handleChangeRe}
@@ -388,7 +391,7 @@ class write extends Component {
               <div>
                 <TextField
                   onChange={handleSubjectChange}
-                  value={subject}
+                  value={recipe.subject}
                   className="inputwriteform"
                   size="small"
                   variant="outlined"
@@ -399,7 +402,7 @@ class write extends Component {
               <div>
                 <TextField
                   onChange={handleSummaryChange}
-                  value={summary}
+                  value={recipe.summary}
                   className="inputwriteform"
                   size="small"
                   variant="outlined"
@@ -410,9 +413,9 @@ class write extends Component {
             <br />
             <div className="all_title">카테고리</div>
             <FormControl className={useStyles.formControl}>
-              <br/>
-              <InputLabel id="demo-simple-select-label">음식 카테고리</InputLabel>
+              <InputLabel id="demo-simple-select-label"></InputLabel>
               <Select
+                value={recipe.food_cate}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={handleFoodcateChange}
@@ -442,6 +445,7 @@ class write extends Component {
                 id="demo-simple-select"
                 onChange={handlePortionChange}
                 style={{ width: "110px" }}
+                value={recipe.portion}
               >
                 <MenuItem value="1인분">1인분</MenuItem>
                 <MenuItem value="2인분">2인분</MenuItem>
@@ -458,6 +462,7 @@ class write extends Component {
             >
               <InputLabel id="demo-simple-select-label">시간</InputLabel>
               <Select
+                value={recipe.time}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={handleTimeChange}
@@ -478,6 +483,7 @@ class write extends Component {
             >
               <InputLabel id="demo-simple-select-label">난이도</InputLabel>
               <Select
+                value={recipe.difficult}
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 onChange={handleDiffChange}
@@ -562,7 +568,7 @@ class write extends Component {
           <br />
           <TextField
             onChange={handleTipChange}
-            value={tip}
+            value={recipe.tip}
             size="small"
             variant="filled"
             style={{
@@ -592,7 +598,7 @@ class write extends Component {
                 marginLeft: "5px",
               }}
             >
-              글쓰기
+              수정하기
             </Button>
           </center>
           <br />
@@ -603,7 +609,7 @@ class write extends Component {
         {/* 위로가기 */}
         <Link
           onClick={() => {
-            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           }}
         >
           <ExpandLess
@@ -622,7 +628,7 @@ class write extends Component {
         </Link>
         <Link
           onClick={() => {
-            window.scrollTo({ top: 5000, left: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 5000, left: 0, behavior: "smooth" });
           }}
         >
           <ExpandMore

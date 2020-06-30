@@ -18,9 +18,9 @@ export default class CounterStore {
 
   //분류
   @observable cate_list = [
-    ["All", "구이", "국/탕/찌개", "디저트"],
-    ["면", "무침", "밥/죽/떡", "볶음"],
-    ["양념/소스", "조림/찜", "튀김/부침", "기타"],
+    ["All", "밥/죽/떡", "면", "국/탕/찌개"],
+    ["튀김/부침", "무침", "볶음", "구이"],
+    ["조림/찜", "양념/소스", "디저트", "기타"],
   ];
   @observable cate_index = 0;
 
@@ -66,6 +66,7 @@ export default class CounterStore {
 
   @action
   setFood_cate = (food) => {
+    this.sort = "";
     this.food_cate = food;
     if (food !== "All") this.reset();
     else this.resetRecipe();
@@ -84,6 +85,25 @@ export default class CounterStore {
   @action
   dothandleClose = (idx) => {
     this.anchorEl[idx] = null;
+  };
+
+  @action
+  updateform = (rec_num, history) => {
+    let url =
+      "http://localhost:9000/acorn/recipe/updateform?rec_num=" + rec_num;
+
+    axios({
+      method: "get",
+      url: url,
+    })
+      .then((res) => {
+        console.log(res.data);
+        this.root.recipeupdate.recipe = res.data;
+        history.push("/update");
+      })
+      .catch((err) => {
+        console.log("수정폼오류:" + err);
+      });
   };
 
   @action
@@ -189,9 +209,10 @@ export default class CounterStore {
   @action
   getList = () => {
     let url = "http://localhost:9000/acorn/recipe/list";
+    let sort = this.sort;
     if (this.search === "") this.search = null;
     if (this.food_cate === "") this.food_cate = null;
-    if (this.sort === "") this.sort = null;
+    if (sort === "") sort = null;
     if (this.list.length === this.list_count) return;
 
     axios({
@@ -201,7 +222,7 @@ export default class CounterStore {
         scroll: this.scroll,
         search: this.search,
         food_cate: this.food_cate,
-        sort: this.sort,
+        sort: sort,
       },
     })
       .then((res) => {
