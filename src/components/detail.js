@@ -172,6 +172,7 @@ class Detail extends Component {
               <img
                 src={`http://localhost:9000/acorn/image/recipe/${i.photo}`}
                 alt=""
+                width="359px"
               />
             </div>
           </div>
@@ -184,7 +185,7 @@ class Detail extends Component {
         <div key={num}>
           <div className="stepnc">
             <div className="stepnum">{num + 1}</div>
-            <span className="steptext">{i.content}</span>
+            <div className="steptext1">{i.content}</div>
           </div>
         </div>
       );
@@ -196,8 +197,7 @@ class Detail extends Component {
           <div className="stepslider">
             <div className="stepnc">
               <div className="stepnum">{step_slide + 1}</div>
-              <span className="steptext">{step_list[step_slide].content}</span>
-              <br />
+              <div className="steptext">{step_list[step_slide].content}</div>
               <br />
               <div className="stepImgWrapper">
                 <div className="centered">
@@ -209,7 +209,6 @@ class Detail extends Component {
                 </div>
               </div>
             </div>
-            <br />
             <div className="stepsliderbtn">
               <KeyboardArrowLeft onClick={stepL} />
               &ensp;

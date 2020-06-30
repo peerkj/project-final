@@ -3,8 +3,11 @@ import { inject, observer } from "mobx-react";
 import { Bookmark, People, Favorite, Restaurant } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import "../css/following.css";
+import {
+    DoubleArrow,
+} from "@material-ui/icons";
 
-// **** 최하단에 잇던 observer 가 이렇게 위로 올라옵니다.
+// **** 최하단에 있던 observer 가 이렇게 위로 올라옵니다.
 @inject((stores) => ({
     follow: stores.following.follow,
     followList: stores.following.followList,
@@ -83,9 +86,18 @@ class Following extends Component {
                                         <div key={idx}>
                                             <Link to={`/recipe/detail?recipe=${r.rec_num}`}>
                                                 <div className="chef-recipebox">
-                                                    <img src={`http://localhost:9000/acorn/image/recipe/${r.repre_photo}`}
-                                                        width="150px" height="150px" alt="" /><br />
-                                                    {r.subject}
+                                                    <div className="followCenterWrapper">
+                                                        <div className="followCenter">
+                                                            <div className="centered">
+                                                                <img src={`http://localhost:9000/acorn/image/recipe/${r.repre_photo}`}
+                                                                    alt="" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <center width="150px">
+                                                        <span style={{ color: "#000000", fontWeight: "500" }}>{r.subject}</span>
+                                                    </center>
+                                                    <span style={{ float: "right", marginRight: "6px", fontSize: "9pt" }}>{r.timeDiffer}</span>
                                                 </div>
                                             </Link>
                                         </div>
@@ -101,7 +113,10 @@ class Following extends Component {
 
         return (
             <div>
-                <h2>내가 팔로하는 쉐프</h2>
+                <div style={{ margin: "30px 0 0 20px" }}>
+                    <DoubleArrow style={{ verticalAlign: "middle" }} fontSize="large" />
+                    <span className="rankingTitle">구독하는 셰프</span>
+                </div>
                 {FollowList}
             </div >
         );

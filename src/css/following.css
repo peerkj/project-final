@@ -1,6 +1,7 @@
 .chefbox{
-    border:1px solid gray;
-    margin-top: 10px;
+    border-bottom: 1px solid #cfcfcf;
+    border-top: 1px solid #cfcfcf;
+    margin-top: 20px;
     padding: 10px;
 }
 
@@ -11,7 +12,49 @@
 }
 
 .chef-recipebox{
-    width: 160px;
+    width: 150px;
     float: left;
-    margin-left: 8px;
+    margin: 0 8px;
+}
+
+.followCenterWrapper{
+    width: 150px;
+    margin-bottom: 5px;    
+	}
+	
+.followCenter{
+	position: relative; 
+	padding-top: 75%; /* 4:3 ratio */ 
+	overflow: hidden;
+}
+.followCenter .centered{
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	right: 0; 
+	bottom: 0; 
+	-webkit-transform: translate(50%,50%); 
+	-ms-transform: translate(50%,50%); 
+	transform: translate(50%,50%);
+}
+
+.followCenter .centered img{
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	max-width: 100%;
+	height: auto;
+	-webkit-transform: translate(-50%,-50%); 
+	-ms-transform: translate(-50%,-50%); 
+	transform: translate(-50%,-50%);
+}
+		
+.followCenter .centered img.portrait { 
+	width: 100%; 
+	height: auto; 
+}
+		
+.followCenter .centered img.landscape { 
+	width: auto; 
+	height: 100%; 
 }

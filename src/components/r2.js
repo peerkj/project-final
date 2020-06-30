@@ -1,127 +1,104 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import useIntersect from "./useIntersect";
 import { Link } from "react-router-dom";
+import { inject, observer } from "mobx-react";
+import { makeStyles } from "@material-ui/core/styles";
+import { red } from "@material-ui/core/colors";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import Comment from "./comment";
+import "../css/detail.css";
 
 import {
   Button,
-  Dialog,
-  AppBar,
-  Toolbar,
-  Badge,
-  DialogContent,
-  DialogActions,
-  TextField,
-  DialogTitle,
-  IconButton,
-  InputAdornment,
-  FormControl,
-  Input,
-  Typography,
-  CardContent,
-  CardHeader,
-  Avatar,
   Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Avatar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Dialog,
+  TextField,
+  DialogContent,
+  DialogTitle,
+  DialogActions,
+  CircularProgress,
 } from "@material-ui/core";
-import { DragDropContainer, DropTarget } from "react-drag-drop-container";
 import {
   Close,
-  AddCircle,
-  ThumbUp,
-  RestaurantMenu,
-  DeleteOutline,
   Search,
+  Create,
+  MoreVert,
+  Restore,
+  Bookmark,
+  Pageview,
+  FavoriteBorder,
+  Favorite,
+  BookmarkBorder,
+  ExpandLess,
+  ChatBubbleOutline,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
 } from "@material-ui/icons";
-import { inject, observer } from "mobx-react";
-import "../css/home.css";
-import { red } from "@material-ui/core/colors";
+import "../css/styles.css";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-  appBar: {
-    position: "relative",
-  },
-  title: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
-  },
-  badge: {
-    height: "40px",
-    minWidth: "40px",
-    borderRadius: "40px",
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-}));
+const fakeFetch = (delay = 1500) =>
+  new Promise((res) => setTimeout(res, delay));
 
-const Home = ({
-  count,
-  addCount,
-  resetCount,
-  openpot,
-  clickPot,
-  pot,
-  changePot,
-  openPot,
-  stopPot,
-  mylist,
-  addPotFood,
-
-  deleteList,
-  c,
-  e_add,
-  e_store,
-  select_delete,
-  addopen,
-  handleAddFood,
-  handleAddOpen,
-  available_addfood,
-  addFood,
-  onChangeFood,
-  handleEnter,
-  handleListFood,
-  refri_delete,
-  handleCook,
-  handleRecipe,
-  refir,
-  handle_style,
-  r_open,
-  r_close,
-  refir_style,
-  binpot,
-  handleKeyPress,
-  onchangeSearch_home,
-  search_home,
-  handleEnter_home,
+const R = ({
+  list,
+  state,
+  getList,
+  changeState,
+  addState,
   history,
+  updateList,
+  setView,
+  modal_open,
+  url,
+  onCopy,
+  handleShare,
+  anchorEl,
+  dothandleClick,
+  dothandleClose,
+  check_j,
+  check_s,
+  Scrap,
+  Joayo,
+  userEmail,
+  comment_count,
+  comment_open,
+  handleComment,
+  setRec_num,
+  onchangeSearch,
+  search,
+  handleEnter,
+  delete_open,
+  deleteOpen,
+  deleteRecipe,
+  checkList,
+  list_count,
+  resetRecipe,
+  setFood_cate,
+  setSort,
+  sort,
   login_state,
-  open_recipe,
-  openRecipe,
-  //추천 레시피 리스트
-  recipe_list,
-  stepR,
-  stepL,
-  recipe_index,
-  ing_list,
-  sw,
-  main_ing,
-  sub_ing,
-  //handleSearchRecipe
-}) => {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    resetCount();
-    r_open();
-    setOpen(true);
-    handleListFood();
-  };
+  cate_list,
+  cate_index,
+  cateR,
+  cateL,
+
+  updateform,
+}) => {
+  //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
+  //   /* fake async fetch */
+
+  useEffect(() => {
+    updateList();
+  }, []);
 
   //리스트 박스 디자인 관련
   const useStyles = makeStyles((theme) => ({
@@ -155,297 +132,349 @@ const Home = ({
       width: 300,
     },
   }));
-  const handleClose = () => {
-    setOpen(false);
-    r_close();
-  };
-  const dropped = (e) => {
-    e.containerElem.style.visibility = "hidden";
-    addPotFood(e.dragData.idx);
-    e_add(e);
-    openPot();
-    addCount();
-  };
 
-  const list = mylist.map((my, idx) => {
+  //카테고리 검색
+  const FoodList = cate_list[cate_index].map((f, i) => {
     return (
-      <DragDropContainer
-        key={my.refrig_num}
-        targetKey="foo"
-        dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
+      <img src={`/img/foodcate/food_${cate_index}_${i}.png`}
+        width="70px" alt=""
+        style={{ verticalAlign: "middle" }}
+        onClick={() => {
+          setFood_cate(f);
+        }} />
+    );
+  });
+
+  //리스트 박스
+  const ListItem = list.map((l, idx) => {
+    return (
+      <Card
+        key={l.rec_num}
+        className={useStyles.root}
+        style={{ marginTop: "10px" }}
       >
-        <img
-          src="/img/pot/dish.png"
-          alt=""
-          width="100px"
-          style={{ marginTop: "-15px" }}
-        ></img>
-        <span
-          style={{
-            position: "absolute",
-            top: "28px",
-            left: "32px",
-          }}
-        >
-          {my.refrig_name}
-        </span>
-        <Close
-          id="profileImg_delete"
-          onClick={() => {
-            refri_delete(my.refrig_num);
-          }}
-          style={{
-            marginLeft: "-25px",
-          }}
-        />
-      </DragDropContainer>
-    );
-  });
-  const pot_list = e_store.map((e) => {
-    return (
-      <div key={e.dragData.key} style={{}}>
-        <span style={{ fontSize: "10pt", fontWeight: "400" }}>
-          {e.dragData.food}
-        </span>
-        <Close
-          id="profileImg_delete"
-          onClick={() => {
-            select_delete(e);
-          }}
-          style={{
-            position: "relative",
-            top: "-1px",
-            left: "1px",
-            fontSize: "12pt",
-          }}
-        />
-      </div>
-    );
-  });
-
-  // //주재료
-  const main = main_ing[recipe_index].map((i, idx) => {
-    return (
-      <div key={idx} className="detailMainIngre">
-        <span>
-          {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.ingre_name}</span>
-          ) : (
-              i.ingre_name
-            )}
-        </span>
-        <span className="sub">
-          {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.quantity}</span>
-          ) : (
-              i.quantity
-            )}
-        </span>
-      </div>
-    );
-  });
-
-  //부재료
-  const sub = sub_ing[recipe_index].map((i, idx) => {
-    return (
-      <div key={idx} className="detailMainIngre">
-        <span>
-          {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.ingre_name}</span>
-          ) : (
-              i.ingre_name
-            )}
-        </span>
-        <span className="sub">
-          {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.quantity}</span>
-          ) : (
-              i.quantity
-            )}
-        </span>
-      </div>
-    );
-  });
-
-  return (
-    <div width="375px">
-      <center>
-        <FormControl className={classes.margin} style={{ marginTop: "70px" }}>
-          <Input
-            onKeyDown={(e) => {
-              handleEnter_home(e, history);
-            }}
-            value={search_home}
-            onChange={onchangeSearch_home}
-            id="input-with-icon-adornment"
-            startAdornment={
-              <InputAdornment position="start">
-                <Search />
-              </InputAdornment>
-            }
-            placeholder="#재료"
-          />
-        </FormControl>
-        <br />
-        <img
-          src="/img/refrigerator.png"
-          style={{
-            width: "180px",
-            marginTop: "70px"
-          }}
-          onClick={() => {
-            if (login_state) handleClickOpen();
-            else {
-              alert("로그인 후 이용하세요");
-              history.push("/login");
-            }
-          }}
-          alt=""
-        />
-        <br />
-        <span className="homeText">나만의 냉장고</span>
-      </center>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-      // TransitionComponent={Transition}
-      >
-        <AppBar
-          className={classes.appBar}
-          style={{ height: "50px", backgroundColor: "#002060" }}
-        >
-          <Toolbar>
-            <IconButton edge="start" onClick={handleClose} aria-label="close">
-              <Close style={{ color: "#ffffff", marginTop: "-5px" }} />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <div>
-          <br />
-          <div style={{ width: "375px" }}>
-            <center>
-              <div className={handle_style}>
-                <Button
-                  onClick={handleRecipe}
-                  size="small"
-                  startIcon={<ThumbUp />}
-                  variant="outlined"
+        <CardHeader
+          avatar={
+            <Avatar aria-label="recipe" className={useStyles.avatar}>
+              <Link to={`/mypage?nick=${l.nickname}`}>
+                <img
+                  width="40px"
+                  src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
+                  alt=""
+                />
+              </Link>
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              {/* 점 3개 */}
+              <MoreVert
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={(e) => {
+                  dothandleClick(e, idx);
+                }}
+              />
+              <Menu
+                id={`simple-menu-${idx}`}
+                anchorEl={anchorEl[idx]}
+                keepMounted
+                open={Boolean(anchorEl[idx])}
+                onClose={() => {
+                  dothandleClose(idx);
+                }}
+              >
+                <MenuItem
+                  onClick={() => {
+                    handleShare(l.rec_num, history);
+                  }}
                 >
-                  추천 레시피 보기
-                </Button>
-                <br />
-                <br />
-                <div onClick={handleAddOpen}>
-                  <AddCircle style={{ fontSize: "10pt" }} />
-                  <span>재료 추가</span>
+                  공유
+                </MenuItem>
+                {l.email === userEmail && (
+                  <MenuItem onClick={() => {
+                    updateform(l.rec_num);
+                  }}>수정</MenuItem>
+                )}
+                {l.email === userEmail && (
+                  <MenuItem
+                    onClick={() => {
+                      deleteOpen(l.rec_num);
+                    }}
+                  >
+                    삭제
+                  </MenuItem>
+                )}
+              </Menu>
+            </IconButton>
+          }
+          title={<Link to={`/mypage?nick=${l.nickname}`} style={{ color: "#000000" }}>{l.nickname}</Link>}
+          subheader={l.timeDiffer}
+        />
+        <Link
+          className="ListItem"
+          to={`/recipe/detail?recipe=${l.rec_num}`}
+          onClick={() => {
+            setView(l.rec_num, idx);
+          }}
+        >
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <span
+                style={{
+                  fontWeight: "400",
+                  fontSize: "10pt",
+                  float: "right",
+                  marginTop: "-30px",
+                }}
+              >
+                조회 {l.readcount}
+              </span>
+              <div className="r2listThumbnail">
+                <div className="centered">
+                  <img
+                    className="r2listImg"
+                    src={`http://localhost:9000/acorn/image/recipe/${l.repre_photo}`}
+                    alt=""
+                  />
                 </div>
               </div>
-              <img
-                className={refir_style}
-                src={refir}
-                alt=""
-                width="530"
-                style={{ marginLeft: "-77px" }}
-              />
-              <div className={handle_style} width="330">
-                <img src="img/refview2.png" alt="" width="330" />
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "155px",
-                    left: "0px",
-                    width: "370px",
-                    height: "320px",
-                  }}
-                >
-                  {list}
-                </span>
-              </div>
-            </center>
-          </div>
-          <DropTarget targetKey="foo" onHit={dropped}>
-            <div className={handle_style}>
-              <center style={{ width: "375px" }}>
-                <span>재료를 드래그하여 냄비에 넣어 주세요.</span>
-                <br />
-                <img
-                  style={{
-                    width: "150px",
-                  }}
-                  src={pot}
-                  alt=""
-                  onClick={clickPot}
-                />
+              <br />
+              <center>
+                <span className="recipeSubject">{l.subject}</span>
               </center>
-            </div>
-            <div
+            </Typography>
+          </CardContent>
+        </Link>
+        <CardActions disableSpacing style={{ float: "right" }}>
+          <IconButton aria-label="share">
+            {check_j[idx] === 0 || !login_state ? (
+              <FavoriteBorder
+                color="disabled"
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            ) : (
+                <Favorite
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
+            <span
               style={{
-                position: "absolute",
-                left: "275px",
-                top: "422px",
+                fontWeight: "500",
+                fontSize: "12pt",
               }}
             >
-              <Badge
-                className={useStyles.badge}
-                badgeContent={count}
-                color="secondary"
-                style={{ top: "85px", left: "-10px" }}
-              ></Badge>
-            </div>
-          </DropTarget>
-        </div>
-      </Dialog>
-
-      <Dialog
-        open={binpot}
-        onClose={clickPot}
-        style={{ position: "absolute", top: "35px", left: "7px" }}
-      >
-        <DialogContent>
-          <Close onClick={clickPot} style={{ float: "right" }} />
-          <br />
-          <center>
-            <img src="img/pot/boiledpot.gif" alt="" width="250px" />
-            <br />
-            <div
-              style={{
-                width: "200px",
-                height: "180px",
-                border: "1px solid #c5c5c5",
-                borderRadius: "10px",
-                marginBottom: "10px",
-                padding: "1px",
-              }}
-            >
-              {pot_list}
-            </div>
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={deleteList}
-              startIcon={<DeleteOutline />}
-            >
-              비우기
-            </Button>
+              {l.joayo}
+            </span>
             &ensp;
-            <Button
-              size="small"
-              variant="outlined"
-              startIcon={<RestaurantMenu />}
-              onClick={handleCook}
+            {check_s[idx] === 0 || !login_state ? (
+              <BookmarkBorder
+                color="disabled"
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            ) : (
+                <Bookmark
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
+            <span
+              style={{
+                fontWeight: "500",
+                fontSize: "12pt",
+              }}
             >
-              요리하기
-            </Button>
+              {l.scrap}
+            </span>
+            &ensp;
+            <ChatBubbleOutline
+              onClick={() => {
+                setRec_num(l.rec_num);
+                setView(l.rec_num, idx);
+                handleComment();
+              }}
+              color="disabled"
+              fontSize="small"
+            />
+            <span
+              style={{
+                fontWeight: "500",
+                fontSize: "12pt",
+              }}
+            >
+              {comment_count[idx]}
+            </span>
+            &nbsp;
+          </IconButton>
+        </CardActions>
+      </Card>
+    );
+  });
+
+  const fetchItems = async () => {
+    changeState();
+    getList();
+    await fakeFetch();
+
+    addState();
+  };
+  /* initial fetch */
+
+  const [_, setRef] = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    await fetchItems();
+    observer.observe(entry.target);
+  }, {});
+
+  //if (state1.itemCount) return null;
+
+  return (
+    <div className="RecipeApp">
+      <div style={{ marginBottom: "15px" }}>
+        {/* 검색창 */}
+        <center style={{ marginTop: "20px" }}>
+          <Search
+            width="40px"
+            fontSize="large"
+            style={{ verticalAlign: "middle" }}
+          />
+          &nbsp;
+          <TextField
+            id="outlined-basic"
+            variant="outlined"
+            size="small"
+            onKeyDown={handleEnter}
+            value={search}
+            onChange={onchangeSearch}
+            style={{ verticalAlign: "middle" }}
+          />
+
+          <center style={{ marginTop: "30px" }}>
+            <KeyboardArrowLeft onClick={cateL} fontSize="large"
+              style={{ verticalAlign: "middle" }} />
+            {FoodList}
+            <KeyboardArrowRight onClick={cateR} fontSize="large"
+              style={{ verticalAlign: "middle" }} />
           </center>
           <br />
-        </DialogContent>
-      </Dialog>
 
-      <Dialog
-        open={addopen}
-        onClose={handleAddOpen}
-        aria-labelledby="form-dialog-title"
+          {/* 리스트 분류,정렬 */}
+          <div className="recipeStepCate">
+            <div
+              className="category"
+              onClick={() => {
+                //최신순
+                setSort("");
+              }}
+            >
+              {sort === "" ? (
+                <Restore fontSize="small" style={{ color: "#002060" }} />
+              ) : (
+                  <Restore fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
+              <br />
+              <span className="cate_text" style={{ color: "#000000" }}>최신순</span>
+              <br />
+            </div>
+            <div
+              className="category"
+              onClick={() => {
+                //스크랩순
+                setSort("scrap");
+              }}
+            >
+              {sort === "scrap" ? (
+                <Bookmark fontSize="small" style={{ color: "#002060" }} />
+              ) : (
+                  <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
+              <br />
+              <span className="cate_text" style={{ color: "#000000" }}>스크랩순</span>
+              <br />
+            </div>
+            <div
+              className="category"
+              onClick={() => {
+                //조회순
+                setSort("readcount");
+              }}
+            >
+              {sort === "readcount" ? (
+                <Pageview fontSize="small" style={{ color: "#002060" }} />
+              ) : (
+                  <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
+              <br />
+              <span className="cate_text" style={{ color: "#000000" }}>조회순</span>
+              <br />
+            </div>
+          </div>
+
+        </center>
+      </div>
+      <br />
+      <br />
+
+      {/* 리스트*/}
+      {ListItem}
+
+      {/* 로딩 */}
+
+      <center>
+        {!checkList && (
+          <div ref={setRef} className="Loading">
+            <div className={useStyles.load}>
+              {state.isLoading && (
+                <CircularProgress style={{ color: "#bdbdbd" }} />
+              )}
+            </div>
+          </div>
+        )}
+        {list_count === 0 && (
+          <div style={{ marginTop: "130px", fontSize: "20px", fontWeight: "500", width: "175px" }}>
+            <span>검색 결과가 없습니다</span>
+          </div>
+        )}
+      </center>
+
+      {/* 위로 가기, 글쓰기 버튼 */}
+      <Link
+        onClick={() => {
+          history.push("/write");
+        }}
+      >
+        <Create
+          style={{
+            position: "fixed",
+            left: "290px",
+            top: "610px",
+            width: "30px",
+            height: "30px",
+            border: "1px solid #575757",
+            backgroundColor: "#ffffff",
+            opacity: "0.8",
+            color: "#000000",
+            fontSize: "10pt",
+          }}
+        />
+      </Link>
+      <Link
+        onClick={() => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }}
       >
         <ExpandLess
           style={{
@@ -508,154 +537,78 @@ const Home = ({
         <DialogContent style={{ width: "270px" }} >
           <Comment />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleAddFood} color="primary">
-            추가
-          </Button>
-
-          <Button onClick={handleAddOpen} color="primary">
-            취소
-          </Button>
-        </DialogActions>
       </Dialog>
-
-      {/*추천 레시피 리스트 */}
-      <Dialog
-        fullScreen
-        open={open_recipe}
-        onClose={openRecipe}
-      // TransitionComponent={Transition}
-      >
-        <AppBar
-          className={classes.appBar}
-          style={{ height: "50px", backgroundColor: "#002060" }}
+      <div>
+        <Dialog
+          open={delete_open}
+          onClose={deleteOpen}
+          aria-labelledby="form-dialog-title"
         >
-          <Toolbar>
-            <IconButton edge="start" onClick={openRecipe} aria-label="close">
-              <Close style={{ color: "#ffffff", marginTop: "-5px" }} />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <div>
-          <br />
-          <b>{recipe_list.length}개의 결과</b>
-          <Card className={useStyles.root} style={{ marginTop: "10px" }}>
-            <CardHeader
-              avatar={
-                <Avatar aria-label="recipe" className={useStyles.avatar}>
-                  <Link
-                    to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}
-                  >
-                    <img
-                      width="40px"
-                      src={`http://localhost:9000/acorn/image/profile/${recipe_list[recipe_index].profile}`}
-                      alt=""
-                    />
-                  </Link>
-                </Avatar>
-              }
-              title={
-                <Link to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}>
-                  {recipe_list[recipe_index].nickname}
-                </Link>
-              }
-              subheader={recipe_list[recipe_index].timeDiffer}
-            />
-            <Link
-              className="ListItem"
-              to={`/recipe/detail?recipe=${recipe_list[recipe_index].rec_num}`}
+          <DialogContent>삭제하시겠습니까?</DialogContent>
+          <DialogActions>
+            <Button onClick={deleteOpen} color="primary">
+              취소
+            </Button>
+            <Button
+              onClick={() => {
+                deleteRecipe();
+              }}
+              style={{ color: "#002060" }}
             >
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  <div className="r2listThumbnail">
-                    <div className="centered">
-                      <img
-                        className="r2listImg"
-                        src={`http://localhost:9000/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <br />
-                  <center>
-                    <span className="recipeSubject">
-                      {recipe_list[recipe_index].subject}
-                    </span>
-                  </center>
-                </Typography>
-              </CardContent>
-            </Link>
-          </Card>
-          <hr className="detailLine" />
-          <div style={{ width: "100%" }}>
-            <p
-              style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
-            >
-              재료
-              <span class="detailIngreTitleText">Ingredients</span>
-            </p>
-            <p className="detailMainTitle">[주재료]</p>
-            {main}
-            <br />
-            <p className="detailMainTitle">[부재료]</p>
-            {sub}
-            <hr className="detailLine" />
-          </div>
-          <b onClick={stepL}>왼쪽</b>
-          <b onClick={stepR}>오른쪽</b>
-        </div>
-      </Dialog>
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 };
-export default inject(({ drag, recipe, info }) => ({
-  count: drag.count,
-  resetCount: drag.resetCount,
-  addCount: drag.addCount,
-  openpot: drag.open,
-  clickPot: drag.clickPot,
-  pot: drag.pot,
-  changePot: drag.changePot,
-  openPot: drag.openPot,
-  stopPot: drag.stopPot,
-  mylist: drag.mylist,
-  addPotFood: drag.addPotFood,
-  deleteList: drag.deleteList,
-  e_add: drag.e_add,
-  select_delete: drag.select_delete,
-  e_store: drag.e_store,
-  addopen: drag.addopen,
-  handleAddFood: drag.handleAddFood,
-  handleAddOpen: drag.handleAddOpen,
-  available_addfood: drag.available_addfood,
-  addFood: drag.addFood,
-  onChangeFood: drag.onChangeFood,
-  handleEnter: drag.handleEnter,
-  handleListFood: drag.handleListFood,
-  refri_delete: drag.refri_delete,
-  handleCook: drag.handleCook,
-  handleRecipe: drag.handleRecipe,
-  r_open: drag.r_open,
-  r_close: drag.r_close,
-  handle_style: drag.handle_style,
-  refir: drag.refir,
-  refir_style: drag.refir_style,
-  binpot: drag.binpot,
-  handleKeyPress: drag.handleKeyPress,
-  //handleSearchRecipe: drag, handleSearchRecipe
-  onchangeSearch_home: recipe.onchangeSearch,
-  search_home: recipe.search,
-  handleEnter_home: recipe.handleEnter,
 
+export default inject(({ recipe, detail, info }) => ({
+  list: recipe.list,
+  getList: recipe.getList,
+  state: recipe.state,
+  changeState: recipe.changeState,
+  addState: recipe.addState,
+  updateList: recipe.updateList,
+  setView: recipe.setView,
+  modal_open: detail.modal_open,
+  url: detail.url,
+  onCopy: detail.onCopy,
+  handleShare: detail.handleShare,
+  anchorEl: recipe.anchorEl,
+  dothandleClick: recipe.dothandleClick,
+  dothandleClose: recipe.dothandleClose,
+  check_j: recipe.check_j,
+  check_s: recipe.check_s,
+  Joayo: recipe.Joayo,
+  Scrap: recipe.Scrap,
+  userEmail: info.userEmail,
+  comment_count: recipe.comment_count,
+
+  comment_open: detail.comment_open,
+  handleComment: detail.handleComment,
+  setRec_num: detail.setRec_num,
+
+  onchangeSearch: recipe.onchangeSearch,
+  search: recipe.search,
+  handleEnter: recipe.handleEnter,
+
+  delete_open: recipe.delete_open,
+  deleteOpen: recipe.deleteOpen,
+  deleteRecipe: recipe.deleteRecipe,
+
+  checkList: recipe.checkList,
+  list_count: recipe.list_count,
+  resetRecipe: recipe.resetRecipe,
+  setFood_cate: recipe.setFood_cate,
+  setSort: recipe.setSort,
   login_state: info.login_state,
-  openRecipe: drag.openRecipe,
-  open_recipe: drag.open_recipe,
-  recipe_list: drag.recipe_list,
-  stepR: drag.stepR,
-  stepL: drag.stepL,
-  recipe_index: drag.recipe_index,
-  ing_list: drag.ing_list,
-  sw: drag.sw,
-  main_ing: drag.main_ing,
-  sub_ing: drag.sub_ing,
-}))(observer(Home));
+
+  cate_list: recipe.cate_list,
+  cate_index: recipe.cate_index,
+  cateR: recipe.cateR,
+  cateL: recipe.cateL,
+  sort: recipe.sort,
+  updateform: recipe.updateform,
+}))(observer(R));

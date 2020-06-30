@@ -50,3 +50,21 @@
   width:auto;
   height: 100%;
 }
+
+.r2listThumbnail2{
+  position: relative; 
+  padding-top: 75%; /* 4:3 ratio */ 
+  overflow: hidden;
+  width: 359px;
+}
+
+.r2listThumbnail2 .centered{
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  -webkit-transform: translate(50%,50%); 
+  -ms-transform: translate(50%,50%); 
+  transform: translate(50%,50%);
+}

@@ -434,12 +434,11 @@ const Home = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAddFood} color="primary">
-            추가
-          </Button>
-
           <Button onClick={handleAddOpen} color="primary">
             취소
+          </Button>
+          <Button onClick={handleAddFood} color="primary">
+            추가
           </Button>
         </DialogActions>
       </Dialog>
@@ -467,17 +466,22 @@ const Home = ({
             <span
               style={{
                 fontSize: "12pt",
-                fontWeight: "500",
-                border: "1px solid #dcdcdc",
-                padding: "5px 10px",
-                borderRadius: "5px"
-              }}>총 {recipe_list.length}개의 레시피 추천
+                fontWeight: "500"
+              }}>[ 총 {recipe_list.length}개의 레시피 추천 ]
               </span>
             <br />
             <br />
-            <KeyboardArrowLeft onClick={stepL} fontSize="large" />
+            <KeyboardArrowLeft onClick={stepL} fontSize="large"
+              style={{
+                border: "1px solid #dcdcdc",
+                borderRadius: "5px"
+              }} />
             &ensp;
-            <KeyboardArrowRight onClick={stepR} fontSize="large" />
+            <KeyboardArrowRight onClick={stepR} fontSize="large"
+              style={{
+                border: "1px solid #dcdcdc",
+                borderRadius: "5px"
+              }} />
           </center>
           <Card className={useStyles.root} style={{ marginTop: "5px" }}>
             <CardHeader
@@ -507,7 +511,7 @@ const Home = ({
             >
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  <div className="r2listThumbnail">
+                  <div className="r2listThumbnail2">
                     <div className="centered">
                       <img
                         className="r2listImg"
@@ -527,8 +531,9 @@ const Home = ({
             </Link>
           </Card>
           <br />
-          <p style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "10px" }}>
+          <p style={{ fontSize: "16pt", fontWeight: "600", marginLeft: "10px" }}>
             재료
+            <span class="detailIngreTitleText">Ingredients</span>
           </p>
           <div>
             <p className="detailMainTitle">[주재료]</p>

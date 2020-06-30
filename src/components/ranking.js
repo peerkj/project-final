@@ -98,8 +98,6 @@ class Counter extends Component {
               ) : (
                     ""
                   )}
-
-
             </div>
             <span id="rankingScore">{c.score}</span>
             {/* 아이콘 */}
