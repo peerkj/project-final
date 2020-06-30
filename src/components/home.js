@@ -193,7 +193,7 @@ const Home = ({
     );
   });
 
-  // //주재료
+  //주재료
   const main = main_ing[recipe_index].map((i, idx) => {
     return (
       <div key={idx} className="detailMainIngre">
@@ -260,8 +260,8 @@ const Home = ({
         <img
           src="/img/refrigerator.png"
           style={{
-            width: "180px",
-            marginTop: "70px"
+            width: "200px",
+            marginTop: "80px"
           }}
           onClick={() => {
             if (login_state) handleClickOpen();
@@ -474,13 +474,13 @@ const Home = ({
             <KeyboardArrowLeft onClick={stepL} fontSize="large"
               style={{
                 border: "1px solid #dcdcdc",
-                borderRadius: "5px"
+                borderRadius: "8px"
               }} />
             &ensp;
             <KeyboardArrowRight onClick={stepR} fontSize="large"
               style={{
                 border: "1px solid #dcdcdc",
-                borderRadius: "5px"
+                borderRadius: "8px"
               }} />
           </center>
           <Card className={useStyles.root} style={{ marginTop: "5px" }}>
