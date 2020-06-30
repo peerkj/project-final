@@ -57,8 +57,6 @@ export default class WriteStore {
     this.tip = e.target.value;
   };
 
-
-
   //순서바꾸기
   @action
   changeStep = (idx, move) => {
@@ -157,16 +155,18 @@ export default class WriteStore {
   handleChange_sub_q = (e, idx) => {
     this.sub_ingre[idx].quantity = e.target.value;
   };
-  @action
-  onChangeStep = (e, idx) => {
-    this.step[idx].content = e.target.value;
-  };
+
   //삭제
   handelDelete_ingre = (idx) => {
     if (!(this.main_ingre.length === 1)) this.main_ingre.splice(idx, 1);
   };
   handelDelete_ingre_sub = (idx) => {
     if (!(this.sub_ingre.length === 1)) this.sub_ingre.splice(idx, 1);
+  };
+
+  @action
+  onChangeStep = (e, idx) => {
+    this.step[idx].content = e.target.value;
   };
   handelDelete_step = (idx) => {
     if (!(this.step.length === 1)) this.step.splice(idx, 1);

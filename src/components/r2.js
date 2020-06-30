@@ -92,6 +92,8 @@ const R = ({
   cate_index,
   cateR,
   cateL,
+
+  updateform,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -133,12 +135,15 @@ const R = ({
   //카테고리 검색
   const FoodList = cate_list[cate_index].map((f, i) => {
     return (
-      <img src={`/img/foodcate/food_${cate_index}_${i}.png`}
-        width="70px" alt=""
+      <img
+        src={`/img/foodcate/food_${cate_index}_${i}.png`}
+        width="70px"
+        alt=""
         style={{ verticalAlign: "middle" }}
         onClick={() => {
           setFood_cate(f);
-        }} />
+        }}
+      />
     );
   });
 
@@ -183,13 +188,19 @@ const R = ({
               >
                 <MenuItem
                   onClick={() => {
-                    handleShare(l.rec_num);
+                    handleShare(l.rec_num, history);
                   }}
                 >
                   공유
                 </MenuItem>
                 {l.email === userEmail && (
-                  <MenuItem onClick={dothandleClose}>수정</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      updateform(l.rec_num, history);
+                    }}
+                  >
+                    수정
+                  </MenuItem>
                 )}
                 {l.email === userEmail && (
                   <MenuItem
@@ -252,14 +263,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -278,14 +289,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -356,16 +367,20 @@ const R = ({
             onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
-
           <center style={{ marginTop: "30px" }}>
-            <KeyboardArrowLeft onClick={cateL} fontSize="large"
-              style={{ verticalAlign: "middle" }} />
+            <KeyboardArrowLeft
+              onClick={cateL}
+              fontSize="large"
+              style={{ verticalAlign: "middle" }}
+            />
             {FoodList}
-            <KeyboardArrowRight onClick={cateR} fontSize="large"
-              style={{ verticalAlign: "middle" }} />
+            <KeyboardArrowRight
+              onClick={cateR}
+              fontSize="large"
+              style={{ verticalAlign: "middle" }}
+            />
           </center>
           <br />
-
           {/* 리스트 분류,정렬 */}
           <div className="recipeStepCate">
             <div
@@ -378,10 +393,12 @@ const R = ({
               {sort === "" ? (
                 <Restore fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <Restore fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <Restore fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
-              <span className="cate_text" style={{ color: "#000000" }}>최신순</span>
+              <span className="cate_text" style={{ color: "#000000" }}>
+                최신순
+              </span>
               <br />
             </div>
             <div
@@ -394,10 +411,12 @@ const R = ({
               {sort === "scrap" ? (
                 <Bookmark fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
-              <span className="cate_text" style={{ color: "#000000" }}>스크랩순</span>
+              <span className="cate_text" style={{ color: "#000000" }}>
+                스크랩순
+              </span>
               <br />
             </div>
             <div
@@ -410,14 +429,15 @@ const R = ({
               {sort === "readcount" ? (
                 <Pageview fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
-              <span className="cate_text" style={{ color: "#000000" }}>조회순</span>
+              <span className="cate_text" style={{ color: "#000000" }}>
+                조회순
+              </span>
               <br />
             </div>
           </div>
-
         </center>
       </div>
       <br />
@@ -439,7 +459,14 @@ const R = ({
           </div>
         )}
         {list_count === 0 && (
-          <div style={{ marginTop: "130px", fontSize: "20px", fontWeight: "500", width: "175px" }}>
+          <div
+            style={{
+              marginTop: "130px",
+              fontSize: "20px",
+              fontWeight: "500",
+              width: "175px",
+            }}
+          >
             <span>검색 결과가 없습니다</span>
           </div>
         )}
@@ -604,5 +631,7 @@ export default inject(({ recipe, detail, info }) => ({
   cate_index: recipe.cate_index,
   cateR: recipe.cateR,
   cateL: recipe.cateL,
-  sort: recipe.sort
+  sort: recipe.sort,
+
+  updateform: recipe.updateform,
 }))(observer(R));

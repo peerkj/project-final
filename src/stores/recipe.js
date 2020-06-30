@@ -66,6 +66,7 @@ export default class CounterStore {
 
   @action
   setFood_cate = (food) => {
+    this.sort = "";
     this.food_cate = food;
     if (food !== "All") this.reset();
     else this.resetRecipe();
@@ -88,17 +89,22 @@ export default class CounterStore {
 
   @action
   updateform = (rec_num, history) => {
-    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + rec_num;
+    let url =
+      "http://localhost:9000/acorn/recipe/updateform?rec_num=" + rec_num;
 
     axios({
       method: "get",
       url: url,
-    }).then((res) => {
-      console.log(res.data);
-    }).catch((err) => {
-      console.log("수정폼오류:" + err);
     })
-  }
+      .then((res) => {
+        console.log(res.data);
+        this.root.recipeupdate.recipe = res.data;
+        history.push("/update");
+      })
+      .catch((err) => {
+        console.log("수정폼오류:" + err);
+      });
+  };
 
   @action
   reset = () => {
@@ -252,7 +258,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //좋아요
@@ -268,7 +274,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
 
@@ -288,7 +294,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //스크랩
@@ -304,7 +310,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
   //댓글 count
@@ -320,6 +326,6 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 }
