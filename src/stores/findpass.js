@@ -14,6 +14,11 @@ export default class JoinStore {
   }
 
   @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleSubmit(history);
+  };
+
+  @action
   handleReset = () => {
     this.name = "";
     this.email = "";

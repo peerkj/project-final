@@ -12,11 +12,17 @@ import {
     follow: stores.following.follow,
     followList: stores.following.followList,
     offNews: stores.following.offNews,
+    login_state: stores.info.login_state,
 }))
 @observer
 class Following extends Component {
     componentWillMount = () => {
+        if (!this.props.login_state) {
+            alert("로그인 후 이용하세요");
+            this.props.history.push("/login");
+        }
         this.props.followList();
+
     }
     render() {
         const { follow, offNews } = this.props;

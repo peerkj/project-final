@@ -90,8 +90,11 @@ const R = ({
   //   /* fake async fetch */
 
   useEffect(() => {
-    let query = queryString.parse(location.search);
 
+    let query = queryString.parse(location.search);
+    if (query.nick === undefined) {
+      history.push("/");
+    }
     setNickname(query.nick, history);
 
 

@@ -128,20 +128,20 @@ const R = ({
         marginLeft: theme.spacing(2),
       },
     },
-    paper: {
-      width: 300,
-    },
   }));
 
   //카테고리 검색
   const FoodList = cate_list[cate_index].map((f, i) => {
     return (
-      <img src={`/img/foodcate/food_${cate_index}_${i}.png`}
-        width="70px" alt=""
+      <img
+        src={`/img/foodcate/food_${cate_index}_${i}.png`}
+        width="70px"
+        alt=""
         style={{ verticalAlign: "middle" }}
         onClick={() => {
           setFood_cate(f);
-        }} />
+        }}
+      />
     );
   });
 
@@ -418,11 +418,12 @@ const R = ({
                   <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
                 )}
               <br />
-              <span className="cate_text" style={{ color: "#000000" }}>조회순</span>
+              <span className="cate_text" style={{ color: "#000000" }}>
+                조회순
+              </span>
               <br />
             </div>
           </div>
-
         </center>
       </div>
       <br />
@@ -444,7 +445,14 @@ const R = ({
           </div>
         )}
         {list_count === 0 && (
-          <div style={{ marginTop: "130px", fontSize: "20px", fontWeight: "500", width: "175px" }}>
+          <div
+            style={{
+              marginTop: "130px",
+              fontSize: "20px",
+              fontWeight: "500",
+              width: "175px",
+            }}
+          >
             <span>검색 결과가 없습니다</span>
           </div>
         )}
@@ -522,7 +530,7 @@ const R = ({
       {/* 공유모달 */}
 
       {/* 댓글모달 */}
-      <Dialog open={comment_open} onClose={handleComment} >
+      <Dialog open={comment_open} onClose={handleComment}>
         <IconButton
           edge="start"
           color="inherit"
