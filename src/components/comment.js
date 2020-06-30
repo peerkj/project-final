@@ -74,8 +74,8 @@ class comment extends Component {
           key={idx}
         >
           <div style={{ display: "inline", verticalAlign: "middle" }}>
-            {c.restep === 2 && <span>&emsp;&nbsp;</span>}
-            {c.restep === 3 && <span>&emsp;&emsp;&ensp;</span>}
+            {/* {c.restep === 2 && <span>&emsp;&nbsp;</span>}
+            {c.restep === 3 && <span>&emsp;&emsp;&ensp;</span>} */}
             {c.relevel === 1 && (
               <img
                 src="/img/comment.png"
@@ -119,7 +119,7 @@ class comment extends Component {
             )}
           </div>
           <br />
-          {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>}
+          {/* {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>} */}
           <span>&emsp;&emsp;&emsp;&ensp;&ensp;{c.content}</span>
           <div className="commentCenterWrapper">
             <div className="commentCenter">
@@ -167,6 +167,7 @@ class comment extends Component {
             <DialogTitle id="form-dialog-title">댓글 쓰기</DialogTitle>
             <DialogContent>
               <TextField
+                autoFocus
                 id="outlined-basic"
                 placeholder="댓글을 입력하세요"
                 variant="outlined"
@@ -184,8 +185,8 @@ class comment extends Component {
                       style={{ maxWidth: "240px", maxHeight: "200px" }}
                     />
                   ) : (
-                    <img src="/img/add_icon2.png" alt="" width="240px" />
-                  )}
+                      <img src="/img/add_icon2.png" alt="" width="240px" />
+                    )}
                 </label>
                 {imgBase64 ? (
                   <Close
@@ -201,8 +202,8 @@ class comment extends Component {
                     id="commentthumb_delete"
                   />
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
               </div>
               <input
                 style={{ display: "none" }}

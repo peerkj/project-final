@@ -143,10 +143,7 @@ class findid extends Component {
               비밀번호 찾기
             </Button>
           </div>
-          <br />
-          <b>{result}</b>
-          <br />
-          {result_state && <Link to="/login">로그인</Link>}
+
           <div>
             <Dialog
               open={modal_open}

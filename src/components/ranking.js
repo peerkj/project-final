@@ -8,6 +8,7 @@ import {
   Restaurant,
   DoubleArrow,
 } from "@material-ui/icons";
+import { Link } from 'react-router-dom';
 
 const fakeFetch = (delay = 1500) =>
   new Promise((res) => setTimeout(res, delay));
@@ -81,7 +82,10 @@ class Counter extends Component {
                   fontSize: "14pt",
                 }}
               >
-                {c.nickname}
+                <Link to={`/mypage?nick=${c.nickname}`}>
+                  {c.nickname}
+                </Link>
+
               </span>
               {/* 소식받기버튼 */}
 
@@ -102,8 +106,8 @@ class Counter extends Component {
                   소식끊기
                 </button>
               ) : (
-                ""
-              )}
+                    ""
+                  )}
             </div>
 
             {/* 아이콘 */}
