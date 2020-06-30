@@ -1,5 +1,13 @@
 import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
+import "../css/ranking.css";
+import {
+  People,
+  Favorite,
+  Bookmark,
+  Restaurant,
+  DoubleArrow,
+} from "@material-ui/icons";
 
 const fakeFetch = (delay = 1500) =>
   new Promise((res) => setTimeout(res, delay));
@@ -9,65 +17,111 @@ const fakeFetch = (delay = 1500) =>
   rankingList: stores.ranking.rankingList,
   chef: stores.ranking.chef,
   check_n: stores.ranking.check_n,
+  checkNews: stores.ranking.checkNews,
+  onNews: stores.ranking.onNews,
+  offNews: stores.ranking.offNews,
 
   onNews: stores.ranking.onNews,
   offNews: stores.ranking.offNews,
 }))
 @observer
 class Counter extends Component {
-  componentDidMount = () => {
+  componentWillMount = () => {
     this.props.rankingList();
   };
-
   render() {
-    const { chef, check_n, onNews, offNews } = this.props;
+    const { chef, check_n, checkNews, onNews, offNews } = this.props;
 
     const ChefList = chef.map((c, idx) => {
       return (
-        <div key={idx} style={{ border: "1px solid gray" }}>
-          {/* 순위 */}
-          <b>{idx + 1}</b>
-          {/* 프로필사진 */}
-          <img
-            src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
-            width="50px"
-            alt=""
-          />
-          {/* 닉네임 */}
-          {c.nickname}
-          {/* 소식받기버튼 */}
-          <br />
-          <div>
-            {check_n[idx] === 0 ? (
-              <span
-                onClick={() => {
-                  onNews(c.email, idx);
-                }}
-              >
-                소식받기
-              </span>
-            ) : (
-              <span
-                onClick={() => {
-                  offNews(c.email, idx);
-                }}
-              >
-                소식끊기
-              </span>
-            )}
+        <div style={{ borderBottom: "1px solid #cfcfcf", padding: "10px" }}>
+          <div style={{ display: "inline" }}>
+            {/* 순위 */}
+            <span
+              style={{
+                padding: "5px 10px",
+                verticalAlign: "middle",
+                color: "#002060",
+                fontWeight: "600",
+                fontSize: "13pt",
+              }}
+            >
+              {idx + 1}
+            </span>
+            {/* 프로필사진 */}
+            <div className="rankingCenterWrapper">
+              <div className="rankingCenter">
+                <div className="centered">
+                  <img
+                    src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-          {/* 그외.. */}
-          총글수 : {c.recipecount} | 소식받기수:{c.newscount} | 좋아요 :{" "}
-          {c.joayocount} | 스크랩 : {c.scrapcount}
+          &ensp;
+          <div style={{ display: "inline" }}>
+            {/* 닉네임 */}
+            <div
+              style={{
+                display: "inline-block",
+                top: "-10px",
+                position: "relative",
+              }}
+            >
+              <span
+                style={{
+                  color: "#002060",
+                  fontWeight: "600",
+                  fontSize: "14pt",
+                }}
+              >
+                {c.nickname}
+              </span>
+              {/* 소식받기버튼 */}
+              {/* {check_n[idx] === 0 && (
+							<span onClick={() => {
+								onNews(c.email, idx);
+							}}>Follow</span>
+						)}
+						{check_n[idx] === 1 && (
+							<span onClick={() => {
+								offNews(c.email, idx);
+							}}>Unfollow</span>
+						)} */}
+            </div>
+
+            {/* 아이콘 */}
+            <div style={{ position: "relative", top: "-30px", left: "100px" }}>
+              <span className="rankIcon">
+                <Restaurant fontSize="small" className="rankIconImg" />
+                <span className="rankIconText">{c.recipecount}</span>
+              </span>
+              <span className="rankIcon">
+                <People fontSize="small" className="rankIconImg" />
+                <span className="rankIconText">{c.newscount}</span>
+              </span>
+              <span className="rankIcon">
+                <Favorite fontSize="small" className="rankIconImg" />
+                <span className="rankIconText">{c.joayocount}</span>
+              </span>
+              <span className="rankIcon">
+                <Bookmark fontSize="small" className="rankIconImg" />
+                <span className="rankIconText">{c.scrapcount}</span>
+              </span>
+            </div>
+          </div>
         </div>
       );
     });
-
     return (
       <div>
-        <h2>랭킹페이지</h2>
-        {ChefList}
-        <br />
+        <DoubleArrow
+          style={{ verticalAlign: "middle", margin: "10px 0 10px 20px" }}
+        />
+        <span className="rankingTitle">Chef Ranking</span>
+        <div style={{ marginTop: "20px" }}>{ChefList}</div>
       </div>
     );
   }

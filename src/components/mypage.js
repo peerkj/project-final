@@ -94,6 +94,7 @@ const R = ({
 
     setNickname(query.nick, history);
 
+
     updateList();
   }, []);
 
@@ -138,7 +139,7 @@ const R = ({
                 width="40px"
                 src={`http://localhost:9000/acorn/image/profile/${
                   sw === 0 ? mypage.profile : l.profile
-                }`}
+                  }`}
                 alt=""
               />
             </Avatar>
@@ -212,7 +213,9 @@ const R = ({
               </div>
               <br />
               <center>
-                <span className="recipeSubject">{l.subject}</span>
+                <span className="recipeSubject">
+                  {l.subject}
+                </span>
               </center>
             </Typography>
           </CardContent>
@@ -228,14 +231,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Favorite
-                style={{ color: "#db555a" }}
-                fontSize="small"
-                onClick={() => {
-                  Joayo(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Favorite
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "500",
@@ -254,14 +257,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Bookmark
-                style={{ color: "#db555a" }}
-                fontSize="small"
-                onClick={() => {
-                  Scrap(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Bookmark
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "500",
@@ -311,7 +314,9 @@ const R = ({
         <center style={{ marginTop: "20px" }}>
           <div className="mypageProfileBox">
             {/* 닉네임 출력 */}
-            <span className="mypageTitle">{mypage.nickname}</span>
+            <span className="mypageTitle">
+              {mypage.nickname}
+            </span>
             <br />
             {/* 프로필 사진 */}
             <div className="mypageCenterWrapper">
@@ -326,14 +331,10 @@ const R = ({
             </div>
             {/* 팔로우 */}
             {checkn === 0 && mypage.email !== userEmail && (
-              <div className="mypageFollowbtn" onClick={onNews}>
-                Follow
-              </div>
+              <div className="mypageFollowbtn" onClick={onNews}>Follow</div>
             )}
             {checkn === 1 && mypage.email !== userEmail && (
-              <div className="mypageUnfollowbtn" onClick={offNews}>
-                Unfollow
-              </div>
+              <div className="mypageUnfollowbtn" onClick={offNews}>Unfollow</div>
             )}
           </div>
         </center>
@@ -351,10 +352,11 @@ const R = ({
               {sw === 0 ? (
                 <ListAlt fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                <ListAlt fontSize="small" style={{ color: "#d0d6e1" }} />
-              )}
+                  <ListAlt fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
               <br />
-              <span className="cate_text">{mypage.nickname}님의 레시피</span>
+              <span className="cate_text">
+                {mypage.nickname}님의 레시피</span>
               <br />
             </div>
             <div
@@ -367,8 +369,8 @@ const R = ({
               {sw === 1 ? (
                 <Bookmark fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
-              )}
+                  <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
               <br />
               <span className="cate_text">스크랩</span>
               <br />
@@ -391,9 +393,7 @@ const R = ({
           </div>
         )}
         {list_count === 0 && (
-          <div
-            style={{ marginTop: "70px", fontSize: "20px", fontWeight: "500" }}
-          >
+          <div style={{ marginTop: "70px", fontSize: "20px", fontWeight: "500" }}>
             <span>글이 없습니다</span>
           </div>
         )}
@@ -466,7 +466,7 @@ const R = ({
           <Comment />
         </DialogContent>
       </Dialog>
-    </div>
+    </div >
   );
 };
 

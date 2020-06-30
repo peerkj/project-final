@@ -121,13 +121,13 @@ export default class CounterStore {
   //카운트 증가
   @action
   addState = () => {
-    this.state.itemCount += 5;
+    this.state.itemCount += 3;
     this.state.isLoading = false;
   };
 
   @action
   setList = () => {
-    let size = this.list.length - 5;
+    let size = this.list.length - 3;
     if (size < 0) size = 0;
     for (let i = size; i < this.list.length; i++) {
       this.anchorEl[i] = null;
@@ -337,19 +337,14 @@ export default class CounterStore {
     axios({
       method: "get",
       url: url,
-      params: {
-        provider: this.mypage.email,
-        receiver: this.root.info.userEmail,
-      },
+      params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
+    }).then((res) => {
+      this.checkn = res.data;
+      console.log(this.checkn);
+    }).catch((err) => {
+      console.log("소식받기체크오류:" + err);
     })
-      .then((res) => {
-        this.checkn = res.data;
-        console.log(this.checkn);
-      })
-      .catch((err) => {
-        console.log("소식받기체크오류:" + err);
-      });
-  };
+  }
 
   //소식받기
   @action
@@ -360,37 +355,12 @@ export default class CounterStore {
       axios({
         method: "get",
         url: url,
-        params: {
-          provider: this.mypage.email,
-          receiver: this.root.info.userEmail,
-        },
+        params: { provider: this.mypage.email, receiver: this.root.info.userEmail },
+      }).then((res) => {
+        this.checkNews();
+      }).catch((err) => {
+        console.log("소식받기오류:" + err);
       })
-        .then((res) => {})
-        .catch((err) => {
-          console.log("소식받기오류:" + err);
-        });
-    }
-  };
-
-  @action
-  offNews = () => {
-    let url = "http://localhost:9000/acorn/connect/offnews";
-
-    if (this.root.info.login_state) {
-      axios({
-        method: "get",
-        url: url,
-        params: {
-          provider: this.mypage.email,
-          receiver: this.root.info.userEmail,
-        },
-      })
-        .then((res) => {
-          this.checkNews();
-        })
-        .catch((err) => {
-          console.log("소식받기취소오류:" + err);
-        });
     }
   }
 

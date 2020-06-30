@@ -37,12 +37,48 @@
     height: 100%;
 }
 
-.de_profile{
-    width: 80px;
-    height: 80px;
+.detailProfileCenterWrapper{
+	width: 80px;
+	height: 80px;
+  }
+  
+  .detailProfileCenter{
+	position: relative; 
+	padding-top: 100%; /* 1:1 ratio */ 
+	overflow: hidden;
     border-radius: 80px;
-    margin-top: -45px;
-}
+    top:-45px;
+  }
+  .detailProfileCenter .centered{
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	right: 0; 
+	bottom: 0; 
+	-webkit-transform: translate(50%,50%); 
+	-ms-transform: translate(50%,50%); 
+	transform: translate(50%,50%);
+  }
+  .detailProfileCenter .centered img{
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	max-width: 100%;
+	height: auto;
+	-webkit-transform: translate(-50%,-50%); 
+	-ms-transform: translate(-50%,-50%); 
+	transform: translate(-50%,-50%);
+  }
+  
+  .detailProfileCenter .centered img.portrait { 
+	width: 100%; 
+	height: auto; 
+  }
+  
+  .detailProfileCenter .centered img.landscape { 
+	width: auto; 
+	height: 100%; 
+  }
 
 .ptdGroup::after{
     content: "";
