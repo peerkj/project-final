@@ -98,9 +98,9 @@
 }
 
 #rankingScore{
+	float: right;
 	font-size: 10pt;
 	font-weight: 400;
-	margin-left: 93px;
 	top:15px;
 	position: relative;
 	font-style: italic;

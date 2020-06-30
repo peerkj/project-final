@@ -11,6 +11,11 @@ export default class JoinStore {
   constructor(root) {
     this.root = root;
   }
+
+  @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleSubmit(history);
+  };
   //input
   @action
   handleNameChange = (e) => {
@@ -81,7 +86,7 @@ export default class JoinStore {
         });
       setTimeout(() => {
         this.root.findPass.handleOpen();
-      }, 3500);
+      }, 2500);
     }
   };
 }

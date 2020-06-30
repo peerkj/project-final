@@ -43,7 +43,7 @@ class Counter extends Component {
 
     const ChefList = chef.map((c, idx) => {
       return (
-        <div style={{ borderBottom: "1px solid #cfcfcf", padding: "10px" }}>
+        <div style={{ borderBottom: "1px solid #cfcfcf", padding: "10px", clear: "both" }}>
           <div style={{ display: "inline" }}>
             {/* 순위 */}
             <span style={{
@@ -99,8 +99,9 @@ class Counter extends Component {
                     ""
                   )}
 
-              <span id="rankingScore">{c.score}</span>
+
             </div>
+            <span id="rankingScore">{c.score}</span>
 
             {/* 아이콘 */}
             <div style={{ position: "relative", top: "-25px", left: "103px", width: "200px" }}>

@@ -15,6 +15,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
   email: stores.findPass.email,
   handleReset: stores.findPass.handleReset,
   error: stores.findPass.error,
+
+  handleEnter: stores.findPass.handleEnter,
+
   //input change
   handleNameChange: stores.findPass.handleNameChange,
   handleEmailChange: stores.findPass.handleEmailChange,
@@ -37,7 +40,7 @@ class findid extends Component {
     this.props.handleReset();
 
     if (this.props.login_state) {
-      this.props.history.replace("/");
+      this.props.history.push("/");
     }
   };
 
@@ -47,6 +50,9 @@ class findid extends Component {
       email,
       history,
       error,
+
+      handleEnter,
+
       //유효성
       available_name,
       available_email,
@@ -108,6 +114,9 @@ class findid extends Component {
                     : "이메일 형식으로 입력하세요"
                 }
                 style={{ width: "200px" }}
+                onKeyPress={(e) => {
+                  handleEnter(e, history);
+                }}
               />
               <br />
               <br />
@@ -154,7 +163,7 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/login");
+                      history.push("/login");
                       handleOpen();
                     }}
                     color="primary"

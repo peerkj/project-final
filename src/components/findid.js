@@ -15,6 +15,8 @@ import { StorefrontSharp } from "@material-ui/icons";
   name: stores.findId.name,
   hp: stores.findId.hp,
 
+  handleEnter: stores.findId.handleEnter,
+
   //input change
   handleNameChange: stores.findId.handleNameChange,
   handleHpChange: stores.findId.handleHpChange,
@@ -49,6 +51,8 @@ class findid extends Component {
       name,
       hp,
       error,
+
+      handleEnter,
       //유효성
       available_name,
       available_hp,
@@ -100,6 +104,9 @@ class findid extends Component {
                 error={!(hp === "010") ^ available_hp}
                 helperText={!available_hp && "하이픈(-) 없이 입력"}
                 style={{ width: "200px" }}
+                onKeyPress={(e) => {
+                  handleEnter(e, history);
+                }}
               />
               <br />
               <br />
@@ -143,7 +150,7 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/login");
+                      history.push("/login");
                       handleOpen();
                     }}
                     color="primary"
@@ -155,7 +162,7 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/findpass");
+                      history.push("/findpass");
                       handleOpen();
                     }}
                     color="primary"
