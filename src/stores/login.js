@@ -99,7 +99,7 @@ export default class loginStore {
     this.root.join.hp = null;
     this.root.join.profile_name = null;
 
-    window.location.push("/");
+    window.location.replace("/");
   };
 
   @computed
