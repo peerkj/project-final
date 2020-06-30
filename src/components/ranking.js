@@ -3,6 +3,9 @@ import { inject, observer } from "mobx-react";
 import "../css/ranking.css";
 import { People, Favorite, Bookmark, Restaurant, DoubleArrow } from '@material-ui/icons';
 
+const fakeFetch = (delay = 1500) =>
+	new Promise((res) => setTimeout(res, delay));
+
 // **** 최하단에 잇던 observer 가 이렇게 위로 올라옵니다.
 @inject((stores) => ({
 	rankingList: stores.ranking.rankingList,
@@ -11,9 +14,11 @@ import { People, Favorite, Bookmark, Restaurant, DoubleArrow } from '@material-u
 	checkNews: stores.ranking.checkNews,
 	onNews: stores.ranking.onNews,
 	offNews: stores.ranking.offNews,
-	// login_state: stores.info.login_state,
-	// userEmail : stores.info.userEmail,
 	updateCheck: stores.ranking.updateCheck,
+	userEmail: stores.info.userEmail,
+	onNews: stores.ranking.onNews,
+	offNews: stores.ranking.offNews,
+
 
 }))
 @observer
@@ -60,30 +65,32 @@ class Counter extends Component {
 							{/* 소식받기버튼 */}
 
 							{check_n[idx] === 0 && c.email !== userEmail ? (
-								<button
+								<span
 									onClick={() => {
 										onNews(c.email, idx);
 									}}
+									id="rankingFollowbtn"
 								>
-									소식받기
-								</button>
+									Follow
+								</span>
 							) : check_n[idx] === 1 && c.email !== userEmail ? (
-								<button
+								<span
 									onClick={() => {
 										offNews(c.email, idx);
 									}}
+									id="rankingUnfollowbtn"
 								>
-									소식끊기
-								</button>
+									Unfollow
+								</span>
 							) : (
 										""
 									)}
 
-							<span style={{}}>{c.score}</span>
+							<span id="rankingScore">Score:{c.score}</span>
 						</div>
 
 						{/* 아이콘 */}
-						<div style={{ position: "relative", top: "-30px", left: "100px" }}>
+						<div style={{ position: "relative", top: "-25px", left: "100px" }}>
 							<span className="rankIcon">
 								<Restaurant fontSize="small" className="rankIconImg" />
 								<span className="rankIconText">{c.recipecount}</span>

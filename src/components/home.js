@@ -137,12 +137,9 @@ const Home = ({
           {my.refrig_name}
         </span>
         <Close
-          id="profileImg_delete"
+          id="homeRef_delete"
           onClick={() => {
             refri_delete(my.refrig_num);
-          }}
-          style={{
-            marginLeft: "-25px",
           }}
         />
       </DragDropContainer>
@@ -155,16 +152,11 @@ const Home = ({
           {e.dragData.food}
         </span>
         <Close
-          id="profileImg_delete"
+          id="homeRefSmall_delete"
           onClick={() => {
             select_delete(e);
           }}
-          style={{
-            position: "relative",
-            top: "-1px",
-            left: "1px",
-            fontSize: "12pt",
-          }}
+          fontSize="small"
         />
       </div>
     );
@@ -194,7 +186,7 @@ const Home = ({
           src="/img/refrigerator.png"
           style={{
             width: "180px",
-            marginTop: "70px"
+            marginTop: "100px"
           }}
           onClick={() => {
             if (login_state) handleClickOpen();
@@ -205,8 +197,6 @@ const Home = ({
           }}
           alt=""
         />
-        <br />
-        <span className="homeText">나만의 냉장고</span>
       </center>
       <Dialog
         fullScreen
@@ -383,7 +373,7 @@ const Home = ({
         fullScreen
         open={open_recipe}
         onClose={openRecipe}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}

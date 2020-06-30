@@ -4,7 +4,7 @@ import axios from 'axios';
 export default class RankingStore {
     @observable chef = [];
     //소식받기
-    @observable check_n = [];
+    @observable check_n = [-1];
     // **** 추가됨
     constructor(root) {
         this.root = root;

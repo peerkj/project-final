@@ -60,11 +60,11 @@
 	height: 100%; 
   }
 
-  .chefTitle{
-	  font-weight: 500;
-	  font-size: 18pt;
-	  font-style: italic;
-	  margin: 10px 5px 20px;
+.chefTitle{
+	font-weight: 500;
+	font-size: 18pt;
+	font-style: italic;
+	margin: 10px 5px 20px;
   }
 .rankingTitle{
 	font-family: 'InkLipquid';
@@ -72,4 +72,34 @@
 	font-style: italic;
 	margin: 10px 0;
 	vertical-align: middle;
+}
+
+#rankingFollowbtn{
+	color: #ffffff;
+	font-size: 9pt;
+	font-weight: 200;
+	background-color: #002060;
+	opacity: 80%;
+	margin-left: 5px;
+	padding: 3px 13px;
+	border-radius: 7px;
+}
+
+#rankingUnfollowbtn{
+	color: #ffffff;
+	font-size: 9pt;
+	font-weight: 200;
+	background-color: #002060;
+	opacity: 40%;
+	margin-left: 5px;
+	padding: 3px 7px;
+	border-radius: 7px;
+}
+
+#rankingScore{
+	font-size: 10pt;
+	font-weight: 400;
+	margin-left: 65px;
+	top:15px;
+	position: relative;
 }
