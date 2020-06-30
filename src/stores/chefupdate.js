@@ -111,7 +111,6 @@ export default class loginStore {
               this.idx = "";
               this.error = "";
               this.pass_open = true;
-              alert("비밀번호가 변경되었습니다");
             }
           } else {
             //실패
@@ -144,6 +143,8 @@ export default class loginStore {
         //headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
+
+          alert("비밀번호가 변경되었습니다");
           this.handleReset();
           this.password = "";
           this.handleOpen2();

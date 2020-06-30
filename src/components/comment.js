@@ -169,6 +169,7 @@ class comment extends Component {
             <DialogTitle id="form-dialog-title">댓글 쓰기</DialogTitle>
             <DialogContent>
               <TextField
+                autoFocus
                 id="outlined-basic"
                 placeholder="댓글을 입력하세요"
                 variant="outlined"

@@ -66,6 +66,7 @@ export default class JoinStore {
         //headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
+          console.log(res.data);
           //없으면 공백
           if (res.data === "") {
             this.result = "일치하는 회원정보가 없습니다.";
@@ -79,7 +80,7 @@ export default class JoinStore {
           console.log("업로드 오류:" + err);
         });
       setTimeout(() => {
-        this.handleOpen();
+        this.root.findPass.handleOpen();
       }, 3500);
     }
   };

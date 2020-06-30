@@ -364,7 +364,7 @@ export default class DragStore {
           }
         }
       }
-    } else {
+    } else if (this.sw === 1) {
       for (let i = 0; i < this.ing_list.length; i++) {
         for (let j = 0; j < this.ing_list[i].length; j++) {
           if (this.ing_list[i][j].sort === "주재료") {
