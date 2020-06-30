@@ -92,6 +92,8 @@ const R = ({
   cate_index,
   cateR,
   cateL,
+
+  updateform,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -185,13 +187,15 @@ const R = ({
               >
                 <MenuItem
                   onClick={() => {
-                    handleShare(l.rec_num);
+                    handleShare(l.rec_num, history);
                   }}
                 >
                   공유
                 </MenuItem>
                 {l.email === userEmail && (
-                  <MenuItem onClick={dothandleClose}>수정</MenuItem>
+                  <MenuItem onClick={() => {
+                    updateform(l.rec_num);
+                  }}>수정</MenuItem>
                 )}
                 {l.email === userEmail && (
                   <MenuItem
@@ -254,14 +258,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Favorite
-                style={{ color: "#db555a" }}
-                fontSize="small"
-                onClick={() => {
-                  Joayo(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Favorite
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "500",
@@ -280,14 +284,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Bookmark
-                style={{ color: "#db555a" }}
-                fontSize="small"
-                onClick={() => {
-                  Scrap(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Bookmark
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "500",
@@ -579,4 +583,6 @@ export default inject(({ recipe, detail, info }) => ({
   cate_index: recipe.cate_index,
   cateR: recipe.cateR,
   cateL: recipe.cateL,
+
+  updateform: recipe.updateform,
 }))(observer(R));

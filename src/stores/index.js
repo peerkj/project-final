@@ -16,6 +16,7 @@ import CU from "./cu";
 import Comment from "./comment";
 import Mypage from "./mypage";
 import RankingStore from "./ranking";
+import RecipeupdateStore from "./recipeupdate";
 class RootStore {
   constructor() {
     this.counter = new CounterStore(this);
@@ -35,6 +36,7 @@ class RootStore {
     this.comment = new Comment(this);
     this.mypage = new Mypage(this);
     this.ranking = new RankingStore(this);
+    this.recipeupdate = new RecipeupdateStore(this);
   }
 }
 
