@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -10,11 +10,9 @@ import {
   DialogActions,
   TextField,
   DialogTitle,
-  Slide,
   IconButton,
   InputAdornment,
   FormControl,
-  InputLabel,
   Input,
 } from "@material-ui/core";
 import { DragDropContainer, DropTarget } from "react-drag-drop-container";
@@ -88,6 +86,10 @@ const Home = ({
   handleEnter_home,
   history,
   login_state,
+  open_recipe,
+  openRecipe,
+  //추천 레시피 리스트
+  recipe_list,
   //handleSearchRecipe
 }) => {
   const classes = useStyles();
@@ -142,9 +144,6 @@ const Home = ({
           style={{
             marginLeft: "-25px",
           }}
-          style={{
-            marginLeft: "-25px",
-          }}
         />
       </DragDropContainer>
     );
@@ -174,8 +173,7 @@ const Home = ({
   return (
     <div width="375px">
       <center>
-        <FormControl className={classes.margin} style={{ marginTop: "230px" }}>
-          {/* <InputLabel htmlFor="input-with-icon-adornment">재료 검색 시 예)#삼겹살</InputLabel> */}
+        <FormControl className={classes.margin} style={{ marginTop: "70px" }}>
           <Input
             onKeyDown={(e) => {
               handleEnter_home(e, history);
@@ -188,40 +186,33 @@ const Home = ({
                 <Search />
               </InputAdornment>
             }
+            placeholder="#재료"
           />
         </FormControl>
+        <br />
+        <img
+          src="/img/refrigerator.png"
+          style={{
+            width: "180px",
+            marginTop: "70px"
+          }}
+          onClick={() => {
+            if (login_state) handleClickOpen();
+            else {
+              alert("로그인 후 이용하세요");
+              history.push("/login");
+            }
+          }}
+          alt=""
+        />
+        <br />
+        <span className="homeText">나만의 냉장고</span>
       </center>
-      <span
-        style={{
-          fontSize: "12pt",
-          fontWeight: "300",
-          position: "absolute",
-          top: "600px",
-          left: "170px",
-        }}
-      >
-        나만의 냉장고
-      </span>
-      <img
-        src="/img/refrigerator.png"
-        style={{
-          float: "right",
-          width: "100px",
-        }}
-        onClick={() => {
-          if (login_state) handleClickOpen();
-          else {
-            alert("로그인 후 이용하세요");
-            history.push("/login");
-          }
-        }}
-        alt=""
-      />
       <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -386,6 +377,31 @@ const Home = ({
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/*추천 레시피 리스트 */}
+      <Dialog
+        fullScreen
+        open={open_recipe}
+        onClose={openRecipe}
+        // TransitionComponent={Transition}
+      >
+        <AppBar
+          className={classes.appBar}
+          style={{ height: "50px", backgroundColor: "#002060" }}
+        >
+          <Toolbar>
+            <IconButton edge="start" onClick={openRecipe} aria-label="close">
+              <Close style={{ color: "#ffffff", marginTop: "-5px" }} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <div>
+          <br />
+          <div style={{ width: "375px" }}>
+            <center></center>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 };
@@ -429,4 +445,7 @@ export default inject(({ drag, recipe, info }) => ({
   handleEnter_home: recipe.handleEnter,
 
   login_state: info.login_state,
+  openRecipe: drag.openRecipe,
+  open_recipe: drag.open_recipe,
+  recipe_list: drag.recipe_list,
 }))(observer(Home));

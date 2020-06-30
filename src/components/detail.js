@@ -244,15 +244,21 @@ class Detail extends Component {
             }}
           >
             <center>
-              <Link to={`/mypage?nick=${all.nickname}`}>
-                <img
-                  className="de_profile"
-                  src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
-                  alt=""
-                />
-              </Link>
-              <p style={{ fontWeight: "500", fontSize: "10pt" }}>
-                <Link to={`/mypage?nick=${all.nickname}`}>{all.nickname}</Link>
+              <div className="detailProfileCenterWrapper">
+                <div className="detailProfileCenter">
+                  <div className="centered">
+                    <Link to={`/mypage?nick=${all.nickname}`}>
+                      <img
+                        src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <p style={{ fontWeight: "500", fontSize: "10pt", marginTop: "-30px" }}>
+                <Link to={`/mypage?nick=${all.nickname}`}
+                  style={{ color: "#000000" }}>{all.nickname}</Link>
               </p>
 
               {/* 요리 제목 */}
@@ -297,8 +303,8 @@ class Detail extends Component {
                   {checkjoa === 0 || !login_state ? (
                     <FavoriteBorderSharp />
                   ) : (
-                    <FavoriteSharp style={{ color: "#db555a" }} />
-                  )}
+                      <FavoriteSharp style={{ color: "#db555a" }} />
+                    )}
                   <br />
                   {checkjoa === 0 || !login_state ? "좋아요" : "좋아요 취소"}
                 </div>
@@ -306,8 +312,8 @@ class Detail extends Component {
                   {checkscr === 0 || !login_state ? (
                     <BookmarkBorderSharp />
                   ) : (
-                    <Bookmark style={{ color: "#db555a" }} />
-                  )}
+                      <Bookmark style={{ color: "#db555a" }} />
+                    )}
                   <br />
                   {checkscr === 0 || !login_state ? "스크랩" : "스크랩 취소"}
                 </div>
