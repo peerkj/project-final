@@ -54,7 +54,7 @@ class header extends Component {
                       className="menuProfileCenterImg"
                     />
                   ) : (
-                      <img src="img/basic_user.png" alt="" />
+                      <img src="/img/basic_user2.png" alt="" className="menuProfileCenterImg" />
                     )}
                 </div>
               </div>
