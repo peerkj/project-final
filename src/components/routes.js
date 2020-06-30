@@ -16,6 +16,7 @@ import Detail from "./detail";
 import Comment from "./comment";
 import Mypage from "./mypage";
 import Ranking from "./ranking";
+import Recipeupdate from "./recipeupdate";
 
 export default () => (
   <Switch>
@@ -34,5 +35,6 @@ export default () => (
     <Route exact path="/comment" component={Comment} />
     <Route exact path="/mypage" component={Mypage} />
     <Route exact path="/ranking" component={Ranking} />
+    <Route exact path="/update" component={Recipeupdate} />
   </Switch>
 );
