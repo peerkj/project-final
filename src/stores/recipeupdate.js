@@ -13,7 +13,9 @@ export default class RecipeupdateStore {
   @observable main_ingre = [];
   @observable sub_ingre = [];
   @observable step = [];
+
   @observable done = [];
+  @observable delete_done = [];
   // **** 추가됨
   constructor(root) {
     this.root = root;
@@ -173,14 +175,14 @@ export default class RecipeupdateStore {
   };
   @action
   handleRemoveRe = () => {
-    this.recipe.repre_photo = "";
+    this.recipe.repre_photo = null;
     this.recipe.repre_photofile = null;
   };
 
   //완성 사진 추가
   @action
   handelAddDone = () => {
-    this.done.push({ comp_photoList: null, imgBase64: "" });
+    this.done.push({ comp_photoList: null, comp_photo: "" });
   };
   //완성 사진 순서 바꾸기
   @action
@@ -196,7 +198,13 @@ export default class RecipeupdateStore {
   };
   //완성 사진 삭제
   handelDelete_done = (idx) => {
-    if (!(idx === this.done.length - 1)) this.done.splice(idx, 1);
+    if (!(idx === this.done.length - 1)) {
+      if (this.done[idx].comp_photoList === null) {
+        this.delete_done.push(this.done[idx].comp_photo);
+      }
+      this.done.splice(idx, 1);
+    }
+    console.log(this.delete_done);
   };
   //완성 사진 넣기
   @action
@@ -213,7 +221,7 @@ export default class RecipeupdateStore {
         // 2. 읽기가 완료되면 아래코드가 실행
         const base64 = reader.result; //reader.result는 이미지를 인코딩(base64 ->이미지를 text인코딩)한 결괏값이 나온다.
         if (base64) {
-          this.done[idx].imgBase64 = base64.toString(); // 파일 base64 상태 업데이트
+          this.done[idx].comp_photo = base64.toString(); // 파일 base64 상태 업데이트
         }
       };
       if (e.target.files[0]) {
@@ -222,11 +230,6 @@ export default class RecipeupdateStore {
       }
       this.handelAddDone();
     }
-  };
-  @action
-  handleRemoveDone = (idx) => {
-    this.done[idx].imgBase64 = "";
-    this.done[idx].comp_photoList = null;
   };
 
   @action
@@ -258,17 +261,165 @@ export default class RecipeupdateStore {
         }
         this.step = this.recipe.orderList;
         for (let i = 0; i < this.step.length; i++) {
-          console.log(this.step[i].photo);
           if (this.step[i].photo !== null) {
             this.step[
               i
             ].photo = `http://localhost:9000/acorn/image/recipe/${this.step[i].photo}`;
           }
         }
-        //this.done=this.recipe.
+        let done_list = this.recipe.comp_photo.split(",");
+        for (let i = 0; i < done_list.length; i++) {
+          this.done.push({
+            comp_photoList: null,
+            comp_photo: done_list[i],
+          });
+        }
+        this.handelAddDone();
       })
+
       .catch((err) => {
         console.log("수정폼오류:" + err);
       });
+  };
+
+  //글쓰기
+  @action
+  insertRecipe = (history) => {
+    let url = "http://localhost:9000/acorn/recipe/update";
+    let submit = new FormData();
+    submit.append("repre_photofile", this.recipe.repre_photofile); //대표사진(썸네일)
+    submit.append("subject", this.recipe.subject);
+    submit.append("summary", this.recipe.summary);
+    submit.append("food_cate", this.recipe.foodcatevalue);
+    submit.append("portion", this.recipe.portionvalue);
+    submit.append("time", this.recipe.timevalue);
+    submit.append("difficult", this.recipe.difftvalue);
+    submit.append("tip", this.recipe.tip);
+    submit.append("email", this.root.info.userEmail);
+
+    //
+    let check_main = false; //주재료
+    let check_sub = false; //부재료
+    let check_step = false; //요리순서
+    let check_done = false; //완성사진
+    //주재료
+    for (let i = 0; i < this.main_ingre.length; i++) {
+      if (
+        this.main_ingre[i].ingre_name === "" ||
+        this.main_ingre[i].quantity === ""
+      ) {
+        check_main = true;
+        break;
+      }
+      submit.append("ingreList[" + i + "].sort", "주재료"); //주재료인지 부재료인지
+      submit.append(
+        "ingreList[" + i + "].ingre_name",
+        this.main_ingre[i].ingre_name
+      ); //재료명
+      submit.append(
+        "ingreList[" + i + "].quantity",
+        this.main_ingre[i].quantity
+      ); //용량
+    }
+    //부재료
+    let j = 0;
+    for (
+      let i = this.main_ingre.length;
+      i < this.main_ingre.length + this.sub_ingre.length;
+      i++
+    ) {
+      if (
+        this.sub_ingre[j].ingre_name === "" ||
+        this.sub_ingre[j].quantity === ""
+      ) {
+        check_sub = true;
+        break;
+      }
+
+      submit.append("ingreList[" + i + "].sort", "부재료"); //주재료인지 부재료인지
+      submit.append(
+        "ingreList[" + i + "].ingre_name",
+        this.sub_ingre[j].ingre_name
+      ); //재료명
+      submit.append(
+        "ingreList[" + i + "].quantity",
+        this.sub_ingre[j].quantity
+      ); //용량
+      j++;
+    }
+
+    //순서
+    for (let i = 0; i < this.step.length; i++) {
+      if (this.step[i].content === "") {
+        check_step = true;
+        break;
+      }
+
+      submit.append("orderList[" + i + "].order_num", i + 1); //순서
+      submit.append("orderList[" + i + "].content", this.step[i].content); //설명
+      submit.append("orderList[" + i + "].photofile", this.step[i].photofile); //사진
+      submit.append("orderList[" + i + "].photo", this.step[i].photo); //파일명
+    }
+    //완성사진
+    let p = this.done.length;
+    if (p > 1) p--;
+    for (let i = 0; i < p; i++) {
+      if (
+        this.done[i].comp_photoList === null &&
+        this.done[i].comp_photo === null
+      ) {
+        check_done = true;
+        break;
+      }
+      if (this.done[i].comp_photoList === null) {
+        submit.append("comp_photoList[" + i + "]", this.done[i].comp_photoList);
+      }
+    }
+
+    if (this.delete_done.length > 0) {
+      for (let i = 0; i < this.delete_done; i++) {
+        submit.append("delcomp[" + i + "]", this.delete_done[i]);
+      }
+    }
+
+    if (this.recipe.repre_photo === null) {
+      alert("대표사진을 등록해주세요");
+    } else if (this.recipe.subject === "") {
+      alert("제목을 입력해주세요");
+    } else if (this.recipe.summary === "") {
+      alert("내용을 입력해주세요");
+    } else if (this.recipe.foodcatevalue === "") {
+      alert("카테고리를 선택해주세요");
+    } else if (
+      this.recipe.portionvalue === "" ||
+      this.recipe.timevalue === "" ||
+      this.recipe.difftvalue === ""
+    ) {
+      alert("요리정보를 선택해주세요");
+    } else if (check_main) {
+      alert("주재료 정보를 입력해주세요");
+    } else if (check_sub) {
+      alert("부재료 정보를 입력해주세요");
+    } else if (this.checkIngre()) {
+      alert("중복된 재료가 있습니다");
+    } else if (check_step) {
+      alert("요리순서 정보를 입력해주세요");
+    } else if (check_done) {
+      alert("완성사진을 한 개 이상 등록해주세요");
+    } else if (this.recipe.tip === "") {
+      alert("요리 Tip을 입력해주세요");
+    } else {
+      axios({
+        method: "post",
+        url: url,
+        data: submit,
+      })
+        .then((res) => {
+          history.push(`/recipe/detail?recipe=${res.data}`);
+        })
+        .catch((err) => {
+          console.log("레시피 업로드 오류:" + err);
+        });
+    }
   };
 }

@@ -65,20 +65,15 @@ const fakeFetch = (delay = 1500) =>
   onChangeStep: stores.recipeupdate.onChangeStep,
 
   //완성 사진
-  done: stores.write.done,
-  changeDone: stores.write.changeDone,
-  handelAddDone: stores.write.handelAddDone,
-  handelDelete_done: stores.write.handelDelete_done,
-  handleChangeDone: stores.write.handleChangeDone,
-  handleRemoveDone: stores.write.handleRemoveDone,
-
-  //
-  represent: stores.write.represent,
+  done: stores.recipeupdate.done,
+  changeDone: stores.recipeupdate.changeDone,
+  handelAddDone: stores.recipeupdate.handelAddDone,
+  handelDelete_done: stores.recipeupdate.handelDelete_done,
+  handleChangeDone: stores.recipeupdate.handleChangeDone,
 
   //
   insertRecipe: stores.write.insertRecipe,
 
-  handleReset: stores.write.handleReset,
   login_state: stores.info.login_state,
 }))
 @observer
@@ -129,8 +124,6 @@ class write extends Component {
       changeStep,
       onChangeStep,
 
-      //
-      represent,
       handleChangeRe,
       handleRemoveRe,
       //
@@ -327,8 +320,16 @@ class write extends Component {
           >
             <div className="finishImg">
               <label htmlFor={idx + "done"}>
-                {i.imgBase64 ? (
-                  <img className="finishImg" src={i.imgBase64} alt="" />
+                {i.comp_photo ? (
+                  <img
+                    className="finishImg"
+                    src={
+                      i.comp_photoList === null
+                        ? `http://localhost:9000/acorn/image/recipe/${i.comp_photo}`
+                        : i.comp_photo
+                    }
+                    alt=""
+                  />
                 ) : (
                   <img className="finishImg" src="img/add_icon2.png" alt="" />
                 )}
