@@ -121,13 +121,13 @@ export default class CounterStore {
   //카운트 증가
   @action
   addState = () => {
-    this.state.itemCount += 3;
+    this.state.itemCount += 5;
     this.state.isLoading = false;
   };
 
   @action
   setList = () => {
-    let size = this.list.length - 3;
+    let size = this.list.length - 5;
     if (size < 0) size = 0;
     for (let i = size; i < this.list.length; i++) {
       this.anchorEl[i] = null;

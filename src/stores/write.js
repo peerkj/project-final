@@ -57,17 +57,7 @@ export default class WriteStore {
     this.tip = e.target.value;
   };
 
-  @action
-  click = () => {
-    console.log(
-      this.subject,
-      this.summary,
-      this.foodcatevalue,
-      this.portionvalue,
-      this.timevalue,
-      this.difftvalue
-    );
-  };
+
 
   //순서바꾸기
   @action
