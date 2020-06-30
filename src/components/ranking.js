@@ -24,12 +24,7 @@ const fakeFetch = (delay = 1500) =>
   offNews: stores.ranking.offNews,
   updateCheck: stores.ranking.updateCheck,
   userEmail: stores.info.userEmail,
-  onNews: stores.ranking.onNews,
-  offNews: stores.ranking.offNews,
 
-
-  onNews: stores.ranking.onNews,
-  offNews: stores.ranking.offNews,
 }))
 @observer
 class Counter extends Component {
