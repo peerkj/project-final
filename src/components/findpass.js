@@ -164,7 +164,7 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/login");
+                      history.push("/login");
                       handleOpen();
                     }}
                     color="primary"

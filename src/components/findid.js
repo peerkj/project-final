@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { TextField, Button } from "@material-ui/core";
 import { Email } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { StorefrontSharp } from "@material-ui/icons";
+
 @inject((stores) => ({
   //input list
   name: stores.findId.name,
@@ -66,25 +64,30 @@ class findid extends Component {
 
     return (
       <div>
-        <div id="divjoin"
+        <div
+          id="divjoin"
           style={{
             width: "290px",
             margin: "0 auto",
-          }}>
+          }}
+        >
           <div style={{ marginTop: "120px" }}>
             <center>
               <Email style={{ verticalAlign: "middle" }} />
-              <span style={{
-                fontSize: "medium",
-                fontWeight: "400",
-                verticalAlign: "middle",
-              }}>
-                이메일 찾기</span>
+              <span
+                style={{
+                  fontSize: "medium",
+                  fontWeight: "400",
+                  verticalAlign: "middle",
+                }}
+              >
+                이메일 찾기
+              </span>
             </center>
           </div>
           <div style={{ marginTop: "50px", marginLeft: "50px" }}>
             <span>이름</span>
-            < br />
+            <br />
             <TextField
               id="standard-basic"
               value={name}
@@ -95,7 +98,8 @@ class findid extends Component {
               }
               style={{ width: "200px" }}
             />
-            <br /><br />
+            <br />
+            <br />
             <span>전화번호</span>
             <br />
             <TextField
@@ -124,11 +128,15 @@ class findid extends Component {
             <Button
               onClick={handleSubmit}
               variant="contained"
-              style={{ backgroundColor: "#002060", color: "#ffffff", marginLeft: "45px" }}
+              style={{
+                backgroundColor: "#002060",
+                color: "#ffffff",
+                marginLeft: "45px",
+              }}
               component="span"
             >
               이메일 찾기
-          </Button>
+            </Button>
             <br />
             <br />
           </div>
@@ -149,7 +157,7 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/login");
+                      history.push("/login");
                       handleOpen();
                     }}
                     color="primary"
@@ -161,7 +169,7 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/findpass");
+                      history.push("/findpass");
                       handleOpen();
                     }}
                     color="primary"
@@ -179,7 +187,7 @@ class findid extends Component {
             </Dialog>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
