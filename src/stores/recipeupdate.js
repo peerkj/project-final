@@ -197,10 +197,10 @@ export default class RecipeupdateStore {
     if (!(idx === this.done.length - 1)) {
       if (this.done[idx].comp_photoList === null) {
         this.delete_done.push(this.done[idx].comp_photo);
+        console.log(this.done[idx].comp_photo);
       }
       this.done.splice(idx, 1);
     }
-    console.log(this.delete_done);
   };
   //완성 사진 넣기
   @action
@@ -230,7 +230,7 @@ export default class RecipeupdateStore {
 
   @action
   updateform = () => {
-    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + 24;
+    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + 23;
 
     axios({
       method: "get",
@@ -375,13 +375,17 @@ export default class RecipeupdateStore {
       submit.append("orderList[" + i + "].order_num", i + 1); //순서
       submit.append("orderList[" + i + "].content", this.step[i].content); //설명
       submit.append("orderList[" + i + "].photofile", this.step[i].photofile); //사진
-      if (this.step[i].photofile === null) {
-        submit.append("orderList[" + i + "].photo", this.step[i].photo); //파일명
+      if (this.step[i].photofile === null && this.step[i].photo !== null) {
+        submit.append(
+          "orderList[" + i + "].photo",
+          this.step[i].photo.split("/").reverse()[0]
+        ); //파일명
       }
     }
     //완성사진
     let p = this.done.length;
     if (p > 1) p--;
+    let k = 0;
     for (let i = 0; i < p; i++) {
       if (
         this.done[i].comp_photoList === null &&
@@ -390,14 +394,16 @@ export default class RecipeupdateStore {
         check_done = true;
         break;
       }
-      if (this.done[i].comp_photoList === null) {
-        submit.append("comp_photoList[" + i + "]", this.done[i].comp_photoList);
+      if (this.done[i].comp_photoList !== null) {
+        submit.append("comp_photoList[" + k + "]", this.done[i].comp_photoList);
+        k++;
       }
     }
 
     if (this.delete_done.length > 0) {
-      for (let i = 0; i < this.delete_done; i++) {
-        submit.append("delcomp[" + i + "]", this.delete_done[i]);
+      for (let i = 0; i < this.delete_done.length; i++) {
+        console.log(this.delete_done[i]);
+        submit.append("delcomp", this.delete_done[i]);
       }
     }
 
