@@ -268,6 +268,7 @@ class join extends Component {
               {error}
             </span>
             <br />
+            <br />
             <Button
               onClick={handleSubmit}
               variant="outlined"

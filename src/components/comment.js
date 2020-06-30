@@ -136,7 +136,7 @@ class comment extends Component {
           </div>
           <br />
           <br />
-          {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>}
+          {/* {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>} */}
           {c.email !== "알수없음" && (
             <span
               onClick={() => {
@@ -156,7 +156,9 @@ class comment extends Component {
     return (
       <div>
         <div>{comment}</div>
-        {err && <b>등록된 댓글이 없습니다</b>}
+        <center>
+          {err && <div style={{ padding: "30px 0 75px" }}>등록된 댓글이 없습니다</div>}
+        </center>
         <div>
           <Dialog
             open={modal_open}
