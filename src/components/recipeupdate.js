@@ -70,7 +70,6 @@ import { inject, observer } from "mobx-react";
 @observer
 class write extends Component {
     componentWillMount = () => {
-        this.props.updateform();
         window.scrollTo(0, 0);
         if (!this.props.login_state) {
             this.props.history.push("/login");
