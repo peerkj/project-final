@@ -196,7 +196,7 @@ const R = ({
                 {l.email === userEmail && (
                   <MenuItem
                     onClick={() => {
-                      updateform(l.rec_num);
+                      updateform(l.rec_num, history);
                     }}
                   >
                     수정

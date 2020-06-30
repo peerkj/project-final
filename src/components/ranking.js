@@ -20,6 +20,7 @@ const fakeFetch = (delay = 1500) =>
   checkNews: stores.ranking.checkNews,
   onNews: stores.ranking.onNews,
   offNews: stores.ranking.offNews,
+  userEmail: stores.info.userEmail,
 
   onNews: stores.ranking.onNews,
   offNews: stores.ranking.offNews,
@@ -30,11 +31,14 @@ class Counter extends Component {
     this.props.rankingList();
   };
   render() {
-    const { chef, check_n, checkNews, onNews, offNews } = this.props;
+    const { chef, check_n, checkNews, onNews, offNews, userEmail } = this.props;
 
     const ChefList = chef.map((c, idx) => {
       return (
-        <div style={{ borderBottom: "1px solid #cfcfcf", padding: "10px" }}>
+        <div
+          key={idx}
+          style={{ borderBottom: "1px solid #cfcfcf", padding: "10px" }}
+        >
           <div style={{ display: "inline" }}>
             {/* 순위 */}
             <span
@@ -80,16 +84,26 @@ class Counter extends Component {
                 {c.nickname}
               </span>
               {/* 소식받기버튼 */}
-              {/* {check_n[idx] === 0 && (
-							<span onClick={() => {
-								onNews(c.email, idx);
-							}}>Follow</span>
-						)}
-						{check_n[idx] === 1 && (
-							<span onClick={() => {
-								offNews(c.email, idx);
-							}}>Unfollow</span>
-						)} */}
+
+              {check_n[idx] === 0 && c.email !== userEmail ? (
+                <button
+                  onClick={() => {
+                    onNews(c.email, idx);
+                  }}
+                >
+                  소식받기
+                </button>
+              ) : check_n[idx] === 1 && c.email !== userEmail ? (
+                <button
+                  onClick={() => {
+                    offNews(c.email, idx);
+                  }}
+                >
+                  소식끊기
+                </button>
+              ) : (
+                ""
+              )}
             </div>
 
             {/* 아이콘 */}
