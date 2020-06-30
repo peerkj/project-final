@@ -242,13 +242,16 @@ export default class DragStore {
         data: food,
       })
         .then((res) => {
-          this.openRecipe();
-          this.recipe_list = res.data;
-
-          for (let i = 0; i < this.recipe_list.length; i++) {
-            this.ing_list[i] = res.data[i].ingreList;
+          if (res.data.length !== 0) {
+            this.openRecipe();
+            this.recipe_list = res.data;
+            for (let i = 0; i < this.recipe_list.length; i++) {
+              this.ing_list[i] = res.data[i].ingreList;
+            }
+            this.sortIng();
+          } else {
+            alert("추천 레시피가 없습니다");
           }
-          this.sortIng();
         })
         .catch((err) => {
           console.log("요리하기오류:" + err);
@@ -273,12 +276,16 @@ export default class DragStore {
         data: recipe,
       })
         .then((res) => {
-          this.openRecipe();
-          this.recipe_list = res.data;
-          for (let i = 0; i < this.recipe_list.length; i++) {
-            this.ing_list[i] = res.data[i].ingreList;
+          if (res.data.length !== 0) {
+            this.openRecipe();
+            this.recipe_list = res.data;
+            for (let i = 0; i < this.recipe_list.length; i++) {
+              this.ing_list[i] = res.data[i].ingreList;
+            }
+            this.sortIng();
+          } else {
+            alert("추천 레시피가 없습니다");
           }
-          this.sortIng();
         })
         .catch((err) => {
           console.log("레시피불러오기오류:" + err);
@@ -364,7 +371,7 @@ export default class DragStore {
           }
         }
       }
-    } else if (this.sw === 1) {
+    } else {
       for (let i = 0; i < this.ing_list.length; i++) {
         for (let j = 0; j < this.ing_list[i].length; j++) {
           if (this.ing_list[i][j].sort === "주재료") {

@@ -39,7 +39,6 @@ const fakeFetch = (delay = 1500) =>
 
   //대표사진
   handleChangeRe: stores.recipeupdate.handleChangeRe,
-  handleRemoveRe: stores.recipeupdate.handleRemoveRe,
 
   //주,부 재료 추가
   handelAddMain: stores.recipeupdate.handelAddMain,
@@ -65,20 +64,15 @@ const fakeFetch = (delay = 1500) =>
   onChangeStep: stores.recipeupdate.onChangeStep,
 
   //완성 사진
-  done: stores.write.done,
-  changeDone: stores.write.changeDone,
-  handelAddDone: stores.write.handelAddDone,
-  handelDelete_done: stores.write.handelDelete_done,
-  handleChangeDone: stores.write.handleChangeDone,
-  handleRemoveDone: stores.write.handleRemoveDone,
+  done: stores.recipeupdate.done,
+  changeDone: stores.recipeupdate.changeDone,
+  handelAddDone: stores.recipeupdate.handelAddDone,
+  handelDelete_done: stores.recipeupdate.handelDelete_done,
+  handleChangeDone: stores.recipeupdate.handleChangeDone,
 
   //
-  represent: stores.write.represent,
+  insertRecipe: stores.recipeupdate.insertRecipe,
 
-  //
-  insertRecipe: stores.write.insertRecipe,
-
-  handleReset: stores.write.handleReset,
   login_state: stores.info.login_state,
 }))
 @observer
@@ -129,10 +123,8 @@ class write extends Component {
       changeStep,
       onChangeStep,
 
-      //
-      represent,
       handleChangeRe,
-      handleRemoveRe,
+
       //
       insertRecipe,
     } = this.props;
@@ -270,7 +262,7 @@ class write extends Component {
                 onChangeStep(e, idx);
               }}
             />
-            <label htmlFor={idx}>
+            <label htmlFor={`${idx}_step`}>
               {i.photo ? (
                 <img className="cookImg" src={i.photo} alt="" />
               ) : (
@@ -302,7 +294,7 @@ class write extends Component {
               }}
               style={{ display: "none" }}
               accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"
-              id={idx}
+              id={`${idx}_step`}
               type="file"
             />
           </DropTarget>
@@ -327,8 +319,16 @@ class write extends Component {
           >
             <div className="finishImg">
               <label htmlFor={idx + "done"}>
-                {i.imgBase64 ? (
-                  <img className="finishImg" src={i.imgBase64} alt="" />
+                {i.comp_photo ? (
+                  <img
+                    className="finishImg"
+                    src={
+                      i.comp_photoList === null
+                        ? `http://localhost:9000/acorn/image/recipe/${i.comp_photo}`
+                        : i.comp_photo
+                    }
+                    alt=""
+                  />
                 ) : (
                   <img className="finishImg" src="img/add_icon2.png" alt="" />
                 )}
@@ -377,16 +377,6 @@ class write extends Component {
                   />
                 )}
               </label>
-              {recipe.repre_photo ? (
-                <Close
-                  onClick={() => {
-                    handleRemoveRe();
-                  }}
-                  id="thumbnail_delete"
-                />
-              ) : (
-                ""
-              )}
             </div>
             <input
               onChange={handleChangeRe}

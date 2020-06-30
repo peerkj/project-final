@@ -244,7 +244,6 @@ export default class WriteStore {
     submit.append("time", this.timevalue);
     submit.append("difficult", this.difftvalue);
     submit.append("tip", this.tip);
-    submit.append("ingreList", this.main_ingre);
     submit.append("email", this.root.info.userEmail);
 
     //

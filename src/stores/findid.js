@@ -39,7 +39,7 @@ export default class JoinStore {
   @computed
   get available_hp() {
     var regExp = /^[0-9]{11,12}$/;
-    console.log(regExp.test(this.hp));
+
     return regExp.test(this.hp);
   }
 
@@ -77,7 +77,7 @@ export default class JoinStore {
           }
         })
         .catch((err) => {
-          console.log("업로드 오류:" + err);
+          `console.log`("업로드 오류:" + err);
         });
       setTimeout(() => {
         this.root.findPass.handleOpen();

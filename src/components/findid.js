@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import { inject, observer } from "mobx-react";
 import { TextField, Button } from "@material-ui/core";
 import { Email } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import { StorefrontSharp } from "@material-ui/icons";
+
 @inject((stores) => ({
   //input list
   name: stores.findId.name,
@@ -143,7 +141,7 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/login");
+                      history.push("/login");
                       handleOpen();
                     }}
                     color="primary"
@@ -155,7 +153,7 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/findpass");
+                      history.push("/findpass");
                       handleOpen();
                     }}
                     color="primary"
@@ -173,7 +171,7 @@ class findid extends Component {
             </Dialog>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
