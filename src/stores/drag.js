@@ -16,10 +16,25 @@ export default class DragStore {
   @observable refir_style = "refclose";
   @observable binpot = false;
   @observable error = "";
-  @observable recipe_list = [];
+  @observable sw = 0;
+
   //추천레시피 리스트
   @observable open_recipe = false;
-
+  @observable recipe_list = [
+    {
+      nickname: "",
+      rec_num: "",
+      repre_photo: "",
+      subject: "",
+      timeDiffer: "",
+      ingreList: [{ sort: "", ingre_name: "", quantity: "" }, {}],
+    },
+    {},
+  ];
+  @observable recipe_index = 0;
+  @observable ing_list = [[{ sort: "", ingre_name: "", quantity: "" }], []];
+  @observable main_ing = [[{ check: "", ingre_name: "", quantity: "" }], []];
+  @observable sub_ing = [[{ check: "", ingre_name: "", quantity: "" }], []];
   constructor(root) {
     this.root = root;
   }
@@ -45,7 +60,7 @@ export default class DragStore {
     setTimeout(() => {
       this.refir_style = "refopen";
       this.handle_style = "open";
-    }, 2000);
+    }, 0);
   };
   //모달 close
   @action
@@ -212,6 +227,7 @@ export default class DragStore {
 
   @action
   handleCook = () => {
+    this.sw = 1;
     let url = "http://localhost:9000/acorn/refri/search";
     let food = new FormData();
     if (this.e_store.length === 0) {
@@ -226,9 +242,13 @@ export default class DragStore {
         data: food,
       })
         .then((res) => {
-          console.log(res.data);
           this.openRecipe();
           this.recipe_list = res.data;
+
+          for (let i = 0; i < this.recipe_list.length; i++) {
+            this.ing_list[i] = res.data[i].ingreList;
+          }
+          this.sortIng();
         })
         .catch((err) => {
           console.log("요리하기오류:" + err);
@@ -237,6 +257,7 @@ export default class DragStore {
   };
   @action
   handleRecipe = () => {
+    this.sw = 0;
     let url = "http://localhost:9000/acorn/refri/search";
     let recipe = new FormData();
     if (this.mylist.length === 0) {
@@ -252,13 +273,152 @@ export default class DragStore {
         data: recipe,
       })
         .then((res) => {
-          console.log(res.data);
           this.openRecipe();
           this.recipe_list = res.data;
+          for (let i = 0; i < this.recipe_list.length; i++) {
+            this.ing_list[i] = res.data[i].ingreList;
+          }
+          this.sortIng();
         })
         .catch((err) => {
           console.log("레시피불러오기오류:" + err);
         });
+    }
+  };
+
+  // >버튼
+  @action
+  stepR = () => {
+    if (this.recipe_index === this.recipe_list.length - 1)
+      this.recipe_index = 0;
+    else this.recipe_index++;
+  };
+
+  // <버튼
+  @action
+  stepL = () => {
+    if (this.recipe_index === 0)
+      this.recipe_index = this.recipe_list.length - 1;
+    else this.recipe_index--;
+  };
+
+  @action
+  sortIng = () => {
+    //sw 0
+    this.main_ing = [[], [], [], [], []];
+    this.sub_ing = [[], [], [], [], []];
+    this.recipe_index = 0;
+
+    if (this.sw === 0) {
+      for (let i = 0; i < this.ing_list.length; i++) {
+        for (let j = 0; j < this.ing_list[i].length; j++) {
+          if (this.ing_list[i][j].sort === "주재료") {
+            for (let k = 0; k < this.mylist.length; k++) {
+              if (
+                this.ing_list[i][j].ingre_name === this.mylist[k].refrig_name
+              ) {
+                this.main_ing[i].push({
+                  check: 1,
+                  ingre_name: this.ing_list[i][j].ingre_name,
+
+                  quantity: this.ing_list[i][j].quantity,
+                });
+                break;
+              } else {
+                if (k === this.mylist.length - 1) {
+                  this.main_ing[i].push({
+                    check: 0,
+                    ingre_name: this.ing_list[i][j].ingre_name,
+                    quantity: this.ing_list[i][j].quantity,
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+      for (let i = 0; i < this.ing_list.length; i++) {
+        for (let j = 0; j < this.ing_list[i].length; j++) {
+          if (this.ing_list[i][j].sort === "부재료") {
+            for (let k = 0; k < this.mylist.length; k++) {
+              if (
+                this.ing_list[i][j].ingre_name === this.mylist[k].refrig_name
+              ) {
+                this.sub_ing[i].push({
+                  check: 1,
+                  ingre_name: this.ing_list[i][j].ingre_name,
+
+                  quantity: this.ing_list[i][j].quantity,
+                });
+                break;
+              } else {
+                if (k === this.mylist.length - 1) {
+                  this.sub_ing[i].push({
+                    check: 0,
+                    ingre_name: this.ing_list[i][j].ingre_name,
+                    quantity: this.ing_list[i][j].quantity,
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+    } else {
+      for (let i = 0; i < this.ing_list.length; i++) {
+        for (let j = 0; j < this.ing_list[i].length; j++) {
+          if (this.ing_list[i][j].sort === "주재료") {
+            for (let k = 0; k < this.e_store.length; k++) {
+              if (
+                this.ing_list[i][j].ingre_name === this.e_store[k].dragData.food
+              ) {
+                this.main_ing[i].push({
+                  check: 1,
+                  ingre_name: this.ing_list[i][j].ingre_name,
+
+                  quantity: this.ing_list[i][j].quantity,
+                });
+                break;
+              } else {
+                if (k === this.e_store.length - 1) {
+                  this.main_ing[i].push({
+                    check: 0,
+                    ingre_name: this.ing_list[i][j].ingre_name,
+                    quantity: this.ing_list[i][j].quantity,
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+      for (let i = 0; i < this.ing_list.length; i++) {
+        for (let j = 0; j < this.ing_list[i].length; j++) {
+          if (this.ing_list[i][j].sort === "부재료") {
+            for (let k = 0; k < this.e_store.length; k++) {
+              if (
+                this.ing_list[i][j].ingre_name === this.e_store[k].dragData.food
+              ) {
+                this.sub_ing[i].push({
+                  check: 1,
+                  ingre_name: this.ing_list[i][j].ingre_name,
+
+                  quantity: this.ing_list[i][j].quantity,
+                });
+                break;
+              } else {
+                if (k === this.e_store.length - 1) {
+                  this.sub_ing[i].push({
+                    check: 0,
+                    ingre_name: this.ing_list[i][j].ingre_name,
+                    quantity: this.ing_list[i][j].quantity,
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
     }
   };
 }

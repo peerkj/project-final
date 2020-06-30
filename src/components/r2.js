@@ -128,6 +128,9 @@ const R = ({
         marginLeft: theme.spacing(2),
       },
     },
+    paper: {
+      width: 300,
+    },
   }));
 
   //카테고리 검색
@@ -519,19 +522,19 @@ const R = ({
       {/* 공유모달 */}
 
       {/* 댓글모달 */}
-      <Dialog open={comment_open} onClose={handleComment}>
+      <Dialog open={comment_open} onClose={handleComment} >
         <IconButton
           edge="start"
           color="inherit"
           onClick={handleComment}
           aria-label="close"
         >
-          <Close />
+          <Close style={{ marginLeft: "12px" }} />
         </IconButton>
 
         <br />
         <br />
-        <DialogContent>
+        <DialogContent style={{ width: "270px" }} >
           <Comment />
         </DialogContent>
       </Dialog>

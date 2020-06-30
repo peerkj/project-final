@@ -74,9 +74,8 @@ class comment extends Component {
           key={idx}
         >
           <div style={{ display: "inline", verticalAlign: "middle" }}>
-            {/* {c.restep === 2 && <span>&emsp;&nbsp;</span>}
-            {c.restep === 3 && <span>&emsp;&emsp;&ensp;</span>} */}
-            {c.relevel === 1 && (
+            {c.relevel === 2 && <span>&emsp;&nbsp;</span>}
+            {c.relevel >= 1 && (
               <img
                 src="/img/comment.png"
                 alt=""
@@ -119,7 +118,8 @@ class comment extends Component {
             )}
           </div>
           <br />
-          {/* {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>} */}
+          {c.relevel === 2 && <span>&emsp;&ensp;</span>}
+          {c.relevel >= 1 && <span>&emsp;&emsp;&ensp;</span>}
           <span>&emsp;&emsp;&emsp;&ensp;&ensp;{c.content}</span>
           <div className="commentCenterWrapper">
             <div className="commentCenter">
@@ -136,8 +136,8 @@ class comment extends Component {
           </div>
           <br />
           <br />
-          {/* {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>} */}
-          {c.email !== "알수없음" && (
+          {c.relevel >= 1 && <span>&emsp;&emsp;&ensp;</span>}
+          {c.email !== "알수없음" && c.relevel < 2 && (
             <span
               onClick={() => {
                 if (login_state) {
@@ -157,7 +157,7 @@ class comment extends Component {
       <div>
         <div>{comment}</div>
         <center>
-          {err && <div style={{ padding: "30px 0 75px" }}>등록된 댓글이 없습니다</div>}
+          {err && <div style={{ padding: "30px 0 90px" }}>등록된 댓글이 없습니다</div>}
         </center>
         <div>
           <Dialog
@@ -192,9 +192,9 @@ class comment extends Component {
                 {imgBase64 ? (
                   <Close
                     style={{
-                      position: "relative",
-                      top: "-198px",
-                      marginLeft: "220px",
+                      position: "absolute",
+                      top: "135px",
+                      left: "20px",
                       zIndex: "2",
                     }}
                     onClick={() => {

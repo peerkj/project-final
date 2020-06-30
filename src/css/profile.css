@@ -62,10 +62,9 @@
 
 /* 댓글창 */
 .commentCenterWrapper{
-width: 100px;
+width: 90px;
 float: right;
-margin-top: -10px;
-margin-right: 5px;
+margin-top: -5px;
 }
 .commentCenter{
 position: relative; 
