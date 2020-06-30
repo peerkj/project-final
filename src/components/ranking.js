@@ -24,7 +24,7 @@ class Counter extends Component {
 
     const ChefList = chef.map((c, idx) => {
       return (
-        <div style={{ border: "1px solid gray" }}>
+        <div key={idx} style={{ border: "1px solid gray" }}>
           {/* 순위 */}
           <b>{idx + 1}</b>
           {/* 프로필사진 */}

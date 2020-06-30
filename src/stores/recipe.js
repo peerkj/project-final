@@ -66,6 +66,7 @@ export default class CounterStore {
 
   @action
   setFood_cate = (food) => {
+    this.sort = "";
     this.food_cate = food;
     if (food !== "All") this.reset();
     else this.resetRecipe();
@@ -238,7 +239,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //좋아요
@@ -254,7 +255,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
 
@@ -274,7 +275,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //스크랩
@@ -290,7 +291,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
   //댓글 count
@@ -306,6 +307,6 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 }
