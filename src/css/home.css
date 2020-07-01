@@ -35,9 +35,15 @@
     clear: both;
 }
 
-.homeText{
-    font-family: 'S-CoreDream-3Light';
-    font-weight: 600;
-    font-size: 20pt;
-    color: #002060;
+#homeRef_delete{
+    position: relative;
+    z-index: 2;
+    top: -115px;
+    left: 45px;
+}
+
+#homeRefSmall_delete{
+    position: relative;
+    z-index: 2;
+    top:5px;
 }

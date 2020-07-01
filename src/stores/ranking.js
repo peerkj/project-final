@@ -12,14 +12,13 @@ export default class RankingStore {
 
   @action
   rankingList = () => {
-    let url = "http://localhost:9000/acorn/ranking/sorting";
+    let url = "http://13.124.83.195:8080/acorn/ranking/sorting";
 
     axios({
       method: "get",
       url: url,
     })
       .then((res) => {
-        console.log(res.data);
         this.chef = res.data;
         this.setList();
       })
@@ -41,7 +40,7 @@ export default class RankingStore {
   //소식받기체크
   @action
   checkNews = (email, i) => {
-    let url = "http://localhost:9000/acorn/connect/newscheck";
+    let url = "http://13.124.83.195:8080/acorn/connect/newscheck";
 
     axios({
       method: "get",
@@ -59,7 +58,7 @@ export default class RankingStore {
   //소식받기
   @action
   onNews = (email, i) => {
-    let url = "http://localhost:9000/acorn/connect/onnews";
+    let url = "http://13.124.83.195:8080/acorn/connect/onnews";
 
     if (this.root.info.login_state) {
       axios({
@@ -80,7 +79,7 @@ export default class RankingStore {
   //소식받기취소
   @action
   offNews = (email, i) => {
-    let url = "http://localhost:9000/acorn/connect/offnews";
+    let url = "http://13.124.83.195:8080/acorn/connect/offnews";
 
     if (this.root.info.login_state) {
       axios({

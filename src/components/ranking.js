@@ -8,6 +8,7 @@ import {
   Restaurant,
   DoubleArrow,
 } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 const fakeFetch = (delay = 1500) =>
   new Promise((res) => setTimeout(res, delay));
@@ -20,10 +21,8 @@ const fakeFetch = (delay = 1500) =>
   checkNews: stores.ranking.checkNews,
   onNews: stores.ranking.onNews,
   offNews: stores.ranking.offNews,
+  updateCheck: stores.ranking.updateCheck,
   userEmail: stores.info.userEmail,
-
-  onNews: stores.ranking.onNews,
-  offNews: stores.ranking.offNews,
 }))
 @observer
 class Counter extends Component {
@@ -36,8 +35,11 @@ class Counter extends Component {
     const ChefList = chef.map((c, idx) => {
       return (
         <div
-          key={idx}
-          style={{ borderBottom: "1px solid #cfcfcf", padding: "10px" }}
+          style={{
+            borderBottom: "1px solid #cfcfcf",
+            padding: "10px",
+            clear: "both",
+          }}
         >
           <div style={{ display: "inline" }}>
             {/* 순위 */}
@@ -45,9 +47,8 @@ class Counter extends Component {
               style={{
                 padding: "5px 10px",
                 verticalAlign: "middle",
-                color: "#002060",
                 fontWeight: "600",
-                fontSize: "13pt",
+                fontSize: "16pt",
               }}
             >
               {idx + 1}
@@ -56,10 +57,12 @@ class Counter extends Component {
             <div className="rankingCenterWrapper">
               <div className="rankingCenter">
                 <div className="centered">
-                  <img
-                    src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
-                    alt=""
-                  />
+                  <Link to={`/mypage?nick=${c.nickname}`}>
+                    <img
+                      src={`http://13.124.83.195:8080/acorn/image/profile/${c.profile}`}
+                      alt=""
+                    />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -76,38 +79,48 @@ class Counter extends Component {
             >
               <span
                 style={{
-                  color: "#002060",
                   fontWeight: "600",
                   fontSize: "14pt",
+                  verticalAlign: "middle",
                 }}
               >
-                {c.nickname}
+                <Link to={`/mypage?nick=${c.nickname}`}>{c.nickname}</Link>
               </span>
-              {/* 소식받기버튼 */}
 
+              {/* 소식받기버튼 */}
               {check_n[idx] === 0 && c.email !== userEmail ? (
-                <button
+                <span
                   onClick={() => {
                     onNews(c.email, idx);
                   }}
+                  id="rankingFollowbtn"
                 >
-                  소식받기
-                </button>
+                  Follow
+                </span>
               ) : check_n[idx] === 1 && c.email !== userEmail ? (
-                <button
+                <span
                   onClick={() => {
                     offNews(c.email, idx);
                   }}
+                  id="rankingUnfollowbtn"
                 >
-                  소식끊기
-                </button>
+                  Unfollow
+                </span>
               ) : (
                 ""
               )}
             </div>
+            <div id="rankingScore">{c.score}</div>
 
             {/* 아이콘 */}
-            <div style={{ position: "relative", top: "-30px", left: "100px" }}>
+            <div
+              style={{
+                position: "relative",
+                top: "-25px",
+                left: "103px",
+                width: "200px",
+              }}
+            >
               <span className="rankIcon">
                 <Restaurant fontSize="small" className="rankIconImg" />
                 <span className="rankIconText">{c.recipecount}</span>
@@ -131,10 +144,31 @@ class Counter extends Component {
     });
     return (
       <div>
-        <DoubleArrow
-          style={{ verticalAlign: "middle", margin: "10px 0 10px 20px" }}
-        />
-        <span className="rankingTitle">Chef Ranking</span>
+        <div style={{ margin: "30px 0 0 20px" }}>
+          <DoubleArrow style={{ verticalAlign: "middle" }} fontSize="large" />
+          <span className="rankingTitle">Chef Ranking</span>
+        </div>
+        <div
+          style={{
+            marginTop: "25px",
+            fontWeight: "600",
+            fontSize: "11pt",
+            borderBottom: "1px solid #cfcfcf",
+            width: "360px",
+            padding: "0 0 10px 0",
+          }}
+        >
+          <span style={{ marginLeft: "12px" }}>순위</span>
+          <div style={{ float: "right", marginRight: "5px" }}>
+            <img
+              src="/img/star.png"
+              alt=""
+              width="25px"
+              style={{ verticalAlign: "middle" }}
+            />
+            <span style={{ verticalAlign: "middle" }}>셰프 점수</span>
+          </div>
+        </div>
         <div style={{ marginTop: "20px" }}>{ChefList}</div>
       </div>
     );

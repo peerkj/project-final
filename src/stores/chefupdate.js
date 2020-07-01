@@ -78,7 +78,7 @@ export default class loginStore {
   }
   @action
   handleUpdate = (history) => {
-    let url = "http://localhost:9000/acorn/chef/login";
+    let url = "http://13.124.83.195:8080/acorn/chef/login";
     let update = new FormData();
     update.append("email", this.root.info.userEmail);
     update.append("pass", this.password);
@@ -111,7 +111,6 @@ export default class loginStore {
               this.idx = "";
               this.error = "";
               this.pass_open = true;
-              alert("비밀번호가 변경되었습니다");
             }
           } else {
             //실패
@@ -126,7 +125,7 @@ export default class loginStore {
   };
   @action
   handlePassUpdate = () => {
-    let url = "http://localhost:9000/acorn/chef/modpass";
+    let url = "http://13.124.83.195:8080/acorn/chef/modpass";
     let update = new FormData();
     update.append("email", this.root.info.userEmail);
     update.append("pass", this.password);
@@ -144,6 +143,7 @@ export default class loginStore {
         //headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
+          alert("비밀번호가 변경되었습니다");
           this.handleReset();
           this.password = "";
           this.handleOpen2();

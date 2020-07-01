@@ -30,6 +30,11 @@ export default class JoinStore {
     this.error = "";
   };
 
+  @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleSubmit(history);
+  };
+
   //유효성검사
   @computed
   get available_name() {
@@ -39,7 +44,7 @@ export default class JoinStore {
   @computed
   get available_hp() {
     var regExp = /^[0-9]{11,12}$/;
-    console.log(regExp.test(this.hp));
+
     return regExp.test(this.hp);
   }
 
@@ -55,7 +60,7 @@ export default class JoinStore {
     } else if (!this.available_hp) {
       this.error = "전화번호 형식을 지켜주세요";
     } else {
-      let url = "http://localhost:9000/acorn/chef/findid";
+      let url = "http://13.124.83.195:8080/acorn/chef/findid";
       let findId = new FormData();
       findId.append("name", this.name);
       findId.append("hp", this.hp);
@@ -79,8 +84,8 @@ export default class JoinStore {
           console.log("업로드 오류:" + err);
         });
       setTimeout(() => {
-        this.handleOpen();
-      }, 3500);
+        this.root.findPass.handleOpen();
+      }, 2500);
     }
   };
 }

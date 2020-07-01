@@ -52,9 +52,13 @@ body {
 
 #thumbnail_delete {
   position: relative;
-  top: -138px;
-  margin-left: 120px;
+  top: -130px;
+  margin-left: 111px;
   z-index: 2;
+  border: 1px solid #dadada;
+  border-radius: 15px;
+  background-color: #dadada;
+  opacity: 60%;
 }
 
 .line{

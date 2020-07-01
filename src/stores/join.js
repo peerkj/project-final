@@ -99,7 +99,7 @@ export default class JoinStore {
   handleChangeImg = (e) => {
     let reader = new FileReader();
     let fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp)$/;
-    console.log("변경");
+
     if (!fileForm.test(e.target.value.toLowerCase()) && e.target.value !== "") {
       alert("이미지 파일만 업로드하세요!!!!!");
       e.target.value = "";
@@ -127,7 +127,7 @@ export default class JoinStore {
   //중복체크
   @computed
   get checkEmail() {
-    let url = "http://localhost:9000/acorn/chef/checkid";
+    let url = "http://13.124.83.195:8080/acorn/chef/checkid";
     let email = new FormData();
     email.append("email", this.email);
     if (this.available_email) {
@@ -152,7 +152,7 @@ export default class JoinStore {
   }
   @computed
   get checkNickname() {
-    let url = "http://localhost:9000/acorn/chef/checknick";
+    let url = "http://13.124.83.195:8080/acorn/chef/checknick";
     let nickname = new FormData();
     nickname.append("nickname", this.nickname);
     if (this.available_nickname) {
@@ -178,7 +178,7 @@ export default class JoinStore {
 
   @action
   handleSubmit = () => {
-    let url = "http://localhost:9000/acorn/chef/regist";
+    let url = "http://13.124.83.195:8080/acorn/chef/regist";
     let submit = new FormData();
     submit.append("name", this.name);
     submit.append("email", this.email);
@@ -223,7 +223,7 @@ export default class JoinStore {
       })
         .then((res) => {
           alert("가입을 축하합니다!!");
-          window.location.replace("/login");
+          window.location.replace("/");
         })
         .catch((err) => {
           console.log("업로드 오류:" + err);

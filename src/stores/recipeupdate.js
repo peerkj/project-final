@@ -2,7 +2,6 @@ import { observable, action, computed } from "mobx";
 import axios from "axios";
 
 export default class RecipeupdateStore {
-  @observable rec_num = 25;
   @observable recipe = {
     food_cate: "구이",
     portion: "1인분",
@@ -21,6 +20,23 @@ export default class RecipeupdateStore {
     this.root = root;
   }
 
+  @action
+  resetuUpdate = () => {
+    this.recipe = {
+      food_cate: "구이",
+      portion: "1인분",
+      time: "15분 이내",
+      difficult: "아무나",
+    };
+
+    this.main_ingre = [];
+    this.sub_ingre = [];
+    this.step = [];
+
+    this.done = [];
+    this.delete_done = [];
+  };
+
   //input
   @action
   handleSubjectChange = (e) => {
@@ -34,7 +50,6 @@ export default class RecipeupdateStore {
 
   @action
   handleFoodcateChange = (e) => {
-    console.log(e.target.value);
     this.recipe.food_cate = e.target.value;
   };
 
@@ -140,7 +155,6 @@ export default class RecipeupdateStore {
       if (e.target.files[0]) {
         reader.readAsDataURL(e.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
         this.step[idx].photofile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
-        console.log(this.step[idx].photofile);
       }
     }
   };
@@ -200,7 +214,6 @@ export default class RecipeupdateStore {
       }
       this.done.splice(idx, 1);
     }
-    console.log(this.delete_done);
   };
   //완성 사진 넣기
   @action
@@ -229,17 +242,18 @@ export default class RecipeupdateStore {
   };
 
   @action
-  updateform = () => {
-    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + 2;
+  updateform = (num, history) => {
+    this.resetuUpdate();
+    let url =
+      "http://13.124.83.195:8080/acorn/recipe/updateform?rec_num=" + num;
 
     axios({
       method: "get",
       url: url,
     })
       .then((res) => {
-        console.log(res.data);
         this.recipe = res.data;
-        this.recipe.repre_photo = `http://localhost:9000/acorn/image/recipe/${this.recipe.repre_photo}`;
+        this.recipe.repre_photo = `http://13.124.83.195:8080/acorn/image/recipe/${this.recipe.repre_photo}`;
 
         //주재료 , 부재료 분류
         for (let i = 0; i < this.recipe.ingreList.length; i++) {
@@ -260,7 +274,7 @@ export default class RecipeupdateStore {
           if (this.step[i].photo !== null && this.step[i].photo !== "null") {
             this.step[
               i
-            ].photo = `http://localhost:9000/acorn/image/recipe/${this.step[i].photo}`;
+            ].photo = `http://13.124.83.195:8080/acorn/image/recipe/${this.step[i].photo}`;
           } else {
             this.step[i].photo = null;
           }
@@ -273,6 +287,7 @@ export default class RecipeupdateStore {
           });
         }
         this.handelAddDone();
+        history.push("/update");
       })
 
       .catch((err) => {
@@ -298,7 +313,7 @@ export default class RecipeupdateStore {
   //글쓰기
   @action
   insertRecipe = (history) => {
-    let url = "http://localhost:9000/acorn/recipe/update";
+    let url = "http://13.124.83.195:8080/acorn/recipe/update";
     let submit = new FormData();
     submit.append("rec_num", this.recipe.rec_num);
     submit.append("repre_photofile", this.recipe.repre_photofile); //대표사진(썸네일)
@@ -361,10 +376,6 @@ export default class RecipeupdateStore {
       j++;
     }
 
-    for (let i = 0; i < this.step.length; i++) {
-      console.log(i, ". ", this.step[i].photofile);
-    }
-
     //순서
     for (let i = 0; i < this.step.length; i++) {
       if (this.step[i].content === "") {
@@ -375,13 +386,17 @@ export default class RecipeupdateStore {
       submit.append("orderList[" + i + "].order_num", i + 1); //순서
       submit.append("orderList[" + i + "].content", this.step[i].content); //설명
       submit.append("orderList[" + i + "].photofile", this.step[i].photofile); //사진
-      if (this.step[i].photofile === null) {
-        submit.append("orderList[" + i + "].photo", this.step[i].photo); //파일명
+      if (this.step[i].photofile === null && this.step[i].photo !== null) {
+        submit.append(
+          "orderList[" + i + "].photo",
+          this.step[i].photo.split("/").reverse()[0]
+        ); //파일명
       }
     }
     //완성사진
     let p = this.done.length;
     if (p > 1) p--;
+    let k = 0;
     for (let i = 0; i < p; i++) {
       if (
         this.done[i].comp_photoList === null &&
@@ -391,7 +406,8 @@ export default class RecipeupdateStore {
         break;
       }
       if (this.done[i].comp_photoList !== null) {
-        submit.append("comp_photoList[" + i + "]", this.done[i].comp_photoList);
+        submit.append("comp_photoList[" + k + "]", this.done[i].comp_photoList);
+        k++;
       }
     }
 
@@ -434,7 +450,7 @@ export default class RecipeupdateStore {
         data: submit,
       })
         .then((res) => {
-          history.push(`/recipe/detail?recipe=${this.recipe.rec_num}`);
+          history.replace(`/recipe/detail?recipe=${this.recipe.rec_num}`);
         })
         .catch((err) => {
           console.log("레시피 업로드 오류:" + err);

@@ -30,6 +30,8 @@ import {
   RestaurantMenu,
   DeleteOutline,
   Search,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
 } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import "../css/home.css";
@@ -146,24 +148,22 @@ const Home = ({
           src="/img/pot/dish.png"
           alt=""
           width="100px"
-          style={{ marginTop: "-15px" }}
-        ></img>
-        <span
-          style={{
-            position: "absolute",
-            top: "28px",
-            left: "32px",
-          }}
-        >
-          {my.refrig_name}
-        </span>
+          style={{ marginTop: "-35px" }}
+        />
+        <center>
+          <span
+            style={{
+              position: "relative",
+              top: "-63px",
+            }}
+          >
+            {my.refrig_name}
+          </span>
+        </center>
         <Close
-          id="profileImg_delete"
+          id="homeRef_delete"
           onClick={() => {
             refri_delete(my.refrig_num);
-          }}
-          style={{
-            marginLeft: "-25px",
           }}
         />
       </DragDropContainer>
@@ -191,20 +191,24 @@ const Home = ({
     );
   });
 
-  // //주재료
+  //주재료
   const main = main_ing[recipe_index].map((i, idx) => {
     return (
       <div key={idx} className="detailMainIngre">
         <span>
           {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.ingre_name}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>
+              {i.ingre_name}
+            </span>
           ) : (
             i.ingre_name
           )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.quantity}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>
+              {i.quantity}
+            </span>
           ) : (
             i.quantity
           )}
@@ -219,14 +223,18 @@ const Home = ({
       <div key={idx} className="detailMainIngre">
         <span>
           {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.ingre_name}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>
+              {i.ingre_name}
+            </span>
           ) : (
             i.ingre_name
           )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.quantity}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>
+              {i.quantity}
+            </span>
           ) : (
             i.quantity
           )}
@@ -251,15 +259,15 @@ const Home = ({
                 <Search />
               </InputAdornment>
             }
-            placeholder="#재료"
+            placeholder="재료 검색:#재료"
           />
         </FormControl>
         <br />
         <img
           src="/img/refrigerator.png"
           style={{
-            width: "180px",
-            marginTop: "70px"
+            width: "200px",
+            marginTop: "80px",
           }}
           onClick={() => {
             if (login_state) handleClickOpen();
@@ -271,13 +279,12 @@ const Home = ({
           alt=""
         />
         <br />
-        <span className="homeText">나만의 냉장고</span>
       </center>
       <Dialog
         fullScreen
         open={open}
         onClose={handleClose}
-      // TransitionComponent={Transition}
+        // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -318,17 +325,17 @@ const Home = ({
               />
               <div className={handle_style} width="330">
                 <img src="img/refview2.png" alt="" width="330" />
-                <span
+                <div
                   style={{
                     position: "absolute",
-                    top: "155px",
+                    top: "175px",
                     left: "0px",
                     width: "370px",
-                    height: "320px",
+                    height: "300px",
                   }}
                 >
                   {list}
-                </span>
+                </div>
               </div>
             </center>
           </div>
@@ -433,12 +440,11 @@ const Home = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAddFood} color="primary">
-            추가
-          </Button>
-
           <Button onClick={handleAddOpen} color="primary">
             취소
+          </Button>
+          <Button onClick={handleAddFood} color="primary">
+            추가
           </Button>
         </DialogActions>
       </Dialog>
@@ -461,9 +467,37 @@ const Home = ({
           </Toolbar>
         </AppBar>
         <div>
-          <br />
-          <b>{recipe_list.length}개의 결과</b>
-          <Card className={useStyles.root} style={{ marginTop: "10px" }}>
+          <center>
+            <br />
+            <span
+              style={{
+                fontSize: "12pt",
+                fontWeight: "500",
+              }}
+            >
+              [ 총 {recipe_list.length}개의 레시피 추천 ]
+            </span>
+            <br />
+            <br />
+            <KeyboardArrowLeft
+              onClick={stepL}
+              fontSize="large"
+              style={{
+                border: "1px solid #dcdcdc",
+                borderRadius: "20px",
+              }}
+            />
+            &ensp;
+            <KeyboardArrowRight
+              onClick={stepR}
+              fontSize="large"
+              style={{
+                border: "1px solid #dcdcdc",
+                borderRadius: "20px",
+              }}
+            />
+          </center>
+          <Card className={useStyles.root} style={{ marginTop: "5px" }}>
             <CardHeader
               avatar={
                 <Avatar aria-label="recipe" className={useStyles.avatar}>
@@ -472,14 +506,17 @@ const Home = ({
                   >
                     <img
                       width="40px"
-                      src={`http://localhost:9000/acorn/image/profile/${recipe_list[recipe_index].profile}`}
+                      src={`http://13.124.83.195:8080/acorn/image/profile/${recipe_list[recipe_index].profile}`}
                       alt=""
                     />
                   </Link>
                 </Avatar>
               }
               title={
-                <Link to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}>
+                <Link
+                  to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}
+                  style={{ color: "#000000" }}
+                >
                   {recipe_list[recipe_index].nickname}
                 </Link>
               }
@@ -491,11 +528,11 @@ const Home = ({
             >
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  <div className="r2listThumbnail">
+                  <div className="r2listThumbnail2">
                     <div className="centered">
                       <img
                         className="r2listImg"
-                        src={`http://localhost:9000/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
+                        src={`http://13.124.83.195:8080/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
                         alt=""
                       />
                     </div>
@@ -510,23 +547,28 @@ const Home = ({
               </CardContent>
             </Link>
           </Card>
-          <hr className="detailLine" />
-          <div style={{ width: "100%" }}>
-            <p
-              style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
-            >
-              재료
-              <span class="detailIngreTitleText">Ingredients</span>
-            </p>
+          <br />
+          <p
+            style={{ fontSize: "16pt", fontWeight: "600", marginLeft: "10px" }}
+          >
+            재료
+            <span class="detailIngreTitleText">Ingredients</span>
+          </p>
+          <p
+            style={{ fontWeight: "300", marginLeft: "10px", color: "#959595" }}
+          >
+            일치하는 재료&nbsp;
+            <span style={{ color: "#dc1523" }}>■</span>색으로 표시
+          </p>
+          <div>
             <p className="detailMainTitle">[주재료]</p>
             {main}
             <br />
             <p className="detailMainTitle">[부재료]</p>
             {sub}
-            <hr className="detailLine" />
           </div>
-          <b onClick={stepL}>왼쪽</b>
-          <b onClick={stepR}>오른쪽</b>
+          <br />
+          <br />
         </div>
       </Dialog>
     </div>

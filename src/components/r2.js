@@ -17,8 +17,6 @@ import {
   Avatar,
   IconButton,
   Typography,
-  BottomNavigation,
-  BottomNavigationAction,
   Menu,
   MenuItem,
   Dialog,
@@ -94,6 +92,8 @@ const R = ({
   cateL,
 
   updateform,
+  rd,
+  rdo,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -161,7 +161,7 @@ const R = ({
               <Link to={`/mypage?nick=${l.nickname}`}>
                 <img
                   width="40px"
-                  src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
+                  src={`http://13.124.83.195:8080/acorn/image/profile/${l.profile}`}
                   alt=""
                 />
               </Link>
@@ -189,6 +189,7 @@ const R = ({
                 <MenuItem
                   onClick={() => {
                     handleShare(l.rec_num, history);
+                    dothandleClose(idx);
                   }}
                 >
                   공유
@@ -197,6 +198,7 @@ const R = ({
                   <MenuItem
                     onClick={() => {
                       updateform(l.rec_num, history);
+                      dothandleClose(idx);
                     }}
                   >
                     수정
@@ -205,7 +207,8 @@ const R = ({
                 {l.email === userEmail && (
                   <MenuItem
                     onClick={() => {
-                      deleteOpen(l.rec_num);
+                      rdo(l.rec_num);
+                      dothandleClose(idx);
                     }}
                   >
                     삭제
@@ -214,7 +217,14 @@ const R = ({
               </Menu>
             </IconButton>
           }
-          title={<Link to={`/mypage?nick=${l.nickname}`}>{l.nickname}</Link>}
+          title={
+            <Link
+              to={`/mypage?nick=${l.nickname}`}
+              style={{ color: "#000000" }}
+            >
+              {l.nickname}
+            </Link>
+          }
           subheader={l.timeDiffer}
         />
         <Link
@@ -240,7 +250,7 @@ const R = ({
                 <div className="centered">
                   <img
                     className="r2listImg"
-                    src={`http://localhost:9000/acorn/image/recipe/${l.repre_photo}`}
+                    src={`http://13.124.83.195:8080/acorn/image/recipe/${l.repre_photo}`}
                     alt=""
                   />
                 </div>
@@ -543,7 +553,7 @@ const R = ({
       </div>
       {/* 공유모달 */}
 
-      {/* 댓글모달 */}
+      {/* 레시피 삭제모달 */}
       <Dialog open={comment_open} onClose={handleComment}>
         <IconButton
           edge="start"
@@ -551,24 +561,20 @@ const R = ({
           onClick={handleComment}
           aria-label="close"
         >
-          <Close />
+          <Close style={{ marginLeft: "12px" }} />
         </IconButton>
 
         <br />
         <br />
-        <DialogContent>
+        <DialogContent style={{ width: "270px" }}>
           <Comment />
         </DialogContent>
       </Dialog>
       <div>
-        <Dialog
-          open={delete_open}
-          onClose={deleteOpen}
-          aria-labelledby="form-dialog-title"
-        >
+        <Dialog open={rd} onClose={rdo} aria-labelledby="form-dialog-title">
           <DialogContent>삭제하시겠습니까?</DialogContent>
           <DialogActions>
-            <Button onClick={deleteOpen} color="primary">
+            <Button onClick={rdo} color="primary">
               취소
             </Button>
             <Button
@@ -586,7 +592,7 @@ const R = ({
   );
 };
 
-export default inject(({ recipe, detail, info }) => ({
+export default inject(({ recipe, detail, info, recipeupdate }) => ({
   list: recipe.list,
   getList: recipe.getList,
   state: recipe.state,
@@ -616,10 +622,6 @@ export default inject(({ recipe, detail, info }) => ({
   search: recipe.search,
   handleEnter: recipe.handleEnter,
 
-  delete_open: recipe.delete_open,
-  deleteOpen: recipe.deleteOpen,
-  deleteRecipe: recipe.deleteRecipe,
-
   checkList: recipe.checkList,
   list_count: recipe.list_count,
   resetRecipe: recipe.resetRecipe,
@@ -632,6 +634,9 @@ export default inject(({ recipe, detail, info }) => ({
   cateR: recipe.cateR,
   cateL: recipe.cateL,
   sort: recipe.sort,
+  updateform: recipeupdate.updateform,
 
-  updateform: recipe.updateform,
+  rd: recipe.rd,
+  rdo: recipe.rdo,
+  deleteRecipe: recipe.deleteRecipe,
 }))(observer(R));

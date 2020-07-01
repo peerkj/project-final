@@ -144,7 +144,7 @@ export default class DragStore {
   //재료 추가
   @action
   handleAddFood = () => {
-    let url = "http://localhost:9000/acorn/refri/put";
+    let url = "http://13.124.83.195:8080/acorn/refri/put";
     let put = new FormData();
     put.append("email", this.root.info.userEmail);
     put.append("refrig_name", this.addFood);
@@ -156,7 +156,7 @@ export default class DragStore {
     } else if (!this.checkFood) {
       alert("이미 추가된 재료입니다");
     } else if (this.mylist.length > 9) {
-      alert("최대 9개까지 추가 가능합니다");
+      alert("최대 9개까지 추가가 가능합니다");
     } else {
       axios({
         method: "post",
@@ -177,7 +177,7 @@ export default class DragStore {
   @action
   handleListFood = () => {
     let url =
-      "http://localhost:9000/acorn/refri/list?email=" +
+      "http://13.124.83.195:8080/acorn/refri/list?email=" +
       this.root.info.userEmail;
     axios({
       method: "get",
@@ -212,7 +212,7 @@ export default class DragStore {
   //재료삭제
   @action
   refri_delete = (num) => {
-    let url = "http://localhost:9000/acorn/refri/delete?refrig_num=" + num;
+    let url = "http://13.124.83.195:8080/acorn/refri/delete?refrig_num=" + num;
     axios({
       method: "get",
       url: url,
@@ -228,7 +228,7 @@ export default class DragStore {
   @action
   handleCook = () => {
     this.sw = 1;
-    let url = "http://localhost:9000/acorn/refri/search";
+    let url = "http://13.124.83.195:8080/acorn/refri/search";
     let food = new FormData();
     if (this.e_store.length === 0) {
       alert("재료를 선택하세요");
@@ -242,13 +242,16 @@ export default class DragStore {
         data: food,
       })
         .then((res) => {
-          this.openRecipe();
-          this.recipe_list = res.data;
-
-          for (let i = 0; i < this.recipe_list.length; i++) {
-            this.ing_list[i] = res.data[i].ingreList;
+          if (res.data.length !== 0) {
+            this.openRecipe();
+            this.recipe_list = res.data;
+            for (let i = 0; i < this.recipe_list.length; i++) {
+              this.ing_list[i] = res.data[i].ingreList;
+            }
+            this.sortIng();
+          } else {
+            alert("입력하신 재료로 추천할 수 있는 레시피가 없습니다");
           }
-          this.sortIng();
         })
         .catch((err) => {
           console.log("요리하기오류:" + err);
@@ -258,7 +261,7 @@ export default class DragStore {
   @action
   handleRecipe = () => {
     this.sw = 0;
-    let url = "http://localhost:9000/acorn/refri/search";
+    let url = "http://13.124.83.195:8080/acorn/refri/search";
     let recipe = new FormData();
     if (this.mylist.length === 0) {
       alert("재료를 추가하세요");
@@ -273,12 +276,16 @@ export default class DragStore {
         data: recipe,
       })
         .then((res) => {
-          this.openRecipe();
-          this.recipe_list = res.data;
-          for (let i = 0; i < this.recipe_list.length; i++) {
-            this.ing_list[i] = res.data[i].ingreList;
+          if (res.data.length !== 0) {
+            this.openRecipe();
+            this.recipe_list = res.data;
+            for (let i = 0; i < this.recipe_list.length; i++) {
+              this.ing_list[i] = res.data[i].ingreList;
+            }
+            this.sortIng();
+          } else {
+            alert("입력하신 재료로 추천할 수 있는 레시피가 없습니다");
           }
-          this.sortIng();
         })
         .catch((err) => {
           console.log("레시피불러오기오류:" + err);
@@ -364,7 +371,7 @@ export default class DragStore {
           }
         }
       }
-    } else if (this.sw === 1) {
+    } else {
       for (let i = 0; i < this.ing_list.length; i++) {
         for (let j = 0; j < this.ing_list[i].length; j++) {
           if (this.ing_list[i][j].sort === "주재료") {

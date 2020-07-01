@@ -16,6 +16,10 @@ export default class CounterStore {
   @observable food_cate = "";
   @observable sort = "";
 
+  //삭제 데이터 저장
+  @observable rd = false;
+  @observable delete_set = { rec_num: "" };
+
   //분류
   @observable cate_list = [
     ["All", "밥/죽/떡", "면", "국/탕/찌개"],
@@ -90,14 +94,13 @@ export default class CounterStore {
   @action
   updateform = (rec_num, history) => {
     let url =
-      "http://localhost:9000/acorn/recipe/updateform?rec_num=" + rec_num;
+      "http://13.124.83.195:8080/acorn/recipe/updateform?rec_num=" + rec_num;
 
     axios({
       method: "get",
       url: url,
     })
       .then((res) => {
-        console.log(res.data);
         this.root.recipeupdate.recipe = res.data;
         history.push("/update");
       })
@@ -185,7 +188,7 @@ export default class CounterStore {
   //카운트 업데이트
   @action
   updateCount = (rec_num, idx) => {
-    let url = "http://localhost:9000/acorn/recipe/count?rec_num=" + rec_num;
+    let url = "http://13.124.83.195:8080/acorn/recipe/count?rec_num=" + rec_num;
 
     //유효성 검사
     axios({
@@ -208,7 +211,7 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
-    let url = "http://localhost:9000/acorn/recipe/list";
+    let url = "http://13.124.83.195:8080/acorn/recipe/list";
     let sort = this.sort;
     if (this.search === "") this.search = null;
     if (this.food_cate === "") this.food_cate = null;
@@ -235,7 +238,6 @@ export default class CounterStore {
         }
         this.setList();
         this.list_count = res.data.count;
-        console.log(this.list_count);
       })
       .catch((err) => {
         console.log("업로드오류:" + err);
@@ -245,7 +247,7 @@ export default class CounterStore {
   //좋아요체크
   @action
   checkJoayo = (num, idx) => {
-    let url = "http://localhost:9000/acorn/connect/joayocheck";
+    let url = "http://13.124.83.195:8080/acorn/connect/joayocheck";
 
     axios({
       method: "get",
@@ -264,7 +266,7 @@ export default class CounterStore {
   //좋아요
   @action
   Joayo = (num, idx) => {
-    let url = "http://localhost:9000/acorn/connect/joayo";
+    let url = "http://13.124.83.195:8080/acorn/connect/joayo";
     if (this.root.info.login_state) {
       axios({
         method: "get",
@@ -281,7 +283,7 @@ export default class CounterStore {
   //스크랩체크
   @action
   checkScrap = (num, idx) => {
-    let url = "http://localhost:9000/acorn/connect/scrapcheck";
+    let url = "http://13.124.83.195:8080/acorn/connect/scrapcheck";
 
     axios({
       method: "get",
@@ -300,7 +302,7 @@ export default class CounterStore {
   //스크랩
   @action
   Scrap = (num, idx) => {
-    let url = "http://localhost:9000/acorn/connect/scrap";
+    let url = "http://13.124.83.195:8080/acorn/connect/scrap";
     if (this.root.info.login_state) {
       axios({
         method: "get",
@@ -316,7 +318,7 @@ export default class CounterStore {
   //댓글 count
   @action
   getComment = (num, idx) => {
-    let url = "http://localhost:9000/acorn/comment/count";
+    let url = "http://13.124.83.195:8080/acorn/comment/count";
 
     axios({
       method: "get",
@@ -327,5 +329,32 @@ export default class CounterStore {
         this.comment_count[idx] = res.data;
       })
       .catch((err) => {});
+  };
+
+  @action
+  rdo = (num) => {
+    this.delete_set.rec_num = num;
+
+    this.rd = !this.rd;
+  };
+
+  //삭제
+  @action
+  deleteRecipe = () => {
+    let url =
+      "http://13.124.83.195:8080/acorn/recipe/delete?rec_num=" +
+      this.delete_set.rec_num;
+
+    axios({
+      method: "get",
+      url: url,
+    })
+      .then((res) => {
+        this.rd = false;
+        this.reset();
+      })
+      .catch((err) => {
+        console.log("레시피삭제오루:" + err);
+      });
   };
 }

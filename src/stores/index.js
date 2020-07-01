@@ -1,4 +1,3 @@
-import CounterStore from "./counters";
 import MenuStore from "./menu";
 import JoinStore from "./join";
 import LoginStore from "./login";
@@ -17,9 +16,9 @@ import Comment from "./comment";
 import Mypage from "./mypage";
 import RankingStore from "./ranking";
 import RecipeupdateStore from "./recipeupdate";
+import FollowingStore from "./following";
 class RootStore {
   constructor() {
-    this.counter = new CounterStore(this);
     this.menu = new MenuStore(this);
     this.join = new JoinStore(this);
     this.login = new LoginStore(this);
@@ -37,6 +36,7 @@ class RootStore {
     this.mypage = new Mypage(this);
     this.ranking = new RankingStore(this);
     this.recipeupdate = new RecipeupdateStore(this);
+    this.following = new FollowingStore(this);
   }
 }
 

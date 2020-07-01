@@ -15,6 +15,9 @@ import DialogContentText from "@material-ui/core/DialogContentText";
   email: stores.findPass.email,
   handleReset: stores.findPass.handleReset,
   error: stores.findPass.error,
+
+  handleEnter: stores.findPass.handleEnter,
+
   //input change
   handleNameChange: stores.findPass.handleNameChange,
   handleEmailChange: stores.findPass.handleEmailChange,
@@ -37,7 +40,7 @@ class findid extends Component {
     this.props.handleReset();
 
     if (this.props.login_state) {
-      this.props.history.replace("/");
+      this.props.history.push("/");
     }
   };
 
@@ -47,6 +50,9 @@ class findid extends Component {
       email,
       history,
       error,
+
+      handleEnter,
+
       //유효성
       available_name,
       available_email,
@@ -64,16 +70,9 @@ class findid extends Component {
 
     return (
       <div>
-        <div
-          id="divjoin"
-          style={{
-            width: "290px",
-            height: "500px",
-            margin: "0 auto",
-          }}
-        >
-          <div style={{ marginTop: "130px" }}>
-            <center>
+        <div>
+          <center>
+            <div style={{ marginTop: "130px" }}>
               <Lock style={{ verticalAlign: "middle" }} />
               <span
                 style={{
@@ -84,69 +83,69 @@ class findid extends Component {
               >
                 비밀번호 찾기
               </span>
-            </center>
-          </div>
-          <div style={{ marginTop: "50px", marginLeft: "55px" }}>
-            이름
-            <br />
-            <TextField
-              id="standard-basic"
-              value={name}
-              onChange={handleNameChange}
-              error={!(name === "") ^ available_name}
-              helperText={
-                available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
-              }
-              style={{ width: "200px" }}
-            />
-            <br />
-            <br />
-            <span>이메일</span>
-            <br />
-            <TextField
-              id="standard-basic"
-              name="email"
-              value={email}
-              onChange={handleEmailChange}
-              error={!(email === "") ^ available_email}
-              helperText={
-                available_email || email === ""
-                  ? ""
-                  : "이메일 형식으로 입력하세요"
-              }
-              style={{ width: "200px" }}
-            />
-            <br />
-            <br />
-            <center>
+            </div>
+            <div style={{ marginTop: "50px" }}>
+              <span style={{ marginLeft: "-170px" }}>이름</span>
+              <br />
+              <TextField
+                id="standard-basic"
+                value={name}
+                onChange={handleNameChange}
+                error={!(name === "") ^ available_name}
+                helperText={
+                  available_name || name === "" ? "" : "한글 2~5자 / 영문 2~15자 "
+                }
+                style={{ width: "200px" }}
+              />
+              <br />
+              <br />
+              <br />
+              <span style={{ marginLeft: "-160px" }}>이메일</span>
+              <br />
+              <TextField
+                id="standard-basic"
+                name="email"
+                value={email}
+                onChange={handleEmailChange}
+                error={!(email === "") ^ available_email}
+                helperText={
+                  available_email || email === ""
+                    ? ""
+                    : "이메일 형식으로 입력하세요"
+                }
+                style={{ width: "200px" }}
+                onKeyPress={(e) => {
+                  handleEnter(e, history);
+                }}
+              />
+              <br />
+              <br />
               <span
                 style={{
                   fontWeight: "400",
                   color: "red",
                   fontSize: "medium",
+                  marginBottom: "5px"
                 }}
               >
-                {error === "" ? <br /> : error}
+                {error === "" ? "" : error}
               </span>
-            </center>
-            <br />
-            <Button
-              onClick={handleSubmit}
-              variant="contained"
-              style={{
-                backgroundColor: "#002060",
-                color: "#ffffff",
-                marginLeft: "35px",
-              }}
-              component="span"
-            >
-              비밀번호 찾기
+              <br />
+              <br />
+              <Button
+                onClick={handleSubmit}
+                variant="contained"
+                style={{
+                  backgroundColor: "#002060",
+                  color: "#ffffff",
+                }}
+                component="span"
+              >
+                비밀번호 찾기
             </Button>
-          </div>
+            </div>
+          </center>
           <br />
-          <b>{result}</b>
-          <br />
-          {result_state && <Link to="/login">로그인</Link>}
           <div>
             <Dialog
               open={modal_open}
@@ -164,10 +163,10 @@ class findid extends Component {
                   <Button
                     onClick={() => {
                       handleReset();
-                      history.replace("/login");
+                      history.push("/login");
                       handleOpen();
                     }}
-                    color="primary"
+                    style={{ color: "#002060" }}
                   >
                     로그인
                   </Button>
@@ -182,7 +181,7 @@ class findid extends Component {
             </Dialog>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

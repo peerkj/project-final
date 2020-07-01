@@ -74,9 +74,8 @@ class comment extends Component {
           key={idx}
         >
           <div style={{ display: "inline", verticalAlign: "middle" }}>
-            {c.restep === 2 && <span>&emsp;&nbsp;</span>}
-            {c.restep === 3 && <span>&emsp;&emsp;&ensp;</span>}
-            {c.relevel === 1 && (
+            {c.relevel === 2 && <span>&emsp;&nbsp;</span>}
+            {c.relevel >= 1 && (
               <img
                 src="/img/comment.png"
                 alt=""
@@ -89,7 +88,7 @@ class comment extends Component {
                 width="40px"
                 height="40px"
                 style={{ borderRadius: "40px", verticalAlign: "middle" }}
-                src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
+                src={`http://13.124.83.195:8080/acorn/image/profile/${c.profile}`}
                 alt=""
               />
             </Link>
@@ -101,13 +100,13 @@ class comment extends Component {
               verticalAlign: "middle",
             }}
           >
-            &emsp;
+            &ensp;
             <b>
               <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
                 {c.nickname}
               </Link>
             </b>
-            &emsp;
+            &ensp;
             <span>{c.timeDiffer}</span>
             {c.email === userEmail && (
               <Close
@@ -119,14 +118,15 @@ class comment extends Component {
             )}
           </div>
           <br />
-          {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>}
+          {c.relevel === 2 && <span>&emsp;&nbsp;</span>}
+          {c.relevel >= 1 && <span>&emsp;&emsp;&nbsp;</span>}
           <span>&emsp;&emsp;&emsp;&ensp;&ensp;{c.content}</span>
           <div className="commentCenterWrapper">
             <div className="commentCenter">
               <div className="centered">
                 {c.image && (
                   <img
-                    src={`http://localhost:9000/acorn/image/comment/${c.image}`}
+                    src={`http://13.124.83.195:8080/acorn/image/comment/${c.image}`}
                     alt=""
                     style={{ float: "right" }}
                   />
@@ -136,8 +136,8 @@ class comment extends Component {
           </div>
           <br />
           <br />
-          {c.relevel === 1 && <span>&emsp;&emsp;&ensp;</span>}
-          {c.email !== "알수없음" && (
+          {c.relevel >= 1 && <span>&emsp;&emsp;&nbsp;</span>}
+          {c.email !== "알수없음" && c.relevel < 2 && (
             <span
               onClick={() => {
                 if (login_state) {
@@ -146,7 +146,7 @@ class comment extends Component {
                 }
               }}
             >
-              &emsp;&emsp;&emsp;&ensp;&ensp;답글
+              &emsp;&emsp;&emsp;&ensp;&nbsp;답글
             </span>
           )}
         </div>
@@ -156,7 +156,11 @@ class comment extends Component {
     return (
       <div>
         <div>{comment}</div>
-        {err && <b>등록된 댓글이 없습니다</b>}
+        <center>
+          {err && (
+            <div style={{ padding: "30px 0 90px" }}>등록된 댓글이 없습니다</div>
+          )}
+        </center>
         <div>
           <Dialog
             open={modal_open}
@@ -167,6 +171,7 @@ class comment extends Component {
             <DialogTitle id="form-dialog-title">댓글 쓰기</DialogTitle>
             <DialogContent>
               <TextField
+                autoFocus
                 id="outlined-basic"
                 placeholder="댓글을 입력하세요"
                 variant="outlined"
@@ -190,9 +195,9 @@ class comment extends Component {
                 {imgBase64 ? (
                   <Close
                     style={{
-                      position: "relative",
-                      top: "-198px",
-                      marginLeft: "220px",
+                      position: "absolute",
+                      top: "135px",
+                      left: "20px",
                       zIndex: "2",
                     }}
                     onClick={() => {

@@ -24,6 +24,7 @@ import {
   ExpandLess,
   BookmarkBorderSharp,
   BorderColor,
+  ExpandMore,
 } from "@material-ui/icons";
 import {
   Button,
@@ -164,14 +165,15 @@ class Detail extends Component {
         <div key={num}>
           <div className="stepnc">
             <div className="stepnum">{num + 1}</div>
-            <span className="steptext">{i.content}</span>
+            <div className="steptext">{i.content}</div>
             <br />
           </div>
           <div className="stepImgWrapper">
             <div className="centered">
               <img
-                src={`http://localhost:9000/acorn/image/recipe/${i.photo}`}
+                src={`http://13.124.83.195:8080/acorn/image/recipe/${i.photo}`}
                 alt=""
+                width="359px"
               />
             </div>
           </div>
@@ -184,7 +186,7 @@ class Detail extends Component {
         <div key={num}>
           <div className="stepnc">
             <div className="stepnum">{num + 1}</div>
-            <span className="steptext">{i.content}</span>
+            <div className="steptext1">{i.content}</div>
           </div>
         </div>
       );
@@ -196,20 +198,18 @@ class Detail extends Component {
           <div className="stepslider">
             <div className="stepnc">
               <div className="stepnum">{step_slide + 1}</div>
-              <span className="steptext">{step_list[step_slide].content}</span>
-              <br />
+              <div className="steptext">{step_list[step_slide].content}</div>
               <br />
               <div className="stepImgWrapper">
                 <div className="centered">
                   <img
-                    src={`http://localhost:9000/acorn/image/recipe/${step_list[step_slide].photo}`}
+                    src={`http://13.124.83.195:8080/acorn/image/recipe/${step_list[step_slide].photo}`}
                     alt=""
                     width="359px"
                   />
                 </div>
               </div>
             </div>
-            <br />
             <div className="stepsliderbtn">
               <KeyboardArrowLeft onClick={stepL} />
               &ensp;
@@ -229,7 +229,7 @@ class Detail extends Component {
             <div className="centered">
               <img
                 className="detailThumbnailImg"
-                src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
+                src={`http://13.124.83.195:8080/acorn/image/recipe/${all.repre_photo}`}
                 alt=""
               />
             </div>
@@ -249,16 +249,26 @@ class Detail extends Component {
                   <div className="centered">
                     <Link to={`/mypage?nick=${all.nickname}`}>
                       <img
-                        src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
+                        src={`http://13.124.83.195:8080/acorn/image/profile/${all.profile}`}
                         alt=""
                       />
                     </Link>
                   </div>
                 </div>
               </div>
-              <p style={{ fontWeight: "500", fontSize: "10pt", marginTop: "-30px" }}>
-                <Link to={`/mypage?nick=${all.nickname}`}
-                  style={{ color: "#000000" }}>{all.nickname}</Link>
+              <p
+                style={{
+                  fontWeight: "500",
+                  fontSize: "10pt",
+                  marginTop: "-30px",
+                }}
+              >
+                <Link
+                  to={`/mypage?nick=${all.nickname}`}
+                  style={{ color: "#000000" }}
+                >
+                  {all.nickname}
+                </Link>
               </p>
 
               {/* 요리 제목 */}
@@ -270,24 +280,40 @@ class Detail extends Component {
                 <span id="detail_subtext">{all.summary}</span>
                 <img src="/img/quote2.png" alt="" width="16px" />
               </p>
+
+              {/* 카테고리 */}
+              <div
+                style={{
+                  border: "1px solid #e2e1e1",
+                  width: "60px",
+                  padding: "8px 10px",
+                  borderRadius: "20px",
+                }}
+              >
+                {all.food_cate}
+              </div>
               <br />
+
+              {/* 난이도 등 */}
               <div className="ptdGroup">
                 <div className="ptd">
-                  <People color="disabled" />
+                  <People className="texts" />
                   <br />
                   <span className="texts">{all.portion}</span>
                 </div>
                 <div className="ptd">
-                  <Timer color="disabled" />
+                  <Timer className="texts" />
                   <br />
                   <span className="texts">{all.time}</span>
                 </div>
                 <div className="ptd">
-                  <Star color="disabled" />
+                  <Star className="texts" />
                   <br />
                   <span className="texts">{all.difficult}</span>
                 </div>
               </div>
+
+              {/* 공유/좋아요/스크랩/댓글 */}
               <div className="ptd2Group">
                 <div
                   className="ptd2"
@@ -303,8 +329,8 @@ class Detail extends Component {
                   {checkjoa === 0 || !login_state ? (
                     <FavoriteBorderSharp />
                   ) : (
-                      <FavoriteSharp style={{ color: "#db555a" }} />
-                    )}
+                    <FavoriteSharp style={{ color: "#db555a" }} />
+                  )}
                   <br />
                   {checkjoa === 0 || !login_state ? "좋아요" : "좋아요 취소"}
                 </div>
@@ -312,8 +338,8 @@ class Detail extends Component {
                   {checkscr === 0 || !login_state ? (
                     <BookmarkBorderSharp />
                   ) : (
-                      <Bookmark style={{ color: "#db555a" }} />
-                    )}
+                    <Bookmark style={{ color: "#db555a" }} />
+                  )}
                   <br />
                   {checkscr === 0 || !login_state ? "스크랩" : "스크랩 취소"}
                 </div>
@@ -400,7 +426,7 @@ class Detail extends Component {
               <div className="stepImgWrapper">
                 <div className="centered">
                   <img
-                    src={`http://localhost:9000/acorn/image/recipe/${comp_img}`}
+                    src={`http://13.124.83.195:8080/acorn/image/recipe/${comp_img}`}
                     alt=""
                   />
                 </div>
@@ -421,9 +447,9 @@ class Detail extends Component {
               style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
             >
               <img
-                src="/img/star.jpg"
+                src="/img/star.png"
                 alt=""
-                width="30px"
+                width="35px"
                 style={{ verticalAlign: "middle" }}
               />
               <span style={{ verticalAlign: "middle" }}>요리 Tip!</span>
@@ -453,6 +479,25 @@ class Detail extends Component {
           }}
         >
           <ExpandLess
+            style={{
+              position: "fixed",
+              left: "330px",
+              top: "570px",
+              width: "30px",
+              height: "30px",
+              border: "1px solid #575757",
+              backgroundColor: "#ffffff",
+              opacity: "0.8",
+              color: "#000000",
+            }}
+          />
+        </Link>
+        <Link
+          onClick={() => {
+            window.scrollTo({ top: 5000, left: 0, behavior: "smooth" });
+          }}
+        >
+          <ExpandMore
             style={{
               position: "fixed",
               left: "330px",

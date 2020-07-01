@@ -14,6 +14,8 @@ import "../css/menu.css";
   menu_profile: stores.cu.menu_profile,
   menu_nick: stores.cu.menu_nick,
   resetRecipe: stores.recipe.resetRecipe,
+  setNickname: stores.mypage.setNickname,
+  getList: stores.mypage.getList,
 }))
 @observer
 class header extends Component {
@@ -28,19 +30,25 @@ class header extends Component {
       login_state,
       profile_name,
       resetRecipe,
+      setNickname,
+      getList,
     } = this.props;
 
     return (
       <div>
         <div id="headgroup">
-          <a href="/">
-            <img
-              style={{ marginLeft: "107.5px", width: "140px" }}
-              src="/img/logo1.png"
-              alt=""
-            />
-          </a>
-          <Hamburger toggled={hamto} toggle={change_ham} />
+          <center>
+            <a href="/">
+              <img
+                style={{ width: "140px", marginLeft: "55px" }}
+                src="/img/logo1.png"
+                alt=""
+              />
+            </a>
+            <div style={{ float: "right" }}>
+              <Hamburger toggled={hamto} toggle={change_ham} />
+            </div>
+          </center>
         </div>
         <div id="flyoutMenu" className={togglemenu} onClick={change_ham}>
           <center>
@@ -88,6 +96,7 @@ class header extends Component {
           </center>
           <br />
           <br />
+          <br />
           <hr id="menuline" />
           <ul>
             <li>
@@ -99,7 +108,15 @@ class header extends Component {
               <Link to="/ranking">CHEF</Link>
             </li>
             <li>
-              <Link to={`/mypage?nick=${menu_nick}`}>MYPAGE</Link>
+              <Link to="/following">FOLLOWING</Link>
+            </li>
+            <li>
+              <Link to={`/mypage?nick=${menu_nick}`} onClick={
+                () => {
+                  setNickname(menu_nick);
+                  getList();
+                }
+              }>MYPAGE</Link>
             </li>
           </ul>
         </div>
