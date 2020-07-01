@@ -30,6 +30,11 @@ export default class JoinStore {
     this.error = "";
   };
 
+  @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleSubmit(history);
+  };
+
   //유효성검사
   @computed
   get available_name() {
