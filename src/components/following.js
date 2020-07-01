@@ -34,7 +34,9 @@ class Following extends Component {
                         <div className="rankingCenterWrapper" style={{ marginRight: "4px" }}>
                             <div className="rankingCenter">
                                 <div className="centered">
-                                    <img src={`http://localhost:9000/acorn/image/profile/${f.chef.profile}`} alt="" />
+                                    <Link to={`/mypage?nick=${f.chef.nickname}`}>
+                                        <img src={`http://localhost:9000/acorn/image/profile/${f.chef.profile}`} alt="" />
+                                    </Link>
                                 </div>
                             </div>
                         </div>

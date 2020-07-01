@@ -156,7 +156,7 @@ export default class DragStore {
     } else if (!this.checkFood) {
       alert("이미 추가된 재료입니다");
     } else if (this.mylist.length > 9) {
-      alert("최대 9개까지 추가 가능합니다");
+      alert("최대 9개까지 추가가 가능합니다");
     } else {
       axios({
         method: "post",
@@ -250,7 +250,7 @@ export default class DragStore {
             }
             this.sortIng();
           } else {
-            alert("추천 레시피가 없습니다");
+            alert("입력하신 재료로 추천할 수 있는 레시피가 없습니다");
           }
         })
         .catch((err) => {
@@ -284,7 +284,7 @@ export default class DragStore {
             }
             this.sortIng();
           } else {
-            alert("추천 레시피가 없습니다");
+            alert("입력하신 재료로 추천할 수 있는 레시피가 없습니다");
           }
         })
         .catch((err) => {
