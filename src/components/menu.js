@@ -14,6 +14,8 @@ import "../css/menu.css";
   menu_profile: stores.cu.menu_profile,
   menu_nick: stores.cu.menu_nick,
   resetRecipe: stores.recipe.resetRecipe,
+  setNickname: stores.mypage.setNickname,
+  getList: stores.mypage.getList,
 }))
 @observer
 class header extends Component {
@@ -28,6 +30,8 @@ class header extends Component {
       login_state,
       profile_name,
       resetRecipe,
+      setNickname,
+      getList,
     } = this.props;
 
     return (
@@ -107,7 +111,12 @@ class header extends Component {
               <Link to="/following">FOLLOWING</Link>
             </li>
             <li>
-              <Link to={`/mypage?nick=${menu_nick}`}>MYPAGE</Link>
+              <Link to={`/mypage?nick=${menu_nick}`} onClick={
+                () => {
+                  setNickname(menu_nick);
+                  getList();
+                }
+              }>MYPAGE</Link>
             </li>
           </ul>
         </div>

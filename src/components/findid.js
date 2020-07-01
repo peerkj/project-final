@@ -151,7 +151,7 @@ class findid extends Component {
                       history.push("/login");
                       handleOpen();
                     }}
-                    color="primary"
+                    style={{ color: "#002060" }}
                   >
                     로그인
                   </Button>
@@ -163,7 +163,7 @@ class findid extends Component {
                       history.push("/findpass");
                       handleOpen();
                     }}
-                    color="primary"
+                    style={{ color: "#002060" }}
                   >
                     비밀번호 찾기
                   </Button>

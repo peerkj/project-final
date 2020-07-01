@@ -166,7 +166,7 @@ class findid extends Component {
                       history.push("/login");
                       handleOpen();
                     }}
-                    color="primary"
+                    style={{ color: "#002060" }}
                   >
                     로그인
                   </Button>
