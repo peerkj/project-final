@@ -506,7 +506,7 @@ const Home = ({
                   >
                     <img
                       width="40px"
-                      src={`http://13.124.83.195:8080/Team5Spring/image/profile/${recipe_list[recipe_index].profile}`}
+                      src={`http://18.221.230.63:8080/acorn/image/profile/${recipe_list[recipe_index].profile}`}
                       alt=""
                     />
                   </Link>
@@ -532,7 +532,7 @@ const Home = ({
                     <div className="centered">
                       <img
                         className="r2listImg"
-                        src={`http://13.124.83.195:8080/Team5Spring/image/recipe/${recipe_list[recipe_index].repre_photo}`}
+                        src={`http://18.221.230.63:8080/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
                         alt=""
                       />
                     </div>

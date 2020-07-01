@@ -78,7 +78,7 @@ export default class loginStore {
   }
   @action
   handleUpdate = (history) => {
-    let url = "http://13.124.83.195:8080/Team5Spring/chef/login";
+    let url = "http://18.221.230.63:8080/acorn/chef/login";
     let update = new FormData();
     update.append("email", this.root.info.userEmail);
     update.append("pass", this.password);
@@ -125,7 +125,7 @@ export default class loginStore {
   };
   @action
   handlePassUpdate = () => {
-    let url = "http://13.124.83.195:8080/Team5Spring/chef/modpass";
+    let url = "http://18.221.230.63:8080/acorn/chef/modpass";
     let update = new FormData();
     update.append("email", this.root.info.userEmail);
     update.append("pass", this.password);

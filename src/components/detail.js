@@ -171,7 +171,7 @@ class Detail extends Component {
           <div className="stepImgWrapper">
             <div className="centered">
               <img
-                src={`http://13.124.83.195:8080/Team5Spring/image/recipe/${i.photo}`}
+                src={`http://18.221.230.63:8080/acorn/image/recipe/${i.photo}`}
                 alt=""
                 width="359px"
               />
@@ -203,7 +203,7 @@ class Detail extends Component {
               <div className="stepImgWrapper">
                 <div className="centered">
                   <img
-                    src={`http://13.124.83.195:8080/Team5Spring/image/recipe/${step_list[step_slide].photo}`}
+                    src={`http://18.221.230.63:8080/acorn/image/recipe/${step_list[step_slide].photo}`}
                     alt=""
                     width="359px"
                   />
@@ -229,7 +229,7 @@ class Detail extends Component {
             <div className="centered">
               <img
                 className="detailThumbnailImg"
-                src={`http://13.124.83.195:8080/Team5Spring/image/recipe/${all.repre_photo}`}
+                src={`http://18.221.230.63:8080/acorn/image/recipe/${all.repre_photo}`}
                 alt=""
               />
             </div>
@@ -249,7 +249,7 @@ class Detail extends Component {
                   <div className="centered">
                     <Link to={`/mypage?nick=${all.nickname}`}>
                       <img
-                        src={`http://13.124.83.195:8080/Team5Spring/image/profile/${all.profile}`}
+                        src={`http://18.221.230.63:8080/acorn/image/profile/${all.profile}`}
                         alt=""
                       />
                     </Link>
@@ -426,7 +426,7 @@ class Detail extends Component {
               <div className="stepImgWrapper">
                 <div className="centered">
                   <img
-                    src={`http://13.124.83.195:8080/Team5Spring/image/recipe/${comp_img}`}
+                    src={`http://18.221.230.63:8080/acorn/image/recipe/${comp_img}`}
                     alt=""
                   />
                 </div>
