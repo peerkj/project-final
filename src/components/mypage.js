@@ -100,7 +100,6 @@ const R = ({
       history.push("/");
     }
     setNickname(query.nick, history);
-
     updateList();
   }, []);
 
