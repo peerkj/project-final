@@ -37,7 +37,7 @@ class header extends Component {
             <a href="/">
               <img
                 style={{ width: "140px", marginLeft: "55px" }}
-                src="/img/logo2.png"
+                src="/img/logo1.png"
                 alt=""
               />
             </a>
