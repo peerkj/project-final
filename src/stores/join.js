@@ -223,7 +223,7 @@ export default class JoinStore {
       })
         .then((res) => {
           alert("가입을 축하합니다!!");
-          window.location.replace("/login");
+          window.location.replace("/");
         })
         .catch((err) => {
           console.log("업로드 오류:" + err);
