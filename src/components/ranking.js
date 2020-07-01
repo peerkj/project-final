@@ -57,7 +57,7 @@ class Counter extends Component {
               <div className="rankingCenter">
                 <div className="centered">
                   <Link to={`/mypage?nick=${c.nickname}`}>
-                    <img src={`http://localhost:9000/acorn/image/profile/${c.profile}`} alt="" />
+                    <img src={`http://3.128.62.155:8080/Team5Spring/image/profile/${c.profile}`} alt="" />
                   </Link>
                 </div>
               </div>

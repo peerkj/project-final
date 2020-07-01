@@ -322,7 +322,7 @@ class write extends Component {
                     className="finishImg"
                     src={
                       i.comp_photoList === null
-                        ? `http://localhost:9000/acorn/image/recipe/${i.comp_photo}`
+                        ? `http://3.128.62.155:8080/Team5Spring/image/recipe/${i.comp_photo}`
                         : i.comp_photo
                     }
                     alt=""

@@ -84,7 +84,7 @@ export default class DetailStore {
   @action
   getRecipe = (rec_num) => {
     this.rec_num = rec_num;
-    let url = "http://localhost:9000/acorn/recipe/select?rec_num=" + rec_num;
+    let url = "http://3.128.62.155:8080/Team5Spring/recipe/select?rec_num=" + rec_num;
     axios({
       url: url,
       method: "get",
@@ -171,7 +171,7 @@ export default class DetailStore {
   //좋아요체크
   @action
   checkJoayo = () => {
-    let url = "http://localhost:9000/acorn/connect/joayocheck";
+    let url = "http://3.128.62.155:8080/Team5Spring/connect/joayocheck";
 
     axios({
       method: "get",
@@ -187,7 +187,7 @@ export default class DetailStore {
   //좋아요
   @action
   Joayo = () => {
-    let url = "http://localhost:9000/acorn/connect/joayo";
+    let url = "http://3.128.62.155:8080/Team5Spring/connect/joayo";
     if (this.root.info.login_state) {
       axios({
         method: "get",
@@ -204,7 +204,7 @@ export default class DetailStore {
   //스크랩체크
   @action
   checkScrap = () => {
-    let url = "http://localhost:9000/acorn/connect/scrapcheck";
+    let url = "http://3.128.62.155:8080/Team5Spring/connect/scrapcheck";
 
     axios({
       method: "get",
@@ -220,7 +220,7 @@ export default class DetailStore {
   //스크랩
   @action
   Scrap = () => {
-    let url = "http://localhost:9000/acorn/connect/scrap";
+    let url = "http://3.128.62.155:8080/Team5Spring/connect/scrap";
     if (this.root.info.login_state) {
       axios({
         method: "get",
@@ -236,7 +236,7 @@ export default class DetailStore {
 
   @action
   getComment = () => {
-    let url = "http://localhost:9000/acorn/comment/count";
+    let url = "http://3.128.62.155:8080/Team5Spring/comment/count";
 
     axios({
       method: "get",

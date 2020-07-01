@@ -234,7 +234,7 @@ export default class WriteStore {
   //글쓰기
   @action
   insertRecipe = (history) => {
-    let url = "http://localhost:9000/acorn/recipe/regist";
+    let url = "http://3.128.62.155:8080/Team5Spring/recipe/regist";
     let submit = new FormData();
     submit.append("repre_photofile", this.represent.repre_photofile); //대표사진(썸네일)
     submit.append("subject", this.subject);

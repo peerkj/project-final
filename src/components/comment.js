@@ -88,7 +88,7 @@ class comment extends Component {
                 width="40px"
                 height="40px"
                 style={{ borderRadius: "40px", verticalAlign: "middle" }}
-                src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
+                src={`http://3.128.62.155:8080/Team5Spring/image/profile/${c.profile}`}
                 alt=""
               />
             </Link>
@@ -126,7 +126,7 @@ class comment extends Component {
               <div className="centered">
                 {c.image && (
                   <img
-                    src={`http://localhost:9000/acorn/image/comment/${c.image}`}
+                    src={`http://3.128.62.155:8080/Team5Spring/image/comment/${c.image}`}
                     alt=""
                     style={{ float: "right" }}
                   />

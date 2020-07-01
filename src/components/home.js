@@ -491,7 +491,7 @@ const Home = ({
                   >
                     <img
                       width="40px"
-                      src={`http://localhost:9000/acorn/image/profile/${recipe_list[recipe_index].profile}`}
+                      src={`http://3.128.62.155:8080/Team5Spring/image/profile/${recipe_list[recipe_index].profile}`}
                       alt=""
                     />
                   </Link>
@@ -514,7 +514,7 @@ const Home = ({
                     <div className="centered">
                       <img
                         className="r2listImg"
-                        src={`http://localhost:9000/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
+                        src={`http://3.128.62.155:8080/Team5Spring/image/recipe/${recipe_list[recipe_index].repre_photo}`}
                         alt=""
                       />
                     </div>

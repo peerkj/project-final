@@ -245,7 +245,7 @@ export default class RecipeupdateStore {
   updateform = (num, history) => {
 
     this.resetuUpdate();
-    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + num;
+    let url = "http://3.128.62.155:8080/Team5Spring/recipe/updateform?rec_num=" + num;
 
     axios({
       method: "get",
@@ -253,7 +253,7 @@ export default class RecipeupdateStore {
     })
       .then((res) => {
         this.recipe = res.data;
-        this.recipe.repre_photo = `http://localhost:9000/acorn/image/recipe/${this.recipe.repre_photo}`;
+        this.recipe.repre_photo = `http://3.128.62.155:8080/Team5Spring/image/recipe/${this.recipe.repre_photo}`;
 
         //주재료 , 부재료 분류
         for (let i = 0; i < this.recipe.ingreList.length; i++) {
@@ -274,7 +274,7 @@ export default class RecipeupdateStore {
           if (this.step[i].photo !== null && this.step[i].photo !== "null") {
             this.step[
               i
-            ].photo = `http://localhost:9000/acorn/image/recipe/${this.step[i].photo}`;
+            ].photo = `http://3.128.62.155:8080/Team5Spring/image/recipe/${this.step[i].photo}`;
           } else {
             this.step[i].photo = null;
           }
@@ -313,7 +313,7 @@ export default class RecipeupdateStore {
   //글쓰기
   @action
   insertRecipe = (history) => {
-    let url = "http://localhost:9000/acorn/recipe/update";
+    let url = "http://3.128.62.155:8080/Team5Spring/recipe/update";
     let submit = new FormData();
     submit.append("rec_num", this.recipe.rec_num);
     submit.append("repre_photofile", this.recipe.repre_photofile); //대표사진(썸네일)

@@ -22,8 +22,11 @@ export default class loginStore {
   };
 
   @action
+  fakeFetch = (delay = 1500) => new Promise((res) => setTimeout(res, delay));
+
+  @action
   handleLogin = (history) => {
-    let url = "http://localhost:9000/acorn/chef/login";
+    let url = "http://3.128.62.155:8080/Team5Spring/chef/login";
     let login = new FormData();
 
     login.append("email", this.email);
@@ -45,7 +48,7 @@ export default class loginStore {
         data: login,
         //headers: { "Content-Type": "multipart/form-data" },
       })
-        .then((res) => {
+        .then(async (res) => {
           if (res.data === 1) {
             //성공 or 실패
             localStorage.setItem("userEmail", this.email);
@@ -53,8 +56,9 @@ export default class loginStore {
 
             this.root.info.userEmail = this.email;
             this.root.info.auth = true;
-            this.root.info.getInfo();
-
+            await this.fakeFetch(200);
+            await this.root.info.getInfo();
+            //await this.fakeFetch(500);
             this.root.findPass.modal_open = false;
             history.go(-1);
           } else {
