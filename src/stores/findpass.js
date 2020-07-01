@@ -66,7 +66,7 @@ export default class JoinStore {
     } else if (!this.available_email) {
       this.error = "이메일 형식을 지켜주세요";
     } else {
-      let url = "http://18.221.230.63:8080/acorn/chef/findpass";
+      let url = "http://13.124.83.195:8080/acorn/chef/findpass";
       let findPass = new FormData();
       findPass.append("name", this.name);
       findPass.append("email", this.email);

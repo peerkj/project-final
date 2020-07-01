@@ -88,7 +88,7 @@ class comment extends Component {
                 width="40px"
                 height="40px"
                 style={{ borderRadius: "40px", verticalAlign: "middle" }}
-                src={`http://18.221.230.63:8080/acorn/image/profile/${c.profile}`}
+                src={`http://13.124.83.195:8080/acorn/image/profile/${c.profile}`}
                 alt=""
               />
             </Link>
@@ -126,7 +126,7 @@ class comment extends Component {
               <div className="centered">
                 {c.image && (
                   <img
-                    src={`http://18.221.230.63:8080/acorn/image/comment/${c.image}`}
+                    src={`http://13.124.83.195:8080/acorn/image/comment/${c.image}`}
                     alt=""
                     style={{ float: "right" }}
                   />

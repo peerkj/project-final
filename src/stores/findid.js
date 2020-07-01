@@ -60,7 +60,7 @@ export default class JoinStore {
     } else if (!this.available_hp) {
       this.error = "전화번호 형식을 지켜주세요";
     } else {
-      let url = "http://18.221.230.63:8080/acorn/chef/findid";
+      let url = "http://13.124.83.195:8080/acorn/chef/findid";
       let findId = new FormData();
       findId.append("name", this.name);
       findId.append("hp", this.hp);
