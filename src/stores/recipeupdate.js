@@ -230,7 +230,7 @@ export default class RecipeupdateStore {
 
   @action
   updateform = () => {
-    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + 24;
+    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + 2;
 
     axios({
       method: "get",
@@ -390,14 +390,14 @@ export default class RecipeupdateStore {
         check_done = true;
         break;
       }
-      if (this.done[i].comp_photoList === null) {
+      if (this.done[i].comp_photoList !== null) {
         submit.append("comp_photoList[" + i + "]", this.done[i].comp_photoList);
       }
     }
 
     if (this.delete_done.length > 0) {
-      for (let i = 0; i < this.delete_done; i++) {
-        submit.append("delcomp[" + i + "]", this.delete_done[i]);
+      for (let i = 0; i < this.delete_done.length; i++) {
+        submit.append("delcomp", this.delete_done[i]);
       }
     }
 
