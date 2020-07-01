@@ -70,7 +70,6 @@ export default class CounterStore {
       },
     })
       .then((res) => {
-        console.log(res.data);
         this.comment_list = res.data;
         if (this.comment_list.length === 0) this.err = true;
         else this.err = false;

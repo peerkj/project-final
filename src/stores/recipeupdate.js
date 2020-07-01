@@ -2,7 +2,6 @@ import { observable, action, computed } from "mobx";
 import axios from "axios";
 
 export default class RecipeupdateStore {
-  @observable rec_num = 25;
   @observable recipe = {
     food_cate: "구이",
     portion: "1인분",
@@ -21,6 +20,23 @@ export default class RecipeupdateStore {
     this.root = root;
   }
 
+  @action
+  resetuUpdate = () => {
+    this.recipe = {
+      food_cate: "구이",
+      portion: "1인분",
+      time: "15분 이내",
+      difficult: "아무나",
+    };
+
+    this.main_ingre = [];
+    this.sub_ingre = [];
+    this.step = [];
+
+    this.done = [];
+    this.delete_done = [];
+  }
+
   //input
   @action
   handleSubjectChange = (e) => {
@@ -34,7 +50,6 @@ export default class RecipeupdateStore {
 
   @action
   handleFoodcateChange = (e) => {
-    console.log(e.target.value);
     this.recipe.food_cate = e.target.value;
   };
 
@@ -140,7 +155,6 @@ export default class RecipeupdateStore {
       if (e.target.files[0]) {
         reader.readAsDataURL(e.target.files[0]); // 1. 파일을 읽어 버퍼에 저장합니다. 저장후 onloadend 트리거
         this.step[idx].photofile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
-        console.log(this.step[idx].photofile);
       }
     }
   };
@@ -197,7 +211,6 @@ export default class RecipeupdateStore {
     if (!(idx === this.done.length - 1)) {
       if (this.done[idx].comp_photoList === null) {
         this.delete_done.push(this.done[idx].comp_photo);
-        console.log(this.done[idx].comp_photo);
       }
       this.done.splice(idx, 1);
     }
@@ -230,6 +243,8 @@ export default class RecipeupdateStore {
 
   @action
   updateform = (num, history) => {
+
+    this.resetuUpdate();
     let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + num;
 
     axios({
@@ -237,7 +252,6 @@ export default class RecipeupdateStore {
       url: url,
     })
       .then((res) => {
-        console.log(res.data);
         this.recipe = res.data;
         this.recipe.repre_photo = `http://localhost:9000/acorn/image/recipe/${this.recipe.repre_photo}`;
 
@@ -362,10 +376,6 @@ export default class RecipeupdateStore {
       j++;
     }
 
-    for (let i = 0; i < this.step.length; i++) {
-      console.log(i, ". ", this.step[i].photofile);
-    }
-
     //순서
     for (let i = 0; i < this.step.length; i++) {
       if (this.step[i].content === "") {
@@ -403,7 +413,6 @@ export default class RecipeupdateStore {
 
     if (this.delete_done.length > 0) {
       for (let i = 0; i < this.delete_done.length; i++) {
-        console.log(this.delete_done[i]);
         submit.append("delcomp", this.delete_done[i]);
       }
     }
@@ -441,7 +450,7 @@ export default class RecipeupdateStore {
         data: submit,
       })
         .then((res) => {
-          history.push(`/recipe/detail?recipe=${this.recipe.rec_num}`);
+          history.replace(`/recipe/detail?recipe=${this.recipe.rec_num}`);
         })
         .catch((err) => {
           console.log("레시피 업로드 오류:" + err);

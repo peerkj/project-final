@@ -19,7 +19,6 @@ export default class RankingStore {
       url: url,
     })
       .then((res) => {
-        console.log(res.data);
         this.chef = res.data;
         this.setList();
       })
