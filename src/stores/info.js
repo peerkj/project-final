@@ -16,7 +16,7 @@ export default class JoinStore {
   @action
   getInfo = () => {
     let url =
-      "http://18.221.230.63:8080/acorn/chef/modform?email=" +
+      "http://13.124.83.195:8080/Team5Spring/chef/modform?email=" +
       this.root.info.userEmail;
 
     //유효성 검사

@@ -12,7 +12,7 @@ export default class RankingStore {
 
   @action
   rankingList = () => {
-    let url = "http://18.221.230.63:8080/acorn/ranking/sorting";
+    let url = "http://13.124.83.195:8080/Team5Spring/ranking/sorting";
 
     axios({
       method: "get",
@@ -40,7 +40,7 @@ export default class RankingStore {
   //소식받기체크
   @action
   checkNews = (email, i) => {
-    let url = "http://18.221.230.63:8080/acorn/connect/newscheck";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/newscheck";
 
     axios({
       method: "get",
@@ -58,7 +58,7 @@ export default class RankingStore {
   //소식받기
   @action
   onNews = (email, i) => {
-    let url = "http://18.221.230.63:8080/acorn/connect/onnews";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/onnews";
 
     if (this.root.info.login_state) {
       axios({
@@ -79,7 +79,7 @@ export default class RankingStore {
   //소식받기취소
   @action
   offNews = (email, i) => {
-    let url = "http://18.221.230.63:8080/acorn/connect/offnews";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/offnews";
 
     if (this.root.info.login_state) {
       axios({

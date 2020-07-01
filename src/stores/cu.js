@@ -11,9 +11,9 @@ export default class CU {
   @observable error = "";
   @observable profile = null;
   @observable
-  imgBase64 = `http://18.221.230.63:8080/acorn/image/profile/${this.root.info.profile_name}`;
+  imgBase64 = `http://13.124.83.195:8080/Team5Spring/image/profile/${this.root.info.profile_name}`;
   @observable
-  menu_profile = `http://18.221.230.63:8080/acorn/image/profile/${
+  menu_profile = `http://13.124.83.195:8080/Team5Spring/image/profile/${
     this.root.info.profile_name === "basic_user.png"
       ? "basic_user2.png"
       : this.root.info.profile_name
@@ -31,11 +31,11 @@ export default class CU {
     this.nickname = this.root.info.nickname;
     this.menu_nick = this.root.info.nickname;
     this.hp = this.root.info.hp;
-    this.imgBase64 = `http://18.221.230.63:8080/acorn/image/profile/${this.root.info.profile_name}`;
+    this.imgBase64 = `http://13.124.83.195:8080/Team5Spring/image/profile/${this.root.info.profile_name}`;
     if (this.root.info.profile_name === "basic_user.png") {
-      this.menu_profile = `http://18.221.230.63:8080/acorn/image/profile/basic_user2.png`;
+      this.menu_profile = `http://13.124.83.195:8080/Team5Spring/image/profile/basic_user2.png`;
     } else
-      this.menu_profile = `http://18.221.230.63:8080/acorn/image/profile/${this.root.info.profile_name}`;
+      this.menu_profile = `http://13.124.83.195:8080/Team5Spring/image/profile/${this.root.info.profile_name}`;
   };
 
   @action
@@ -46,7 +46,7 @@ export default class CU {
   };
   @action
   reloadimg = () => {
-    this.imgBase64 = `http://18.221.230.63:8080/acorn/image/profile/${this.root.info.profile_name}`;
+    this.imgBase64 = `http://13.124.83.195:8080/Team5Spring/image/profile/${this.root.info.profile_name}`;
     this.checkImg();
   };
 
@@ -111,7 +111,7 @@ export default class CU {
 
   @action
   checkNickname = () => {
-    let url = "http://18.221.230.63:8080/acorn/chef/checknick";
+    let url = "http://13.124.83.195:8080/Team5Spring/chef/checknick";
     let nickname = new FormData();
     nickname.append("nickname", this.nickname);
     if (this.available_nickname) {
@@ -137,7 +137,7 @@ export default class CU {
   };
   @action
   handleSubmit = (history) => {
-    let url = "http://18.221.230.63:8080/acorn/chef/mod";
+    let url = "http://13.124.83.195:8080/Team5Spring/chef/mod";
     let submit = new FormData();
     submit.append("name", this.name);
     submit.append("email", this.email);

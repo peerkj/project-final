@@ -26,7 +26,7 @@ export default class loginStore {
 
   @action
   handleLogin = (history) => {
-    let url = "http://18.221.230.63:8080/acorn/chef/login";
+    let url = "http://13.124.83.195:8080/Team5Spring/chef/login";
     let login = new FormData();
 
     login.append("email", this.email);

@@ -32,7 +32,7 @@ export default class CounterStore {
   setNickname = (nick, history) => {
     this.nick = nick;
 
-    let url = "http://18.221.230.63:8080/acorn/chef/mypage";
+    let url = "http://13.124.83.195:8080/Team5Spring/chef/mypage";
     //유효성 검사
     axios({
       method: "get",
@@ -161,7 +161,8 @@ export default class CounterStore {
   //카운트 업데이트
   @action
   updateCount = (rec_num, idx) => {
-    let url = "http://18.221.230.63:8080/acorn/recipe/count?rec_num=" + rec_num;
+    let url =
+      "http://13.124.83.195:8080/Team5Spring/recipe/count?rec_num=" + rec_num;
     //유효성 검사
     axios({
       method: "get",
@@ -184,7 +185,7 @@ export default class CounterStore {
   @action
   getList = () => {
     if (this.list.length === this.list_count) return;
-    let url = "http://18.221.230.63:8080/acorn/mypage/recipe";
+    let url = "http://13.124.83.195:8080/Team5Spring/mypage/recipe";
     axios({
       method: "get",
       url: url,
@@ -211,7 +212,7 @@ export default class CounterStore {
   @action
   getList_scrap = () => {
     if (this.list.length === this.list_count) return;
-    let url = "http://18.221.230.63:8080/acorn/mypage/scrap";
+    let url = "http://13.124.83.195:8080/Team5Spring/mypage/scrap";
     axios({
       method: "get",
       url: url,
@@ -238,7 +239,7 @@ export default class CounterStore {
   //좋아요체크
   @action
   checkJoayo = (num, idx) => {
-    let url = "http://18.221.230.63:8080/acorn/connect/joayocheck";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/joayocheck";
 
     axios({
       method: "get",
@@ -257,7 +258,7 @@ export default class CounterStore {
   //좋아요
   @action
   Joayo = (num, idx) => {
-    let url = "http://18.221.230.63:8080/acorn/connect/joayo";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/joayo";
     if (this.root.info.login_state) {
       axios({
         method: "get",
@@ -279,7 +280,7 @@ export default class CounterStore {
   //스크랩체크
   @action
   checkScrap = (num, idx) => {
-    let url = "http://18.221.230.63:8080/acorn/connect/scrapcheck";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/scrapcheck";
 
     axios({
       method: "get",
@@ -298,7 +299,7 @@ export default class CounterStore {
   //스크랩
   @action
   Scrap = (num, idx) => {
-    let url = "http://18.221.230.63:8080/acorn/connect/scrap";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/scrap";
     if (this.root.info.login_state) {
       axios({
         method: "get",
@@ -314,7 +315,7 @@ export default class CounterStore {
   //댓글 count
   @action
   getComment = (num, idx) => {
-    let url = "http://18.221.230.63:8080/acorn/comment/count";
+    let url = "http://13.124.83.195:8080/Team5Spring/comment/count";
 
     axios({
       method: "get",
@@ -330,7 +331,7 @@ export default class CounterStore {
   //소식받기체크
   @action
   checkNews = () => {
-    let url = "http://18.221.230.63:8080/acorn/connect/newscheck";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/newscheck";
 
     axios({
       method: "get",
@@ -351,7 +352,7 @@ export default class CounterStore {
   //소식받기
   @action
   onNews = () => {
-    let url = "http://18.221.230.63:8080/acorn/connect/onnews";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/onnews";
 
     if (this.root.info.login_state) {
       axios({
@@ -374,7 +375,7 @@ export default class CounterStore {
   //소식받기취소
   @action
   offNews = () => {
-    let url = "http://18.221.230.63:8080/acorn/connect/offnews";
+    let url = "http://13.124.83.195:8080/Team5Spring/connect/offnews";
 
     if (this.root.info.login_state) {
       axios({
@@ -403,7 +404,7 @@ export default class CounterStore {
   @action
   deleteRecipe = () => {
     let url =
-      "http://18.221.230.63:8080/acorn/recipe/delete?rec_num=" +
+      "http://13.124.83.195:8080/Team5Spring/recipe/delete?rec_num=" +
       this.delete_set.rec_num;
 
     axios({

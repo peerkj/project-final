@@ -142,7 +142,7 @@ const R = ({
             <Avatar aria-label="recipe" className={useStyles.avatar}>
               <img
                 width="40px"
-                src={`http://18.221.230.63:8080/acorn/image/profile/${
+                src={`http://13.124.83.195:8080/Team5Spring/image/profile/${
                   sw === 0 ? mypage.profile : l.profile
                 }`}
                 alt=""
@@ -226,7 +226,7 @@ const R = ({
                 <div className="centered">
                   <img
                     className="r2listImg"
-                    src={`http://18.221.230.63:8080/acorn/image/recipe/${l.repre_photo}`}
+                    src={`http://13.124.83.195:8080/Team5Spring/image/recipe/${l.repre_photo}`}
                     alt=""
                   />
                 </div>
@@ -339,7 +339,7 @@ const R = ({
               <div className="mypageCenter">
                 <div className="centered">
                   <img
-                    src={`http://18.221.230.63:8080/acorn/image/profile/${
+                    src={`http://13.124.83.195:8080/Team5Spring/image/profile/${
                       mypage.profile === "basic_user.png"
                         ? "basic_user2.png"
                         : mypage.profile
