@@ -17,7 +17,7 @@ export default class CU {
     this.root.info.profile_name === "basic_user.png"
       ? "basic_user2.png"
       : this.root.info.profile_name
-  }`;
+    }`;
   @observable nickname_check = false;
 
   constructor(root) {
@@ -85,7 +85,6 @@ export default class CU {
         this.profile = e.target.files[0]; // 파일 상태 업데이트 업로드 하는것은 파일이기 때문에 관리 필요
       }
     }
-    console.log(this.imgBase64);
   };
   @action
   handleRemove = () => {

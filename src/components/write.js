@@ -269,7 +269,11 @@ class write extends Component {
                   handleRemove(idx);
                 }}
                 size="small"
-                style={{ position: "relative", left: "-21px", top: "-75px" }}
+                style={{
+                  position: "relative",
+                  left: "-21px",
+                  top: "-75px",
+                }}
               />
             ) : (
                 ""

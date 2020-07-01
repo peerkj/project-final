@@ -100,13 +100,13 @@ class comment extends Component {
               verticalAlign: "middle",
             }}
           >
-            &emsp;
+            &ensp;
             <b>
               <Link to={`/mypage?nick=${c.nickname}`} onClick={modalReset}>
                 {c.nickname}
               </Link>
             </b>
-            &emsp;
+            &ensp;
             <span>{c.timeDiffer}</span>
             {c.email === userEmail && (
               <Close
@@ -118,8 +118,8 @@ class comment extends Component {
             )}
           </div>
           <br />
-          {c.relevel === 2 && <span>&emsp;&ensp;</span>}
-          {c.relevel >= 1 && <span>&emsp;&emsp;&ensp;</span>}
+          {c.relevel === 2 && <span>&emsp;&nbsp;</span>}
+          {c.relevel >= 1 && <span>&emsp;&emsp;&nbsp;</span>}
           <span>&emsp;&emsp;&emsp;&ensp;&ensp;{c.content}</span>
           <div className="commentCenterWrapper">
             <div className="commentCenter">
@@ -136,7 +136,7 @@ class comment extends Component {
           </div>
           <br />
           <br />
-          {c.relevel >= 1 && <span>&emsp;&emsp;&ensp;</span>}
+          {c.relevel >= 1 && <span>&emsp;&emsp;&nbsp;</span>}
           {c.email !== "알수없음" && c.relevel < 2 && (
             <span
               onClick={() => {
@@ -146,7 +146,7 @@ class comment extends Component {
                 }
               }}
             >
-              &emsp;&emsp;&emsp;&ensp;&ensp;답글
+              &emsp;&emsp;&emsp;&ensp;&nbsp;답글
             </span>
           )}
         </div>

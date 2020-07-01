@@ -19,7 +19,6 @@ export default class FollowingStore {
             url: url,
             params: { email: this.root.info.userEmail },
         }).then((res) => {
-            console.log(res.data);
             this.follow = res.data;
         }).catch((err) => {
             console.log("팔로리스트오류:" + err);

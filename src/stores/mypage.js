@@ -43,7 +43,6 @@ export default class CounterStore {
       //headers: { "Content-Type": "multipart/form-data" },
     })
       .then((res) => {
-        console.log(res.data);
         if (res.data === "") {
           alert("사용자가 없습니다");
           history.push("/");
@@ -75,7 +74,6 @@ export default class CounterStore {
   @action
   setSw = (e) => {
     // 0->내글 / 1->스크랩
-    console.log("스크랩", e);
     this.sw = e;
     this.resetRecipe();
   };
@@ -185,7 +183,6 @@ export default class CounterStore {
   //리스트
   @action
   getList = () => {
-    console.log("리스트");
     if (this.list.length === this.list_count) return;
     let url = "http://localhost:9000/acorn/mypage/recipe";
     axios({
@@ -198,7 +195,6 @@ export default class CounterStore {
     })
       .then((res) => {
         this.scroll++;
-        console.log(res.data);
         if (this.scroll === 1) {
           this.list = res.data.list;
         } else {
@@ -214,7 +210,6 @@ export default class CounterStore {
 
   @action
   getList_scrap = () => {
-    console.log("스크랩리스트");
     if (this.list.length === this.list_count) return;
     let url = "http://localhost:9000/acorn/mypage/scrap";
     axios({
@@ -227,7 +222,6 @@ export default class CounterStore {
     })
       .then((res) => {
         this.scroll++;
-        console.log(res.data);
         if (this.scroll === 1) {
           this.list = res.data.list;
         } else {
@@ -257,7 +251,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -273,7 +267,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -298,7 +292,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -314,7 +308,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   //댓글 count
@@ -330,7 +324,7 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //소식받기체크
@@ -348,7 +342,6 @@ export default class CounterStore {
     })
       .then((res) => {
         this.checkn = res.data;
-        console.log(this.checkn);
       })
       .catch((err) => {
         console.log("소식받기체크오류:" + err);

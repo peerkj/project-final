@@ -144,28 +144,27 @@ const Home = ({
         targetKey="foo"
         dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
       >
+
         <img
           src="/img/pot/dish.png"
           alt=""
           width="100px"
-          style={{ marginTop: "-15px" }}
-        ></img>
-        <span
-          style={{
-            position: "absolute",
-            top: "28px",
-            left: "32px",
-          }}
-        >
-          {my.refrig_name}
-        </span>
+          style={{ marginTop: "-35px" }}
+        />
+        <center>
+          <span
+            style={{
+              position: "relative",
+              top: "-63px"
+            }}
+          >
+            {my.refrig_name}
+          </span>
+        </center>
         <Close
           id="homeRef_delete"
           onClick={() => {
             refri_delete(my.refrig_num);
-          }}
-          style={{
-            marginLeft: "-25px",
           }}
         />
       </DragDropContainer>
@@ -253,7 +252,7 @@ const Home = ({
                 <Search />
               </InputAdornment>
             }
-            placeholder="#재료"
+            placeholder="재료 검색:#재료"
           />
         </FormControl>
         <br />
@@ -319,17 +318,17 @@ const Home = ({
               />
               <div className={handle_style} width="330">
                 <img src="img/refview2.png" alt="" width="330" />
-                <span
+                <div
                   style={{
                     position: "absolute",
-                    top: "155px",
+                    top: "175px",
                     left: "0px",
                     width: "370px",
-                    height: "320px",
+                    height: "300px",
                   }}
                 >
                   {list}
-                </span>
+                </div>
               </div>
             </center>
           </div>
@@ -474,13 +473,13 @@ const Home = ({
             <KeyboardArrowLeft onClick={stepL} fontSize="large"
               style={{
                 border: "1px solid #dcdcdc",
-                borderRadius: "8px"
+                borderRadius: "20px"
               }} />
             &ensp;
             <KeyboardArrowRight onClick={stepR} fontSize="large"
               style={{
                 border: "1px solid #dcdcdc",
-                borderRadius: "8px"
+                borderRadius: "20px"
               }} />
           </center>
           <Card className={useStyles.root} style={{ marginTop: "5px" }}>
@@ -535,6 +534,8 @@ const Home = ({
             재료
             <span class="detailIngreTitleText">Ingredients</span>
           </p>
+          <p style={{ fontWeight: "300", marginLeft: "10px", color: "#959595" }}>일치하는 재료&nbsp;
+          <span style={{ color: "#dc1523" }}>■</span>색으로 표시</p>
           <div>
             <p className="detailMainTitle">[주재료]</p>
             {main}

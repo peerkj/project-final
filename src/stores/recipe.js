@@ -116,7 +116,6 @@ export default class CounterStore {
       url: url,
     })
       .then((res) => {
-        console.log(res.data);
         this.root.recipeupdate.recipe = res.data;
         history.push("/update");
       })
@@ -254,7 +253,6 @@ export default class CounterStore {
         }
         this.setList();
         this.list_count = res.data.count;
-        console.log(this.list_count);
       })
       .catch((err) => {
         console.log("업로드오류:" + err);

@@ -92,6 +92,7 @@ class header extends Component {
           </center>
           <br />
           <br />
+          <br />
           <hr id="menuline" />
           <ul>
             <li>

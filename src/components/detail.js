@@ -24,6 +24,7 @@ import {
   ExpandLess,
   BookmarkBorderSharp,
   BorderColor,
+  ExpandMore,
 } from "@material-ui/icons";
 import {
   Button,
@@ -460,10 +461,29 @@ class Detail extends Component {
         {/* 위로가기 */}
         <Link
           onClick={() => {
-            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
           }}
         >
           <ExpandLess
+            style={{
+              position: "fixed",
+              left: "330px",
+              top: "570px",
+              width: "30px",
+              height: "30px",
+              border: "1px solid #575757",
+              backgroundColor: "#ffffff",
+              opacity: "0.8",
+              color: "#000000",
+            }}
+          />
+        </Link>
+        <Link
+          onClick={() => {
+            window.scrollTo({ top: 5000, left: 0, behavior: 'smooth' });
+          }}
+        >
+          <ExpandMore
             style={{
               position: "fixed",
               left: "330px",

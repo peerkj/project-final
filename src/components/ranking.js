@@ -56,7 +56,9 @@ class Counter extends Component {
             <div className="rankingCenterWrapper">
               <div className="rankingCenter">
                 <div className="centered">
-                  <img src={`http://localhost:9000/acorn/image/profile/${c.profile}`} alt="" />
+                  <Link to={`/mypage?nick=${c.nickname}`}>
+                    <img src={`http://localhost:9000/acorn/image/profile/${c.profile}`} alt="" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -75,8 +77,8 @@ class Counter extends Component {
                   {c.nickname}
                 </Link>
               </span>
-              {/* 소식받기버튼 */}
 
+              {/* 소식받기버튼 */}
               {check_n[idx] === 0 && c.email !== userEmail ? (
                 <span
                   onClick={() => {
@@ -99,7 +101,8 @@ class Counter extends Component {
                     ""
                   )}
             </div>
-            <span id="rankingScore">{c.score}</span>
+            <div id="rankingScore">{c.score}</div>
+
             {/* 아이콘 */}
             <div style={{ position: "relative", top: "-25px", left: "103px", width: "200px" }}>
               <span className="rankIcon">
