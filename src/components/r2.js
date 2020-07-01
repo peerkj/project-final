@@ -17,8 +17,6 @@ import {
   Avatar,
   IconButton,
   Typography,
-  BottomNavigation,
-  BottomNavigationAction,
   Menu,
   MenuItem,
   Dialog,
@@ -586,7 +584,7 @@ const R = ({
   );
 };
 
-export default inject(({ recipe, detail, info }) => ({
+export default inject(({ recipe, recipeupdate, detail, info }) => ({
   list: recipe.list,
   getList: recipe.getList,
   state: recipe.state,
@@ -633,5 +631,5 @@ export default inject(({ recipe, detail, info }) => ({
   cateL: recipe.cateL,
   sort: recipe.sort,
 
-  updateform: recipe.updateform,
+  updateform: recipeupdate.updateform,
 }))(observer(R));
