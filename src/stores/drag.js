@@ -144,7 +144,7 @@ export default class DragStore {
   //재료 추가
   @action
   handleAddFood = () => {
-    let url = "http://localhost:9000/acorn/refri/put";
+    let url = "http://13.124.83.195:8080/Team5Spring/refri/put";
     let put = new FormData();
     put.append("email", this.root.info.userEmail);
     put.append("refrig_name", this.addFood);
@@ -177,7 +177,7 @@ export default class DragStore {
   @action
   handleListFood = () => {
     let url =
-      "http://localhost:9000/acorn/refri/list?email=" +
+      "http://13.124.83.195:8080/Team5Spring/refri/list?email=" +
       this.root.info.userEmail;
     axios({
       method: "get",
@@ -212,7 +212,8 @@ export default class DragStore {
   //재료삭제
   @action
   refri_delete = (num) => {
-    let url = "http://localhost:9000/acorn/refri/delete?refrig_num=" + num;
+    let url =
+      "http://13.124.83.195:8080/Team5Spring/refri/delete?refrig_num=" + num;
     axios({
       method: "get",
       url: url,
@@ -228,7 +229,7 @@ export default class DragStore {
   @action
   handleCook = () => {
     this.sw = 1;
-    let url = "http://localhost:9000/acorn/refri/search";
+    let url = "http://13.124.83.195:8080/Team5Spring/refri/search";
     let food = new FormData();
     if (this.e_store.length === 0) {
       alert("재료를 선택하세요");
@@ -261,7 +262,7 @@ export default class DragStore {
   @action
   handleRecipe = () => {
     this.sw = 0;
-    let url = "http://localhost:9000/acorn/refri/search";
+    let url = "http://13.124.83.195:8080/Team5Spring/refri/search";
     let recipe = new FormData();
     if (this.mylist.length === 0) {
       alert("재료를 추가하세요");

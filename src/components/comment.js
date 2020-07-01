@@ -88,7 +88,7 @@ class comment extends Component {
                 width="40px"
                 height="40px"
                 style={{ borderRadius: "40px", verticalAlign: "middle" }}
-                src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
+                src={`http://13.124.83.195:8080/Team5Spring/image/profile/${c.profile}`}
                 alt=""
               />
             </Link>
@@ -126,7 +126,7 @@ class comment extends Component {
               <div className="centered">
                 {c.image && (
                   <img
-                    src={`http://localhost:9000/acorn/image/comment/${c.image}`}
+                    src={`http://13.124.83.195:8080/Team5Spring/image/comment/${c.image}`}
                     alt=""
                     style={{ float: "right" }}
                   />
@@ -157,7 +157,9 @@ class comment extends Component {
       <div>
         <div>{comment}</div>
         <center>
-          {err && <div style={{ padding: "30px 0 90px" }}>등록된 댓글이 없습니다</div>}
+          {err && (
+            <div style={{ padding: "30px 0 90px" }}>등록된 댓글이 없습니다</div>
+          )}
         </center>
         <div>
           <Dialog
@@ -187,8 +189,8 @@ class comment extends Component {
                       style={{ maxWidth: "240px", maxHeight: "200px" }}
                     />
                   ) : (
-                      <img src="/img/add_icon2.png" alt="" width="240px" />
-                    )}
+                    <img src="/img/add_icon2.png" alt="" width="240px" />
+                  )}
                 </label>
                 {imgBase64 ? (
                   <Close
@@ -204,8 +206,8 @@ class comment extends Component {
                     id="commentthumb_delete"
                   />
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
               </div>
               <input
                 style={{ display: "none" }}

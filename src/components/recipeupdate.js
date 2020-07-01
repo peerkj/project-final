@@ -74,10 +74,9 @@ import { inject, observer } from "mobx-react";
 }))
 @observer
 class write extends Component {
-
   componentDidMount = () => {
     window.scrollTo(0, 0);
-  }
+  };
 
   render() {
     const {
@@ -264,8 +263,8 @@ class write extends Component {
               {i.photo ? (
                 <img className="cookImg" src={i.photo} alt="" />
               ) : (
-                  <img className="cookImg" src="img/add_icon2.png" alt="" />
-                )}
+                <img className="cookImg" src="img/add_icon2.png" alt="" />
+              )}
             </label>
             {i.photo ? (
               <Close
@@ -276,8 +275,8 @@ class write extends Component {
                 style={{ position: "relative", left: "-21px", top: "-75px" }}
               />
             ) : (
-                ""
-              )}
+              ""
+            )}
             <Cancel
               onClick={() => {
                 handelDelete_step(idx);
@@ -322,14 +321,14 @@ class write extends Component {
                     className="finishImg"
                     src={
                       i.comp_photoList === null
-                        ? `http://localhost:9000/acorn/image/recipe/${i.comp_photo}`
+                        ? `http://13.124.83.195:8080/Team5Spring/image/recipe/${i.comp_photo}`
                         : i.comp_photo
                     }
                     alt=""
                   />
                 ) : (
-                    <img className="finishImg" src="img/add_icon2.png" alt="" />
-                  )}
+                  <img className="finishImg" src="img/add_icon2.png" alt="" />
+                )}
               </label>
             </div>
             <input
@@ -368,12 +367,12 @@ class write extends Component {
                     alt=""
                   />
                 ) : (
-                    <img
-                      className="writeThumbnail"
-                      src="img/add_icon3.png"
-                      alt=""
-                    />
-                  )}
+                  <img
+                    className="writeThumbnail"
+                    src="img/add_icon3.png"
+                    alt=""
+                  />
+                )}
               </label>
             </div>
             <input
