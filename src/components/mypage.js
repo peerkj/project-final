@@ -90,8 +90,11 @@ const R = ({
   //   /* fake async fetch */
 
   useEffect(() => {
-    let query = queryString.parse(location.search);
 
+    let query = queryString.parse(location.search);
+    if (query.nick === undefined) {
+      history.push("/");
+    }
     setNickname(query.nick, history);
 
 
@@ -356,7 +359,8 @@ const R = ({
                 )}
               <br />
               <span className="cate_text">
-                {mypage.nickname}님의 레시피</span>
+                {mypage.email === userEmail ? ("나") : ("셰프")}
+                의 레시피</span>
               <br />
             </div>
             <div

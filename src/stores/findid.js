@@ -11,6 +11,11 @@ export default class JoinStore {
   constructor(root) {
     this.root = root;
   }
+
+  @action
+  handleEnter = (e, history) => {
+    if (e.key === "Enter") this.handleSubmit(history);
+  };
   //input
   @action
   handleNameChange = (e) => {
@@ -66,6 +71,7 @@ export default class JoinStore {
         //headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
+          console.log(res.data);
           //없으면 공백
           if (res.data === "") {
             this.result = "일치하는 회원정보가 없습니다.";

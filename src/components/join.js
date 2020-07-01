@@ -48,7 +48,7 @@ class join extends Component {
   componentWillMount = () => {
     this.props.handelReset();
     if (this.props.login_state) {
-      this.props.history.replace("/");
+      this.props.history.push("/");
     }
   };
 
@@ -267,6 +267,7 @@ class join extends Component {
             >
               {error}
             </span>
+            <br />
             <br />
             <Button
               onClick={handleSubmit}

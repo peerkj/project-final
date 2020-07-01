@@ -29,7 +29,7 @@ class login extends Component {
     this.props.handleReset();
 
     if (this.props.login_state) {
-      this.props.history.replace("/");
+      this.props.history.push("/");
     }
   };
 

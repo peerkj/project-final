@@ -30,6 +30,8 @@ import {
   RestaurantMenu,
   DeleteOutline,
   Search,
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
 } from "@material-ui/icons";
 import { inject, observer } from "mobx-react";
 import "../css/home.css";
@@ -158,7 +160,7 @@ const Home = ({
           {my.refrig_name}
         </span>
         <Close
-          id="profileImg_delete"
+          id="homeRef_delete"
           onClick={() => {
             refri_delete(my.refrig_num);
           }}
@@ -191,23 +193,23 @@ const Home = ({
     );
   });
 
-  // //주재료
+  //주재료
   const main = main_ing[recipe_index].map((i, idx) => {
     return (
       <div key={idx} className="detailMainIngre">
         <span>
           {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.ingre_name}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>{i.ingre_name}</span>
           ) : (
-            i.ingre_name
-          )}
+              i.ingre_name
+            )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.quantity}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>{i.quantity}</span>
           ) : (
-            i.quantity
-          )}
+              i.quantity
+            )}
         </span>
       </div>
     );
@@ -219,17 +221,17 @@ const Home = ({
       <div key={idx} className="detailMainIngre">
         <span>
           {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.ingre_name}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>{i.ingre_name}</span>
           ) : (
-            i.ingre_name
-          )}
+              i.ingre_name
+            )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
-            <span style={{ color: "pink" }}>{i.quantity}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>{i.quantity}</span>
           ) : (
-            i.quantity
-          )}
+              i.quantity
+            )}
         </span>
       </div>
     );
@@ -258,8 +260,8 @@ const Home = ({
         <img
           src="/img/refrigerator.png"
           style={{
-            width: "180px",
-            marginTop: "70px"
+            width: "200px",
+            marginTop: "80px"
           }}
           onClick={() => {
             if (login_state) handleClickOpen();
@@ -271,7 +273,6 @@ const Home = ({
           alt=""
         />
         <br />
-        <span className="homeText">나만의 냉장고</span>
       </center>
       <Dialog
         fullScreen
@@ -433,12 +434,11 @@ const Home = ({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAddFood} color="primary">
-            추가
-          </Button>
-
           <Button onClick={handleAddOpen} color="primary">
             취소
+          </Button>
+          <Button onClick={handleAddFood} color="primary">
+            추가
           </Button>
         </DialogActions>
       </Dialog>
@@ -448,7 +448,7 @@ const Home = ({
         fullScreen
         open={open_recipe}
         onClose={openRecipe}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -461,9 +461,29 @@ const Home = ({
           </Toolbar>
         </AppBar>
         <div>
-          <br />
-          <b>{recipe_list.length}개의 결과</b>
-          <Card className={useStyles.root} style={{ marginTop: "10px" }}>
+          <center>
+            <br />
+            <span
+              style={{
+                fontSize: "12pt",
+                fontWeight: "500"
+              }}>[ 총 {recipe_list.length}개의 레시피 추천 ]
+              </span>
+            <br />
+            <br />
+            <KeyboardArrowLeft onClick={stepL} fontSize="large"
+              style={{
+                border: "1px solid #dcdcdc",
+                borderRadius: "8px"
+              }} />
+            &ensp;
+            <KeyboardArrowRight onClick={stepR} fontSize="large"
+              style={{
+                border: "1px solid #dcdcdc",
+                borderRadius: "8px"
+              }} />
+          </center>
+          <Card className={useStyles.root} style={{ marginTop: "5px" }}>
             <CardHeader
               avatar={
                 <Avatar aria-label="recipe" className={useStyles.avatar}>
@@ -479,7 +499,7 @@ const Home = ({
                 </Avatar>
               }
               title={
-                <Link to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}>
+                <Link to={`/mypage?nick=${recipe_list[recipe_index].nickname}`} style={{ color: "#000000" }}>
                   {recipe_list[recipe_index].nickname}
                 </Link>
               }
@@ -491,7 +511,7 @@ const Home = ({
             >
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  <div className="r2listThumbnail">
+                  <div className="r2listThumbnail2">
                     <div className="centered">
                       <img
                         className="r2listImg"
@@ -510,23 +530,20 @@ const Home = ({
               </CardContent>
             </Link>
           </Card>
-          <hr className="detailLine" />
-          <div style={{ width: "100%" }}>
-            <p
-              style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
-            >
-              재료
-              <span class="detailIngreTitleText">Ingredients</span>
-            </p>
+          <br />
+          <p style={{ fontSize: "16pt", fontWeight: "600", marginLeft: "10px" }}>
+            재료
+            <span class="detailIngreTitleText">Ingredients</span>
+          </p>
+          <div>
             <p className="detailMainTitle">[주재료]</p>
             {main}
             <br />
             <p className="detailMainTitle">[부재료]</p>
             {sub}
-            <hr className="detailLine" />
           </div>
-          <b onClick={stepL}>왼쪽</b>
-          <b onClick={stepR}>오른쪽</b>
+          <br />
+          <br />
         </div>
       </Dialog>
     </div>

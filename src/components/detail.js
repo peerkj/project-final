@@ -164,7 +164,7 @@ class Detail extends Component {
         <div key={num}>
           <div className="stepnc">
             <div className="stepnum">{num + 1}</div>
-            <span className="steptext">{i.content}</span>
+            <div className="steptext">{i.content}</div>
             <br />
           </div>
           <div className="stepImgWrapper">
@@ -172,6 +172,7 @@ class Detail extends Component {
               <img
                 src={`http://localhost:9000/acorn/image/recipe/${i.photo}`}
                 alt=""
+                width="359px"
               />
             </div>
           </div>
@@ -184,7 +185,7 @@ class Detail extends Component {
         <div key={num}>
           <div className="stepnc">
             <div className="stepnum">{num + 1}</div>
-            <span className="steptext">{i.content}</span>
+            <div className="steptext1">{i.content}</div>
           </div>
         </div>
       );
@@ -196,8 +197,7 @@ class Detail extends Component {
           <div className="stepslider">
             <div className="stepnc">
               <div className="stepnum">{step_slide + 1}</div>
-              <span className="steptext">{step_list[step_slide].content}</span>
-              <br />
+              <div className="steptext">{step_list[step_slide].content}</div>
               <br />
               <div className="stepImgWrapper">
                 <div className="centered">
@@ -209,7 +209,6 @@ class Detail extends Component {
                 </div>
               </div>
             </div>
-            <br />
             <div className="stepsliderbtn">
               <KeyboardArrowLeft onClick={stepL} />
               &ensp;
@@ -270,24 +269,36 @@ class Detail extends Component {
                 <span id="detail_subtext">{all.summary}</span>
                 <img src="/img/quote2.png" alt="" width="16px" />
               </p>
+
+              {/* 카테고리 */}
+              <div style={{
+                border: "1px solid #e2e1e1",
+                width: "60px",
+                padding: "8px 10px",
+                borderRadius: "20px"
+              }}>{all.food_cate}</div>
               <br />
+
+              {/* 난이도 등 */}
               <div className="ptdGroup">
                 <div className="ptd">
-                  <People color="disabled" />
+                  <People className="texts" />
                   <br />
                   <span className="texts">{all.portion}</span>
                 </div>
                 <div className="ptd">
-                  <Timer color="disabled" />
+                  <Timer className="texts" />
                   <br />
                   <span className="texts">{all.time}</span>
                 </div>
                 <div className="ptd">
-                  <Star color="disabled" />
+                  <Star className="texts" />
                   <br />
                   <span className="texts">{all.difficult}</span>
                 </div>
               </div>
+
+              {/* 공유/좋아요/스크랩/댓글 */}
               <div className="ptd2Group">
                 <div
                   className="ptd2"
@@ -421,9 +432,9 @@ class Detail extends Component {
               style={{ fontSize: "16pt", fontWeight: "500", marginLeft: "5px" }}
             >
               <img
-                src="/img/star.jpg"
+                src="/img/star.png"
                 alt=""
-                width="30px"
+                width="35px"
                 style={{ verticalAlign: "middle" }}
               />
               <span style={{ verticalAlign: "middle" }}>요리 Tip!</span>
