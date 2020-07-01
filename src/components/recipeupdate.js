@@ -20,9 +20,6 @@ import {
 import Button from "@material-ui/core/Button";
 import { inject, observer } from "mobx-react";
 
-const fakeFetch = (delay = 1500) =>
-  new Promise((res) => setTimeout(res, delay));
-
 @inject((stores) => ({
   //input
   recipe: stores.recipeupdate.recipe,
@@ -77,10 +74,6 @@ const fakeFetch = (delay = 1500) =>
 }))
 @observer
 class write extends Component {
-  componentDidMount = async () => {
-    await this.props.updateform();
-  };
-
   render() {
     const {
       recipe,
@@ -581,7 +574,7 @@ class write extends Component {
               variant="outlined"
               size="medium"
               onClick={() => {
-                history.push("/recipe");
+                history.go(-1);
               }}
             >
               취소

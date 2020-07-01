@@ -16,6 +16,10 @@ export default class CounterStore {
   @observable food_cate = "";
   @observable sort = "";
 
+  //삭제 데이터 저장
+  @observable rd = false;
+  @observable delete_set = { rec_num: "" };
+
   //분류
   @observable cate_list = [
     ["All", "밥/죽/떡", "면", "국/탕/찌개"],
@@ -327,5 +331,32 @@ export default class CounterStore {
         this.comment_count[idx] = res.data;
       })
       .catch((err) => {});
+  };
+
+  @action
+  rdo = (num) => {
+    this.delete_set.rec_num = num;
+
+    this.rd = !this.rd;
+  };
+
+  //삭제
+  @action
+  deleteRecipe = () => {
+    let url =
+      "http://localhost:9000/acorn/recipe/delete?rec_num=" +
+      this.delete_set.rec_num;
+
+    axios({
+      method: "get",
+      url: url,
+    })
+      .then((res) => {
+        this.rd = false;
+        this.reset();
+      })
+      .catch((err) => {
+        console.log("레시피삭제오루:" + err);
+      });
   };
 }
