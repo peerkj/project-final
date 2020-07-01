@@ -25,6 +25,7 @@ import {
   DialogContent,
   DialogTitle,
   CircularProgress,
+  DialogActions,
 } from "@material-ui/core";
 import {
   Close,
@@ -36,7 +37,6 @@ import {
   ExpandLess,
   ChatBubbleOutline,
   ListAlt,
-  Cloud,
 } from "@material-ui/icons";
 import "../css/styles.css";
 
@@ -85,18 +85,21 @@ const R = ({
   checkNews,
   onNews,
   offNews,
+  updateform,
+
+  rd,
+  rdo,
+  deleteRecipe,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
 
   useEffect(() => {
-
     let query = queryString.parse(location.search);
     if (query.nick === undefined) {
       history.push("/");
     }
     setNickname(query.nick, history);
-
 
     updateList();
   }, []);
@@ -142,7 +145,7 @@ const R = ({
                 width="40px"
                 src={`http://localhost:9000/acorn/image/profile/${
                   sw === 0 ? mypage.profile : l.profile
-                  }`}
+                }`}
                 alt=""
               />
             </Avatar>
@@ -174,10 +177,22 @@ const R = ({
                   공유
                 </MenuItem>
                 {l.email === userEmail && (
-                  <MenuItem onClick={dothandleClose}>수정</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      updateform(l.rec_num, history);
+                    }}
+                  >
+                    수정
+                  </MenuItem>
                 )}
                 {l.email === userEmail && (
-                  <MenuItem onClick={dothandleClose}>삭제</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      rdo(l.rec_num);
+                    }}
+                  >
+                    삭제
+                  </MenuItem>
                 )}
               </Menu>
             </IconButton>
@@ -216,9 +231,7 @@ const R = ({
               </div>
               <br />
               <center>
-                <span className="recipeSubject">
-                  {l.subject}
-                </span>
+                <span className="recipeSubject">{l.subject}</span>
               </center>
             </Typography>
           </CardContent>
@@ -234,14 +247,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -260,14 +273,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -317,16 +330,18 @@ const R = ({
         <center style={{ marginTop: "20px" }}>
           <div className="mypageProfileBox">
             {/* 닉네임 출력 */}
-            <span className="mypageTitle">
-              {mypage.nickname}
-            </span>
+            <span className="mypageTitle">{mypage.nickname}</span>
             <br />
             {/* 프로필 사진 */}
             <div className="mypageCenterWrapper">
               <div className="mypageCenter">
                 <div className="centered">
                   <img
-                    src={`http://localhost:9000/acorn/image/profile/${mypage.profile}`}
+                    src={`http://localhost:9000/acorn/image/profile/${
+                      mypage.profile === "basic_user.png"
+                        ? "basic_user2.png"
+                        : mypage.profile
+                    }`}
                     alt=""
                   />
                 </div>
@@ -334,10 +349,14 @@ const R = ({
             </div>
             {/* 팔로우 */}
             {checkn === 0 && mypage.email !== userEmail && (
-              <div className="mypageFollowbtn" onClick={onNews}>Follow</div>
+              <div className="mypageFollowbtn" onClick={onNews}>
+                Follow
+              </div>
             )}
             {checkn === 1 && mypage.email !== userEmail && (
-              <div className="mypageUnfollowbtn" onClick={offNews}>Unfollow</div>
+              <div className="mypageUnfollowbtn" onClick={offNews}>
+                Unfollow
+              </div>
             )}
           </div>
         </center>
@@ -355,12 +374,12 @@ const R = ({
               {sw === 0 ? (
                 <ListAlt fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <ListAlt fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <ListAlt fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
               <span className="cate_text">
-                {mypage.email === userEmail ? ("나") : ("셰프")}
-                의 레시피</span>
+                {mypage.email === userEmail ? "나" : "셰프"}의 레시피
+              </span>
               <br />
             </div>
             <div
@@ -373,8 +392,8 @@ const R = ({
               {sw === 1 ? (
                 <Bookmark fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
               <span className="cate_text">스크랩</span>
               <br />
@@ -397,7 +416,9 @@ const R = ({
           </div>
         )}
         {list_count === 0 && (
-          <div style={{ marginTop: "70px", fontSize: "20px", fontWeight: "500" }}>
+          <div
+            style={{ marginTop: "70px", fontSize: "20px", fontWeight: "500" }}
+          >
             <span>글이 없습니다</span>
           </div>
         )}
@@ -453,6 +474,24 @@ const R = ({
         </Dialog>
       </div>
       {/* 공유모달 */}
+
+      <Dialog open={rd} onClose={rdo} aria-labelledby="form-dialog-title">
+        <DialogContent>삭제하시겠습니까?</DialogContent>
+        <DialogActions>
+          <Button onClick={rdo} color="primary">
+            취소
+          </Button>
+          <Button
+            onClick={() => {
+              deleteRecipe();
+            }}
+            style={{ color: "#002060" }}
+          >
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       {/* 댓글모달 */}
       <Dialog open={comment_open} onClose={handleComment}>
         <IconButton
@@ -470,11 +509,11 @@ const R = ({
           <Comment />
         </DialogContent>
       </Dialog>
-    </div >
+    </div>
   );
 };
 
-export default inject(({ mypage, detail, info }) => ({
+export default inject(({ mypage, detail, info, recipeupdate }) => ({
   list: mypage.list,
   getList: mypage.getList,
   state: mypage.state,
@@ -522,4 +561,8 @@ export default inject(({ mypage, detail, info }) => ({
   checkNews: mypage.checkNews,
   onNews: mypage.onNews,
   offNews: mypage.offNews,
+  updateform: recipeupdate.updateform,
+  rd: mypage.rd,
+  rdo: mypage.rdo,
+  deleteRecipe: mypage.deleteRecipe,
 }))(observer(R));

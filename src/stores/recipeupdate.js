@@ -229,8 +229,8 @@ export default class RecipeupdateStore {
   };
 
   @action
-  updateform = () => {
-    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + 23;
+  updateform = (num, history) => {
+    let url = "http://localhost:9000/acorn/recipe/updateform?rec_num=" + num;
 
     axios({
       method: "get",
@@ -273,6 +273,7 @@ export default class RecipeupdateStore {
           });
         }
         this.handelAddDone();
+        history.push("/update");
       })
 
       .catch((err) => {

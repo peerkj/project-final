@@ -19,6 +19,10 @@ export default class CounterStore {
   //소식받기
   @observable checkn = "";
 
+  //삭제 데이터 저장
+  @observable rd = false;
+  @observable delete_set = { rec_num: "" };
+
   // **** 추가됨
   constructor(root) {
     this.root = root;
@@ -395,5 +399,30 @@ export default class CounterStore {
           console.log("소식받기취소오류:" + err);
         });
     }
+  };
+  @action
+  rdo = (num) => {
+    this.delete_set.rec_num = num;
+    this.rd = !this.rd;
+  };
+
+  //삭제
+  @action
+  deleteRecipe = () => {
+    let url =
+      "http://localhost:9000/acorn/recipe/delete?rec_num=" +
+      this.delete_set.rec_num;
+
+    axios({
+      method: "get",
+      url: url,
+    })
+      .then((res) => {
+        this.rd = false;
+        this.reset();
+      })
+      .catch((err) => {
+        console.log("레시피삭제오루:" + err);
+      });
   };
 }

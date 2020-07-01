@@ -47,7 +47,7 @@ export default class loginStore {
       })
         .then((res) => {
           if (res.data === 1) {
-            //성공
+            //성공 or 실패
             localStorage.setItem("userEmail", this.email);
             localStorage.setItem("auth", true);
 
