@@ -602,10 +602,6 @@ export default inject(({ recipe, detail, info }) => ({
   search: recipe.search,
   handleEnter: recipe.handleEnter,
 
-  delete_open: recipe.delete_open,
-  deleteOpen: recipe.deleteOpen,
-  deleteRecipe: recipe.deleteRecipe,
-
   checkList: recipe.checkList,
   list_count: recipe.list_count,
   resetRecipe: recipe.resetRecipe,

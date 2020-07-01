@@ -29,6 +29,21 @@ export default class CounterStore {
     this.root = root;
   }
 
+  //삭제
+  @action
+  deleteRecipe = (rec_num, history) => {
+    let url = "http://localhost:9000/acorn/recipe/delete?rec_num=" + rec_num;
+
+    axios({
+      method: "get",
+      url: url,
+    }).then((res) => {
+      history.push("/recipe");
+    }).catch((err) => {
+      console.log("레시피삭제오루:" + err);
+    })
+  }
+
   //분류
   @action
   cateR = () => {
@@ -258,7 +273,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_j[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -274,7 +289,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -294,7 +309,7 @@ export default class CounterStore {
       .then((res) => {
         this.check_s[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -310,7 +325,7 @@ export default class CounterStore {
         .then((res) => {
           this.updateCheck(num, idx);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   //댓글 count
@@ -326,6 +341,6 @@ export default class CounterStore {
       .then((res) => {
         this.comment_count[idx] = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }
