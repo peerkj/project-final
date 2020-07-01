@@ -92,6 +92,8 @@ const R = ({
   cateL,
 
   updateform,
+  rd,
+  rdo,
 }) => {
   //   // const [state, setState] = useState({ itemCount: 0, isLoading: false });
   //   /* fake async fetch */
@@ -192,14 +194,18 @@ const R = ({
                   공유
                 </MenuItem>
                 {l.email === userEmail && (
-                  <MenuItem onClick={() => {
-                    updateform(l.rec_num);
-                  }}>수정</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      updateform(l.rec_num, history);
+                    }}
+                  >
+                    수정
+                  </MenuItem>
                 )}
                 {l.email === userEmail && (
                   <MenuItem
                     onClick={() => {
-                      deleteOpen(l.rec_num);
+                      rdo(l.rec_num);
                     }}
                   >
                     삭제
@@ -208,7 +214,14 @@ const R = ({
               </Menu>
             </IconButton>
           }
-          title={<Link to={`/mypage?nick=${l.nickname}`} style={{ color: "#000000" }}>{l.nickname}</Link>}
+          title={
+            <Link
+              to={`/mypage?nick=${l.nickname}`}
+              style={{ color: "#000000" }}
+            >
+              {l.nickname}
+            </Link>
+          }
           subheader={l.timeDiffer}
         />
         <Link
@@ -257,14 +270,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -283,14 +296,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -361,16 +374,20 @@ const R = ({
             onChange={onchangeSearch}
             style={{ verticalAlign: "middle" }}
           />
-
           <center style={{ marginTop: "30px" }}>
-            <KeyboardArrowLeft onClick={cateL} fontSize="large"
-              style={{ verticalAlign: "middle" }} />
+            <KeyboardArrowLeft
+              onClick={cateL}
+              fontSize="large"
+              style={{ verticalAlign: "middle" }}
+            />
             {FoodList}
-            <KeyboardArrowRight onClick={cateR} fontSize="large"
-              style={{ verticalAlign: "middle" }} />
+            <KeyboardArrowRight
+              onClick={cateR}
+              fontSize="large"
+              style={{ verticalAlign: "middle" }}
+            />
           </center>
           <br />
-
           {/* 리스트 분류,정렬 */}
           <div className="recipeStepCate">
             <div
@@ -383,10 +400,12 @@ const R = ({
               {sort === "" ? (
                 <Restore fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <Restore fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <Restore fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
-              <span className="cate_text" style={{ color: "#000000" }}>최신순</span>
+              <span className="cate_text" style={{ color: "#000000" }}>
+                최신순
+              </span>
               <br />
             </div>
             <div
@@ -399,10 +418,12 @@ const R = ({
               {sort === "scrap" ? (
                 <Bookmark fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
-              <span className="cate_text" style={{ color: "#000000" }}>스크랩순</span>
+              <span className="cate_text" style={{ color: "#000000" }}>
+                스크랩순
+              </span>
               <br />
             </div>
             <div
@@ -415,8 +436,8 @@ const R = ({
               {sort === "readcount" ? (
                 <Pageview fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
               <span className="cate_text" style={{ color: "#000000" }}>
                 조회순
@@ -529,7 +550,7 @@ const R = ({
       </div>
       {/* 공유모달 */}
 
-      {/* 댓글모달 */}
+      {/* 레시피 삭제모달 */}
       <Dialog open={comment_open} onClose={handleComment}>
         <IconButton
           edge="start"
@@ -542,19 +563,15 @@ const R = ({
 
         <br />
         <br />
-        <DialogContent style={{ width: "270px" }} >
+        <DialogContent style={{ width: "270px" }}>
           <Comment />
         </DialogContent>
       </Dialog>
       <div>
-        <Dialog
-          open={delete_open}
-          onClose={deleteOpen}
-          aria-labelledby="form-dialog-title"
-        >
+        <Dialog open={rd} onClose={rdo} aria-labelledby="form-dialog-title">
           <DialogContent>삭제하시겠습니까?</DialogContent>
           <DialogActions>
-            <Button onClick={deleteOpen} color="primary">
+            <Button onClick={rdo} color="primary">
               취소
             </Button>
             <Button
@@ -572,7 +589,7 @@ const R = ({
   );
 };
 
-export default inject(({ recipe, detail, info }) => ({
+export default inject(({ recipe, detail, info, recipeupdate }) => ({
   list: recipe.list,
   getList: recipe.getList,
   state: recipe.state,
@@ -614,5 +631,9 @@ export default inject(({ recipe, detail, info }) => ({
   cateR: recipe.cateR,
   cateL: recipe.cateL,
   sort: recipe.sort,
-  updateform: recipe.updateform,
+  updateform: recipeupdate.updateform,
+
+  rd: recipe.rd,
+  rdo: recipe.rdo,
+  deleteRecipe: recipe.deleteRecipe,
 }))(observer(R));

@@ -13,12 +13,17 @@ export default class CU {
   @observable
   imgBase64 = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
   @observable
-  menu_profile = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
+  menu_profile = `http://localhost:9000/acorn/image/profile/${
+    this.root.info.profile_name === "basic_user.png"
+      ? "basic_user2.png"
+      : this.root.info.profile_name
+  }`;
   @observable nickname_check = false;
 
   constructor(root) {
     this.root = root;
   }
+
   @action
   reLoadState = () => {
     this.email = this.root.info.userEmail;
@@ -27,7 +32,10 @@ export default class CU {
     this.menu_nick = this.root.info.nickname;
     this.hp = this.root.info.hp;
     this.imgBase64 = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
-    this.menu_profile = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
+    if (this.root.info.profile_name === "basic_user.png") {
+      this.menu_profile = `http://localhost:9000/acorn/image/profile/basic_user2.png`;
+    } else
+      this.menu_profile = `http://localhost:9000/acorn/image/profile/${this.root.info.profile_name}`;
   };
 
   @action
