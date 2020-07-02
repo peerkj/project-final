@@ -26,7 +26,7 @@ export default class loginStore {
 
   @action
   handleLogin = (history) => {
-    let url = "http://localhost:9000/acorn/chef/login";
+    let url = "http://13.124.83.195:8080/acorn/chef/login";
     let login = new FormData();
 
     login.append("email", this.email);
@@ -56,7 +56,7 @@ export default class loginStore {
 
             this.root.info.userEmail = this.email;
             this.root.info.auth = true;
-            await this.fakeFetch(350);
+            await this.fakeFetch(200);
             await this.root.info.getInfo();
             //await this.fakeFetch(500);
             this.root.findPass.modal_open = false;

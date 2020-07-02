@@ -234,7 +234,7 @@ export default class WriteStore {
   //글쓰기
   @action
   insertRecipe = (history) => {
-    let url = "http://localhost:9000/acorn/recipe/regist";
+    let url = "http://13.124.83.195:8080/acorn/recipe/regist";
     let submit = new FormData();
     submit.append("repre_photofile", this.represent.repre_photofile); //대표사진(썸네일)
     submit.append("subject", this.subject);
@@ -246,7 +246,6 @@ export default class WriteStore {
     submit.append("tip", this.tip);
     submit.append("email", this.root.info.userEmail);
 
-    //
     let check_main = false; //주재료
     let check_sub = false; //부재료
     let check_step = false; //요리순서
@@ -347,12 +346,15 @@ export default class WriteStore {
     } else if (this.tip === "") {
       alert("요리 Tip을 입력해주세요");
     } else {
+      console.log("글쓰기 시작!?");
       axios({
         method: "post",
         url: url,
         data: submit,
+        headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
+          console.log("글쓰기 성공!?");
           history.push(`/recipe/detail?recipe=${res.data}`);
         })
         .catch((err) => {

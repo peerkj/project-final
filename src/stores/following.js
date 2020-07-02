@@ -11,7 +11,7 @@ export default class FollowingStore {
 
   @action
   followList = () => {
-    let url = "http://localhost:9000/acorn/ranking/news";
+    let url = "http://13.124.83.195:8080/acorn/ranking/news";
 
     axios({
       method: "get",
@@ -29,7 +29,7 @@ export default class FollowingStore {
   //소식받기취소
   @action
   offNews = (email, i) => {
-    let url = "http://localhost:9000/acorn/connect/offnews";
+    let url = "http://13.124.83.195:8080/acorn/connect/offnews";
 
     if (this.root.info.login_state) {
       axios({
