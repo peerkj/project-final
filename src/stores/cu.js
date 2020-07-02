@@ -17,7 +17,7 @@ export default class CU {
     this.root.info.profile_name === "basic_user.png"
       ? "basic_user2.png"
       : this.root.info.profile_name
-    }`;
+  }`;
   @observable nickname_check = false;
 
   constructor(root) {

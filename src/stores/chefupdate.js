@@ -143,7 +143,6 @@ export default class loginStore {
         //headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
-
           alert("비밀번호가 변경되었습니다");
           this.handleReset();
           this.password = "";

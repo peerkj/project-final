@@ -181,7 +181,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkjoa = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //좋아요
@@ -197,7 +197,7 @@ export default class DetailStore {
         .then((res) => {
           this.checkJoayo();
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
 
@@ -214,7 +214,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkscr = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 
   //스크랩
@@ -230,7 +230,7 @@ export default class DetailStore {
         .then((res) => {
           this.checkScrap();
         })
-        .catch((err) => { });
+        .catch((err) => {});
     }
   };
 
@@ -246,6 +246,6 @@ export default class DetailStore {
       .then((res) => {
         this.c_count = res.data;
       })
-      .catch((err) => { });
+      .catch((err) => {});
   };
 }

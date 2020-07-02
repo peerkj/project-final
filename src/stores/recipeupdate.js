@@ -35,7 +35,7 @@ export default class RecipeupdateStore {
 
     this.done = [];
     this.delete_done = [];
-  }
+  };
 
   //input
   @action
@@ -243,7 +243,6 @@ export default class RecipeupdateStore {
 
   @action
   updateform = (num, history) => {
-
     this.resetuUpdate();
     let url = "http://3.128.62.155:8080/Team5Spring/recipe/updateform?rec_num=" + num;
 

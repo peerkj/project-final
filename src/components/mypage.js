@@ -144,7 +144,7 @@ const R = ({
                 width="40px"
                 src={`http://3.128.62.155:8080/Team5Spring/image/profile/${
                   sw === 0 ? mypage.profile : l.profile
-                  }`}
+                }`}
                 alt=""
               />
             </Avatar>
@@ -249,14 +249,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Favorite
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Joayo(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Favorite
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Joayo(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -275,14 +275,14 @@ const R = ({
                 }}
               />
             ) : (
-                <Bookmark
-                  style={{ color: "#db555a" }}
-                  fontSize="small"
-                  onClick={() => {
-                    Scrap(l.rec_num, idx);
-                  }}
-                />
-              )}
+              <Bookmark
+                style={{ color: "#db555a" }}
+                fontSize="small"
+                onClick={() => {
+                  Scrap(l.rec_num, idx);
+                }}
+              />
+            )}
             <span
               style={{
                 fontWeight: "500",
@@ -343,7 +343,7 @@ const R = ({
                       mypage.profile === "basic_user.png"
                         ? "basic_user2.png"
                         : mypage.profile
-                      }`}
+                    }`}
                     alt=""
                   />
                 </div>
@@ -376,8 +376,8 @@ const R = ({
               {sw === 0 ? (
                 <ListAlt fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <ListAlt fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <ListAlt fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
               <span className="cate_text">
                 {mypage.email === userEmail ? "나" : "셰프"}의 레시피
@@ -394,8 +394,8 @@ const R = ({
               {sw === 1 ? (
                 <Bookmark fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                  <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
-                )}
+                <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+              )}
               <br />
               <span className="cate_text">스크랩</span>
               <br />
@@ -480,8 +480,7 @@ const R = ({
       <Dialog open={rd} onClose={rdo} aria-labelledby="form-dialog-title">
         <DialogContent>삭제하시겠습니까?</DialogContent>
         <DialogActions>
-          <Button onClick={rdo}
-            style={{ color: "#002060" }}>
+          <Button onClick={rdo} style={{ color: "#002060" }}>
             취소
           </Button>
           <Button

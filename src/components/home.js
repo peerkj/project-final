@@ -144,7 +144,6 @@ const Home = ({
         targetKey="foo"
         dragData={{ idx: idx, key: my.refrig_num, food: my.refrig_name }}
       >
-
         <img
           src="/img/pot/dish.png"
           alt=""
@@ -155,7 +154,7 @@ const Home = ({
           <span
             style={{
               position: "relative",
-              top: "-63px"
+              top: "-63px",
             }}
           >
             {my.refrig_name}
@@ -198,17 +197,21 @@ const Home = ({
       <div key={idx} className="detailMainIngre">
         <span>
           {i.check === 1 ? (
-            <span style={{ color: "#dc1523", fontWeight: "500" }}>{i.ingre_name}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>
+              {i.ingre_name}
+            </span>
           ) : (
-              i.ingre_name
-            )}
+            i.ingre_name
+          )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
-            <span style={{ color: "#dc1523", fontWeight: "500" }}>{i.quantity}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>
+              {i.quantity}
+            </span>
           ) : (
-              i.quantity
-            )}
+            i.quantity
+          )}
         </span>
       </div>
     );
@@ -220,17 +223,21 @@ const Home = ({
       <div key={idx} className="detailMainIngre">
         <span>
           {i.check === 1 ? (
-            <span style={{ color: "#dc1523", fontWeight: "500" }}>{i.ingre_name}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>
+              {i.ingre_name}
+            </span>
           ) : (
-              i.ingre_name
-            )}
+            i.ingre_name
+          )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
-            <span style={{ color: "#dc1523", fontWeight: "500" }}>{i.quantity}</span>
+            <span style={{ color: "#dc1523", fontWeight: "500" }}>
+              {i.quantity}
+            </span>
           ) : (
-              i.quantity
-            )}
+            i.quantity
+          )}
         </span>
       </div>
     );
@@ -260,7 +267,7 @@ const Home = ({
           src="/img/refrigerator.png"
           style={{
             width: "200px",
-            marginTop: "80px"
+            marginTop: "80px",
           }}
           onClick={() => {
             if (login_state) handleClickOpen();
@@ -277,7 +284,7 @@ const Home = ({
         fullScreen
         open={open}
         onClose={handleClose}
-      // TransitionComponent={Transition}
+        // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -447,7 +454,7 @@ const Home = ({
         fullScreen
         open={open_recipe}
         onClose={openRecipe}
-      // TransitionComponent={Transition}
+        // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -465,22 +472,30 @@ const Home = ({
             <span
               style={{
                 fontSize: "12pt",
-                fontWeight: "500"
-              }}>[ 총 {recipe_list.length}개의 레시피 추천 ]
-              </span>
+                fontWeight: "500",
+              }}
+            >
+              [ 총 {recipe_list.length}개의 레시피 추천 ]
+            </span>
             <br />
             <br />
-            <KeyboardArrowLeft onClick={stepL} fontSize="large"
+            <KeyboardArrowLeft
+              onClick={stepL}
+              fontSize="large"
               style={{
                 border: "1px solid #dcdcdc",
-                borderRadius: "20px"
-              }} />
+                borderRadius: "20px",
+              }}
+            />
             &ensp;
-            <KeyboardArrowRight onClick={stepR} fontSize="large"
+            <KeyboardArrowRight
+              onClick={stepR}
+              fontSize="large"
               style={{
                 border: "1px solid #dcdcdc",
-                borderRadius: "20px"
-              }} />
+                borderRadius: "20px",
+              }}
+            />
           </center>
           <Card className={useStyles.root} style={{ marginTop: "5px" }}>
             <CardHeader
@@ -498,7 +513,10 @@ const Home = ({
                 </Avatar>
               }
               title={
-                <Link to={`/mypage?nick=${recipe_list[recipe_index].nickname}`} style={{ color: "#000000" }}>
+                <Link
+                  to={`/mypage?nick=${recipe_list[recipe_index].nickname}`}
+                  style={{ color: "#000000" }}
+                >
                   {recipe_list[recipe_index].nickname}
                 </Link>
               }
@@ -530,12 +548,18 @@ const Home = ({
             </Link>
           </Card>
           <br />
-          <p style={{ fontSize: "16pt", fontWeight: "600", marginLeft: "10px" }}>
+          <p
+            style={{ fontSize: "16pt", fontWeight: "600", marginLeft: "10px" }}
+          >
             재료
             <span class="detailIngreTitleText">Ingredients</span>
           </p>
-          <p style={{ fontWeight: "300", marginLeft: "10px", color: "#959595" }}>일치하는 재료&nbsp;
-          <span style={{ color: "#dc1523" }}>■</span>색으로 표시</p>
+          <p
+            style={{ fontWeight: "300", marginLeft: "10px", color: "#959595" }}
+          >
+            일치하는 재료&nbsp;
+            <span style={{ color: "#dc1523" }}>■</span>색으로 표시
+          </p>
           <div>
             <p className="detailMainTitle">[주재료]</p>
             {main}

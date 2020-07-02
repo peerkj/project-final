@@ -256,9 +256,19 @@ class Detail extends Component {
                   </div>
                 </div>
               </div>
-              <p style={{ fontWeight: "500", fontSize: "10pt", marginTop: "-30px" }}>
-                <Link to={`/mypage?nick=${all.nickname}`}
-                  style={{ color: "#000000" }}>{all.nickname}</Link>
+              <p
+                style={{
+                  fontWeight: "500",
+                  fontSize: "10pt",
+                  marginTop: "-30px",
+                }}
+              >
+                <Link
+                  to={`/mypage?nick=${all.nickname}`}
+                  style={{ color: "#000000" }}
+                >
+                  {all.nickname}
+                </Link>
               </p>
 
               {/* 요리 제목 */}
@@ -272,12 +282,16 @@ class Detail extends Component {
               </p>
 
               {/* 카테고리 */}
-              <div style={{
-                border: "1px solid #e2e1e1",
-                width: "60px",
-                padding: "8px 10px",
-                borderRadius: "20px"
-              }}>{all.food_cate}</div>
+              <div
+                style={{
+                  border: "1px solid #e2e1e1",
+                  width: "60px",
+                  padding: "8px 10px",
+                  borderRadius: "20px",
+                }}
+              >
+                {all.food_cate}
+              </div>
               <br />
 
               {/* 난이도 등 */}
@@ -315,8 +329,8 @@ class Detail extends Component {
                   {checkjoa === 0 || !login_state ? (
                     <FavoriteBorderSharp />
                   ) : (
-                      <FavoriteSharp style={{ color: "#db555a" }} />
-                    )}
+                    <FavoriteSharp style={{ color: "#db555a" }} />
+                  )}
                   <br />
                   {checkjoa === 0 || !login_state ? "좋아요" : "좋아요 취소"}
                 </div>
@@ -324,8 +338,8 @@ class Detail extends Component {
                   {checkscr === 0 || !login_state ? (
                     <BookmarkBorderSharp />
                   ) : (
-                      <Bookmark style={{ color: "#db555a" }} />
-                    )}
+                    <Bookmark style={{ color: "#db555a" }} />
+                  )}
                   <br />
                   {checkscr === 0 || !login_state ? "스크랩" : "스크랩 취소"}
                 </div>
@@ -461,7 +475,7 @@ class Detail extends Component {
         {/* 위로가기 */}
         <Link
           onClick={() => {
-            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           }}
         >
           <ExpandLess
@@ -480,7 +494,7 @@ class Detail extends Component {
         </Link>
         <Link
           onClick={() => {
-            window.scrollTo({ top: 5000, left: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 5000, left: 0, behavior: "smooth" });
           }}
         >
           <ExpandMore

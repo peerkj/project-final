@@ -23,10 +23,10 @@ export default class JoinStore {
     axios({
       method: "get",
       url: url,
-
       //headers: { "Content-Type": "multipart/form-data" },
     })
       .then((res) => {
+        console.log("-실행-");
         localStorage.setItem("name", res.data.name);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("hp", res.data.hp);
