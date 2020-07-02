@@ -56,7 +56,7 @@ export default class loginStore {
 
             this.root.info.userEmail = this.email;
             this.root.info.auth = true;
-            await this.fakeFetch(200);
+            await this.fakeFetch(350);
             await this.root.info.getInfo();
             //await this.fakeFetch(500);
             this.root.findPass.modal_open = false;

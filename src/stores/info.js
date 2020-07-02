@@ -16,13 +16,13 @@ export default class JoinStore {
   @action
   getInfo = () => {
     let url =
-      "http://localhost/acorn/chef/modform?email=" + this.root.info.userEmail;
+      "http://localhost:9000/acorn/chef/modform?email=" +
+      this.root.info.userEmail;
 
     //유효성 검사
     axios({
       method: "get",
       url: url,
-
       //headers: { "Content-Type": "multipart/form-data" },
     })
       .then((res) => {
