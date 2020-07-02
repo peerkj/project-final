@@ -171,7 +171,7 @@ class Detail extends Component {
           <div className="stepImgWrapper">
             <div className="centered">
               <img
-                src={`http://localhost:9000/acorn/image/recipe/${i.photo}`}
+                src={`http://13.124.83.195:8080/acorn/image/recipe/${i.photo}`}
                 alt=""
                 width="359px"
               />
@@ -203,7 +203,7 @@ class Detail extends Component {
               <div className="stepImgWrapper">
                 <div className="centered">
                   <img
-                    src={`http://localhost:9000/acorn/image/recipe/${step_list[step_slide].photo}`}
+                    src={`http://13.124.83.195:8080/acorn/image/recipe/${step_list[step_slide].photo}`}
                     alt=""
                     width="359px"
                   />
@@ -229,7 +229,7 @@ class Detail extends Component {
             <div className="centered">
               <img
                 className="detailThumbnailImg"
-                src={`http://localhost:9000/acorn/image/recipe/${all.repre_photo}`}
+                src={`http://13.124.83.195:8080/acorn/image/recipe/${all.repre_photo}`}
                 alt=""
               />
             </div>
@@ -249,7 +249,7 @@ class Detail extends Component {
                   <div className="centered">
                     <Link to={`/mypage?nick=${all.nickname}`}>
                       <img
-                        src={`http://localhost:9000/acorn/image/profile/${all.profile}`}
+                        src={`http://13.124.83.195:8080/acorn/image/profile/${all.profile}`}
                         alt=""
                       />
                     </Link>
@@ -329,8 +329,8 @@ class Detail extends Component {
                   {checkjoa === 0 || !login_state ? (
                     <FavoriteBorderSharp />
                   ) : (
-                    <FavoriteSharp style={{ color: "#db555a" }} />
-                  )}
+                      <FavoriteSharp style={{ color: "#db555a" }} />
+                    )}
                   <br />
                   {checkjoa === 0 || !login_state ? "좋아요" : "좋아요 취소"}
                 </div>
@@ -338,8 +338,8 @@ class Detail extends Component {
                   {checkscr === 0 || !login_state ? (
                     <BookmarkBorderSharp />
                   ) : (
-                    <Bookmark style={{ color: "#db555a" }} />
-                  )}
+                      <Bookmark style={{ color: "#db555a" }} />
+                    )}
                   <br />
                   {checkscr === 0 || !login_state ? "스크랩" : "스크랩 취소"}
                 </div>
@@ -426,7 +426,7 @@ class Detail extends Component {
               <div className="stepImgWrapper">
                 <div className="centered">
                   <img
-                    src={`http://localhost:9000/acorn/image/recipe/${comp_img}`}
+                    src={`http://13.124.83.195:8080/acorn/image/recipe/${comp_img}`}
                     alt=""
                   />
                 </div>

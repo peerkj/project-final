@@ -84,7 +84,7 @@ export default class DetailStore {
   @action
   getRecipe = (rec_num) => {
     this.rec_num = rec_num;
-    let url = "http://localhost:9000/acorn/recipe/select?rec_num=" + rec_num;
+    let url = "http://13.124.83.195:8080/acorn/recipe/select?rec_num=" + rec_num;
     axios({
       url: url,
       method: "get",
@@ -171,7 +171,7 @@ export default class DetailStore {
   //좋아요체크
   @action
   checkJoayo = () => {
-    let url = "http://localhost:9000/acorn/connect/joayocheck";
+    let url = "http://13.124.83.195:8080/acorn/connect/joayocheck";
 
     axios({
       method: "get",
@@ -181,13 +181,13 @@ export default class DetailStore {
       .then((res) => {
         this.checkjoa = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
   @action
   Joayo = () => {
-    let url = "http://localhost:9000/acorn/connect/joayo";
+    let url = "http://13.124.83.195:8080/acorn/connect/joayo";
     if (this.root.info.login_state) {
       axios({
         method: "get",
@@ -197,14 +197,14 @@ export default class DetailStore {
         .then((res) => {
           this.checkJoayo();
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
   //스크랩체크
   @action
   checkScrap = () => {
-    let url = "http://localhost:9000/acorn/connect/scrapcheck";
+    let url = "http://13.124.83.195:8080/acorn/connect/scrapcheck";
 
     axios({
       method: "get",
@@ -214,13 +214,13 @@ export default class DetailStore {
       .then((res) => {
         this.checkscr = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
   @action
   Scrap = () => {
-    let url = "http://localhost:9000/acorn/connect/scrap";
+    let url = "http://13.124.83.195:8080/acorn/connect/scrap";
     if (this.root.info.login_state) {
       axios({
         method: "get",
@@ -230,13 +230,13 @@ export default class DetailStore {
         .then((res) => {
           this.checkScrap();
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
   @action
   getComment = () => {
-    let url = "http://localhost:9000/acorn/comment/count";
+    let url = "http://13.124.83.195:8080/acorn/comment/count";
 
     axios({
       method: "get",
@@ -246,6 +246,6 @@ export default class DetailStore {
       .then((res) => {
         this.c_count = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }

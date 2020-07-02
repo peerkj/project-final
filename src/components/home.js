@@ -201,8 +201,8 @@ const Home = ({
               {i.ingre_name}
             </span>
           ) : (
-            i.ingre_name
-          )}
+              i.ingre_name
+            )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
@@ -210,8 +210,8 @@ const Home = ({
               {i.quantity}
             </span>
           ) : (
-            i.quantity
-          )}
+              i.quantity
+            )}
         </span>
       </div>
     );
@@ -227,8 +227,8 @@ const Home = ({
               {i.ingre_name}
             </span>
           ) : (
-            i.ingre_name
-          )}
+              i.ingre_name
+            )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
@@ -236,8 +236,8 @@ const Home = ({
               {i.quantity}
             </span>
           ) : (
-            i.quantity
-          )}
+              i.quantity
+            )}
         </span>
       </div>
     );
@@ -284,7 +284,7 @@ const Home = ({
         fullScreen
         open={open}
         onClose={handleClose}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -454,7 +454,7 @@ const Home = ({
         fullScreen
         open={open_recipe}
         onClose={openRecipe}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -506,7 +506,7 @@ const Home = ({
                   >
                     <img
                       width="40px"
-                      src={`http://localhost:9000/acorn/image/profile/${recipe_list[recipe_index].profile}`}
+                      src={`http://13.124.83.195:8080/acorn/image/profile/${recipe_list[recipe_index].profile}`}
                       alt=""
                     />
                   </Link>
@@ -532,7 +532,7 @@ const Home = ({
                     <div className="centered">
                       <img
                         className="r2listImg"
-                        src={`http://localhost:9000/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
+                        src={`http://13.124.83.195:8080/acorn/image/recipe/${recipe_list[recipe_index].repre_photo}`}
                         alt=""
                       />
                     </div>
