@@ -11,7 +11,7 @@ export default class WithdrawStore {
 
   @action
   handleWithdraw = () => {
-    let url = "http://13.124.83.195:8080/acorn/chef/withdraw";
+    let url = "http://localhost:9000/acorn/chef/withdraw";
     let withdraw = new FormData();
 
     withdraw.append("email", this.root.login.email);

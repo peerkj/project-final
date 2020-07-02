@@ -127,7 +127,7 @@ export default class JoinStore {
   //중복체크
   @computed
   get checkEmail() {
-    let url = "http://13.124.83.195:8080/acorn/chef/checkid";
+    let url = "http://localhost:9000/acorn/chef/checkid";
     let email = new FormData();
     email.append("email", this.email);
     if (this.available_email) {
@@ -152,7 +152,7 @@ export default class JoinStore {
   }
   @computed
   get checkNickname() {
-    let url = "http://13.124.83.195:8080/acorn/chef/checknick";
+    let url = "http://localhost:9000/acorn/chef/checknick";
     let nickname = new FormData();
     nickname.append("nickname", this.nickname);
     if (this.available_nickname) {
@@ -178,7 +178,7 @@ export default class JoinStore {
 
   @action
   handleSubmit = () => {
-    let url = "http://13.124.83.195:8080/acorn/chef/regist";
+    let url = "http://localhost:9000/acorn/chef/regist";
     let submit = new FormData();
     submit.append("name", this.name);
     submit.append("email", this.email);

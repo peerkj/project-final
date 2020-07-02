@@ -321,7 +321,7 @@ class write extends Component {
                     className="finishImg"
                     src={
                       i.comp_photoList === null
-                        ? `http://13.124.83.195:8080/acorn/image/recipe/${i.comp_photo}`
+                        ? `http://localhost:9000/acorn/image/recipe/${i.comp_photo}`
                         : i.comp_photo
                     }
                     alt=""
