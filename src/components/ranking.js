@@ -59,7 +59,7 @@ class Counter extends Component {
                 <div className="centered">
                   <Link to={`/mypage?nick=${c.nickname}`}>
                     <img
-                      src={`http://13.124.83.195:8080/Team5Spring/image/profile/${c.profile}`}
+                      src={`http://localhost:9000/acorn/image/profile/${c.profile}`}
                       alt=""
                     />
                   </Link>

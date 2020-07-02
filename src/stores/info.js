@@ -16,8 +16,7 @@ export default class JoinStore {
   @action
   getInfo = () => {
     let url =
-      "http://13.124.83.195:8080/Team5Spring/chef/modform?email=" +
-      this.root.info.userEmail;
+      "http://localhost/acorn/chef/modform?email=" + this.root.info.userEmail;
 
     //유효성 검사
     axios({
@@ -27,6 +26,7 @@ export default class JoinStore {
       //headers: { "Content-Type": "multipart/form-data" },
     })
       .then((res) => {
+        console.log("-실행-");
         localStorage.setItem("name", res.data.name);
         localStorage.setItem("nickname", res.data.nickname);
         localStorage.setItem("hp", res.data.hp);

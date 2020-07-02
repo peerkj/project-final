@@ -59,7 +59,7 @@ export default class CounterStore {
   //리스트
   @action
   getList = (i) => {
-    let url = "http://13.124.83.195:8080/Team5Spring/comment/list";
+    let url = "http://localhost:9000/acorn/comment/list";
 
     axios({
       method: "get",
@@ -122,7 +122,7 @@ export default class CounterStore {
 
   @action
   handleSubmit = () => {
-    let url = "http://13.124.83.195:8080/Team5Spring/comment/regist";
+    let url = "http://localhost:9000/acorn/comment/regist";
     let submit = new FormData();
     submit.append("email", this.root.info.userEmail);
     submit.append("content", this.content);
@@ -151,7 +151,7 @@ export default class CounterStore {
 
   @action
   deleteComment = () => {
-    let url = "http://13.124.83.195:8080/Team5Spring/comment/delete";
+    let url = "http://localhost:9000/acorn/comment/delete";
 
     axios({
       method: "get",

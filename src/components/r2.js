@@ -161,7 +161,7 @@ const R = ({
               <Link to={`/mypage?nick=${l.nickname}`}>
                 <img
                   width="40px"
-                  src={`http://13.124.83.195:8080/Team5Spring/image/profile/${l.profile}`}
+                  src={`http://localhost:9000/acorn/image/profile/${l.profile}`}
                   alt=""
                 />
               </Link>
@@ -250,7 +250,7 @@ const R = ({
                 <div className="centered">
                   <img
                     className="r2listImg"
-                    src={`http://13.124.83.195:8080/Team5Spring/image/recipe/${l.repre_photo}`}
+                    src={`http://localhost:9000/acorn/image/recipe/${l.repre_photo}`}
                     alt=""
                   />
                 </div>

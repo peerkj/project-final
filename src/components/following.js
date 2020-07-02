@@ -36,7 +36,7 @@ class Following extends Component {
                 <div className="centered">
                   <Link to={`/mypage?nick=${f.chef.nickname}`}>
                     <img
-                      src={`http://13.124.83.195:8080/Team5Spring/image/profile/${f.chef.profile}`}
+                      src={`http://localhost:9000/acorn/image/profile/${f.chef.profile}`}
                       alt=""
                     />
                   </Link>
@@ -114,7 +114,7 @@ class Following extends Component {
                             <div className="followCenter">
                               <div className="centered">
                                 <img
-                                  src={`http://13.124.83.195:8080/Team5Spring/image/recipe/${r.repre_photo}`}
+                                  src={`http://localhost:9000/acorn/image/recipe/${r.repre_photo}`}
                                   alt=""
                                 />
                               </div>
