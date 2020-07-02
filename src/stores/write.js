@@ -246,7 +246,6 @@ export default class WriteStore {
     submit.append("tip", this.tip);
     submit.append("email", this.root.info.userEmail);
 
-    //
     let check_main = false; //주재료
     let check_sub = false; //부재료
     let check_step = false; //요리순서
@@ -347,12 +346,15 @@ export default class WriteStore {
     } else if (this.tip === "") {
       alert("요리 Tip을 입력해주세요");
     } else {
+      console.log("글쓰기 시작!?");
       axios({
         method: "post",
         url: url,
         data: submit,
+        headers: { "Content-Type": "multipart/form-data" },
       })
         .then((res) => {
+          console.log("글쓰기 성공!?");
           history.push(`/recipe/detail?recipe=${res.data}`);
         })
         .catch((err) => {

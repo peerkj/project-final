@@ -273,14 +273,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Favorite
-                style={{ color: "#db555a" }}
-                fontSize="small"
-                onClick={() => {
-                  Joayo(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Favorite
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Joayo(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "500",
@@ -299,14 +299,14 @@ const R = ({
                 }}
               />
             ) : (
-              <Bookmark
-                style={{ color: "#db555a" }}
-                fontSize="small"
-                onClick={() => {
-                  Scrap(l.rec_num, idx);
-                }}
-              />
-            )}
+                <Bookmark
+                  style={{ color: "#db555a" }}
+                  fontSize="small"
+                  onClick={() => {
+                    Scrap(l.rec_num, idx);
+                  }}
+                />
+              )}
             <span
               style={{
                 fontWeight: "500",
@@ -403,8 +403,8 @@ const R = ({
               {sort === "" ? (
                 <Restore fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                <Restore fontSize="small" style={{ color: "#d0d6e1" }} />
-              )}
+                  <Restore fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
               <br />
               <span className="cate_text" style={{ color: "#000000" }}>
                 최신순
@@ -421,8 +421,8 @@ const R = ({
               {sort === "scrap" ? (
                 <Bookmark fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
-              )}
+                  <Bookmark fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
               <br />
               <span className="cate_text" style={{ color: "#000000" }}>
                 스크랩순
@@ -439,8 +439,8 @@ const R = ({
               {sort === "readcount" ? (
                 <Pageview fontSize="small" style={{ color: "#002060" }} />
               ) : (
-                <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
-              )}
+                  <Pageview fontSize="small" style={{ color: "#d0d6e1" }} />
+                )}
               <br />
               <span className="cate_text" style={{ color: "#000000" }}>
                 조회순

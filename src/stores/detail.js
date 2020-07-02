@@ -84,8 +84,7 @@ export default class DetailStore {
   @action
   getRecipe = (rec_num) => {
     this.rec_num = rec_num;
-    let url =
-      "http://13.124.83.195:8080/acorn/recipe/select?rec_num=" + rec_num;
+    let url = "http://13.124.83.195:8080/acorn/recipe/select?rec_num=" + rec_num;
     axios({
       url: url,
       method: "get",
@@ -182,7 +181,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkjoa = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //좋아요
@@ -198,7 +197,7 @@ export default class DetailStore {
         .then((res) => {
           this.checkJoayo();
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -215,7 +214,7 @@ export default class DetailStore {
       .then((res) => {
         this.checkscr = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   //스크랩
@@ -231,7 +230,7 @@ export default class DetailStore {
         .then((res) => {
           this.checkScrap();
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
@@ -247,6 +246,6 @@ export default class DetailStore {
       .then((res) => {
         this.c_count = res.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 }

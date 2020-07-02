@@ -244,8 +244,7 @@ export default class RecipeupdateStore {
   @action
   updateform = (num, history) => {
     this.resetuUpdate();
-    let url =
-      "http://13.124.83.195:8080/acorn/recipe/updateform?rec_num=" + num;
+    let url = "http://13.124.83.195:8080/acorn/recipe/updateform?rec_num=" + num;
 
     axios({
       method: "get",

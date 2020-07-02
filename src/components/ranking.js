@@ -107,8 +107,8 @@ class Counter extends Component {
                   Unfollow
                 </span>
               ) : (
-                ""
-              )}
+                    ""
+                  )}
             </div>
             <div id="rankingScore">{c.score}</div>
 

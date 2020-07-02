@@ -329,8 +329,8 @@ class Detail extends Component {
                   {checkjoa === 0 || !login_state ? (
                     <FavoriteBorderSharp />
                   ) : (
-                    <FavoriteSharp style={{ color: "#db555a" }} />
-                  )}
+                      <FavoriteSharp style={{ color: "#db555a" }} />
+                    )}
                   <br />
                   {checkjoa === 0 || !login_state ? "좋아요" : "좋아요 취소"}
                 </div>
@@ -338,8 +338,8 @@ class Detail extends Component {
                   {checkscr === 0 || !login_state ? (
                     <BookmarkBorderSharp />
                   ) : (
-                    <Bookmark style={{ color: "#db555a" }} />
-                  )}
+                      <Bookmark style={{ color: "#db555a" }} />
+                    )}
                   <br />
                   {checkscr === 0 || !login_state ? "스크랩" : "스크랩 취소"}
                 </div>

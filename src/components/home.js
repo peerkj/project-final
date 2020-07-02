@@ -201,8 +201,8 @@ const Home = ({
               {i.ingre_name}
             </span>
           ) : (
-            i.ingre_name
-          )}
+              i.ingre_name
+            )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
@@ -210,8 +210,8 @@ const Home = ({
               {i.quantity}
             </span>
           ) : (
-            i.quantity
-          )}
+              i.quantity
+            )}
         </span>
       </div>
     );
@@ -227,8 +227,8 @@ const Home = ({
               {i.ingre_name}
             </span>
           ) : (
-            i.ingre_name
-          )}
+              i.ingre_name
+            )}
         </span>
         <span className="sub">
           {i.check === 1 ? (
@@ -236,8 +236,8 @@ const Home = ({
               {i.quantity}
             </span>
           ) : (
-            i.quantity
-          )}
+              i.quantity
+            )}
         </span>
       </div>
     );
@@ -284,7 +284,7 @@ const Home = ({
         fullScreen
         open={open}
         onClose={handleClose}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
@@ -454,7 +454,7 @@ const Home = ({
         fullScreen
         open={open_recipe}
         onClose={openRecipe}
-        // TransitionComponent={Transition}
+      // TransitionComponent={Transition}
       >
         <AppBar
           className={classes.appBar}
