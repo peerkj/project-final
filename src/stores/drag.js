@@ -144,7 +144,7 @@ export default class DragStore {
   //재료 추가
   @action
   handleAddFood = () => {
-    let url = "http://13.124.83.195:8080/acorn/refri/put";
+    let url = "http://localhost:9000/acorn/refri/put";
     let put = new FormData();
     put.append("email", this.root.info.userEmail);
     put.append("refrig_name", this.addFood);
