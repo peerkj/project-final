@@ -6,7 +6,7 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "hamburger-react": "^2.1.1",
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
